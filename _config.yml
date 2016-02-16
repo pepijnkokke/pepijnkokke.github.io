@@ -7,12 +7,9 @@ baseurl: '/jekyll-uno/'
 # disqus_shortname: 'your-disqus-name'
 
 author:
-  name: 'Josh Gerdes'
-  email: josh@joshgerdes.com
-  twitter_username: joshgerdes
-  facebook_username: joshgerdes
-  github_username:  joshgerdes
-  linkedin_username:  joshgerdes
+  name: 'Pepijn Kokke'
+  email: pepijn.kokke@gmail.com
+  github_username:  pepijnkokke
 
 defaults:
   -
@@ -30,10 +27,8 @@ markdown: kramdown
 highlighter: rouge
 
 kramdown:
-  # use Github Flavored Markdown
   input: GFM
-  # do not replace newlines by <br>s
   hard_wrap: false
 
 gems: ['jekyll-paginate']
-exclude: ['README.md', 'Gemfile', 'Gemfile.lock', 'screenshot.png']
+exclude: ['Gemfile', 'Gemfile.lock']
