@@ -1,5 +1,6 @@
 _site
 .sass-cache
+<<<<<<< HEAD
 .DS_Store
 
 # Ignore the config file that's used for gh-pages.
@@ -7,3 +8,9 @@ _config.gh-pages.yml
 
 Gemfile.lock
 .ruby-version
+=======
+.jekyll-metadata
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+>>>>>>> fece6282ba15a6058069b66c2f5ed10ca4cd77a5
