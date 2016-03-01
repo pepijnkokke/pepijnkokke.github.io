@@ -5,7 +5,6 @@ baseurl     : ''
 
 author:
   name              : 'Pepijn Kokke'
-  email             : pepijn.kokke@gmail.com
   github_username   : pepijnkokke
 
 defaults:
