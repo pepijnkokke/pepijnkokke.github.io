@@ -27,4 +27,4 @@ kramdown:
   hard_wrap: false
 
 gems    : ['jekyll-paginate']
-exclude : ['Gemfile', 'Gemfile.lock']
+exclude : ['Gemfile', 'Gemfile.lock', 'Rakefile', 'tasks/', '*.lagda']
