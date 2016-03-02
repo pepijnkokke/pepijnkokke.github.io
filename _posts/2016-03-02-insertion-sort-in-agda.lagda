@@ -62,9 +62,9 @@ y` will tell you whether or not `x ≤ y`, whereas `total` will tell you
 whether it is `x ≤ y` or `y ≤ x`.
 
 \begin{code}
-module InsertionSort {c ℓ₁ ℓ₂} (Ord : DecTotalOrder c ℓ₁ ℓ₂) where
+module 2016-03-02-insertion-sort-in-agda {c ℓ₁ ℓ₂} (Ord : DecTotalOrder c ℓ₁ ℓ₂) where
 
-  open DecTotalOrder {{...}} using (_≤_; _≤?_; total)
+  open DecTotalOrder {{...}} using (_≤_; _≤?_; total) renaming (trans to ≤-trans)
   A = DecTotalOrder.Carrier Ord
 \end{code}
 
@@ -215,37 +215,28 @@ Finally! We've developed enough vocabulary to write down what it
 really means to perform an insertion:
 
 \begin{code}
-  insert : ∀ {l n k} → OVec l n (suc k) → ∃ (λ l → OVec l n k)
-  insert (x ∷ xs) = _ , insertAcc x xs
-    where
-      insertAcc : ∀ {l n k}
-                → (x : A) → OVec l n k → OVec (⟦ x ⟧ ⊓ l) (suc n) k
-      insertAcc x []       = x ∷ [] by ≲⊤
-      insertAcc x (y ∷ xs) = y ∷ insertAcc x xs
-      insertAcc x (y ∷ xs by p) with x ≤? y
-      ... | yes x≤y = x ∷ (y ∷ xs by p)    by ≤-lift x≤y
-      ... | no  x≰y = y ∷ (insertAcc x xs) by ⊓-conserves-≲ (≰-lift x≰y) p
+  insert : ∀ {l n k} (x : A) → OVec l n k → OVec (⟦ x ⟧ ⊓ l) (suc n) k
+  insert x []       = x ∷ [] by ≲⊤
+  insert x (y ∷ xs) = y ∷ insert x xs
+  insert x (y ∷ xs by p) with x ≤? y
+  ... | yes x≤y = x ∷ (y ∷ xs by p) by (≤-lift x≤y)
+  ... | no  x≰y = y ∷ (insert x xs) by (⊓-conserves-≲ (≰-lift x≰y) p)
 \end{code}
 
-Note that insert takes a vector with *k+1* unsorted elements, but
-returns a vector with only *k* unsorted elements! To figure out why
-this is, let's have a look at the code. First off, insert takes a
-vector with *k+1* unsorted elements... which means that it contains
-*at least* one element. We split off this element, and insert it
-into the sorted portion of the vector with 'insertAcc'. In doing so,
-we construct a list which is one element longer (as we inserted
-an element) and which has a new lower bound, which is equal to the
-minimum of the previous lower bound and the inserted element.
+Note that insert takes a vector with *k* unsorted elements, and
+returns a vector which has one more element, but still only *k*
+unsorted elements! It does this (obviously) by inserting the element
+at the right position within the sorted portion of the vector.
 
-It follows fairly easily from the fact that 'insert' sorts an element,
-that if we repeat 'insert' *k* times, we'll have sorted *k*
-elements... and therefore the list.
+It follows fairly easily from the fact that 'insert' inserts an
+element in the sorted portion of the vector, that if we take elements
+from the unsorted portion, insert it, and repeat this *k* times, we'll
+have sorted *k* elements... and therefore the list.
 
 \begin{code}
   insertsort : ∀ {l n k} → OVec l n k → ∃ (λ l → OVec l n 0)
-  insertsort [] = ⊤ , []
-  insertsort (x ∷ xs) with insert (x ∷ xs)
-  insertsort (x ∷ xs) | l , ys = insertsort ys
+  insertsort []            = ⊤ , []
+  insertsort (x ∷ xs)      = insertsort (insert x xs)
   insertsort (x ∷ xs by p) = ⟦ x ⟧ , x ∷ xs by p
 \end{code}
 
@@ -263,5 +254,48 @@ in the output list. However, as I mostly wrote this blog post as a
 test case for my Jekyll/Agda integration... I'm not going to put in
 the effort to do either.
 
+One amusing anecdote about this code is that while I was writing it, I
+thought I was implementing bubble sort---so much for safety. However,
+if you have a look at the invariants that both algorithms maintain,
+they are really quite similar. In fact, we can easily implement bubble
+sort using our `OVec` data type. The underlying algorithm is
+incredibly similar to insert. However, as opposed to inserting the
+first element in the correct position, `bubble` has trouble making up
+its mind and drops whatever it's hold when it sees a bigger element!
+
 \begin{code}
+  bubble : ∀ {l n k} (x : A) → OVec l n k → OVec (⟦ x ⟧ ⊓ l) (suc n) k
+  bubble x []            = x ∷ [] by ≲⊤
+  bubble x (y ∷ xs)      with x ≤? y
+  ... | no  x≰y = y ∷ bubble x xs
+  ... | yes x≤y = x ∷ bubble y xs
+  bubble x (y ∷ xs by p) with x ≤? y
+  ... | no  x≰y = y ∷ bubble x xs by ⊓-conserves-≲ (≰-lift x≰y) p
+  ... | yes x≤y = x ∷ bubble y xs by ⊓-conserves-≲ x≲y (≲-trans x≲y p)
+    where
+      x≲y = ≤-lift x≤y
+\end{code}
+
+All that we need is to show that our home-brewed ≲-relation is
+transitive. This follows immediately from the underlying
+order. But this sort of lemma should really be provided by the
+standard library anyway---and perhaps it is, and I've simply failed to
+find it!
+
+\begin{code}
+      ≲-trans : ∀ {x y z} → x ≲ y → y ≲ z → x ≲ z
+      ≲-trans  ⊥≲         _         = ⊥≲
+      ≲-trans  _          ≲⊤        = ≲⊤
+      ≲-trans (≤-lift p) (≤-lift q) = ≤-lift (≤-trans p q)
+\end{code}
+
+At any rate, once we have our "bubble" function, the implementation of
+the sorting algorithm is trivial---and exactly identical to the
+definition of insertion sort!
+
+\begin{code}
+  bubblesort : ∀ {l n k} → OVec l n k → ∃ (λ l → OVec l n 0)
+  bubblesort []            = ⊤ , []
+  bubblesort (x ∷ xs)      = bubblesort (bubble x xs)
+  bubblesort (x ∷ xs by p) = ⟦ x ⟧ , x ∷ xs by p
 \end{code}
