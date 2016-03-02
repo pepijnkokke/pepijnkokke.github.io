@@ -62,7 +62,7 @@ y` will tell you whether or not `x ≤ y`, whereas `total` will tell you
 whether it is `x ≤ y` or `y ≤ x`.
 
 \begin{code}
-module 2016-03-02-insertion-sort-in-agda {c ℓ₁ ℓ₂} (Ord : DecTotalOrder c ℓ₁ ℓ₂) where
+module insertion-sort {c ℓ₁ ℓ₂} (Ord : DecTotalOrder c ℓ₁ ℓ₂) where
 
   open DecTotalOrder {{...}} using (_≤_; _≤?_; total) renaming (trans to ≤-trans)
   A = DecTotalOrder.Carrier Ord
