@@ -26,7 +26,7 @@ in terms of time and space---if you don't need some property, you
 don't have to compute its proof!
 
 I'm getting carried away... Well, one last announcement in the public
-interest. This post is written in literate Agda, and I've gone through
+interest: This post is written in literate Agda, and I've gone through
 the effort of using the Agda hilighter. This means that all functions
 and module names have links to their definitions---be it within the
 post, or in the Agda standard library!
