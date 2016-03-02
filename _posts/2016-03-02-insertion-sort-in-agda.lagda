@@ -260,8 +260,8 @@ if you have a look at the invariants that both algorithms maintain,
 they are really quite similar. In fact, we can easily implement bubble
 sort using our `OVec` data type. The underlying algorithm is
 incredibly similar to insert. However, as opposed to inserting the
-first element in the correct position, `bubble` has trouble making up
-its mind and drops whatever it's hold when it sees a bigger element!
+first element in the correct position, "bubble" has trouble making up
+its mind and drops whatever it's holding when it sees a bigger element!
 
 \begin{code}
   bubble : ∀ {l n k} (x : A) → OVec l n k → OVec (⟦ x ⟧ ⊓ l) (suc n) k
