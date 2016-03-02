@@ -278,9 +278,9 @@ its mind and drops whatever it's hold when it sees a bigger element!
 
 All that we need is to show that our home-brewed ≲-relation is
 transitive. This follows immediately from the underlying
-order. But this sort of lemma should really be provided by the
-standard library anyway---and perhaps it is, and I've simply failed to
-find it!
+order. This kind of stuff---the adding of bounds to total
+order---should really be provided by the standard library. And perhaps
+it is, and I've simply failed to find it...
 
 \begin{code}
       ≲-trans : ∀ {x y z} → x ≲ y → y ≲ z → x ≲ z
