@@ -334,21 +334,24 @@ bubble sort, and "copy the first element *n* times". And because I
 paid little attention---I'm convinced my brain simply implemented what
 was an obvious optimalisation---I picked the wrong one.
 
-The second question that follows, is how do you know that you've
-written down the right property? One simple mistake in my definition
-of `OVec` would render it into "a list where sometimes an element is
-smaller than one of the elements after it". Obviously, sorting
-algorithms would ensure this property... Now, the answer that you
-often hear is "you don't", and this is true... both in Agda, in Coq,
-in JavaScript, in set theory. There is no real way to ensure that what
+The second question that usually follows is "How do you know that you've
+written down the right *property*?" For instance, one small mistake in
+my definition of `OVec` would have it mean "a list where sometimes an
+element is smaller than one of the elements after it".
+Obviously, sorting algorithms would have this property... Now, the
+simple answer is that you don't. And this holds for Agda, Coq,
+JavaScript, set theory... There is no real way to ensure that what
 you write down, in general, corresponds to what you wanted to write
 down.
-But there is one redeeming factor to *machine-checked* proofs:
-usage. When you prove a lemma, you intend to *use* it to prove some
-different lemma. And in general, if you've proven the wrong lemma,
-your next proof will *fail*. You've defined the right property because
-you can use it to *prove* what you wanted to prove with it, regardless
-of your conceptualisation of the property.
+But there is one redeeming factor. Set theory is believed to not be a
+hot mess because there are *tons* of people who've checked the
+proofs, and who've used the proved properties to prove other, more
+complex properties. When you prove a lemma, you intend to *use* it to
+prove some different lemma. And in general, if you've proven the wrong
+lemma, your next proof will *fail*. And obviously, the notion that the
+*usage* of properties and and *repeated checking* of proofs strengtens
+a theory applies even more strongly to theories which are also
+*machine-checked*.
 
 \begin{code}
 \end{code}
