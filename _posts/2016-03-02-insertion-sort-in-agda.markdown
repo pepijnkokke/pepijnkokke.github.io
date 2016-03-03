@@ -271,3 +271,54 @@ definition of insertion sort!
   </a><a name="12097" href="#12036" class="Function">bubblesort</a><a name="12107"> </a><a name="12108" href="#7134" class="InductiveConstructor">[]</a><a name="12110">            </a><a name="12122" class="Symbol">=</a><a name="12123"> </a><a name="12124" href="#3377" class="InductiveConstructor">⊤</a><a name="12125"> </a><a name="12126" href="https://agda.github.io/agda-stdlib/Data.Product.html#509" class="InductiveConstructor Operator" target="_blank">,</a><a name="12127"> </a><a name="12128" href="#7134" class="InductiveConstructor">[]</a><a name="12130">
   </a><a name="12133" href="#12036" class="Function">bubblesort</a><a name="12143"> </a><a name="12144" class="Symbol">(</a><a name="12145" href="#12145" class="Bound">x</a><a name="12146"> </a><a name="12147" href="#7253" class="InductiveConstructor Operator">∷</a><a name="12148"> </a><a name="12149" href="#12149" class="Bound">xs</a><a name="12151" class="Symbol">)</a><a name="12152">      </a><a name="12158" class="Symbol">=</a><a name="12159"> </a><a name="12160" href="#12036" class="Function">bubblesort</a><a name="12170"> </a><a name="12171" class="Symbol">(</a><a name="12172" href="#10912" class="Function">bubble</a><a name="12178"> </a><a name="12179" href="#12145" class="Bound">x</a><a name="12180"> </a><a name="12181" href="#12149" class="Bound">xs</a><a name="12183" class="Symbol">)</a><a name="12184">
   </a><a name="12187" href="#12036" class="Function">bubblesort</a><a name="12197"> </a><a name="12198" class="Symbol">(</a><a name="12199" href="#12199" class="Bound">x</a><a name="12200"> </a><a name="12201" href="#7159" class="InductiveConstructor Operator">∷</a><a name="12202"> </a><a name="12203" href="#12203" class="Bound">xs</a><a name="12205"> </a><a name="12206" href="#7159" class="InductiveConstructor Operator">by</a><a name="12208"> </a><a name="12209" href="#12209" class="Bound">p</a><a name="12210" class="Symbol">)</a><a name="12211"> </a><a name="12212" class="Symbol">=</a><a name="12213"> </a><a name="12214" href="#3399" class="InductiveConstructor Operator">⟦</a><a name="12215"> </a><a name="12216" href="#12199" class="Bound">x</a><a name="12217"> </a><a name="12218" href="#3399" class="InductiveConstructor Operator">⟧</a><a name="12219"> </a><a name="12220" href="https://agda.github.io/agda-stdlib/Data.Product.html#509" class="InductiveConstructor Operator" target="_blank">,</a><a name="12221"> </a><a name="12222" href="#12199" class="Bound">x</a><a name="12223"> </a><a name="12224" href="#7159" class="InductiveConstructor Operator">∷</a><a name="12225"> </a><a name="12226" href="#12203" class="Bound">xs</a><a name="12228"> </a><a name="12229" href="#7159" class="InductiveConstructor Operator">by</a><a name="12231"> </a><a name="12232" href="#12209" class="Bound">p</a></pre>
+
+This does lead to an interesting point: how do you know that what
+you've implemented is actually what you *wanted* to implement?
+Of course, a similar discussion applies much more strongly to
+programming languages with weaker or non-existent type systems.
+However, the point seems to be brought up more often once you stray
+into the realm of verification.
+
+Obviously, if you write your program in a language such as JavaScript,
+there is nothing that tells you you've implemented the right algorithm.
+And it would be rather hard to come up with a test which could tell
+the difference between insertion sort and bubble sort---though a
+stress-test may reveal the fact. However, in JavaScript, one cannot
+even tell the difference between two completely different algorithms,
+e.g. "insertion sort" and "Lehvenstein distance", without using
+tests. And even then, tests generally only cover a small, finite
+number of cases. You may have implemented algorithm *A* for the first
+100 inputs, and algorithm *B* afterwards, and you'll never know.
+
+Once you enter the realm of Agda, the argument can be made a little
+neater: using a language with a *strong* type system, you limit the
+set of all possible algorithms with your types, and you can be sure
+that you've implemented *one* of the algorithms in that set.
+The trick is to narrow down the set to exactly those algorithms that
+you need.
+
+In the above exercise, I failed to do so. The set of algorithms that I
+selected for was the set of algorithms that turn lists into sorted
+lists of equal length, without inspecting the values (other than by
+comparison) and maintaining the "*k*-unsorted elements" invariant.
+As we've seen, some of the algorithms in this set are insertion sort,
+bubble sort, and "copy the first element *n* times". And because I
+paid little attention---I'm convinced my brain simply implemented what
+was an obvious optimalisation---I picked the wrong one.
+
+The second question that follows, is how do you know that you've
+written down the right property? One simple mistake in my definition
+of `OVec` would render it into "a list where sometimes an element is
+smaller than one of the elements after it". Obviously, sorting
+algorithms would ensure this property... Now, the answer that you
+often hear is "you don't", and this is true... both in Agda, in Coq,
+in JavaScript, in set theory. There is no real way to ensure that what
+you write down, in general, corresponds to what you wanted to write
+down.
+But there is one redeeming factor to *machine-checked* proofs:
+usage. When you prove a lemma, you intend to *use* it to prove some
+different lemma. And in general, if you've proven the wrong lemma,
+your next proof will *fail*. You've defined the right property because
+you can use it to *prove* what you wanted to prove with it, regardless
+of your conceptualisation of the property.
+

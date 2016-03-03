@@ -299,3 +299,56 @@ definition of insertion sort!
   bubblesort (x ∷ xs)      = bubblesort (bubble x xs)
   bubblesort (x ∷ xs by p) = ⟦ x ⟧ , x ∷ xs by p
 \end{code}
+
+This does lead to an interesting point: how do you know that what
+you've implemented is actually what you *wanted* to implement?
+Of course, a similar discussion applies much more strongly to
+programming languages with weaker or non-existent type systems.
+However, the point seems to be brought up more often once you stray
+into the realm of verification.
+
+Obviously, if you write your program in a language such as JavaScript,
+there is nothing that tells you you've implemented the right algorithm.
+And it would be rather hard to come up with a test which could tell
+the difference between insertion sort and bubble sort---though a
+stress-test may reveal the fact. However, in JavaScript, one cannot
+even tell the difference between two completely different algorithms,
+e.g. "insertion sort" and "Lehvenstein distance", without using
+tests. And even then, tests generally only cover a small, finite
+number of cases. You may have implemented algorithm *A* for the first
+100 inputs, and algorithm *B* afterwards, and you'll never know.
+
+Once you enter the realm of Agda, the argument can be made a little
+neater: using a language with a *strong* type system, you limit the
+set of all possible algorithms with your types, and you can be sure
+that you've implemented *one* of the algorithms in that set.
+The trick is to narrow down the set to exactly those algorithms that
+you need.
+
+In the above exercise, I failed to do so. The set of algorithms that I
+selected for was the set of algorithms that turn lists into sorted
+lists of equal length, without inspecting the values (other than by
+comparison) and maintaining the "*k*-unsorted elements" invariant.
+As we've seen, some of the algorithms in this set are insertion sort,
+bubble sort, and "copy the first element *n* times". And because I
+paid little attention---I'm convinced my brain simply implemented what
+was an obvious optimalisation---I picked the wrong one.
+
+The second question that follows, is how do you know that you've
+written down the right property? One simple mistake in my definition
+of `OVec` would render it into "a list where sometimes an element is
+smaller than one of the elements after it". Obviously, sorting
+algorithms would ensure this property... Now, the answer that you
+often hear is "you don't", and this is true... both in Agda, in Coq,
+in JavaScript, in set theory. There is no real way to ensure that what
+you write down, in general, corresponds to what you wanted to write
+down.
+But there is one redeeming factor to *machine-checked* proofs:
+usage. When you prove a lemma, you intend to *use* it to prove some
+different lemma. And in general, if you've proven the wrong lemma,
+your next proof will *fail*. You've defined the right property because
+you can use it to *prove* what you wanted to prove with it, regardless
+of your conceptualisation of the property.
+
+\begin{code}
+\end{code}
