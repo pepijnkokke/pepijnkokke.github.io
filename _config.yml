@@ -3,6 +3,7 @@ description      : ''
 url              : 'https://pepijnkokke.github.io'
 baseurl          : ''
 google_analytics : 'UA-74596735-1'
+disqus_shortname : 'pepijnkokke'
 
 author:
   name              : 'Pepijn Kokke'
