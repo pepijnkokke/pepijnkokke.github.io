@@ -1,4 +1,4 @@
-title            : Pepijn Kokke
+title            : 'Pepijn Kokke'
 description      : ''
 url              : 'https://pepijnkokke.github.io'
 baseurl          : ''
@@ -28,4 +28,4 @@ kramdown:
   hard_wrap: false
 
 gems    : ['jekyll-paginate']
-exclude : ['Gemfile', 'Gemfile.lock', 'Rakefile', 'tasks/', '*.lagda']
+exclude : ['Gemfile', 'Gemfile.lock', 'Rakefile', 'tasks/', '*.lagda', '*.agdai']
