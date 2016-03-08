@@ -17,6 +17,6 @@ rule '.markdown' => '.lagda' do |t|
     filename = "#{tmp}/#{basename}.lagda"
     cp t.source, filename
     sh("agda -i#{tmp} -i#{AGDA_HOME} --html --html-dir=#{tmp} #{filename}")
-    File.write(t.name, fix_agda_html(filename.ext('.html')))
+    File.write(t.name, fix_agda_html(filename))
   end
 end
