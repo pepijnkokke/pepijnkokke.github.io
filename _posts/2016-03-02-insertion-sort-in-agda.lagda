@@ -5,17 +5,17 @@ categories : [agda]
 tags       : [agda]
 ---
 
-<div style="display:none;">
-\begin{code}
-module 2016-03-02-insertion-sort-in-agda where
-\end{code}
-</div>
-
 I wrote this code a long time ago, and verifiying the correctness of
 some sorting algorithm is pretty much *the* standard "Hello World! I
 can Agda!" blog post---well, that and implementing the
 λ-calculus---but I really wanted an excuse to test my Jekyll/Agda
 integration.
+
+<div style="display:none;">
+\begin{code}
+module 2016-03-02-insertion-sort-in-agda where
+\end{code}
+</div>
 
 Now, the version of insertion sort that I will write in this blog post
 will be *correct by construction*. By this I mean that I will
