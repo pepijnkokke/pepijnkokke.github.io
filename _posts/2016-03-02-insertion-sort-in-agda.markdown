@@ -5,15 +5,15 @@ categories : [agda]
 tags       : [agda]
 ---
 
-<div style="display:none;">
-<pre class="Agda"><a name="162" class="Keyword">module</a><a name="168"> </a><a name="169" href="#1" class="Module">2016-03-02-insertion-sort-in-agda</a><a name="202"> </a><a name="203" class="Keyword">where</a></pre>
-</div>
-
 I wrote this code a long time ago, and verifiying the correctness of
 some sorting algorithm is pretty much *the* standard "Hello World! I
 can Agda!" blog post---well, that and implementing the
 λ-calculus---but I really wanted an excuse to test my Jekyll/Agda
 integration.
+
+<div style="display:none;">
+<pre class="Agda"><a name="435" class="Keyword">module</a><a name="441"> </a><a name="442" href="#1" class="Module">2016-03-02-insertion-sort-in-agda</a><a name="475"> </a><a name="476" class="Keyword">where</a></pre>
+</div>
 
 Now, the version of insertion sort that I will write in this blog post
 will be *correct by construction*. By this I mean that I will

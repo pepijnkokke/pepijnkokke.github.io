@@ -1,20 +1,22 @@
 ---
-title      : "AB grammars in Haskell"
+title      : "Side-effects in English"
 date       : 2016-03-09 12:00:00
 categories : [haskell, categorial grammar]
 tags       : [haskell, categorial grammar]
 ---
 
-Let's have a little fun with basic AB grammars in Haskell, see how
-far we can get. Briefly, AB grammars are just about the simplest form
-of categorial grammars, which is an approach to natural language
-syntax and semantics with very close ties to logic and type
-theory. However, due to the incredible simplicity of AB grammars,
-maybe don't expect huge results.
+Back when I wrote this, I had just discovered
+["Extensible Effects: an alternative to Monad Transformers"](http://okmij.org/ftp/Haskell/extensible/)
+by Oleg Kiselyov, Amr Sabry, Cameron Swords, and Hiromi Ishii, and
+I've always penchant for mucking about with linguistics and
+Haskell... so... let's have a little fun with this library and some
+basic AB grammars in Haskell, see how far we can get within the
+universally well-defined maximum length of a blog post!
 
 Well, first off, don't let this scare you off... but we are going to
-need a LOT of language extensions. This is because we're basically
-going to parse strings to Haskell functions.
+do this in Haskell, and we're going to need a LOT of language
+extensions. This is because we're basically going to parse strings to
+Haskell functions:
 
 {% highlight haskell %}
 {-# LANGUAGE
@@ -33,54 +35,56 @@ In addition, we're going to use the following packages:
 For the extensible effects library, I've included a copy of all the
 required code in [the repository](https://github.com/pepijnkokke/ab_grammar).
 
-<div style="display:none;">
-{% highlight haskell %}
-import Prelude hiding (lookup,lex)
-import Control.Applicative ((<|>),empty,liftA2)
-import Data.Maybe (maybeToList)
-import Data.Singletons.Decide (Decision(..),(:~:)(..),(%~))
-import Data.Singletons.Prelude
-import Data.Singletons.TH (singletons)
-import Eff1 (Eff,run,Reader,runReader,ask,Writer,tell,runWriter)
-import Text.Parsec (char,letter,spaces,many1,chainr1,parse)
-{% endhighlight %}
-</div>
-
-Before we start off, let's review some basic AB-grammar. In
+Before we start off, let's review some basic AB-grammar knowledge. In
 general, a categorial grammar---of which AB-grammars are an
 instance---consist of three things:
 
- 1. a typed language \\(\\mathcal{L}_1\\);
- 2. a typed language \\(\\mathcal{L}_2\\); and
- 3. a translation from \\(\\mathcal{L}_1\\) to \\(\\mathcal{L}_2\\).
+  1. a typed language \\(\\mathcal{L}_1\\);
+  2. a typed language \\(\\mathcal{L}_2\\); and
+  3. a translation \\(Tr\\) from \\(\\mathcal{L}_1\\) to \\(\\mathcal{L}_2\\).
 
-In the case of AB-grammars, the language \\(\\mathcal{L}_1\\) is the
-language of syntactic types, and consists of:
+The language \\(\\mathcal{L}_1\\) describes the *grammar* of our
+language, whereas \\(\\mathcal{L}_2\\) will describe its
+*meaning*. And one more important requirement: if we have a type in
+\\(\\mathcal{L}_1\\), then we should have some efficient way of
+getting all the programs of that type---this will be our parsing
+algorithm.
+
+In the case of AB-grammars, \\(\\mathcal{L}_1\\) has the following types:
 \\[
-    \\text{Types }A, B ::= S \\mid N \\mid NP \\mid A \\backslash B \\mid B / A
+    \\text{Type }A, B ::= S \\mid N \\mid NP \\mid A \\backslash B \\mid B / A
 \\]
-It also includes a set of typed words, and two typing rules for
-function application:
+The programs in this language consist of a bunch of constants, which
+represent words. It also has two rules for building programs, of
+them variants of function application:
 \\[
-    \\frac{A \\quad A \\backslash B}{B}
+    \\frac{x:A \\quad f:A \\backslash B}{(fx):B}{\\small \\backslash e}
     \\quad
-    \\frac{B / A \\quad A}{B}
+    \\frac{f:B / A \\quad x:A}{(fx):B}{\\small / e}
 \\]
-The language \\(\\mathcal{L}_2\\) is the simply-typed lambda calculus, typed with only
-the primitive types \\(e\\) and \\(t\\), for entities and truth-values:
+The language \\(\\mathcal{L}_2\\) is the simply-typed lambda calculus,
+typed with only the primitive types \\(e\\) and \\(t\\), for entities
+and truth-values:
 \\[
     \\text{Types }\\sigma, \\tau ::= e \\mid t \\mid \\sigma \\to \\tau
 \\]
-It furthermore consists of a second set of typed constants, which
-represent the interpretations of the words, and is usually taken to
-include both the universal and the existential quantifier.
+It also has a set of typed constants, which we use to represent the
+abstract meanings of words. This means it contains familiar logical
+operators, like \\({\\wedge}:t\\to t\\to t\\) or \\(\\forall:(e\\to
+t)\\to t\\), but also things like \\(cat:e\\to t\\), the predicate
+which tests whether or not something is a cat.
 
 The translation function then maps the types for \\(\\mathcal{L}_1\\)
 to types for \\(\\mathcal{L}_2\\), and the words in
-\\(\\mathcal{L}_1\\) to constants in \\(\\mathcal{L}_2\\). For the
+\\(\\mathcal{L}_1\\) to expressions in \\(\\mathcal{L}_2\\). For the
 types, the translation is as follows:
+
 \\[ \\begin{array}{lcl} Tr(S) &= &t\\\\ Tr(N) &= &e\\to t\\\\ Tr(NP) &= &e\\\\ Tr(A \\backslash B) &= &Tr(A)\\to Tr(B)\\\\ Tr(B / A) &= &Tr(A)\\to Tr(B) \\end{array} \\]
 
+The translation on the level of programs is simple: programs in
+\\(\\mathcal{L}_1\\) consist *solely* of function applications and
+some constants. As long as we don't make promises in the types of
+those constants that we cannot keep, we should be fine!
 
 So, let's start off by creating some Haskell data types to represent
 the syntactic and semantic types described above:
@@ -97,9 +101,9 @@ singletons [d|
   |]
 {% endhighlight %}
 
-The reason we're wrapping these declarations in the `singletons` macro
-is---obviously---because later on we will want to use their singletons.
-First off, a 'singleton' is a Haskell data type which has the same
+The `singletons` function that we're using here is important. It's a
+template Haskell function which, given some datatype, defines its
+"singleton". A "singleton" is a Haskell data type which has the same
 structure on the value level and on the type level. For the type
 `SynT` above, that means that the `singletons` function generates a
 second data type:
@@ -111,10 +115,10 @@ second data type:
       (:%\) :: SSynT a -> SSynT b -> SSynT (a :\ b)
       (:%/) :: SSynT b -> SSynT a -> SSynT (b :/ a)
 
-By providing a value of such a type, we can constrain the types, and
-by pattern matching on it we can pattern match on types. For now, just
-be aware that those data types are generated. They will become
-relevant soon enough.
+By using the singleton of some value, we can get that value *on the
+type level*---and by pattern matching on a singleton, we can pattern
+match on types! For now, just be aware that those data types are
+generated. They will become relevant soon enough.
 
 First off, though---we probably should've done this right away---let's
 just set some fixities for our type-level operators:
@@ -139,8 +143,16 @@ sTV = sIV :%/ SNP
 sAP = SNP :%/ SNP
 {% endhighlight %}
 
-Now that we have this type structure, our translation function `Tr`
-can almost be copied into a Haskell type function:
+Note: the convention in the singletons library is to define the
+singleton version of a constructor by prefixing it with an
+`S`. Obviously, since the above definitions aren't constructors, we
+can't do that. However, we stick as close to the convention as
+possible in naming these "derived" singletons `sIV`, `sTV` and `sAP`.
+
+So now that we've defined the types of the languages
+\\(\\mathcal{L}_1\\) and \\(\\mathcal{L}_2\\), we can define our
+translation *on types*. Not that we can more-or-less directly use our
+translation function in Haskell:
 
 {% highlight haskell %}
 type family Tr (ty :: SynT) :: SemT where
@@ -162,8 +174,8 @@ to use to represent our semantic terms, for instance:
 
 While we have a way of talking about terms of a certain type---e.g. by
 saying `Expr E` we can talk about all entities---we cannot really
-leave the type open and talk about all well-typed terms. For this we
-need to introduce a new data type:
+leave the type open and talk about *all* well-typed terms, regardless
+of type. For this we need to introduce a new data type:
 
 {% highlight haskell %}
 data Typed (expr :: SemT -> *) = forall a. Typed (SSynT a, expr (Tr a))
@@ -174,6 +186,12 @@ type, and an expression. Notice that the type-level variable `a` is
 shared between the singleton and the expression, which means that the
 expression in the second position is forced to be of the type given in
 the first.
+
+Our definition of `Typed` has one type-level parameter, `expr`, which
+represents the type of expressions. One possible value for this is the
+`Expr` type we sketched earlier---for instance, some values of the
+type `Typed Expr` would be `(SE, John)`, `(SE, Mary)`, `(ST, Like :$
+John :$ Mary)` and `(SE %:-> ST, Like :$ Mary)`.
 
 We are abstracting over the expressions used, but we're going to need
 them to support *at least* function application---as this is what AB
@@ -194,13 +212,10 @@ succeeds. What we're doing in the function is the following:
  1. we pattern match to check if either the left or the right type is
     an appropriate function type;
  2. we use the type-level equality function `%~` to check if the
-    argument type is the same in both cases;
- 3. and if so, we apply `apply`.
+    argument type is the same in both cases; and
+ 3. if so, we apply `apply`.
 
-In all other cases, we're forced to return `Nothing`. As a side note,
-this function corresponds to proof search in the AB grammars, and this
-is the function that should be extended if you wish to extend this
-grammar to use e.g. Lambek grammars.
+In all other cases, we're forced to return `Nothing`:
 
 {% highlight haskell %}
 maybeApply :: SemE expr => Typed expr -> Typed expr -> Maybe (Typed expr)
@@ -215,8 +230,17 @@ maybeApply (Typed (b :%/ a1,f)) (Typed (a2,x)) =
 maybeApply _ _ = empty
 {% endhighlight %}
 
-Next, since AB-grammars don't do full parsing but work on parse trees,
-we're going to need some sort of trees:
+Note: it is this function corresponds to backward-chaining proof
+search in the more general framework of categorial grammar. However,
+AB grammars *only* support function application, and therefore our
+"proof search" (1) can return at most one result, and (2) is
+more-or-less just a cursory check to see if the types match.
+
+What we've implemented above is just a *check* to see if some given
+pair of expressions can be applied as function and argument. Applied
+repeatedly, this corresponds to checking if some given syntax tree has
+a well-typed function-argument structure. If we want to do this, we're
+going to need some sort of trees:
 
 {% highlight haskell %}
 data Tree a = Leaf a | Node (Tree a) (Tree a)
@@ -224,8 +248,9 @@ data Tree a = Leaf a | Node (Tree a) (Tree a)
 {% endhighlight %}
 
 However, since we don't actually want to write these horribly verbose
-things, we implement a tiny parser which parses sentences of the form
-"(the unicorn) (found jack) first":
+things, we're going to use parser combinators to implement a tiny
+parser which parses sentences of the form "(the unicorn) (found jack)
+first":
 
 {% highlight haskell %}
 parseTree :: String -> Maybe (Tree String)
@@ -240,8 +265,8 @@ parseTree str = case parse sent "" str of
         node = pure Node <* spaces
 {% endhighlight %}
 
-Spaces form nodes in the tree, and
-are taken to be right associative, so the example above represents the
+That is to say, for our parser, spaces form nodes in the tree, and are
+taken to be right associative. So, the example above represents the
 following tree:
 
             -----------
@@ -252,10 +277,10 @@ following tree:
       /    \      /    \    \
     the unicorn found jack first
 
-Last, before we can write out full implementation of parsing with AB
+Last, before we can write out full implementation of "parsing" with AB
 grammars, we're going to need the concept of a lexicon. In our case, a
-lexicon will be a function from `String`s to a list of typed
-expression---that is, a word can have multiple interpretations:
+lexicon will be a function from string to lists of typed expressions
+(because a word can have multiple interpretations):
 
 {% highlight haskell %}
 type Lexicon expr = String -> [Typed expr]
@@ -265,12 +290,12 @@ Parsing consists of four stages:
 
   1. we parse the given string into a tree;
   2. we look up the words in the tree in the lexicon;
-  3. we combine the words using `maybeApply` as defined above;
-  4. we check if the resulting terms are of the correct type, and
-     return those that are.
+  3. we combine the words using `maybeApply` as defined above; and
+  4. we return those resulting terms that are of the correct type.
 
-Note that the `checkType` function once again makes use of the
-type-level equality function `%~`.
+Below, you see the function written out in full. Note that the
+`checkType` function once again makes use of the type-level equality
+function `%~`:
 
 {% highlight haskell %}
 parseWith :: SemE expr => Lexicon expr -> String -> SSynT a -> [expr (Tr a)]
@@ -322,11 +347,9 @@ data Pred = Like Entity Entity -- ^ Is it 'like' or 'like like'?
 Secondly, we could turn our expressions into plain Haskell
 expressions, but that would be dull. Language isn't side-effect
 free---there's all kinds of stuff going on! So, we're going to use
-a library for extensible effects written by Oleg Kiselyov, Amr Sabry,
-Cameron Swords, and Hiromi Ishii. For more information, see
-<http://okmij.org/ftp/Haskell/extensible/>. However, if you just want
-to compile and run this code, I've included the necessary files in the
-repository.
+a library for
+[extensible effects](http://okmij.org/ftp/Haskell/extensible/) written
+by Oleg Kiselyov, Amr Sabry, Cameron Swords, and Hiromi Ishii.
 
 Let's translate our semantic types into effectful Haskell types! And,
 most importantly, let's keep the set of effects `r` unspecified!
@@ -353,8 +376,8 @@ instance SemE (Ext r) where
 
 But now we're all ready to go! First, let's determine the effects we
 want to use in our library. We could still leave this underspecified,
-and only give membership constraints... but that would be much more
-verbose.
+and only mention which effects we expect to be supported... but that
+would be much more verbose:
 
 {% highlight haskell %}
 type RW = (Reader Entity ': Writer Pred ': '[])
@@ -378,12 +401,12 @@ type `Entity`, and through our translation, `NP` gets translated to
 
 Then, the predicate `Like` is simply lifted by `liftA2`, which is
 similar to `pure`, but for binary functions. The `flip` is present
-because according to the grammar, `Like` will take it's object first
-and the subject second... but for readability, we'd like that to be
-the other way around.
+because according to... *egh*... *grammar*, `Like` will take its
+object first and its subject second... but for readability, we'd like
+that to be the other way around.
 
 The definition for "stupid" acts as an identity function on entities,
-but inserts a predicate into the 'appositive dimension'. This
+but inserts a predicate into the "appositive dimension". This
 corresponds to the linguistic analysis of expressives: they don't
 contribute to the sentence meaning, but store their meanings in some
 other meaning dimension---in this case, a `Writer` monad!
@@ -394,9 +417,9 @@ resolution would be to also include a `Writer` monad, and have
 entities submit themselves as potential referents, then have this
 `Writer` monad periodically empty itself into the `Reader` monad,
 e.g. at sentence or clause boundaries, and have anaphora consume the
-first appropriate referent. But we digress!
+first appropriate referent... But we digress!
 
-We're still stuck with these unresolved effects, which arise from our
+We're still stuck with these unresolved effects coming from our
 lexicon. So we're going to define a function `runExt`, which handles
 all effects in order, and then escapes the `Eff` monad:
 
