@@ -1,5 +1,7 @@
 # encoding: UTF-8
 
+require 'rubygems'
+require 'bundler/setup'
 require 'nokogiri'
 
 RE_BEGIN = /.*\\begin\{code\}(.*)/m

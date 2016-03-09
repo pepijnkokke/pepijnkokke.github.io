@@ -1,3 +1,8 @@
 source 'https://rubygems.org'
 gem 'github-pages'
-gem 'nokogiri'
+
+group :development do
+  gem 'nokogiri'
+  gem 'guard-bundler'
+  gem 'guard-rake'
+end

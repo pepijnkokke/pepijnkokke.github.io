@@ -1,3 +1,5 @@
+require 'rubygems'
+require 'bundler/setup'
 require 'tmpdir'
 require_relative 'tasks/fix_agda_html'
 
