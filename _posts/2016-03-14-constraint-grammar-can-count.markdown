@@ -295,6 +295,6 @@ languages.
 So for now, let's leave it at this. I'm a little bored of programming
 CG at any rate. If you want to have a go,
 [my full code and examples are available here](https://gist.github.com/pepijnkokke/e5f76d82939ecc9d3a4c),
-and [vislcg3 is available here](http://beta.visl.sdu.dk/cg3/chunked/installation.html)
+and [vislcg3 is available here](http://beta.visl.sdu.dk/cg3/chunked/installation.html).
 
 -----
