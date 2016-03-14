@@ -127,7 +127,8 @@ REMOVE EVEN (NOT -1 ODD);
 
 It's exactly this "marking as even by deleting odd" that makes it a
 bit of a confusing read, so if you'd like to play around with an example,
-[my full code with examples is available here](https://gist.github.com/pepijnkokke/e5f76d82939ecc9d3a4c).
+[my full code with examples is available here](https://gist.github.com/pepijnkokke/e5f76d82939ecc9d3a4c),
+and [vislcg3 is available here](http://beta.visl.sdu.dk/cg3/chunked/installation.html).
 
 Anyway, after performing this labelling, we can check if the last
 position is even, and if so, delete all positions:[^emptystring]
