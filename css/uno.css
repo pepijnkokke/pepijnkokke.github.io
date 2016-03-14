@@ -938,13 +938,17 @@ body {
 a {
 	text-decoration: none;
 	color: #e25440; }
-	a:hover {
-		color: #b9301c;
-		-o-transition: .5s;
-		-ms-transition: .5s;
-		-moz-transition: .5s;
-		-webkit-transition: .5s; }
 
+a:hover {
+        color: #b9301c;
+	-o-transition: .5s;
+	-ms-transition: .5s;
+	-moz-transition: .5s;
+	-webkit-transition: .5s; }
+
+.tooltip:hover {
+        text-decoration:underline; }
+        
 h1,
 h2,
 h3,

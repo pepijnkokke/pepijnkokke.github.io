@@ -1,8 +1,8 @@
 title            : "All The Languages"
 description      : >-
-  Hi! I'm <span title="It's pronounced [pʌpɛin].">Pepijn</span>. I
-  study natural languages, programming languages and logical
-  languages. Basically, all the languages.
+  Hi! I'm <span class="tooltip" title="It's pronounced
+  [pʌpɛin].">Pepijn</span>. I study natural languages, programming
+  languages and logical languages. Basically, all the languages.
 url              : 'https://pepijnkokke.github.io'
 baseurl          : ''
 google_analytics : 'UA-74596735-1'
