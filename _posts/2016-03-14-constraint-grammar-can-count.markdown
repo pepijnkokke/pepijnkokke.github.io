@@ -15,15 +15,22 @@ it is nontheless a grammar formalism which sees a lot of usage. One
 natural question to ask of any grammar formalism is "how expressive is
 it?"
 
-It is not immediately obvious how to answer this question. The answer
-lies in the name: *constrain*. We will view a constraint grammar as a
-formal language \\(\\mathcal{L}\\) of  words, generated over an
-alphabet \\(\\Sigma\\), by passing words of *every* length, with the
-entire alphabet at each position in the word. A constraint grammar is
-said to *accept* a word \\(w\\) of length \\(n\\) -- that is to say,
-we have \\(w \\in \\mathcal{L}\\) -- if, after we pass in \\(\\langle
-\\Sigma \\rangle_n\\), \\(w\\) is still one of the possible
-interpretations.
+Over the weekend, [inariksit](https://github.com/inariksit) visited
+me, and we decided to find out.
+
+It's not immediately obvious how to even approach this question, as
+constraint grammar doesn't *generate* strings per se. It simply
+*constrains* existing, ambiguous strings.
+We took the following approach: we view a constraint grammar as a
+formal language \\(\\mathcal{L}\\), generated over an alphabet
+\\(\\Sigma\\). We generate the words of the language by passing
+maximally ambiguous words of *every* length to the grammar -- i.e.,
+words where each position contains the entire alphabet, so \\(\\langle
+\\Sigma \\rangle_n\\).
+A constraint grammar is said to *accept* a word \\(w\\) of length
+\\(n\\) if, when we pass \\(\\langle \\Sigma \\rangle_n\\) as an input
+to the CG, \\(w\\) is still one of the possible interpretations of its
+output.
 
 The specification of CG3 mentions tags such as `EXTERNAL`, which
 passes information to an external command. So constraint grammar is
