@@ -30,7 +30,13 @@ words where each position contains the entire alphabet, so \\(\\langle
 A constraint grammar is said to *accept* a word \\(w\\) of length
 \\(n\\) if, when we pass \\(\\langle \\Sigma \\rangle_n\\) as an input
 to the CG, \\(w\\) is still one of the possible interpretations of its
-output.
+output.[^downside]
+
+[^downside]: An obvious downside to this approach is that for finite
+    languages (as well as infinite ones, but duh) the CG will never
+    stop generating the language, as we have to feed it \\(\\langle
+    \\Sigma \\rangle_n\\) *for every \\(n\\)*. But we're playing
+    fast and loose here, so what gives.
 
 The specification of CG3 mentions tags such as `EXTERNAL`, which
 passes information to an external command. So constraint grammar is
