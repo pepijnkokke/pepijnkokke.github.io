@@ -131,7 +131,13 @@ infixr 5 :->
 
 And while we're at it, let's create some type-level aliases for common
 parts of speech---though I cannot say that this treatment of appositive
-modifiers is entirely common:
+modifiers is entirely common:[^convention]
+
+[^convention]: The convention in the singletons library is to define
+    the singleton version of a constructor by prefixing it with an
+    `S`. Obviously, since the above definitions aren't constructors,
+    we can't do that. However, we stick as close to the convention as
+    possible in naming these "derived" singletons `sIV`, `sTV` and `sAP`.
 
 {% highlight haskell %}
 type IV = NP :\ S  -- intransitive verbs
@@ -143,16 +149,10 @@ sTV = sIV :%/ SNP
 sAP = SNP :%/ SNP
 {% endhighlight %}
 
-Note: the convention in the singletons library is to define the
-singleton version of a constructor by prefixing it with an
-`S`. Obviously, since the above definitions aren't constructors, we
-can't do that. However, we stick as close to the convention as
-possible in naming these "derived" singletons `sIV`, `sTV` and `sAP`.
-
 So now that we've defined the types of the languages
 \\(\\mathcal{L}_1\\) and \\(\\mathcal{L}_2\\), we can define our
-translation *on types*. Not that we can more-or-less directly use our
-translation function in Haskell:
+translation *on types*. Note that our previous definition of our
+translation function was already more-or-less valid Haskell:
 
 {% highlight haskell %}
 type family Tr (ty :: SynT) :: SemT where
@@ -205,9 +205,10 @@ class SemE (expr :: SemT -> *) where
 {% endhighlight %}
 
 Using this `apply` function, we can define application on `Typed`
-expression as well. Since these expressions hide their type, we cannot
-enforce on the type-level that this application necessarily
-succeeds. What we're doing in the function is the following:
+expression as well.[^proofsearch] Since these expressions hide their
+type, we cannot enforce on the type-level that this application
+necessarily succeeds. What we're doing in the function is the
+following:
 
  1. we pattern match to check if either the left or the right type is
     an appropriate function type;
@@ -216,6 +217,13 @@ succeeds. What we're doing in the function is the following:
  3. if so, we apply `apply`.
 
 In all other cases, we're forced to return `Nothing`:
+
+[^proofsearch]: It is the repeated application of this function which
+    corresponds to backward-chaining proof search in the more general
+    framework of categorial grammar. However, AB grammars *only*
+    support function application, and therefore our "proof search" (1)
+    can return at most one result, and (2) is more-or-less just a
+    cursory check to see if the types match.
 
 {% highlight haskell %}
 maybeApply :: SemE expr => Typed expr -> Typed expr -> Maybe (Typed expr)
@@ -229,12 +237,6 @@ maybeApply (Typed (b :%/ a1,f)) (Typed (a2,x)) =
     _           -> empty
 maybeApply _ _ = empty
 {% endhighlight %}
-
-Note: it is this function corresponds to backward-chaining proof
-search in the more general framework of categorial grammar. However,
-AB grammars *only* support function application, and therefore our
-"proof search" (1) can return at most one result, and (2) is
-more-or-less just a cursory check to see if the types match.
 
 What we've implemented above is just a *check* to see if some given
 pair of expressions can be applied as function and argument. Applied

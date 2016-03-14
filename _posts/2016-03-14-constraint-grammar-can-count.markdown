@@ -23,11 +23,11 @@ constraint grammar doesn't *generate* strings per se. It simply
 *constrains* existing, ambiguous strings.
 We took the following approach: we view a constraint grammar as a
 formal language \\(\\mathcal{L}\\), generated over an alphabet
-\\(\\Sigma\\). We generate the words of the language by passing
-maximally ambiguous words of *every* length to the grammar -- i.e.,
-words where each position contains the entire alphabet, so \\(\\langle
-\\Sigma \\rangle_n\\).
-A constraint grammar is said to *accept* a word \\(w\\) of length
+\\(\\Sigma\\). We generate the strings in our language by passing
+maximally ambiguous strings of *every* length to the grammar. With
+maximally ambiguous, I mean those strings where each position contains
+the entire alphabet, so \\(\\langle \\Sigma \\rangle_n\\).
+A constraint grammar is said to *accept* a string \\(w\\) of length
 \\(n\\) if, when we pass \\(\\langle \\Sigma \\rangle_n\\) as an input
 to the CG, \\(w\\) is still one of the possible interpretations of its
 output.[^downside]
@@ -66,7 +66,7 @@ nothing. Worse so, if there is only one reading left, the `REMOVE`
 command will have no effect. So one more concession we make is that we
 allow ourselves to use the `REMCOHORT` command -- which removes an
 entire "cohort", or "symbol" in our terminology -- for the *sole
-purpose* of deleting the entire word if it is not accepted.
+purpose* of deleting the entire string if it is not accepted.
 
 ### CG3 is not regular; the language \\(a^nb^n\\)
 
@@ -74,7 +74,7 @@ In this section we show that CG3, restricted to sections and `REMOVE`
 is not regular. We show this by implementing a grammar for the
 counting language \\(a^nb^n\\).
 
-The first thing we do is to try and detect the edges of the word. CG3
+The first thing we do is to try and detect the edges of the string. CG3
 has "magical" constants for this, called `>>>` and `<<<` for the left
 and right edge, respectively. However, we cannot use those. Instead,
 we define them ourselves using two hidden variables, which we also
@@ -94,8 +94,8 @@ preceding or succeeding the current position, and if so, delete `>>>`
 or `<<<`. As a result, the first position will be the only one tagged
 `>>>`, and the last the only one tagged `<<<`.[^magic][^beforeafter]
 
-[^magic]: CG3's magic constants are just outside of the word, whereas
-    ours are right at the edge of the word. Therefore, all indices
+[^magic]: CG3's magic constants are just outside of the string, whereas
+    ours are right at the edge of the string. Therefore, all indices
     using magic constants are moved by one.
 
 [^beforeafter]: While we use `BEFORE-SECTIONS` and `AFTER-SECTIONS`
@@ -103,14 +103,17 @@ or `<<<`. As a result, the first position will be the only one tagged
     grammar also works if everything is executed under a single
     `SECTION`.
 
-Next, we note that *all* words in the language \\(a^nb^n\\) are of
+Next, we note that *all* strings in the language \\(a^nb^n\\) are of
 even length, and that every even length corresponds to *exactly* one
-word. Therefore, we must reject all words of uneven length. We assume
-two more hidden symbols, `EVEN` and `ODD`. We can use these to
+string. Therefore, we must reject all strings of uneven length. We
+assume two more hidden symbols, `EVEN` and `ODD`. We can use these to
 label whether a position is even or odd: we know the first position is
 odd, so we delete `EVEN`; we know that positions following odd
-positions must be even, and we know that positions following even
-positions are `ODD`...[^link]
+positions must be even, so we delete `ODD`; and we know that positions
+following even positions are `ODD`, so we delete `EVEN`...[^link]
+It's exactly this "marking as even by deleting odd" that makes it a
+bit of a confusing read, so if you'd like to play around with an example,
+[my full code with examples is available here](https://gist.github.com/pepijnkokke/e5f76d82939ecc9d3a4c):
 
 [^link]: Note that `LINK` is a conjunction, but one in which indices
     in the *second* argument are interpreted from the perspective of
@@ -240,10 +243,11 @@ REMOVE NOT_SND (0 FST LINK 0 SND LINK 0 OPT_SND LINK NOT 0 OPT_FST)
 {% endhighlight %}
 
 Once we've divided the word in half, it becomes fairly easy to point
-out the middle. In fact, the above code leave the middle (or middle
-*two* in the case of an even-length word) untagged. Below, we mark the
-first position as \\(a\\), the last position as \\(c\\) and the middle
-position as \\(b\\):
+out the middle. Below, we mark the first position as \\(a\\), the last
+position as \\(c\\) and the middle position as \\(b\\):[^middletwo]
+
+[^middletwo]: If the string has an even-numbered length, we in fact
+    mark the middle *two* positions as \\(b\\).
 
 {% highlight python %}
 SET OPT_A_OR_B = (OPT_A OR OPT_B);
@@ -260,7 +264,9 @@ REMOVE OPT_C_OR_A (0 SND LINK -1 FST LINK NOT 0 SND)
 {% endhighlight %}
 
 And finally, we grow \\(a\\) and \\(b\\), and \\(b\\) and \\(c\\)
-towards one another as we did before:
+towards one another as we did before. Note that we have to let \\(a\\)
+and \\(c\\) grow twice every time we grow \\(b\\), because \\(b\\) is
+growing in *two* directions at the same time:
 
 {% highlight python %}
 SECTION
@@ -291,7 +297,7 @@ has the power to observe *all* of its surrounding context ends up being
 at least context-sensitive.
 I could continue. It is still fairly straightforward to generate the
 language \\(a^nb^nc^nd^n\\) -- divide into half, and divide halves
-into half -- and using simlar strategies, you can keep on constructing
+into half -- and using similar strategies, you can keep on constructing
 CGs which compute the counting language \\(\\sigma_1^n\\cdots
 \sigma_k^n\\) for any \\(k\\) as long as you can come up with new
 strategies for prime numbers.. but this won't do us a whole lot of
