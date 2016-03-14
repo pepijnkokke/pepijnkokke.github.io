@@ -29,7 +29,7 @@ maximally ambiguous, I mean those strings where each position contains
 the entire alphabet, so \\(\\langle \\Sigma \\rangle_n\\).
 A constraint grammar is said to *accept* a string \\(w\\) of length
 \\(n\\) if, when we pass \\(\\langle \\Sigma \\rangle_n\\) as an input
-to the CG, \\(w\\) is still one of the possible interpretations of its
+to the CG, \\(w\\) is one of the possible interpretations of its
 output.[^downside]
 
 [^downside]: An obvious downside to this approach is that for finite
