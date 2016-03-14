@@ -13,15 +13,17 @@ choices in programming language syntax in history.
 Though its specification has changed tremendously since CG1,
 it is nontheless a grammar formalism which sees a lot of usage. One
 natural question to ask of any grammar formalism is "how expressive is
-it?" It is not immediately obvious how to answer this
-question. The answer lies in the name: *constrain*. We will
-view a constraint grammar as a formal language \\(\\mathcal{L}\\) of
-words, generated over an alphabet \\(\\Sigma\\), by passing words of
-*every* length, with the entire alphabet at each position in the
-word. A constraint grammar is said to *accept* a word \\(w\\) of
-length \\(n\\) -- that is to say, we have \\(w \\in \\mathcal{L}\\) --
-if, after we pass in \\(\\langle \\Sigma \\rangle_n\\), \\(w\\) is
-still one of the possible interpretations.
+it?"
+
+It is not immediately obvious how to answer this question. The answer
+lies in the name: *constrain*. We will view a constraint grammar as a
+formal language \\(\\mathcal{L}\\) of  words, generated over an
+alphabet \\(\\Sigma\\), by passing words of *every* length, with the
+entire alphabet at each position in the word. A constraint grammar is
+said to *accept* a word \\(w\\) of length \\(n\\) -- that is to say,
+we have \\(w \\in \\mathcal{L}\\) -- if, after we pass in \\(\\langle
+\\Sigma \\rangle_n\\), \\(w\\) is still one of the possible
+interpretations.
 
 The specification of CG3 mentions tags such as `EXTERNAL`, which
 passes information to an external command. So constraint grammar is
