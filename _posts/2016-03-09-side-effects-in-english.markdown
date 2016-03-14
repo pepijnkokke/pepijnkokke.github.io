@@ -1,8 +1,8 @@
 ---
 title      : "Side-effects in English"
 date       : 2016-03-09 12:00:00
-categories : [haskell, categorial grammar, compling]
-tags       : [haskell, categorial grammar]
+categories : [haskell, catgram, compling]
+tags       : [haskell, catgram, compling]
 ---
 
 Back when I wrote this, I had just discovered
