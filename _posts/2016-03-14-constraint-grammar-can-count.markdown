@@ -302,8 +302,8 @@ into half -- and using similar strategies, you can keep on constructing
 CGs which compute the counting language \\(\\sigma_1^n\\cdots
 \sigma_k^n\\) for any \\(k\\) as long as you can come up with new
 strategies for prime numbers.. but this won't do us a whole lot of
-good -- at least, it won't help us escape the class of context-free
-languages.
+good -- at least, it won't help us escape the class of
+context-sensitive languages.
 
 So for now, let's leave it at this. I'm a little bored of programming
 CG at any rate. If you want to have a go,
