@@ -68,6 +68,10 @@ allow ourselves to use the `REMCOHORT` command -- which removes an
 entire "cohort", or "position" in our terminology -- for the *sole
 purpose* of deleting the entire string if it is not accepted.
 
+From here on out, when we say 'CG3', we are referring to this fragment
+of constraint grammar.
+
+
 ### CG3 is not regular; the language \\(a^nb^n\\)
 
 In this section we show that CG3, restricted to sections and `REMOVE`
