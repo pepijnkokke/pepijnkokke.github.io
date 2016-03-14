@@ -946,6 +946,10 @@ a:hover {
 	-moz-transition: .5s;
 	-webkit-transition: .5s; }
 
+.footnote {
+        vertical-align: super;
+        font-size: small; }
+
 .tooltip:hover {
         text-decoration:underline; }
         
