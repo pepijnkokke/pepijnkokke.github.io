@@ -111,9 +111,6 @@ label whether a position is even or odd: we know the first position is
 odd, so we delete `EVEN`; we know that positions following odd
 positions must be even, so we delete `ODD`; and we know that positions
 following even positions are `ODD`, so we delete `EVEN`...[^link]
-It's exactly this "marking as even by deleting odd" that makes it a
-bit of a confusing read, so if you'd like to play around with an example,
-[my full code with examples is available here](https://gist.github.com/pepijnkokke/e5f76d82939ecc9d3a4c):
 
 [^link]: Note that `LINK` is a conjunction, but one in which indices
     in the *second* argument are interpreted from the perspective of
@@ -128,8 +125,12 @@ REMOVE ODD  (NOT  0 >>> LINK NOT -1 EVEN);
 REMOVE EVEN (NOT -1 ODD);
 {% endhighlight %}
 
-After performing this labelling, we can check if the last position is
-even, and if so, delete all positions:[^emptystring]
+It's exactly this "marking as even by deleting odd" that makes it a
+bit of a confusing read, so if you'd like to play around with an example,
+[my full code with examples is available here](https://gist.github.com/pepijnkokke/e5f76d82939ecc9d3a4c).
+
+Anyway, after performing this labelling, we can check if the last
+position is even, and if so, delete all positions:[^emptystring]
 
 [^emptystring]: We have chosen to describe faillure by outputting the
     empty string. If we would have been more careful, we could have
