@@ -1,7 +1,7 @@
 ---
 title      : "Side-effects in English"
 date       : 2016-03-09 12:00:00
-categories : [haskell, catgram, compling]
+categories : [haskell, compling]
 tags       : [haskell, catgram, compling]
 ---
 
