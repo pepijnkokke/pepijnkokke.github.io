@@ -65,7 +65,7 @@ One last hurdle is that constraint grammar has no notion of
 nothing. Worse so, if there is only one reading left, the `REMOVE`
 command will have no effect. So one more concession we make is that we
 allow ourselves to use the `REMCOHORT` command -- which removes an
-entire "cohort", or "symbol" in our terminology -- for the *sole
+entire "cohort", or "position" in our terminology -- for the *sole
 purpose* of deleting the entire string if it is not accepted.
 
 ### CG3 is not regular; the language \\(a^nb^n\\)
