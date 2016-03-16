@@ -61,6 +61,12 @@ notice that they do slightly different things. For some x and y, `x ≤?
 y` will tell you whether or not `x ≤ y`, whereas `total` will tell you
 whether it is `x ≤ y` or `y ≤ x`.
 
+<div style="display:none;">
+\begin{code}
+module 2016-03-01-insertion-sort-in-agda where
+\end{code}
+</div>
+
 \begin{code}
 module InsertionSort {c ℓ₁ ℓ₂} (Ord : DecTotalOrder c ℓ₁ ℓ₂) where
 
