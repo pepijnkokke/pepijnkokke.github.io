@@ -6,12 +6,72 @@ tags       : [haskell, catgram, compling]
 ---
 
 Back when I wrote this, I had just discovered
-["Extensible Effects: an alternative to Monad Transformers"](http://okmij.org/ftp/Haskell/extensible/)
+["Extensible Effects: an alternative to Monad Transformers"][eff]{:#eff}
 by Oleg Kiselyov, Amr Sabry, Cameron Swords, and Hiromi Ishii, and
 I've always penchant for mucking about with linguistics and
 Haskell... so... let's have a little fun with this library and some
 basic AB grammars in Haskell, see how far we can get within the
 universally well-defined maximum length of a blog post!
+
+Before we start, let's get a clear idea of what we're going to try and
+accomplish. It's more or less a well known fact that natural language
+has tons of side-effects---sometimes also referred to as
+"non-compositional phenomena". Let's look at some examples:
+
+  1. "I cooked up a delicious dinner!"
+  2. "There! I walked the damn dog!"
+  3. "As Mary left, she whistled a cheery tune."
+
+In (1), the word "I" is non-compositional: it's a word which you can
+always use, but which changes its meaning depending on the
+context---on who uses it.
+In (2) we have the word "damn", an expressive. There's pretty
+extensive literature on expressives---see, for instance, Daniel
+Gutzmann's ["Use-conditional meaning"][ucm]---but
+the gist of it is as follows: "damn" doesn't affect the
+*truth* of a sentence. If I come back from walking the dog, even
+though I do not like dogs, and say "There! I walked the damn dog!",
+you can't reply by saying "No, you didn't! The dog is nice!" Instead,
+"damn" conveys it's meaning on some sort of side-channel.
+Finally, in (3) we have "she", which again has a context-dependent
+meaning. However, in this situation, "she" doesn't get its meaning
+from the context in which the sentence is uttered. Instead, reading
+this sentence in isolation, it seems pretty likely that "she" refers
+to Mary.
+
+"Non-compositional phenomena" is a bit of a misnomer for the phenomena
+in (1-3). We can implement these phenomena as *side-effects*, and as
+we know from functional programming, side-effects are often perfectly
+compositional. In fact, the above phenomena correspond, in
+Haskell-lingo, to a *Reader*, a *Writer* and a *State*
+monad.[^esslli2015-monads] However, rolling together various different
+monads can be a tedious chore. In addition, when we're writing what
+a word means, we might not *want* to specify its meaning for *all
+possible side-effects*. Since linguistics is continually changing, we
+might not even want to commit to what all possible side-effects *are*.
+
+So this is why I got excited when I saw the latest library for
+extensible effects. If you don't know what extensible effects are, I'd
+recommend [the paper linked above](#eff). But anyway, what I'm going
+to do in this post is: develop a parser, which parses Haskell strings,
+looks up the words in a dictionary of *effectful* Haskell functions,
+and composes these to get some meaning for the sentence. Here's an
+example that you'll see again at the end of the post, except then
+it'll actually work!
+
+{% highlight haskell %}
+lex :: String -> [SomeEffectfulFunction]
+lex "tim"    = [ NP , Tim             ]
+lex "bob"    = [ NP , Bob             ]
+lex "likes"  = [ TV , Like            ]
+lex "stupid" = [ AP , < id , Stupid > ] -- Has an identity (i.e. no) meaning,but
+                                        -- but conveys `Stupid` as a side-effect.
+lex "him"    = [ NP , magic           ] -- Has some magic way of obtaining the
+                                        -- thing that's referenced.
+
+example :: [(Pred, [Pred])]
+example = parseWith Tim "(stupid bob) likes him" --> [(Like Bob Tim,[Stupid Bob])]
+{% endhighlight %}
 
 Well, first off, don't let this scare you off... but we are going to
 do this in Haskell, and we're going to need a LOT of language
@@ -133,12 +193,6 @@ And while we're at it, let's create some type-level aliases for common
 parts of speech---though I cannot say that this treatment of appositive
 modifiers is entirely common:[^convention]
 
-[^convention]: The convention in the singletons library is to define
-    the singleton version of a constructor by prefixing it with an
-    `S`. Obviously, since the above definitions aren't constructors,
-    we can't do that. However, we stick as close to the convention as
-    possible in naming these "derived" singletons `sIV`, `sTV` and `sAP`.
-
 {% highlight haskell %}
 type IV = NP :\ S  -- intransitive verbs
 type TV = IV :/ NP -- transitive verbs
@@ -217,13 +271,6 @@ following:
  3. if so, we apply `apply`.
 
 In all other cases, we're forced to return `Nothing`:
-
-[^proofsearch]: It is the repeated application of this function which
-    corresponds to backward-chaining proof search in the more general
-    framework of categorial grammar. However, AB grammars *only*
-    support function application, and therefore our "proof search" (1)
-    can return at most one result, and (2) is more-or-less just a
-    cursory check to see if the types match.
 
 {% highlight haskell %}
 maybeApply :: SemE expr => Typed expr -> Typed expr -> Maybe (Typed expr)
@@ -438,3 +485,25 @@ s1 = runExt Tim <$> parseWith lex "(stupid bob) likes him" SS
 {% endhighlight %}
 
 Which evaluates to: `[(Like Bob Tim,[Stupid Bob])]`
+
+---
+
+[eff]: http://okmij.org/ftp/Haskell/extensible/
+[ucm]: http://www.danielgutzmann.com/work/use-conditional-meaning
+
+[^convention]: The convention in the singletons library is to define
+    the singleton version of a constructor by prefixing it with an
+    `S`. Obviously, since the above definitions aren't constructors,
+    we can't do that. However, we stick as close to the convention as
+    possible in naming these "derived" singletons `sIV`, `sTV` and `sAP`.
+
+[^proofsearch]: It is the repeated application of this function which
+    corresponds to backward-chaining proof search in the more general
+    framework of categorial grammar. However, AB grammars *only*
+    support function application, and therefore our "proof search" (1)
+    can return at most one result, and (2) is more-or-less just a
+    cursory check to see if the types match.
+
+[^esslli2015-monads]: For a more hands-on implementation of
+    side-effects in natural language using *monads*, see
+    <https://github.com/dylnb/esslli2015-monads>.
