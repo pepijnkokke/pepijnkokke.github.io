@@ -8,11 +8,11 @@ AGDA_HOME = ENV['AGDA_HOME']
 
 task :default do
   Dir.glob('_posts/*.lagda') do |post|
-    Rake::Task[post.ext('.markdown')].invoke
+    Rake::Task[post.ext('.md')].invoke
   end
 end
 
-rule '.markdown' => '.lagda' do |t|
+rule '.md' => '.lagda' do |t|
   Dir.mktmpdir do |tmp|
     contents = File.read(t.source)
     basename = contents.match(/^module (#{RE_IDENT})/).to_a.fetch(1, "main")

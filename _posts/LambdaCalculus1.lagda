@@ -11,10 +11,9 @@ you'll find out there is implementing the λ-calculus.
 
 <div style="display:none;">
 \begin{code}
-module 2016-03-09-one-lambda-calculus,-many-times where
+module LambdaCalculus1 where
 \end{code}
 </div>
-
 
 \begin{code}
 module SetAntecedent (Atom : Set) where

@@ -1,3 +1,6 @@
 [submodule "on-uuparsinglib"]
 	path = on-uuparsinglib
 	url  = https://github.com/pepijnkokke/on-uuparsinglib.git
+[submodule "side-effects-in-english"]
+	path = side-effects-in-english
+	url = https://github.com/pepijnkokke/side-effects-in-english.git
