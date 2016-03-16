@@ -73,6 +73,9 @@ example :: [(Pred, [Pred])]
 example = parseWith Tim "(stupid bob) likes him" --> [(Like Bob Tim,[Stupid Bob])]
 {% endhighlight %}
 
+
+## AB Grammars in Haskell
+
 Well, first off, don't let this scare you off... but we are going to
 do this in Haskell, and we're going to need a LOT of language
 extensions. This is because we're basically going to parse strings to
