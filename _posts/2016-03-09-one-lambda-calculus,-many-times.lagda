@@ -6,9 +6,8 @@ tags       : [agda]
 published  : false
 ---
 
-I mentioned one another type of post which you'll find on any Agda
-user's blog: implementing the λ-calculus. If you simply google "Agda
-lambda calculus", you'll easily find tens of examples.
+Previously, I mentioned that one of the most common Agda blogposts
+you'll find out there is implementing the λ-calculus.
 
 <div style="display:none;">
 \begin{code}
@@ -35,7 +34,7 @@ module SetAntecedent (Atom : Set) where
   open import Data.List.Any        using (module Membership; here; there)
   open import Function.Equivalence using (_⇔_; id; map; equivalence)
   open import Relation.Binary.PropositionalEquality
-  open Membership (setoid Type)    using (_∈_)
+  open Membership (setoid Type)    using (_∈_; _⊆_)
 \end{code}
 
 
@@ -90,49 +89,39 @@ module SetAntecedent (Atom : Set) where
 \end{code}
 
 \begin{code}
-  ∈-exch : ∀ {A B C} (Γ₁ : List Type) {Γ₂ : List Type}
-          → A ∈ Γ₁ ++ C ∷ B ∷ Γ₂ → A ∈ Γ₁ ++ B ∷ C ∷ Γ₂
-  ∈-exch      []  (here         p)  = there (here p) -- the swap
-  ∈-exch      []  (there (here  p)) = here p         -- is here.
-  ∈-exch      []  (there (there p)) = there (there p)
-  ∈-exch (C ∷ Γ₁) (here         p)  = here p
-  ∈-exch (C ∷ Γ₁) (there        p)  = there (∈-exch Γ₁ p)
 \end{code}
 
 \begin{code}
-  exch : ∀ {A B C} (Γ₁ : List Type) {Γ₂ : List Type}
-       → ND Γ₁ ++ B ∷ A ∷ Γ₂ ⊢ C → ND Γ₁ ++ A ∷ B ∷ Γ₂ ⊢ C
-  exch Γ₁ (ax p)   = ax (∈-exch Γ₁ p)
-  exch Γ₁ (⇒i f)   = ⇒i (exch (_ ∷ Γ₁) f)
-  exch Γ₁ (⇒e f g) = ⇒e (exch Γ₁ f) (exch Γ₁ g)
+  struct : ∀ {A Γ Γ′} → Γ ⊆ Γ′ → ND Γ ⊢ A → ND Γ′ ⊢ A
+  struct Γ⊆Γ′ (ax x)   = ax (Γ⊆Γ′ x)
+  struct Γ⊆Γ′ (⇒i f)   = ⇒i (struct (∷-resp-⊆ Γ⊆Γ′) f)
+    where
+
+      ∷-resp-⊆ : ∀ {A Γ Γ′} → Γ ⊆ Γ′ → A ∷ Γ ⊆ A ∷ Γ′
+      ∷-resp-⊆ Γ⊆Γ′ (here  x) = here x
+      ∷-resp-⊆ Γ⊆Γ′ (there x) = there (Γ⊆Γ′ x)
+
+  struct Γ⊆Γ′ (⇒e f g) = ⇒e (struct Γ⊆Γ′ f) (struct Γ⊆Γ′ g)
 \end{code}
 
 \begin{code}
   weak : ∀ {A B Γ} → ND Γ ⊢ B → ND A ∷ Γ ⊢ B
-  weak (ax p)   = ax (there p)
-  weak (⇒i f)   = ⇒i (exch [] (weak f))
-  weak (⇒e f g) = ⇒e (weak f) (weak g)
+  weak = struct there
 \end{code}
 
 \begin{code}
-  instance
-    ND⇔SC : ∀ {S} → ND S ⇔ SC S
-    ND⇔SC = equivalence ⟹ ⟸
-      where
-        ⟹ : ∀ {S} → ND S → SC S
-        ⟹ (ax  p)   = ax p
-        ⟹ (⇒i  f)   = ⇒r (⟹ f)
-        ⟹ (⇒e  f g) = cut (⟹ f) (⇒l (⟹ g) ax₀)
-        ⟸ : ∀ {S} → SC S → ND S
-        ⟸ (ax  p)   = ax p
-        ⟸ (cut f g) = ⇒e (⇒i (⟸ g)) (⟸ f)
-        ⟸ (⇒l  f g) = ⇒e (weak (⇒i (⟸ g))) (⇒e ax₀ (weak (⟸ f)))
-        ⟸ (⇒r  f)   = ⇒i (⟸ f)
-\end{code}
+  module ND⇔SC where
 
-\begin{code}
-  cont : ∀ {A B Γ} → ND A ∷ A ∷ Γ ⊢ B → ND A ∷ Γ ⊢ B
-  cont f = ⇒e (⇒i f) (ax (here refl))
+    ⟹ : ∀ {S} → ND S → SC S
+    ⟹ (ax  x)   = ax x
+    ⟹ (⇒i  f)   = ⇒r  (⟹ f)
+    ⟹ (⇒e  f g) = cut (⟹ f) (⇒l (⟹ g) ax₀)
+
+    ⟸ : ∀ {S} → SC S → ND S
+    ⟸ (ax  p)   = ax p
+    ⟸ (cut f g) = ⇒e (⇒i (⟸ g)) (⟸ f)
+    ⟸ (⇒l  f g) = ⇒e (weak (⇒i (⟸ g))) (⇒e ax₀ (weak (⟸ f)))
+    ⟸ (⇒r  f)   = ⇒i (⟸ f)
 \end{code}
 
 \begin{code}
@@ -162,8 +151,8 @@ module SetAntecedent-Interpret
 
 \begin{code}
   instance
-    intpType : Interpret Type Set
-    intpType = record { ⟦_⟧ = ⟦_⟧′ }
+    ⟦_:Type⟧ : Interpret Type Set
+    ⟦_:Type⟧ = record { ⟦_⟧ = ⟦_⟧′ }
       where
         ⟦_⟧′  : Type → Set
         ⟦ El  A ⟧′ = ⟦ A ⟧
@@ -185,8 +174,8 @@ module SetAntecedent-Interpret
 
 \begin{code}
   instance
-    intpSequent : Interpret Sequent Set
-    intpSequent = record { ⟦_⟧ = ⟦_⟧′ }
+    ⟦_:Sequent⟧ : Interpret Sequent Set
+    ⟦_:Sequent⟧ = record { ⟦_⟧ = ⟦_⟧′ }
       where
         ⟦_⟧′ : Sequent → Set
         ⟦ Γ ⊢ A ⟧′ = Env Γ → ⟦ A ⟧
@@ -194,8 +183,8 @@ module SetAntecedent-Interpret
 
 \begin{code}
   instance
-    intpND : ∀ {S} → Interpret (ND S) ⟦ S ⟧
-    intpND = record { ⟦_⟧ = ⟦_⟧′ }
+    ⟦_:ND⟧ : ∀ {S} → Interpret (ND S) ⟦ S ⟧
+    ⟦_:ND⟧ = record { ⟦_⟧ = ⟦_⟧′ }
       where
         ⟦_⟧′ : ∀ {S} → ND S → ⟦ S ⟧
         ⟦ ax p   ⟧′ e = lookup p e
@@ -204,28 +193,36 @@ module SetAntecedent-Interpret
 \end{code}
 
 \begin{code}
-  instance
-    intpSC : ∀ {S} → Interpret (SC S) ⟦ S ⟧
-    intpSC = record { ⟦_⟧ = ⟦_⟧′ }
-      where
-        ⟦_⟧′ : ∀ {S} → SC S → ⟦ S ⟧
-        ⟦ ax  p   ⟧′      e  = lookup p e
-        ⟦ cut f g ⟧′      e  = ⟦ g ⟧′ (⟦ f ⟧′ e ∷ e)
-        ⟦ ⇒l  f g ⟧′ (h ∷ e) = ⟦ g ⟧′ (h (⟦ f ⟧′ e) ∷ e)
-        ⟦ ⇒r  f   ⟧′      e  = λ x → ⟦ f ⟧′ (x ∷ e)
+  head : ∀ {A Γ} → Env (A ∷ Γ) → ⟦ A ⟧
+  head (x ∷ _) = x
+
+  tail : ∀ {A Γ} → Env (A ∷ Γ) → Env Γ
+  tail (_ ∷ e) = e
 \end{code}
 
 \begin{code}
-  ⟦ND⟧⇒⟦SC⟧ : ∀ {S} (f : ND S) → ⟦ f ⟧ ≡ ⟦ to ND⇔SC ⟨$⟩ f ⟧
-  ⟦ND⟧⇒⟦SC⟧ (ax _)   = refl
-  ⟦ND⟧⇒⟦SC⟧ (⇒i f)   = cong  (λ f e x → f (x ∷ e)) (⟦ND⟧⇒⟦SC⟧ f)
-  ⟦ND⟧⇒⟦SC⟧ (⇒e f g) = cong₂ (λ f g e → f e (g e)) (⟦ND⟧⇒⟦SC⟧ f) (⟦ND⟧⇒⟦SC⟧ g)
+  instance
+    ⟦_:SC⟧ : ∀ {S} → Interpret (SC S) ⟦ S ⟧
+    ⟦_:SC⟧ = record { ⟦_⟧ = ⟦_⟧′ }
+      where
+        ⟦_⟧′ : ∀ {S} → SC S → ⟦ S ⟧
+        ⟦ ax  p   ⟧′ e = lookup p e
+        ⟦ cut f g ⟧′ e = ⟦ g ⟧′ (⟦ f ⟧′ e ∷ e)
+        ⟦ ⇒l  f g ⟧′ e = ⟦ g ⟧′ (head e (⟦ f ⟧′ (tail e)) ∷ tail e)
+        ⟦ ⇒r  f   ⟧′ e = λ x → ⟦ f ⟧′ (x ∷ e)
 \end{code}
 
-<!--
-  ⟦ND⟧⇐⟦SC⟧ : ∀ {S} (f : SC S) → ⟦ f ⟧ ≡ ⟦ from ND⇔SC ⟨$⟩ f ⟧
-  ⟦ND⟧⇐⟦SC⟧ (ax  _)   = refl
-  ⟦ND⟧⇐⟦SC⟧ (cut f g) = cong₂ (λ f g e → g (f e ∷ e)) (⟦ND⟧⇐⟦SC⟧ f) (⟦ND⟧⇐⟦SC⟧ g)
-  ⟦ND⟧⇐⟦SC⟧ (⇒l  f g) = {!!}
-  ⟦ND⟧⇐⟦SC⟧ (⇒r  f)   = cong  (λ f e x → f (x ∷ e)) (⟦ND⟧⇐⟦SC⟧ f)
--->
+\begin{code}
+  module ⟦ND⟧⇔⟦SC⟧ where
+
+    ⟹ : ∀ {S} (f : ND S) → ⟦ f ⟧ ≡ ⟦ ND⇔SC.⟹ f ⟧
+    ⟹ (ax _)   = refl
+    ⟹ (⇒i f)   = cong  (λ f e x → f (x ∷ e)) (⟹ f)
+    ⟹ (⇒e f g) = cong₂ (λ f g e → f e (g e)) (⟹ f) (⟹ g)
+
+--  ⟸ : ∀ {S} (f : SC S) → ⟦ f ⟧ ≡ ⟦ ND⇔SC.⟸ f ⟧
+--  ⟸ (ax  _)   = refl
+--  ⟸ (cut f g) = cong₂ (λ f g e → g (f e ∷ e)) (⟸ f) (⟸ g)
+--  ⟸ (⇒l  f g) = {!!}
+--  ⟸ (⇒r  f)   = cong  (λ f e x → f (x ∷ e)) (⟸ f)
+\end{code}
