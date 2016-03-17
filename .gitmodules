@@ -1,3 +1,6 @@
 [submodule "_posts/side-effects-in-english"]
 	path = _posts/side-effects-in-english
 	url = https://github.com/pepijnkokke/side-effects-in-english.git
+[submodule "_posts/uu-parsinglib-tutorial"]
+	path = _posts/uu-parsinglib-tutorial
+	url = https://github.com/pepijnkokke/uu-parsinglib-tutorial.git
