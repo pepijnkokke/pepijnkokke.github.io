@@ -3,20 +3,21 @@ title      : One λ-calculus, many times...
 date       : 2016-03-09 12:00:00
 categories : [agda]
 tags       : [agda]
-published  : false
 ---
 
 Previously, I mentioned that one of the most common Agda blogposts
-you'll find out there is implementing the λ-calculus.
+you'll find out there is implementing the λ-calculus. Most such posts
+describe the natural deduction system for propositional logic, better
+known as the simply-typed λ-calculus.
 
-<div style="display:none;">
+<div class="hidden">
 \begin{code}
 module LambdaCalculus1 where
 \end{code}
 </div>
 
 \begin{code}
-module SetAntecedent (Atom : Set) where
+module Syntax (Atom : Set) where
 \end{code}
 
 \begin{code}
@@ -26,6 +27,11 @@ module SetAntecedent (Atom : Set) where
 \end{code}
 
 
+
+<pre class="Agda">  <a name="511" class="Keyword">data</a><a name="515"> </a><a name="516" href="#289" class="Module">Atom</a><a name="521"> </a><a name="522" class="Symbol">:</a><a name="523"> </a><a name="524" class="PrimitiveType">Set</a><a name="527"> </a><a name="528" class="Keyword">where</a><a name="533"><br />    </a><a name="538" href="#538" class="InductiveConstructor">Int</a><a name="542">    </a><a name="543" class="Symbol">:</a><a name="544"> </a><a name="545" href="#516" class="Datatype">Atom</a><a name="550"><br />    </a><a name="555" href="#555" class="InductiveConstructor">String</a><a name="562"> </a><a name="563" class="Symbol">:</a><a name="564"> </a><a name="565" href="#516" class="Datatype">Atom</a></pre>
+
+
+<div class="hidden">
 \begin{code}
   open import Data.Nat             using (ℕ; suc; zero)
   open import Data.Fin             using (Fin; suc; zero)
@@ -35,7 +41,7 @@ module SetAntecedent (Atom : Set) where
   open import Relation.Binary.PropositionalEquality
   open Membership (setoid Type)    using (_∈_; _⊆_)
 \end{code}
-
+</div>
 
 \begin{code}
   infix 4 _⊢_
@@ -53,13 +59,13 @@ module SetAntecedent (Atom : Set) where
     ⇒e : ∀ {A B Γ} → ND Γ ⊢ A ⇒ B → ND Γ ⊢ A → ND Γ ⊢ B
 \end{code}
 
-\\[
-    \\frac{A \\in \\Gamma}{\\Gamma \\vdash A}{\\small ax}
-    \\quad
-    \\frac{A , \\Gamma \\vdash B}{\\Gamma \\vdash A \\Rightarrow B}{\\small{\\Rightarrow}\\!i}
-    \\quad
-    \\frac{\\Gamma \\vdash A \Rightarrow B \\quad \\Gamma \\vdash A}{\\Gamma \\vdash B}{\\small{\\Rightarrow}\\!e}
-\\]
+$$
+    \frac{A \in \Gamma}{\Gamma \vdash A}{\small ax}
+    \quad
+    \frac{A , \Gamma \vdash B}{\Gamma \vdash A \Rightarrow B}{\small{\Rightarrow}\!i}
+    \quad
+    \frac{\Gamma \vdash A \Rightarrow B \quad \Gamma \vdash A}{\Gamma \vdash B}{\small{\Rightarrow}\!e}
+$$
 
 \begin{code}
   infix 3 SC_
@@ -71,15 +77,15 @@ module SetAntecedent (Atom : Set) where
     ⇒r  : ∀ {A B   Γ} → SC A ∷ Γ ⊢ B → SC Γ ⊢ A ⇒ B
 \end{code}
 
-\\[
-    \\frac{A \\in \\Gamma}{\\Gamma \\vdash A}{\\small ax}
-    \\quad
-    \\frac{\\Gamma \\vdash A \\quad A , \\Gamma \\vdash B}{\\Gamma \\vdash B}{\\small cut}
-    \\quad
-    \\frac{\\Gamma \\vdash A \\quad B , \\Gamma \\vdash C}{A \\Rightarrow  B , \\Gamma \\vdash C}{\\small{\\Rightarrow}\\!l}
-    \\quad
-    \\frac{A , \\Gamma \\vdash B}{\\Gamma \\vdash A \\Rightarrow B}{\\small{\\Rightarrow}\\!r}
-\\]
+$$
+    \frac{A \in \Gamma}{\Gamma \vdash A}{\small ax}
+    \quad
+    \frac{\Gamma \vdash A \quad A , \Gamma \vdash B}{\Gamma \vdash B}{\small cut}
+    \quad
+    \frac{\Gamma \vdash A \quad B , \Gamma \vdash C}{A \Rightarrow  B , \Gamma \vdash C}{\small{\Rightarrow}\!l}
+    \quad
+    \frac{A , \Gamma \vdash B}{\Gamma \vdash A \Rightarrow B}{\small{\Rightarrow}\!r}
+$$
 
 \begin{code}
   pattern ax₀ = ax (here refl)
@@ -133,12 +139,13 @@ open Interpret {{...}}
 \end{code}
 
 \begin{code}
-module SetAntecedent-Interpret
+module Semantics
        (Atom : Set) (intp : Interpret Atom Set) where
 \end{code}
 
+<div class="hidden">
 \begin{code}
-  open SetAntecedent Atom
+  open Syntax Atom
   open import Data.List            using (List; _∷_; []; map)
   open import Data.List.Any        using (module Membership; here; there)
   open import Function.Equality    using (_⟨$⟩_)
@@ -147,6 +154,7 @@ module SetAntecedent-Interpret
   open Membership (setoid Type)    using (_∈_)
   open Equivalence                 using (to; from)
 \end{code}
+</div>
 
 \begin{code}
   instance
@@ -210,6 +218,7 @@ module SetAntecedent-Interpret
         ⟦ ⇒l  f g ⟧′ e = ⟦ g ⟧′ (head e (⟦ f ⟧′ (tail e)) ∷ tail e)
         ⟦ ⇒r  f   ⟧′ e = λ x → ⟦ f ⟧′ (x ∷ e)
 \end{code}
+
 
 \begin{code}
   module ⟦ND⟧⇔⟦SC⟧ where
