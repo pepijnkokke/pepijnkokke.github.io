@@ -1,0 +1,530 @@
+---
+title      : One λ-calculus, many times...
+date       : 2016-03-20 12:00:00
+categories : [agda, compsci]
+tags       : [agda, compsci]
+---
+
+Previously, I mentioned that one of the most common posts on Agda blogs
+is implementing the simply-typed λ-calculus. [Gergő Érdi][noshortcuts]
+even goes as far as to call it the FizzBuzz of dependently-typed
+programming, and rightfully so: If you do a quick search, you'll find
+dozens of examples.
+
+In *[Dependently-Typed Programming with Agda][agdatutorial]*, Ulf Norell
+implements a type checker the simply-typed λ-calculus;
+[Francesco Mazzoli][byexample] more or less follows Ulf, but extends
+his λ-calculus with a primitive operator for addition; and,
+[Gergő Érdi][noshortcuts] extends Ulf's approach with a checker for
+scope and binding.
+
+I figured it would be more fun if, instead of rewriting the type
+checker example, I would do something a little bit different. So for
+my λ-calculus post, I'll have a look at kinds of different ways of
+implementing the simply-typed λ-calculus. Today, natural deduction and
+the sequent calculus.
+
+<div class="hidden">
+\begin{code}
+module 2016-03-20-one-lambda-calculus-many-times where
+\end{code}
+</div>
+
+### Natural Deduction and the λ-Calculus
+
+We'll start our discussion with the syntax of types. Usually, types
+are defined inductively over some set of atomic types. We don't really
+care what these atomic types will be, so we might as well abstract
+over them:
+
+\begin{code}
+module Syntax (Atom : Set) where
+\end{code}
+
+But, if it makes you feel better, we can pretend that they'll be some
+like this:
+
+<pre class="Agda Spec">  <a name="511" class="Keyword">data</a><a name="515"> </a><a name="516" href="#289" class="Module">Atom</a><a name="521"> </a><a name="522" class="Symbol">:</a><a name="523"> </a><a name="524" class="PrimitiveType">Set</a><a name="527"> </a><a name="528" class="Keyword">where</a><a name="533"><br />    </a><a name="538" href="#538" class="InductiveConstructor">Int</a><a name="542">    </a><a name="543" class="Symbol">:</a><a name="544"> </a><a name="545" href="#516" class="Datatype">Atom</a><a name="550"><br />    </a><a name="555" href="#555" class="InductiveConstructor">String</a><a name="562"> </a><a name="563" class="Symbol">:</a><a name="564"> </a><a name="565" href="#516" class="Datatype">Atom</a></pre>
+
+Next, we defined our types. Since we're talking about minimal
+propositional logic, a type is either atomic (marked by <a class="Agda
+InductiveConstructor">El</a>) or an implication:
+
+\begin{code}
+  infixr 6 _⇒_
+
+  data Type : Set where
+    El  : Atom → Type
+    _⇒_ : Type → Type → Type
+\end{code}
+
+Now we'll define sequents. Even though this is just a tiny piece of
+syntax, we should put some thought behind it...
+
+Traditionally, the antecedent of some sequent would be a *set* of
+formulas. However, we're looking at this from the perspective of
+λ-calculus, and there may well be a difference between two terms of
+the same type. This is usually solved by changing the antecedent to a
+set of *type assignments*, which means $$x : A$$ and $$y : A$$ are now
+distinct. From the logical perspective, this is the same as using a
+*bag* or *multiset* antecedent. If we were doing mathematics, we'd be
+done, but implementation-wise a bag is actually a rather complex
+beast. For this reason, we'll use a *list*:[^imports]
+
+<div class="hidden">
+\begin{code}
+  open import Data.Nat             using (ℕ; suc; zero)
+  open import Data.Fin             using (Fin; suc; zero)
+  open import Data.List            using (List; _∷_; []; _++_)
+  open import Data.List.Any        using (module Membership; here; there)
+  open import Function.Equivalence using (_⇔_; id; map; equivalence)
+  open import Relation.Binary.PropositionalEquality
+  open Membership (setoid Type)    using (_∈_; _⊆_)
+\end{code}
+</div>
+\begin{code}
+  infix 4 _⊢_
+
+  data Sequent : Set where
+    _⊢_ : List Type → Type → Sequent
+\end{code}
+
+So what does a *proof* of a sequent look like? The logical system that
+is most familiar to a computer scientist is probably *natural
+deduction*. The natural deduction system for minimal propositional
+logic has *three* rules:
+
+$$
+    \frac{A \in \Gamma}{\Gamma \vdash A}{\small ax}
+    \quad
+    \frac{A , \Gamma \vdash B}{\Gamma \vdash A \Rightarrow B}{\small{\Rightarrow}\!i}
+    \quad
+    \frac{\Gamma \vdash A \Rightarrow B \quad \Gamma \vdash A}{\Gamma \vdash B}{\small{\Rightarrow}\!e}
+$$
+
+Recall that λ-terms are constructed in one of three ways: a λ-term is
+either a *variable*, an *abstraction* or an *application*:
+
+$$
+    M, N ::= x \mid (\lambda x . M) \mid (M\;N)
+$$
+
+These correspond exactly to the rules of natural deduction. In fact,
+in type systems they are usually presented together:
+
+$$
+    \frac{(x : A) \in \Gamma}{\Gamma \vdash x : A}
+    \quad
+    \frac{x : A , \Gamma \vdash M : B}{\Gamma \vdash (\lambda x. M) : A \Rightarrow B}
+    \quad
+    \frac{\Gamma \vdash M : A \Rightarrow B \quad \Gamma \vdash N : A}{\Gamma \vdash (M\;N) : B}
+$$
+
+However, I like the clean look of the logical notation, so in the
+interest of keeping things simple I will use that.
+We encode the natural deduction system as a datatype, with each rule
+corresponding to a *constructor*, and each proof a *value*:
+
+\begin{code}
+  infix 3 ND_
+
+  data ND_ : Sequent → Set where
+    ax : ∀ {A   Γ} → A ∈ Γ → ND Γ ⊢ A
+    ⇒i : ∀ {A B Γ} → ND A ∷ Γ ⊢ B → ND Γ ⊢ A ⇒ B
+    ⇒e : ∀ {A B Γ} → ND Γ ⊢ A ⇒ B → ND Γ ⊢ A → ND Γ ⊢ B
+\end{code}
+
+I prefer to think of things of the type <a class="Agda Datatype
+Operator">ND</a> as proofs made up of rules, but if you prefer to
+think of them as programs made up of the constructors of lambda terms,
+just use the following syntax:
+
+\begin{code}
+  pattern var   x = ax   x
+  pattern lam   x = ⇒i   x
+  pattern _∙_ f x = ⇒e f x
+\end{code}
+
+Earlier, we made the conscious choice to use *lists* to represent the
+antecedent. However, this introduced a minor problem: while two
+programs of the same type may not do the same thing, they *should* be
+equivalent, as far as the type system is concerned, and so it *should*
+be possible to rewrite a program which needs *two* values of type
+$$A$$ to a program which needs only *one*.
+
+Similarily, by using lists, we have introduced a fixed order in our
+antecedent which isn't exactly desirable. While they may be different
+programs, we *should* be able to rewrite the program $$f : A\to B\to C$$
+to receive its arguments in the different order, i.e. to a program
+$$f\prime : B\to A\to C$$.
+
+Collectively, such properties are known as *structural* properties,
+and for this particular logic we can summarise them neatly as follows:
+
+> If $$\Gamma \subseteq \Gamma\prime$$ and $$\Gamma \vdash A$$, then
+> $$\Gamma\prime \vdash A$$.
+
+We can give a proof of this theorem by induction on the structure of
+natural deduction proofs. Note that we represent the subset relation
+as a *function*, that is to say $$\Gamma \subseteq \Gamma\prime$$ is
+the *function* $$A\in\Gamma\to A\in\Gamma\prime$$:
+
+\begin{code}
+  struct : ∀ {A Γ Γ′} → Γ ⊆ Γ′ → ND Γ ⊢ A → ND Γ′ ⊢ A
+  struct Γ⊆Γ′ (ax x)   = ax (Γ⊆Γ′ x)
+  struct Γ⊆Γ′ (⇒i f)   = ⇒i (struct (∷-resp-⊆ Γ⊆Γ′) f)
+    where
+
+      ∷-resp-⊆ : ∀ {A Γ Γ′} → Γ ⊆ Γ′ → A ∷ Γ ⊆ A ∷ Γ′
+      ∷-resp-⊆ Γ⊆Γ′ (here  x) = here x
+      ∷-resp-⊆ Γ⊆Γ′ (there x) = there (Γ⊆Γ′ x)
+
+  struct Γ⊆Γ′ (⇒e f g) = ⇒e (struct Γ⊆Γ′ f) (struct Γ⊆Γ′ g)
+\end{code}
+
+Note that values of type $$A\in\Gamma$$ are constructed using <a
+class="Agda InductiveConstructor" target="_blank"
+href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174">here</a>
+and <a class="Agda InductiveConstructor" target="_blank"
+href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227">there</a>,
+which makes them more or less just numbers, i.e. "first value",
+"second value", etc...
+
+I mentioned two uses of this structural rule: contracting two
+different variables of the *same* type into one, and exchanging the
+order of the types in the antecedent. There is one more canonical use:
+*weakning*.
+Weakening is so obvious to programmers that they don't really think of
+it, but what it says is that if you can run a program in *some*
+environment, then you should *certainly* be able to run that program
+in that enviroment with some irrelevant stuff added to it. Formally,
+we write it as:
+
+\begin{code}
+  weak : ∀ {A B Γ} → ND Γ ⊢ B → ND A ∷ Γ ⊢ B
+  weak = struct there
+\end{code}
+
+Passing <a class="Agda InductiveConstructor" target="_blank"
+href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227">there</a>
+to <a href="#6956" class="Agda Function">struct</a> simply
+moves every value by one: the first value becomes the second, the
+second becomes the third, etc... In the new antecedent, the first
+value will be our irrelevant stuff.
+
+
+### Sequent Calculus and Natural Deduction
+
+We've got enough to start talking about the sequent calculus now. The
+sequent calculus is a different way of writing down logical systems,
+and it has some pros and cons when compared to natural deduction.
+It's usual presentation is as follows:
+
+$$
+    \frac{A \in \Gamma}{\Gamma \vdash A}{\small ax}
+    \quad
+    \frac{\Gamma \vdash A \quad A , \Gamma \vdash B}{\Gamma \vdash B}{\small cut}
+    \quad
+    \frac{\Gamma \vdash A \quad B , \Gamma \vdash C}{A \Rightarrow  B , \Gamma \vdash C}{\small{\Rightarrow}\!l}
+    \quad
+    \frac{A , \Gamma \vdash B}{\Gamma \vdash A \Rightarrow B}{\small{\Rightarrow}\!r}
+$$
+
+We can encode these rules in Agda as follows:
+
+\begin{code}
+  infix 3 SC_
+
+  data SC_ : Sequent → Set where
+    ax  : ∀ {A     Γ} → A ∈ Γ → SC Γ ⊢ A
+    cut : ∀ {A B   Γ} → SC Γ ⊢ A → SC A ∷ Γ ⊢ B → SC Γ ⊢ B
+    ⇒l  : ∀ {A B C Γ} → SC Γ ⊢ A → SC B ∷ Γ ⊢ C → SC A ⇒ B ∷ Γ ⊢ C
+    ⇒r  : ∀ {A B   Γ} → SC A ∷ Γ ⊢ B → SC Γ ⊢ A ⇒ B
+\end{code}
+
+We will define a few patterns that we'd otherwise have to write out,
+over and over again. Namely, names for the first, second, and third
+variable in a context:
+
+\begin{code}
+  pattern ax₀ = ax (here refl)
+  pattern ax₁ = ax (there (here refl))
+  pattern ax₂ = ax (there (there (here refl)))
+\end{code}
+
+It's a little bit of a puzzle, but given <a href="#8254" class="Agda
+Function">weak</a> it becomes quite easy to show that the two logics
+are in fact equivalent---that they derive the *same sequents*:
+
+\begin{code}
+  module ND⇔SC where
+
+    ⟹ : ∀ {S} → ND S → SC S
+    ⟹ (ax  x)   = ax x
+    ⟹ (⇒i  f)   = ⇒r  (⟹ f)
+    ⟹ (⇒e  f g) = cut (⟹ f) (⇒l (⟹ g) ax₀)
+
+    ⟸ : ∀ {S} → SC S → ND S
+    ⟸ (ax  p)   = ax p
+    ⟸ (cut f g) = ⇒e (⇒i (⟸ g)) (⟸ f)
+    ⟸ (⇒l  f g) = ⇒e (weak (⇒i (⟸ g))) (⇒e ax₀ (weak (⟸ f)))
+    ⟸ (⇒r  f)   = ⇒i (⟸ f)
+\end{code}
+
+The rules for sequent calculus obviously no longer correspond *directly*
+to the λ-calculus. However, we've just shown that there is in fact
+*some* correspondence between them.
+In the λ-calculus, computation is represented by β-reduction, which is
+the iterative removal of redexes
+
+$$(\lambda x.M)\; N\mapsto M[x := N]$$
+
+Likewise, sequent calculus comes equipped with its own notion of
+computation: cut-elimination. And the beautiful thing about cut
+elimination is that it has a *very* concrete normal form. Instead of
+faffing about, claiming the structure is free of β-redexes, cut
+elimination---as its name implies---allows you to remove the entire
+structural rule of $$cut$$. It would be interesting to show exactly
+what kind of relation cut elimination has to β-reduction...
+
+*Alas*! It may be too much effort for a single post to implement both of
+these logics *and* a procedure for cut elimination. However, there
+*is* a much simpler thing we can do. Agda itself has a pretty
+servicable implementation of β-reduction for Agda terms, and we can
+quite easily piggyback on that mechanism. In fact, most of the
+articles I linked to at the beginning do exactly this.
+
+
+### Interpretations in Agda
+
+As a first step, we write down what an interpretation is---and since
+we want to use the intepretation brackets in as many places as
+possible, we create a type class for it, and give <a href="#12173"
+class="Agda Field Operator">⟦_⟧</a> the least restrictive type
+possible:
+
+<div class="hidden">
+\begin{code}
+open import Level using (_⊔_)
+\end{code}
+</div>
+\begin{code}
+record Interpret {a} {b} (A : Set a) (B : Set b) : Set (a ⊔ b) where
+  field
+    ⟦_⟧ : A → B
+open Interpret {{...}}
+\end{code}
+
+Now, in order to interpret natural deduction proofs in Agda, we'll
+need an interpretation for the atomic types. Below we say as much:
+
+\begin{code}
+module Semantics (Atom : Set) (InterpretAtom : Interpret Atom Set) where
+\end{code}
+
+<div class="hidden">
+\begin{code}
+  open Syntax Atom
+  open import Data.Empty           using (⊥-elim)
+  open import Data.List            using (List; _∷_; []; map)
+  open import Data.List.Any        using (module Membership; here; there)
+  open import Function             using (_∘_)
+  open import Function.Equality    using (_⟨$⟩_)
+  open import Function.Equivalence using (module Equivalence)
+  open import Relation.Binary.PropositionalEquality
+  open Membership (setoid Type)    using (_∈_; _⊆_)
+  open Equivalence                 using (to; from)
+\end{code}
+</div>
+
+Unsurprisingly, we interpret the implication as Agda's function type:
+
+\begin{code}
+  instance
+    InterpretType : Interpret Type Set
+    InterpretType = record { ⟦_⟧ = ⟦_⟧′ }
+      where
+        ⟦_⟧′  : Type → Set
+        ⟦ El  A ⟧′ = ⟦ A ⟧
+        ⟦ A ⇒ B ⟧′ = ⟦ A ⟧′ → ⟦ B ⟧′
+\end{code}
+
+In order to interpret sequents, we'll need an interpretation for the
+antecedent. For this we'll create a type for *environments*, <a
+class="Agda Datatype">Env</a>, which is indexed by a list of types, and
+which stores values of the *interpretations* of those types:
+
+\begin{code}
+  infixr 5 _∷_
+
+  data Env : List Type → Set where
+    []  : Env []
+    _∷_ : {A : Type} {Γ : List Type} → ⟦ A ⟧ → Env Γ → Env (A ∷ Γ)
+\end{code}
+
+Using this, we can interpret sequents as functions from environments
+to values:
+
+\begin{code}
+  instance
+    InterpretSequent : Interpret Sequent Set
+    InterpretSequent = record { ⟦_⟧ = ⟦_⟧′ }
+      where
+        ⟦_⟧′ : Sequent → Set
+        ⟦ Γ ⊢ A ⟧′ = Env Γ → ⟦ A ⟧
+\end{code}
+
+Let's get to interpreting terms! First off, variables. We can
+interpret variables simply by looking them up in the environment:
+
+\begin{code}
+  lookup : ∀ {A Γ} → A ∈ Γ → Env Γ → ⟦ A ⟧
+  lookup (here  p) (x ∷ _) rewrite p = x
+  lookup (there p) (_ ∷ e) = lookup p e
+\end{code}
+
+
+(If you're wondering what we're rewriting by: the <a class="Agda
+InductiveConstructor" target="_blank"
+href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174">here</a>
+constructor carries a small proof that the element at the top of the
+list is *really* the element you were looking for.)
+
+The translation for natural deduction proofs is, of course, completely
+routine---we translate variables withs lookups, introductions by
+abstractions and eliminations by applications:
+
+\begin{code}
+  instance
+    InterpretND : ∀ {S} → Interpret (ND S) ⟦ S ⟧
+    InterpretND = record { ⟦_⟧ = ⟦_⟧′ }
+      where
+        ⟦_⟧′ : ∀ {S} → ND S → ⟦ S ⟧
+        ⟦ ax p   ⟧′ e = lookup p e
+        ⟦ ⇒i f   ⟧′ e = λ x → ⟦ f ⟧′ (x ∷ e)
+        ⟦ ⇒e f g ⟧′ e = (⟦ f ⟧′ e) (⟦ g ⟧′ e)
+\end{code}
+
+Hooray! And even better,  as a corollary, we immediately obtain a
+translation from sequent calculus into Agda:
+
+\begin{code}
+  instance
+    InterpretSC : ∀ {S} → Interpret (SC S) ⟦ S ⟧
+    InterpretSC = record { ⟦_⟧ = ⟦_⟧ ∘ ND⇔SC.⟸ }
+\end{code}
+
+Which means that we've now implemented the following functions:
+
+$$
+    \begin{array}{ccc}
+    ND & \rightarrow & Agda \\
+                            \\
+    \updownarrow            \\
+                            \\
+    SC                      \\
+    \end{array}
+$$
+
+
+
+If you are looking for more reading on this topic, I can recommend the
+highly readible *[Lambda terms for natural deduction, sequent calculus
+and cut elimination][barendregt]* by Henk Barendregt and Silvia Ghilezan.
+
+Next time, I'll talk about Gentzen's LJ, which has explicit structural
+rules, and variations which use other, non-list structures as the
+antecedent.
+
+---
+
+[agdatutorial]: http://www.cse.chalmers.se/~ulfn/papers/afp08/tutorial.pdf
+[noshortcuts]: https://gergo.erdi.hu/blog/2013-05-01-simply_typed_lambda_calculus_in_agda,_without_shortcuts/
+[byexample]: http://mazzo.li/posts/Lambda.html
+[barendregt]: http://journals.cambridge.org/action/displayAbstract?fromPage=online&aid=44279#
+
+[^imports]: This is a good time to note that I'm not showing any of
+    the import statements. If you wish to see them, they're there in
+    the HTML source. However, it may be much easier to click the
+    symbol that confuses you---that should take you directly to its
+    definition in the standard library.
+
+
+<div class="hidden">
+### BONUS!
+### The Limit of Intensional Type Theory
+
+Boop.
+
+\begin{code}
+  ax₀′ : ∀ {A Γ} → Env (A ∷ Γ) → ⟦ A ⟧
+  ax₀′ = lookup (here refl)
+
+  ⇒i′ : ∀ {A Γ} {B : Set} → (Env (A ∷ Γ) → B) → Env Γ → ⟦ A ⟧ → B
+  ⇒i′ f e x = f (x ∷ e)
+
+  weak′ : ∀ {A Γ} {B : Set} → (Env Γ → B) → Env (A ∷ Γ) → B
+  weak′ f (x ∷ e) = f e
+\end{code}
+
+Boop.
+
+\begin{code}
+  instance
+    InterpretSC′ : ∀ {S} → Interpret (SC S) ⟦ S ⟧
+    InterpretSC′ = record { ⟦_⟧ = ⟦_⟧′ }
+      where
+        ⟦_⟧′ : ∀ {S} → SC S → ⟦ S ⟧
+        ⟦ ax  p   ⟧′ e = lookup p e
+        ⟦ cut f g ⟧′ e = ⟦ g ⟧′ (⟦ f ⟧′ e ∷ e)
+        ⟦ ⇒l  f g ⟧′ e = (weak′ (⇒i′ ⟦ g ⟧′)) e ((ax₀′ e) (weak′ ⟦ f ⟧′ e))
+        ⟦ ⇒r  f   ⟧′ e = λ x → ⟦ f ⟧′ (x ∷ e)
+\end{code}
+
+Boop.
+
+\begin{code}
+  module ⟦ND⟧⇔⟦SC⟧ where
+
+    ⟹ : ∀ {S} (f : ND S) → ⟦ f ⟧ ≡ ⟦ ND⇔SC.⟹ f ⟧
+    ⟹ (ax _)   = refl
+    ⟹ (⇒i f)   = cong  (λ f e x → f (x ∷ e)) (⟹ f)
+    ⟹ (⇒e f g) = cong₂ (λ f g e → f e (g e)) (⟹ f) (⟹ g)
+\end{code}
+
+Boop.
+
+\begin{code}
+    open import Relation.Binary.PropositionalEquality.TrustMe renaming (trustMe to ???)
+\end{code}
+
+\begin{code}
+    ⟸ : ∀ {S} (f : SC S) → ⟦ f ⟧ ≡ ⟦ ND⇔SC.⟸ f ⟧
+    ⟸ (ax  _)   = refl
+    ⟸ (cut f g) = cong₂ (λ f g e → g (f e ∷ e)) (⟸ f) (⟸ g)
+    ⟸ (⇒l  f g) = lem
+      where
+
+      lem : (λ e → ( weak′ (⇒i′ ⟦ g ⟧ )) e
+                       (ax₀′ e (weak′ ⟦ f ⟧ e)))
+
+          ≡ (λ e → ⟦ weak (⇒i (ND⇔SC.⟸ g)) ⟧ e
+                       (ax₀′ e (⟦ weak (ND⇔SC.⟸ f) ⟧ e)))
+      lem = ???
+
+    ⟸ (⇒r  f)   = cong  (λ f e x → f (x ∷ e)) (⟸ f)
+\end{code}
+
+Boop.
+
+\begin{code}
+    postulate
+      i⇒≡i⇒′
+        : ∀ {A B Γ} (f : ND A ∷ Γ ⊢ B)
+          → ⟦ ⇒i f ⟧ ≡ ⇒i′ {A} ⟦ f ⟧
+
+      weak≡weak′
+        : ∀ {A B Γ} (f : ND Γ ⊢ B)
+          → ⟦ weak {A} f ⟧ ≡ weak′ {A} ⟦ f ⟧
+\end{code}
+</div>

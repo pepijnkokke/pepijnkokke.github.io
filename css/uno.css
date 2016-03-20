@@ -1006,18 +1006,15 @@ em {
 	font-style: italic; }
 
 blockquote {
-	margin: 1em 0;
-	padding: 2em 0;
+	margin: 1ex 0;
+	padding: 1ex 0;
 	background: #f8f8f8;
 	border: 1px solid #eeeeee;
 	border-radius: 3px;
 	font-family: "Roboto Slab", serif;
 	font-weight: lighter;
-	font-style: italic;
-	font-size: 1.3em;
 	text-align: center; }
-	blockquote p:last-child {
-		margin-bottom: 0; }
+	blockquote p:last-child { margin-bottom: 0; }
 
 ol, ul {
 	margin: 0 0 1.3em 2.5em; }
