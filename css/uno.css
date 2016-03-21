@@ -22,6 +22,24 @@ body {
 ol, ul {
 	list-style: none; }
 
+
+dl.chat {
+    margin-left: 5em;
+    margin-right: 5em;
+}
+dl.chat dt {
+    float: left;
+    clear: left;
+}
+dl.chat dt:after {
+    content: ":";
+}
+dl.chat dd {    
+    margin: 0 0 0 5em;
+    padding: 0 0 0.5em 0;
+}
+
+
 blockquote, q {
 	quotes: none; }
 
@@ -1693,3 +1711,5 @@ input[type="tel"] {
 	.btn, .navigation__item a {
 		display: block;
 		margin-bottom: .4em; } }
+
+
