@@ -148,7 +148,8 @@ that either sentence will give you a pretty clear idea of what a
 wampurnik is *in that context*.
 
 So if you want to know what a word (e.g. "bear") means, you take a
-*huge* corpus, and you look for all the occurances of that word...
+*huge* corpus, and you look for all the occurances of that
+word...[^webcorp]
 
 <pre style="margin-left: 3em;">
        over the mountains. A <a style="color:dark-orange;">bear</a> also features prominentl
@@ -216,3 +217,4 @@ objects*. And this is what a co-occurance matrix gives us.
 
 [UnicornPower]: https://github.com/UnicornPower
 [^wampimuk]: Taken from <https://www.cs.utexas.edu/~mooney/cs388/slides/dist-sem-intro-NLP-class-UT.pdf>.
+[^webcorp]: Taken from <http://www.webcorp.org.uk>.
