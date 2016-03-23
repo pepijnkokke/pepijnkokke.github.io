@@ -11,6 +11,9 @@
       window.secret              = data['secret'];
       window.secret_with_article = data['secret_with_article'];
       window.definitions         = data['definitions'];
+      if (window.location.href.indexOf("#breadbox") != -1) {
+        $('#breadbox-input').find('input').focus();
+      }
     }
   });
 </script>

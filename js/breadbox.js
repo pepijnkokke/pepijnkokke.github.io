@@ -12,7 +12,7 @@ $('#breadbox-input').cssConsole({
     inputName:'console',
     charLimit: 60,
     onEnter: function(){
-        execCommand($('#bre adbox-input').find('input').val(),
+        execCommand($('#breadbox-input').find('input').val(),
                     function() {
                         $('#breadbox-input').cssConsole('reset');
                         $('#breadbox-input').find('input').focus();
@@ -24,6 +24,9 @@ $('#breadbox-input').cssConsole({
     }
 });
 
+$('.breadbox-container').on('click', function() {
+    $('#breadbox-input').find('input').focus();
+});
 
 function addLine(input, style, color) {
     if($('.breadbox-console div').length==lineLimit) {
@@ -37,6 +40,7 @@ function addLine(input, style, color) {
 
 
 function execCommand(input,cont,stop) {
+
     var input = input.trim();
 
     if (input == "help") {

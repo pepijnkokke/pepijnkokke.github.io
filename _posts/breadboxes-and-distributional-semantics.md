@@ -112,7 +112,8 @@ exclude all animals."
 
 It is exactly this---the fact that the game forces you to consider a
 *total* order on your internal ontology, insofar as one exists---which
-makes it so fascinating to play. I heartily recommend you try!
+makes it so fascinating to play. I heartily recommend you <a
+href="#breadbox">try it!</a>
 
 ---
 
@@ -120,7 +121,7 @@ In the summer of 2014, I took
 [a course on distributional semantics][ESSLLI2014] taught by Marco
 Baroni and Georgiana Dinu.
 
-<div class="breadbox-container">
+<div id="breadbox" class="breadbox-container">
   <div class="breadbox-console">
     <div class="breadbox-line breadbox-white">
     Welcome to Breadbox 1.0! Type 'help' for instructions, or simply start guessing!
