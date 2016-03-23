@@ -115,6 +115,10 @@ It is exactly this---the fact that the game forces you to consider a
 makes it so fascinating to play. I heartily recommend you <a
 href="#breadbox">try it!</a>
 
+If you're upset because Breadbox is hard, or because you think that
+the choices it makes are weird or wrong... try playing it with a
+person! ^^
+
 ---
 
 In the summer of 2014, I took a course on distributional semantics (by
