@@ -3,6 +3,8 @@ title      : "Breadboxes, Plenty Questions and Distributional Semantics"
 date       : 2016-03-20 12:00:00
 categories : [python, compling]
 tags       : [python, compling, distsem]
+script     : 2016-03-21-breadboxes-and-distributional-semantics-script.html
+style      : 2016-03-21-breadboxes-and-distributional-semantics-style.html
 ---
 
 Quite a while ago, [UnicornPower][UnicornPower] introduced me to a
@@ -13,7 +15,7 @@ more, really---who we'll name Allie and Blake:
  1. Allie thinks of something.
  2. As their first question, Blake asks *"Is it a breadbox?"*
  3. Allie---who, seeing the mandatory first question, obviously
-    wouldn't choose a breadbox---answers *"No, it isn't!"*
+    wouldn't choose a breadbox---answers *"No, it's not!"*
 
 From there on out, all Blake's questions have to be of the form...
 
@@ -88,8 +90,8 @@ Allie
 {:.chat}
 
 Since this game tends to bring out the... best in people, Blake might
-just give up. After this, Allie may be called on to explain what the
-word she chose even means:
+just have to give up. After this, Allie may be called on to explain
+what the word she chose even means:
 
 Blake
 : I give up... what was it?
@@ -117,6 +119,19 @@ makes it so fascinating to play. I heartily recommend you try!
 In the summer of 2014, I took
 [a course on distributional semantics][ESSLLI2014] taught by Marco
 Baroni and Georgiana Dinu.
+
+<div class="breadbox-container">
+  <div class="breadbox-console">
+    <div class="breadbox-line breadbox-white">
+    Welcome to Breadbox 1.0! Type 'help' for instructions, or simply start guessing!
+    </div>
+    <div class="breadbox-line">&nbsp;</div>
+  </div>
+  <div class="breadbox-bottom">
+    <div class="breadbox-label">></div>
+    <div id="breadbox-input"></div>
+  </div>
+</div>
 
 ---
 

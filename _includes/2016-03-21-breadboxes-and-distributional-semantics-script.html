@@ -1,0 +1,18 @@
+<script>
+  var lineLimit           = 25;
+  var breadbox_url        = 'https://breadbox-pepijnkokke.rhcloud.com/';
+
+  $.ajax({
+    url         : breadbox_url+"generate/secret",
+    type        : "GET",
+    crossDomain : true,
+    dataType    : "json",
+    success     : function(data) {
+      window.secret              = data['secret'];
+      window.secret_with_article = data['secret_with_article'];
+      window.definitions         = data['definitions'];
+    }
+  });
+</script>
+<script type="text/javascript" src="{{ "/js/cssConsole.min.js" | prepend: site.baseurl }}"></script>
+<script type="text/javascript" src="{{ "/js/breadbox.js" | prepend: site.baseurl }}"></script>
