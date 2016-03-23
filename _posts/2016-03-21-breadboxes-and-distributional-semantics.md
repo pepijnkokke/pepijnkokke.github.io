@@ -211,8 +211,8 @@ conceivably be a pet, it'd be a lot rarer than having a cat or
 dog... and we could never really feel like we *owned* the lion.
 
 You can think of the rows in this matrix as points, in a six
-dimensional graph---one dimension for every column. And because it's a
-graph, you can measure the distance between words. And this is where
+dimensional space---one dimension for every column. And because it's a
+space, you can measure the distance between words. And this is where
 we get back to Breadbox: in order to play this bizarre game, we needed
 a *total order* on meanings, to be able to compare and order *any two
 objects*. And this is what a co-occurance matrix gives us.
