@@ -117,10 +117,9 @@ href="#breadbox">try it!</a>
 
 ---
 
-In the summer of 2014, I took
-[a course on distributional semantics][ESSLLI2014] taught by Marco
-Baroni and Georgiana Dinu.... and the first thing I thought to do was
-to use their dataset to implement an AI for Breadbox:
+In the summer of 2014, I took a course on distributional semantics (by
+Marco Baroni and Georgiana Dinu) and the first thing I thought to do
+was to use their dataset to implement an AI for Breadbox:
 
 <div id="breadbox" class="breadbox-container">
   <div class="breadbox-console">
@@ -135,10 +134,85 @@ to use their dataset to implement an AI for Breadbox:
   </div>
 </div>
 
+So how does it work? The core hypothesis of distributional semantics is
 
+> You can know the meaning of a word by the company it keeps
 
+Have a look at the two sentences below:[^wampimuk]
+
+ 1. He filled the *wampimuk*, passed it around and we all drunk some.
+ 2. We found a little, hairy *wampimuk* sleeping behind the tree.
+
+While you've probably never read the word wampimuk before, it's likely
+that either sentence will give you a pretty clear idea of what a
+wampurnik is *in that context*.
+
+So if you want to know what a word (e.g. "bear") means, you take a
+*huge* corpus, and you look for all the occurances of that word...
+
+<pre style="margin-left: 3em;">
+       over the mountains. A <a style="color:dark-orange;">bear</a> also features prominentl
+    rnejakt" (An Unfortunate <a style="color:dark-orange;">Bear</a> Hunt) by Theodor Kittels
+       to his hagiography, a <a style="color:dark-orange;">bear</a> killed Saint Corbinian's
+         however, he let the <a style="color:dark-orange;">bear</a> go. The saddled "bear
+       bear go. The saddled "<a style="color:dark-orange;">bear</a> of St. Corbinian" the
+    tails on this topic, see <a style="color:dark-orange;">Bear</a> in heraldry. The British
+         Cat and the Russian <a style="color:dark-orange;">Bear</a> (see The Great Game)
+     Great Game) The Russian <a style="color:dark-orange;">bear</a> is a common national
+    Soviet Union). The brown <a style="color:dark-orange;">bear</a> is also Finland's nation
+    animals and had the same <a style="color:dark-orange;">bear</a> carry him from his hermi
+         thus Christianised, <a style="color:dark-orange;">bear</a> clasping each gable
+     evidence of prehistoric <a style="color:dark-orange;">bear</a> worship. Anthropologists
+     peoples, considered the <a style="color:dark-orange;">bear</a> as the spirit of one's
+    fathers. This is why the <a style="color:dark-orange;">bear</a> (karhu) was a greatly
+    ikämmen and kontio). The <a style="color:dark-orange;">bear</a> is the national animal
+      tries to kill a mother <a style="color:dark-orange;">bear</a> and her cubs—and is
+         society. "The Brown <a style="color:dark-orange;">Bear</a> of Norway" is a Scottish
+     magically turned into a <a style="color:dark-orange;">bear</a>, and who managed to get
+     television. Evidence of <a style="color:dark-orange;">bear</a> worship has been found
+      mythology identify the <a style="color:dark-orange;">bear</a> as their ancestor and
+    shopric of Freising, the <a style="color:dark-orange;">bear</a> is the dangerous totem
+</pre>
+
+...and then you count, for every other word, how often it occurs
+together with your word. The above text, for instance, gives us a
+number of obvious co-occurances for bear: mountain, kill, hunt, brown,
+animal and cub. The idea is that, given a large enough corpus, these
+co-occurances will drown out the noisier ones.
+
+By doing this for *every* word, you build up a co-occurance matrix,
+which lists how often every word occurs with every other word. For
+instance,[^wampimuk]
+
+||-------||-------||------||-----||-------||-----||------||
+||       || leash || walk || run || owner || pet || bark ||
+||:------||:-----:||:----:||:---:||:-----:||:---:||:----:||
+|| dog   || 3     || 5    || 2   || 5     || 3   || 2    ||
+|| cat   || 0     || 3    || 3   || 2     || 3   || 0    ||
+|| lion  || 0     || 3    || 2   || 0     || 1   || 0    ||
+|| light || 0     || 0    || 0   || 0     || 0   || 0    ||
+|| bark  || 1     || 0    || 0   || 2     || 1   || 0    ||
+|| car   || 0     || 0    || 1   || 3     || 0   || 0    ||
+||=======||=======||======||=====||=======||=====||======||
+{:style="margin: 1ex auto;"}
+
+Now the meaning for a word is determined by its co-occurances with
+some select group of words. For instance, if we look at 'dog' we see
+that it strongly co-occurs with things such as 'leash', 'walk',
+'owner', 'pet' and 'bark'. For 'cat', we lose 'leash' and
+'bark'---since cats don't bark, and are rarely leashed. And for
+'lion', we also lose 'owner' and 'pet'---while a lion could
+conceivably be a pet, it'd be a lot rarer than having a cat or
+dog... and we could never really feel like we *owned* the lion.
+
+You can think of the rows in this matrix as points, in a six
+dimensional graph---one dimension for every column. And because it's a
+graph, you can measure the distance between words. And this is where
+we get back to Breadbox: in order to play this bizarre game, we needed
+a *total order* on meanings, to be able to compare and order *any two
+objects*. And this is what a co-occurance matrix gives us.
 
 ---
 
 [UnicornPower]: https://github.com/UnicornPower
-[ESSLLI2014]: http://www.esslli2014.info/program/week-two/course-29
+[^wampimuk]: Taken from <https://www.cs.utexas.edu/~mooney/cs388/slides/dist-sem-intro-NLP-class-UT.pdf>.
