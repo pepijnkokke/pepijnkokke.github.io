@@ -75,7 +75,7 @@ function execCommand(input,cont,stop) {
         var next  = input[input.length - 1];
 
         $.ajax({
-            url         : breadbox_url+'poopguess/'+secret+'/'+next,
+            url         : breadbox_url+'guess/'+secret+'/'+next,
             type        : "GET",
             crossDomain : true,
             dataType    : "json",
