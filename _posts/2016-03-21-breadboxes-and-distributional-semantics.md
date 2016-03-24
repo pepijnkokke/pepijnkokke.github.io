@@ -1,10 +1,10 @@
 ---
-title      : "Breadboxes, Plenty Questions and Distributional Semantics"
-date       : 2016-03-20 12:00:00
-categories : [python, compling]
-tags       : [python, compling, distsem]
-script     : 2016-03-21-breadboxes-and-distributional-semantics-script.html
-style      : 2016-03-21-breadboxes-and-distributional-semantics-style.html
+title        : "Breadboxes, Plenty Questions and Distributional Semantics"
+date         : 2016-03-20 12:00:00
+categories   : [python, compling]
+tags         : [python, compling, distsem]
+extra-script : breadbox-extra-script.html
+extra-style  : breadbox-extra-style.html
 ---
 
 Quite a while ago, [UnicornPower][UnicornPower] introduced me to a

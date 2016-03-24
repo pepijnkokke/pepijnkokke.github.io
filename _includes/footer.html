@@ -35,6 +35,6 @@
 <script type="text/javascript">
   $('a[href^=http]:not(a[href*=\'{{ site.url }}\'])').attr('target','_blank');
 </script>
-{% if page.script %}
-{% include {{page.script}} %}
+{% if page.extra-script %}
+{% include {{page.extra-script}} %}
 {% endif %}
