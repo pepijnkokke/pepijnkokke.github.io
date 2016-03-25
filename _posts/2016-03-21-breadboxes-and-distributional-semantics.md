@@ -215,10 +215,29 @@ dimensional space---one dimension for every column. And because it's a
 space, you can measure the distance between words. And this is where
 we get back to Breadbox: in order to play this bizarre game, we needed
 a *total order* on meanings, to be able to compare and order *any two
-objects*. And this is what a co-occurance matrix gives us.
+objects*. And this is *exactly* what a co-occurance matrix gives us!
+
+Obviously, there's a lot more to distributional semantics than just
+this. For instance, the matrices that you derive this way tend to be
+huge---one axis per word, one point per word---so there's a whole
+bunch of work which goes into selecting exactly which set of words
+should be the axes. Then there's the difficultly of *composing* word
+meanings. You may have noticed that my breadbox implementation doesn't
+work all too well for compound nouns: that's because I'm not taking
+the effort to compose meaning vectors.[^abitofashame]
+
+If you wish to read more about distributional semantics, there's a
+pretty good overview of introductions and surveys [here][SlidesBaroni].
+Additionally, there's a whole branch of work which uses neural
+networks to learn the word meanings: for instance, have a look at
+[Word2Vec][Word2Vec].
 
 ---
 
 [UnicornPower]: https://github.com/UnicornPower
+[Word2Vec]: http://deeplearning4j.org/word2vec
+[SlidesBaroni]: https://www.cs.utex.edu/~mooney/cs388/slides/dist-sem-intro-NLP-class-UT.pdf
 [^wampimuk]: Taken from <https://www.cs.utexas.edu/~mooney/cs388/slides/dist-sem-intro-NLP-class-UT.pdf>.
 [^webcorp]: Taken from <http://www.webcorp.org.uk>.
+[^abitofashame]: A bit of a shame, really, since the course I took was
+    *about* composing meaning vector.
