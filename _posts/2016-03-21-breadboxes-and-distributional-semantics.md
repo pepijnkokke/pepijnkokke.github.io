@@ -123,7 +123,8 @@ person! ^^
 
 In the summer of 2014, I took a course on distributional semantics (by
 Marco Baroni and Georgiana Dinu) and the first thing I thought to do
-was to use their dataset to implement an AI for Breadbox:
+was to use their [dataset][semantic-vectors] to implement an AI for
+Breadbox:
 
 <div id="breadbox" class="breadbox-container">
   <div class="breadbox-console">
@@ -227,17 +228,17 @@ work all too well for compound nouns: that's because I'm not taking
 the effort to compose meaning vectors.[^abitofashame]
 
 If you wish to read more about distributional semantics, there's a
-pretty good overview of introductions and surveys [here][SlidesBaroni].
+pretty good overview of introductions and surveys [here][slides].
 Additionally, there's a whole branch of work which uses neural
 networks to learn the word meanings: for instance, have a look at
-[Word2Vec][Word2Vec].
+[Word2Vec][word2vec].
 
 ---
 
 [UnicornPower]: https://github.com/UnicornPower
-[Word2Vec]: http://deeplearning4j.org/word2vec
-[SlidesBaroni]: https://www.cs.utex.edu/~mooney/cs388/slides/dist-sem-intro-NLP-class-UT.pdf
+[word2vec]: http://deeplearning4j.org/word2vec
+[slides]: https://www.cs.utex.edu/~mooney/cs388/slides/dist-sem-intro-NLP-class-UT.pdf
+[semantic-vectors]: http://clic.cimec.unitn.it/composes/semantic-vectors.html
 [^wampimuk]: Taken from <https://www.cs.utexas.edu/~mooney/cs388/slides/dist-sem-intro-NLP-class-UT.pdf>.
 [^webcorp]: Taken from <http://www.webcorp.org.uk>.
-[^abitofashame]: A bit of a shame, really, since the course I took was
-    *about* composing meaning vector.
+[^abitofashame]: A bit of a shame, really, since the course I took was *about* composing meaning vector.
