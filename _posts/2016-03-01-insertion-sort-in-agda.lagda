@@ -1,7 +1,7 @@
 ---
 title      : "Insertion sort in Agda"
 date       : 2016-03-01 12:00:00
-categories : [agda]
+categories : [compsci]
 tags       : [agda]
 ---
 

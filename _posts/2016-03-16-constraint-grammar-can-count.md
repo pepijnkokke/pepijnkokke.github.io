@@ -2,7 +2,7 @@
 title      : "Constraint Grammar can count!"
 date       : 2016-03-14 12:00:00
 categories : [compling]
-tags       : [compling, constraint grammar]
+tags       : [constraint grammar]
 ---
 
 Constraint grammar---it is a natural language processing formalism with

@@ -1,7 +1,7 @@
 ---
 title      : "Insertion sort in Agda"
 date       : 2016-03-01 12:00:00
-categories : [agda]
+categories : [compsci]
 tags       : [agda]
 ---
 
@@ -328,5 +328,3 @@ lemma, your next proof will *fail*. And obviously, the notion that the
 *usage* of properties and and *repeated checking* of proofs strengtens
 a theory applies even more strongly to theories which are also
 *machine-checked*.
-
-

@@ -1,8 +1,8 @@
 ---
 title         : One λ-calculus, many times...
 date          : 2016-03-20 12:00:00
-categories    : [agda, compsci]
-tags          : [agda, compsci]
+categories    : [compsci]
+tags          : [agda]
 hide_implicit : true
 ---
 
