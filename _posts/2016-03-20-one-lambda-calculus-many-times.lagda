@@ -1,8 +1,9 @@
 ---
-title      : One λ-calculus, many times...
-date       : 2016-03-20 12:00:00
-categories : [agda, compsci]
-tags       : [agda, compsci]
+title         : One λ-calculus, many times...
+date          : 2016-03-20 12:00:00
+categories    : [agda, compsci]
+tags          : [agda, compsci]
+hide_implicit : true
 ---
 
 Previously, I mentioned that one of the most common posts on Agda blogs
@@ -134,6 +135,11 @@ corresponding to a *constructor*, and each proof a *value*:
     ⇒e : ∀ {A B Γ} → ND Γ ⊢ A ⇒ B → ND Γ ⊢ A → ND Γ ⊢ B
 \end{code}
 
+Note: for the sake of brevity, I'm using an Agda notation in which
+implicit arguments are hidden. That means that any unbound
+variable---such as the As, Bs and Γs above---is implicitly universally
+quantified.
+
 I prefer to think of things of the type <a class="Agda Datatype
 Operator">ND</a> as proofs made up of rules, but if you prefer to
 think of them as programs made up of the constructors of lambda terms,
@@ -210,7 +216,7 @@ href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227">there</a>
 to <a href="#6956" class="Agda Function">struct</a> simply
 moves every value by one: the first value becomes the second, the
 second becomes the third, etc... In the new antecedent, the first
-value will be our irrelevant stuff.
+value will be our "irrelevant stuff".
 
 
 ### Sequent Calculus and Natural Deduction
