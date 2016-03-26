@@ -14,10 +14,20 @@ end
 
 rule '.md' => '.lagda' do |t|
   Dir.mktmpdir do |tmp|
-    contents = File.read(t.source)
-    basename = contents.match(/^module (#{RE_IDENT})/).to_a.fetch(1, "main")
-    filename = "#{tmp}/#{basename}.lagda"
-    cp t.source, filename
+
+    # dirtmp file for our target
+    filename = nil
+
+    # move ALL *.lagda files to tmpdir
+    Dir.glob('_posts/*.lagda') do |source|
+      contents    = File.read(source)
+      module_name = contents.match(/^module (#{RE_IDENT})/).to_a.fetch(1, "main")
+      target      = "#{tmp}/#{module_name}.lagda"
+      filename    = target if source == t.source
+      cp source, target
+    end
+
+    # compile our target and extract HTML
     sh("agda -i#{tmp} -i#{AGDA_HOME} --html --html-dir=#{tmp} #{filename}")
     File.write(t.name, fix_agda_html(filename))
   end
