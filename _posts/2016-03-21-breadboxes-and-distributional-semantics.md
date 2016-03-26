@@ -1,6 +1,6 @@
 ---
 title        : "Breadboxes, Plenty Questions and Distributional Semantics"
-date         : 2016-03-20 12:00:00
+date         : 2016-03-21 12:00:00
 categories   : [python, compling]
 tags         : [python, compling, distsem]
 extra-script : breadbox-extra-script.html
@@ -241,4 +241,4 @@ networks to learn the word meanings: for instance, have a look at
 [semantic-vectors]: http://clic.cimec.unitn.it/composes/semantic-vectors.html
 [^wampimuk]: Taken from <https://www.cs.utexas.edu/~mooney/cs388/slides/dist-sem-intro-NLP-class-UT.pdf>.
 [^webcorp]: Taken from <http://www.webcorp.org.uk>.
-[^abitofashame]: A bit of a shame, really, since the course I took was *about* composing meaning vector.
+[^abitofashame]: A bit of a shame, really, since the course I took was *about* composing meaning vectors.
