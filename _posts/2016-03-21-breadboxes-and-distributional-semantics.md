@@ -111,7 +111,7 @@ hierarchical thinking: "Oh, it's not like an animal... so we can
 exclude all animals."
 
 It is exactly this---the fact that the game forces you to consider a
-*total* order on your internal ontology, insofar as one exists---which
+*total order* on your internal ontology, insofar as one exists---which
 makes it so fascinating to play. I heartily recommend you <a
 href="#breadbox">try it!</a>
 
