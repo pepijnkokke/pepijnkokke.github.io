@@ -111,7 +111,7 @@ hierarchical thinking: "Oh, it's not like an animal... so we can
 exclude all animals."
 
 It is exactly this---the fact that the game forces you to consider a
-*total order* on your internal ontology, insofar as one exists---which
+distance metric for your internal ontology, insofar as one exists---which
 makes it so fascinating to play. I heartily recommend you <a
 href="#breadbox">try it!</a>
 
@@ -215,7 +215,7 @@ You can think of the rows in this matrix as points, in a six
 dimensional space---one dimension for every column. And because it's a
 space, you can measure the distance between words. And this is where
 we get back to Breadbox: in order to play this bizarre game, we needed
-a *total order* on meanings, to be able to compare and order *any two
+a distance metric for meanings, to be able to compare and order *any two
 objects*. And this is *exactly* what a co-occurance matrix gives us!
 
 Obviously, there's a lot more to distributional semantics than just
