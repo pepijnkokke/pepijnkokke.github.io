@@ -76,7 +76,7 @@ function play(player,game) {
         return playerAI.play(player,game);
     }
     catch (e) {
-        addLine(player + ".play: " + e.message);
+        addLine("Error in " + player + ".play: " + e.message);
         return [];
     }
 }
@@ -87,7 +87,7 @@ function give(player,n,hand) {
         return playerAI.give(player,n,hand);
     }
     catch (e) {
-        addLine(player + ".give: " + e.message);
+        addLine("Error in " + player + ".give: " + e.message);
         return [];
     }
 }
