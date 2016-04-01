@@ -28,10 +28,19 @@ me it. Plus, I own a copy of it, so why not?
 Some words in between.
 
 ``` javascript
-var hand = JSON.stringify(game.hands[player]);
-var play = JSON.stringify(playWorstCards(game));
-var text = prompt("Your hand is "+hand+".\nWhat would you like to play?",play);
-(text === null) ? [] : JSON.parse(text);
+{
+    play : function(player,game) {
+        var hand = JSON.stringify(game.hands[player]);
+        var play = JSON.stringify(playWorstCards(game));
+        var text = prompt("Your hand is "+hand+".\nWhat would you like to play?",play);
+        return (text === null) ? [] : JSON.parse(text);
+    },
+    give : function (player,n,hand) {
+        var give = JSON.stringify(giveWorstCards(n,hand));
+        var text = prompt("Your hand is "+hand+".\nWhat would you like to give?",give);
+        return (text === null) ? [] : JSON.parse(text);
+    }
+}
 ```
 
 Some words after.
