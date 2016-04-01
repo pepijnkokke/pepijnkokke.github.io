@@ -50,7 +50,18 @@ function announce(msg) {
         //addLine(msg.contents[0] + ' is dealt [' + msg.contents[1].toString() + ']');
         break;
     case msg.tag === 'Illegal':
-        addLine(msg.contents[0] + ' attempted the illegal move [' + msg.contents[1].toString() + ']');
+        //addLine(msg.contents[0] + ' attempted the illegal move ['
+        //        + msg.contents[1].toString() + ']');
+        break;
+    case msg.tag === 'Give':
+        //addLine(msg.contents[0] + ' gives [' + msg.contents[2]
+        //        + '] to ' + msg.contents[1]);
+        break;
+    case msg.tag === 'StartTaxation':
+        //addLine("");
+        break;
+    case msg.tag === 'StartGame':
+        //addLine("");
         break;
     case msg.tag === 'AllPass':
         addLine("The game ended early, because all players passed.");
@@ -59,9 +70,14 @@ function announce(msg) {
 }
 // Create play function:
 function play(player,game) {
-    var editor = $('#tabs-'+player+' .CodeMirror')[0].CodeMirror;
-    var code    = editor.getValue();
-    return eval(code);
+    var editor   = $('#tabs-'+player+' .CodeMirror')[0].CodeMirror;
+    var playerAI = eval('('+editor.getValue().replace(/;$/,'')+');');
+    return playerAI.play(player,game);
+}
+function give(player,n,hand) {
+    var editor   = $('#tabs-'+player+' .CodeMirror')[0].CodeMirror;
+    var playerAI = eval('('+editor.getValue().replace(/;$/,'')+');');
+    return playerAI.give(player,n,hand);
 }
 // Create main function:
 function main() {
@@ -80,6 +96,33 @@ function main() {
     ul.append(li);
     $('#runmain').button('enable');
 }
+var playWorstCardsAI = `
+{
+    play : function(player,game) {
+        return playWorstCards(game);
+    },
+    give : function(player,n,hand) {
+        return giveWorstCards(n,hand);
+    }
+}`;
+var playBestCardsAI = `
+{
+    play : function(player,game) {
+        return playBestCards(game);
+    },
+    give : function(player,n,hand) {
+        return giveWorstCards(n,hand);
+    }
+}`;
+var passAI = `
+{
+    play : function(player,game) {
+        return [];
+    },
+    give : function(player,n,hand) {
+        return giveWorstCards(n,hand);
+    }
+}`;
 $(function() {
     $('#tabs').tabs();
     $('#runmain').button().click(function(event) {
@@ -96,10 +139,10 @@ $(function() {
         mode        : "javascript",
         autofocus   : false
     };
-    newPlayer('Ezra',"playWorstCards(game);",opts);
-    newPlayer('Neil',"playBestCards(game);",opts);
-    newPlayer('Ruth',"[];",opts);
-    newPlayer('Abby',"playWorstCards(game);",opts);
+    newPlayer('Ezra',playWorstCardsAI,opts);
+    newPlayer('Neil',playBestCardsAI,opts);
+    newPlayer('Ruth',passAI,opts);
+    newPlayer('Abby',playWorstCardsAI,opts);
     $("#tabs").tabs({
         activate: function(event,ui) {
             if (ui.newPanel.attr('id') == 'tabs-Console') {

@@ -7,7 +7,17 @@ extra-script : dalmuti-extra-script.html
 extra-style  : dalmuti-extra-style.html
 ---
 
-Some words before.
+One of my favourite games is [The Great Dalmuti][BoardGameGeek]. It's
+a variant of a widely-played card game with many, many names:
+President, Scumbag, Kings and Arseholes. Each of these may have
+*slightly* different rules, and *slightly* different decks, but they
+all share one thing---a lesson:
+
+> Regardless of skill, the wealthy stay wealthy, the poor stay poor.
+
+I've played many variants of this game, but there is something
+pleasing about the deck The Great Dalmuti uses which keeps drawing
+me it. Plus, I own a copy of it, so why not?
 
 <div id="tabs">
   <ul>
@@ -25,3 +35,7 @@ var text = prompt("Your hand is "+hand+".\nWhat would you like to play?",play);
 ```
 
 Some words after.
+
+---
+
+[BoardGameGeek]: https://boardgamegeek.com/boardgame/929/great-dalmuti
