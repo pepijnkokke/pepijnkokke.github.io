@@ -32,12 +32,14 @@ Some words in between.
     play : function(player,game) {
         var hand = JSON.stringify(game.hands[player]);
         var play = JSON.stringify(playWorstCards(game));
-        var text = prompt("Your hand is "+hand+".\nWhat would you like to play?",play);
+        var text = prompt("Your hand is "+hand+".\n"
+                          + "What would you like to play?",play);
         return (text === null) ? [] : JSON.parse(text);
     },
     give : function (player,n,hand) {
         var give = JSON.stringify(giveWorstCards(n,hand));
-        var text = prompt("Your hand is "+hand+".\nWhat would you like to give?",give);
+        var text = prompt("Your hand is "+hand+".\n"
+                          + "What would you like to give?",give);
         return (text === null) ? [] : JSON.parse(text);
     }
 }

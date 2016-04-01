@@ -72,22 +72,20 @@ function announce(msg) {
 function play(player,game) {
     var editor   = $('#tabs-'+player+' .CodeMirror')[0].CodeMirror;
     try {
-        var playerAI = eval('('+editor.getValue().replace(/;$/,'')+');');
-        return playerAI.play(player,game);
+        return eval('('+editor.getValue().replace(/;$/,'')+')').play(player,game);
     }
     catch (e) {
-        addLine("// Error in " + player + ".play: " + e.message);
+        addLine("// " + player + " throws " + e.toString());
         return [];
     }
 }
 function give(player,n,hand) {
     var editor   = $('#tabs-'+player+' .CodeMirror')[0].CodeMirror;
     try {
-        var playerAI = eval('('+editor.getValue().replace(/;$/,'')+');');
-        return playerAI.give(player,n,hand);
+        return eval('('+editor.getValue().replace(/;$/,'')+')').give(player,n,hand);
     }
     catch (e) {
-        addLine("// Error in " + player + ".give: " + e.message);
+        addLine("// " + player + " throws " + e.toString());
         return [];
     }
 }
