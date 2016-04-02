@@ -3,13 +3,14 @@ layout    : page
 title     : Publications
 permalink : /pubs/
 ---
+<style> tr.bibtexitem { margin-bottom: 1em; } </style>
 
 
 
 
 <table>
 
-<tr valign="top">
+<tr valign="top" class="bibtexitem">
 <td align="right" class="bibtexnumber">
 [<a name="kokke2015tytles">5</a>]
 </td>
@@ -23,7 +24,7 @@ Pepijn Kokke.
 </tr>
 
 
-<tr valign="top">
+<tr valign="top" class="bibtexitem">
 <td align="right" class="bibtexnumber">
 [<a name="kokke2015mpc">4</a>]
 </td>
@@ -39,7 +40,7 @@ Pepijn Kokke and Wouter Swierstra.
 </tr>
 
 
-<tr valign="top">
+<tr valign="top" class="bibtexitem">
 <td align="right" class="bibtexnumber">
 [<a name="toledo2014wisa">3</a>]
 </td>
@@ -56,7 +57,7 @@ Assaf Toledo, Stavroula Alexandropoulou, Sophie Chesney, Robert Grimm, Pepijn
 </tr>
 
 
-<tr valign="top">
+<tr valign="top" class="bibtexitem">
 <td align="right" class="bibtexnumber">
 [<a name="toledo2014lilt">2</a>]
 </td>
@@ -73,7 +74,7 @@ Assaf Toledo, Stavroula Alexandropoupou, Sophie Chesney, Sophia Katrenko, Heidi
 </tr>
 
 
-<tr valign="top">
+<tr valign="top" class="bibtexitem">
 <td align="right" class="bibtexnumber">
 [<a name="toledo2013iwcs">1</a>]
 </td>

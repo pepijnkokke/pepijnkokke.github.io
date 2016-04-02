@@ -33,8 +33,8 @@ end
 file 'pubs.md' => 'pubs.bib' do |t|
   Dir.mktmpdir do |tmp|
     sh "bibtex2html -nodoc -nodoi -nobibsource -nokeywords -noabstract -r -revkeys -d -o #{tmp}/pubs pubs.bib"
-    doc = Nokogiri::HTML::DocumentFragment.parse(File.read("#{tmp}/pubs.html"))
 
+    doc = Nokogiri::HTML::DocumentFragment.parse(File.read("#{tmp}/pubs.html"))
     doc.xpath('comment()').remove()
     doc.at('hr').xpath('following-sibling::*').remove()
     doc.at('hr').remove()
