@@ -1,0 +1,157 @@
+@booklet{kokke2015tytles,
+  abstract     = { In recent years, the interest in using proof
+                  assistants to formalise and reason about mathematics
+                  and programming languages has grown. Type-logical
+                  grammars, being closely related to type theories and
+                  systems used in functional programming, are a
+                  perfect candidate to next apply this curiosity
+                  to. The advantages of using proof assistants is that
+                  they allow one to write formally verified proofs
+                  about one’s type-logical systems, and that any
+                  theory, once implemented, can immediately be
+                  computed with. The downside is that in many cases
+                  the formal proofs are written as an afterthought,
+                  are incomplete, or use obtuse syntax. This makes it
+                  that the verified proofs are often much more
+                  difficult to read than the pen-and-paper proofs, and
+                  almost never directly published. In this paper, we
+                  will try to remedy that by example. Concretely, we
+                  use Agda to model the Lambek-Grishin calculus, a
+                  grammar logic with a rich vocabulary of typeforming
+                  operations. We then present a verified procedure for
+                  cut elimination in this system. Then we briefly
+                  outline a continuation-passing style translation
+                  from proofs in the Lambek-Grishin calculus to
+                  programs in Agda. And finally, we will put our
+                  system to use in the analysis of a simple example
+                  sentence. },
+  title        = {Formalising Type-Logical Grammar in Agda},
+  author       = {Kokke, Pepijn},
+  howpublished = {Paper presented at TYTLES 2015, as part of ESSLLI, Barcelona},
+  year         = {2015},
+  url          = {http://www.lirmm.fr/tytles/Articles/Kokke.pdf},
+  language     = {English},
+}
+@incollection{kokke2015mpc,
+  abstract     = { As proofs in type theory become increasingly
+                  complex, there is a growing need to provide better
+                  proof automation. This paper shows how to implement
+                  a Prolog-style resolution procedure in the
+                  dependently typed programming language
+                  Agda. Connecting this resolution procedure to Agda’s
+                  reflection mechanism provides a first-class proof
+                  search tactic for first-order Agda terms. As a
+                  result, writing proof automation tactics need not be
+                  different from writing any other program. },
+  year         = {2015},
+  isbn         = {978-3-319-19796-8},
+  booktitle    = {Mathematics of Program Construction},
+  volume       = {9129},
+  series       = {Lecture Notes in Computer Science},
+  editor       = {Hinze, Ralf and Voigtländer, Janis},
+  doi          = {10.1007/978-3-319-19797-5_14},
+  title        = {Auto in Agda},
+  url          = {http://dx.doi.org/10.1007/978-3-319-19797-5_14},
+  publisher    = {Springer International Publishing},
+  author       = {Kokke, Pepijn and Swierstra, Wouter},
+  pages        = {276-301},
+  language     = {English},
+}
+@inproceedings{toledo2013iwcs,
+  abstract     = { We introduce a new formal semantic model for
+                  annotating textual entailments, that describes
+                  restrictive, intersective and appositive
+                  modification. The model contains a formally defined
+                  interpreted lexicon, which specifies the inventory
+                  of symbols and the supported semantic operators, and
+                  an informally defined annotation scheme that
+                  instructs annotators in which way to bind words and
+                  constructions from a given pair of premise and
+                  hypothesis to the interpreted lexicon. We explore
+                  the applicability of the proposed model to the
+                  Recognizing Textual Entailment (RTE) 1-4 corpora and
+                  describe a first-stage annotation scheme based on
+                  which manual annotation work was carried out. The
+                  constructions we annotated were found to occur in
+                  80.65\% of the entailments in RTE 1-4 and were
+                  annotated with cross-annotator agreement of 68\% on
+                  average. The annotated RTE corpora are publicly
+                  available for the research community. },
+  author       = {Toledo, Assaf and Alexandropoulou, Stavroula and Katrenko, Sophia and Klockmann, Heidi and Kokke, Pepijn and Winter, Yoad},
+  title        = {Semantic Annotation of Textual Entailment},
+  booktitle    = {Proceedings of the 10th International Conference on Computational Semantics (IWCS 2013) -- Long Papers},
+  month        = {March},
+  year         = {2013},
+  address      = {Potsdam, Germany},
+  publisher    = {Association for Computational Linguistics},
+  pages        = {240--251},
+  url          = {http://www.aclweb.org/anthology/W13-0121},
+  language     = {English},
+}
+@inproceedings{toledo2014wisa,
+  abstract     = { We introduce a new platform for annotating
+                  inferential phenomena in entailment data, buttressed
+                  by a formal semantic model and a proof-system that
+                  provide immediate verification of the coherency and
+                  completeness of the marked annotations. By
+                  integrating a web-based user interface, a formal
+                  lexicon, a lambda-calculus engine and an
+                  off-the-shelf theorem prover, the platform allows
+                  human annotators to mark linguistic phenomena in
+                  entailment data (pairs made up of a premise and a
+                  hypothesis) and to receive immediate feedback
+                  whether their annotations are substantiated: for
+                  positive entailment pairs, the system searches for a
+                  formal logical proof that the hypothesis follows
+                  from the premise; for negative pairs, the system
+                  verifies that a counter-model can be
+                  constructed. This novel approach facilitates the
+                  creation of textual entailment corpora with
+                  annotations that are sufficiently coherent and
+                  complete for recognizing the entailment relation or
+                  lack thereof. A corpus of several hundred annotated
+                  entailments is currently being compiled based on the
+                  platform and will be available for the research
+                  community in the foreseeable future. },
+  author       = {Toledo, Assaf and Alexandropoulou, Stavroula and Chesney, Sophie and Grimm, Robert and Kokke, Pepijn and Kruit, Benno and Neophytou, Kyriaki and Nguyen, Antony and Winter, Yoad},
+  title        = {A Proof-Based Annotation Platform of Textual Entailment},
+  booktitle    = {Proceedings 10th Joint ISO - ACL SIGSEM Workshop on Interoperable Semantic Annotation},
+  month        = {May},
+  year         = {2014},
+  address      = {Reykjavik, Iceland},
+  publisher    = {Association for Computational Linguistics},
+  pages        = {21--24},
+  url          = {http://dspace.library.uu.nl/handle/1874/306425},
+  language     = {English},
+}
+@incollection{toledo2014lilt,
+  abstract     = { We introduce a new formal semantic model for
+                  annotating textual entailments that describes
+                  restrictive, intersective, and appositive
+                  modification. The model contains a formally defined
+                  interpreted lexicon, which specifies the inventory
+                  of symbols and the supported semantic operators, and
+                  an informally defined annotation scheme that
+                  instructs annotators in which way to bind words and
+                  constructions from a given pair of premise and
+                  hypothesis to the interpreted lexicon. We explore
+                  the applicability of the proposed model to the
+                  Recognizing Textual Entailment (RTE) 1–4 corpora and
+                  describe a first-stage annotation scheme on which we
+                  based the manual annotation work. The constructions
+                  we annotated were found to occur in 80.65\% of the
+                  entailments in RTE 1–4 and were annotated with
+                  cross-annotator agreement of 68\% on average. The
+                  annotated parts of the RTE corpora are publicly
+                  available for further research. },
+  author       = {Toledo, Assaf and Alexandropoupou, Stavroula and Chesney, Sophie and Katrenko, Sophia and Klockmann, Heidi and Kokke, Pepijn and Kruit, Benno and Winter, Yoad},
+  title        = {Towards a Semantic Model for Textual Entailment},
+  booktitle    = {Perspectives on Semantic Representations for Textual Inference},
+  volume       = {9},
+  year         = {2014},
+  publisher    = {Linguistic Issues in Language Technology},
+  pages        = {117--150},
+  issn         = {1945-3604},
+  url          = {http://csli-lilt.stanford.edu/ojs/index.php/LiLT/issue/view/1},
+  language     = {English},
+}
