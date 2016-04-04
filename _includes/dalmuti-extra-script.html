@@ -47,24 +47,24 @@ function announce(msg) {
         addLine(msg.contents + ' is out of cards!');
         break;
     case msg.tag === 'Hand':
-        //addLine(msg.contents[0] + ' is dealt [' + msg.contents[1].toString() + ']');
+        addLine(msg.contents[0] + ' is dealt [' + msg.contents[1].toString() + ']');
         break;
     case msg.tag === 'Illegal':
-        //addLine(msg.contents[0] + ' attempted the illegal move ['
-        //        + msg.contents[1].toString() + ']');
+        addLine(msg.contents[0] + ' attempted the illegal move ['
+                + msg.contents[1].toString() + ']');
         break;
     case msg.tag === 'Give':
-        //addLine(msg.contents[0] + ' gives [' + msg.contents[2]
-        //        + '] to ' + msg.contents[1]);
+        addLine(msg.contents[0] + ' gives [' + msg.contents[2]
+                + '] to ' + msg.contents[1]);
         break;
     case msg.tag === 'Revolution':
         addLine(msg.contents + ' cries revolution!');
         break;
     case msg.tag === 'StartTaxation':
-        //addLine("");
+        addLine("");
         break;
     case msg.tag === 'StartGame':
-        //addLine("");
+        addLine("");
         break;
     case msg.tag === 'AllPass':
         addLine("The game ended early, because all players passed.");
@@ -124,7 +124,7 @@ var playBestCardsAI = `
         return playBestCards(game);
     },
     give : function(player,n,hand) {
-        return giveWorstCards(n,hand);
+        return giveBestCards(n,hand);
     }
 }`;
 var passAI = `
@@ -133,7 +133,7 @@ var passAI = `
         return [];
     },
     give : function(player,n,hand) {
-        return giveWorstCards(n,hand);
+        return giveBestCards(n,hand);
     }
 }`;
 function shuffle(a) {
