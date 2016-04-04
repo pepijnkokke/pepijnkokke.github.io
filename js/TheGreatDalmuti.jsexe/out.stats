@@ -9,7 +9,7 @@ ghc-prim:                19894
 ghcjs_B7KLFJ07Vte3zPHAgRIBTb:10250
 ghcjs_Kc7TQ2cEDg1F5e5cgY2Vuk:21824
 integer-gmp:             43175
-main:                    493430
+main:                    494656
 primi_293YT17zdlWL9QJgnLTQSn:2385
 rando_3e2beemixydBACmXmsTUb2:16476
 scien_JLbgv5DSrHg1BhuIrFclni:50193
@@ -109,7 +109,7 @@ integer-gmp
     GHC.Integer.Type:                   42842
 
 main
-    Main:                               493430
+    Main:                               494656
 
 primi_293YT17zdlWL9QJgnLTQSn
     Control.Monad.Primitive:            1043
@@ -150,5 +150,5 @@ vecto_FNLwpzrmeRC6Ra1RihE2cq
 
 
 
-packed metadata: 244891
+packed metadata: 244915
 
