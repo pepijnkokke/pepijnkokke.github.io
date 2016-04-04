@@ -15,7 +15,7 @@ permalink : /pubs/
 </td>
 <td class="bibtexitem">
 Pepijn Kokke.
- Nlq: a modular type-logical grammar for quantifier movement, scope
+ NLQ: a modular type-logical grammar for quantifier movement, scope
   islands, and more.
  Master's thesis, Utrecht Universiy, 2 2016.
 [ <a href="http://dspace.library.uu.nl/handle/1874/328401">http</a> ]
