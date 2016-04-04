@@ -92,10 +92,11 @@ Personally, I think I'd be quite easy to implement an AI which can
 competently play The Great Dalmuti. A simple, rule-based AI should
 already do quite well. As a first step in demonstrating this, I've
 written a small playground where AIs can compete with one another.
-
 Below, you should see a number of tabs, the first of which is labelled
 'Console'. In it, there should be a button that looks like this: <span
-class="runmain">&#9654;</span>.
+class="runmain">&#9654;</span>. If you click it, the AIs in the other
+tabs will be pitted against one another in a game of The Great Dalmuti.
+Try it!
 
 <div id="tabs">
   <ul>

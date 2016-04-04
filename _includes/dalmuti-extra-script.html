@@ -175,11 +175,13 @@ $(function() {
     });
     $("#tabs").tabs({
         activate: function(event,ui) {
-            if (ui.newPanel.attr('id') == 'tabs-Console') {
-                $('.runmain').show();
+    if (ui.newPanel.attr('id') == 'tabs-Console') {
+                $('.runmain').button('enable');
+                $('#tabs .runmain').show();
             }
             else {
-                $('.runmain').hide();
+                $('.runmain').button('disable');
+                $('#tabs .runmain').hide();
             }
         }
     });
