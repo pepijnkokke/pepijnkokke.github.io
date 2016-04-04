@@ -107,7 +107,7 @@ function main() {
         return i1 > i2;
     });
     ul.append(li);
-    $('#runmain').button('enable');
+    $('.runmain').button('enable');
 }
 var playWorstCardsAI = `
 {
@@ -146,11 +146,13 @@ function shuffle(a) {
     }
 }
 $(function() {
+    $('#tabs-noscript').hide();
+    $('#tabs').show();
     $('#tabs').tabs();
-    $('#runmain').button().click(function(event) {
-        $('#runmain').button('disable');
+    $('.runmain').button().click(function(event) {
+        $('.runmain').button('disable');
         main();
-    });;
+    });
     newTab('Console',{
         readOnly    : true,
         value       : '',
@@ -174,10 +176,10 @@ $(function() {
     $("#tabs").tabs({
         activate: function(event,ui) {
             if (ui.newPanel.attr('id') == 'tabs-Console') {
-                $('#runmain').show();
+                $('.runmain').show();
             }
             else {
-                $('#runmain').hide();
+                $('.runmain').hide();
             }
         }
     });

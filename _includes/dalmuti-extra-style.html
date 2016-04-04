@@ -3,9 +3,17 @@
 <link href="{{ "/css/jquery-ui.min.css"           | prepend: site.baseurl }}" type="text/css" rel="stylesheet">
 <link href="{{ "/css/codemirror.css"              | prepend: site.baseurl }}" type="text/css" rel="stylesheet">
 <style type="text/css">
-  #runmain {
-  float    : right;
-  position : relative;
+  #tabs {
+  display  : none;
+  }
+  #tabs-noscript img {
+  width : 100%;
+  margin: 1ex auto;
+  }
+  #tabs .runmain {
+  position : absolute;
+  bottom   : 1ex;
+  right    : 1ex;
   z-index  : 1;
   }
   #loader {
