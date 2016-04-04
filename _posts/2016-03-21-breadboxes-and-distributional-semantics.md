@@ -235,10 +235,16 @@ networks to learn the word meanings: for instance, have a look at
 
 ---
 
+[DontCountPredict]: http://clic.cimec.unitn.it/marco/publications/acl2014/baroni-etal-countpredict-acl2014.pdf
 [UnicornPower]: https://github.com/UnicornPower
 [word2vec]: http://deeplearning4j.org/word2vec
 [slides]: https://www.cs.utex.edu/~mooney/cs388/slides/dist-sem-intro-NLP-class-UT.pdf
 [semantic-vectors]: http://clic.cimec.unitn.it/composes/semantic-vectors.html
 [^wampimuk]: Taken from <https://www.cs.utexas.edu/~mooney/cs388/slides/dist-sem-intro-NLP-class-UT.pdf>.
 [^webcorp]: Taken from <http://www.webcorp.org.uk>.
-[^abitofashame]: A bit of a shame, really, since the course I took was *about* composing meaning vectors.
+[^abitofashame]: A bit of a shame, really, since the course I took was
+    *about* composing meaning vectors. Also, full disclosure, the
+    vectors that I used were created using [Word2Vec][word2vec], using
+    neural networks. Such vectors generally outperform counting
+    vectors in tasks of relatedness (see
+    *[Don't Count, Predict!][DontCountPredict]* by Baroni et al.).

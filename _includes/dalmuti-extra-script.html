@@ -57,6 +57,9 @@ function announce(msg) {
         //addLine(msg.contents[0] + ' gives [' + msg.contents[2]
         //        + '] to ' + msg.contents[1]);
         break;
+    case msg.tag === 'Revolution':
+        addLine(msg.contents + ' cries revolution!');
+        break;
     case msg.tag === 'StartTaxation':
         //addLine("");
         break;
@@ -133,6 +136,15 @@ var passAI = `
         return giveWorstCards(n,hand);
     }
 }`;
+function shuffle(a) {
+    var j, x, i;
+    for (i = a.length; i; i -= 1) {
+        j = Math.floor(Math.random() * i);
+        x = a[i - 1];
+        a[i - 1] = a[j];
+        a[j] = x;
+    }
+}
 $(function() {
     $('#tabs').tabs();
     $('#runmain').button().click(function(event) {
@@ -149,10 +161,16 @@ $(function() {
         mode        : "javascript",
         autofocus   : false
     };
-    newPlayer('Ezra',playWorstCardsAI,opts);
-    newPlayer('Neil',playBestCardsAI,opts);
-    newPlayer('Ruth',passAI,opts);
-    newPlayer('Abby',playWorstCardsAI,opts);
+    var players =
+    [ {name: 'Ezra', code: playWorstCardsAI, opts: opts}
+    , {name: 'Neil', code: playBestCardsAI,  opts: opts}
+    , {name: 'Ruth', code: passAI,           opts: opts}
+    , {name: 'Abby', code: playWorstCardsAI, opts: opts}
+    ];
+    shuffle(players)
+    players.forEach(function(player,index,array) {
+      newPlayer(player.name,player.code,player.opts);
+    });
     $("#tabs").tabs({
         activate: function(event,ui) {
             if (ui.newPanel.attr('id') == 'tabs-Console') {
@@ -163,8 +181,5 @@ $(function() {
             }
         }
     });
-    window.setTimeout(function(){
-        $('#runmain').click();
-    },1000);
 });
 </script>
