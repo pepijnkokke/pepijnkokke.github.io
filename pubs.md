@@ -3,14 +3,28 @@ layout    : page
 title     : Publications
 permalink : /pubs/
 ---
-<style> tr.bibtexitem { margin-bottom: 1em; } </style>
 
 
 
 
 <table>
 
-<tr valign="top" class="bibtexitem">
+<tr valign="top">
+<td align="right" class="bibtexnumber">
+[<a name="kokke2016nlq">6</a>]
+</td>
+<td class="bibtexitem">
+Pepijn Kokke.
+ Nlq: a modular type-logical grammar for quantifier movement, scope
+  islands, and more.
+ Master's thesis, Utrecht Universiy, 2 2016.
+[ <a href="http://dspace.library.uu.nl/handle/1874/328401">http</a> ]
+
+</td>
+</tr>
+
+
+<tr valign="top">
 <td align="right" class="bibtexnumber">
 [<a name="kokke2015tytles">5</a>]
 </td>
@@ -24,7 +38,7 @@ Pepijn Kokke.
 </tr>
 
 
-<tr valign="top" class="bibtexitem">
+<tr valign="top">
 <td align="right" class="bibtexnumber">
 [<a name="kokke2015mpc">4</a>]
 </td>
@@ -40,7 +54,7 @@ Pepijn Kokke and Wouter Swierstra.
 </tr>
 
 
-<tr valign="top" class="bibtexitem">
+<tr valign="top">
 <td align="right" class="bibtexnumber">
 [<a name="toledo2014wisa">3</a>]
 </td>
@@ -57,7 +71,7 @@ Assaf Toledo, Stavroula Alexandropoulou, Sophie Chesney, Robert Grimm, Pepijn
 </tr>
 
 
-<tr valign="top" class="bibtexitem">
+<tr valign="top">
 <td align="right" class="bibtexnumber">
 [<a name="toledo2014lilt">2</a>]
 </td>
@@ -74,7 +88,7 @@ Assaf Toledo, Stavroula Alexandropoupou, Sophie Chesney, Sophia Katrenko, Heidi
 </tr>
 
 
-<tr valign="top" class="bibtexitem">
+<tr valign="top">
 <td align="right" class="bibtexnumber">
 [<a name="toledo2013iwcs">1</a>]
 </td>
