@@ -92,6 +92,9 @@ function give(player,n,hand) {
         return [];
     }
 }
+function revolt(player,rank,hand) {
+    return rank > 2;
+}
 // Create main function:
 function main() {
     var editor = $('#tabs-Console .CodeMirror')[0].CodeMirror;

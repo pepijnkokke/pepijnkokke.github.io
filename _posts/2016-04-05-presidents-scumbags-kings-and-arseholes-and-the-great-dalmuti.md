@@ -1,6 +1,6 @@
 ---
 title        : "Presidents, Scumbags, Kings and Arseholes, and The Great Dalmuti"
-date         : 2016-04-05 12:00:00
+date         : 2016-04-04 12:00:00
 categories   : []
 tags         : [haskell, javascript]
 extra-script : dalmuti-extra-script.html
@@ -17,17 +17,19 @@ I've had a bunch of discussions about this game over the years, most
 of which were about the possible strategies. Personally, I don't
 believe that this game is all that hard to play well---and
 consequently, that it isn't all that hard to write an AI for it.
-Therefore, I thought I'd write a little playground for AIs to play
-in. I'll get back to that later in this post, though if you're
-familiar with the game, you may as well
-[skip the next section](#an-ai-playground).
+Pehaps even a very simple, rule-based AI can play passably. However,
+friends of mine think that it is a much harder problem, and that much
+more advanced techniques will be needed. Therefore, I thought I'd
+write a little playground for AIs to play in. I'll get back to that
+later in this post, though if you're familiar with the game, you may
+as well [skip the next section](#an-ai-playground).
 
 
 ## The Rules
 
-Before I get that that, though, it's probably prudent to at least
-briefly talk about the game. The rules of the game are fairly simple,
-so I'll summarise them here:
+Before I get to showcasing my playground, it's probably prudent to at
+least briefly talk about the game. The rules of the game are fairly
+simple, so I'll summarise them here:
 
   - **Rank**: Each player has a rank, with the top ranks usually called
     something like "president" and "vice president", and the lower
@@ -36,10 +38,10 @@ so I'll summarise them here:
     evenly amongst the players; the highest ranking player then starts
     the first round;
   - **Rounds**: Starting with the player who starts that round
-    (obviously) each player either plays some cards or passes, with
+    (obviously) each player either plays some cards or passes, and
     the turn passing to the next in rank (after the lowest rank, the
     turn passes to the highest in rank);
-  - **Legal Plays**: For any play, it is legal if:
+  - **Legal Plays**: A play is legal if:
       * it is the first play, and the cards are all identical in
         number; or
       * there are previous plays, the new play has the same number of
@@ -51,13 +53,15 @@ so I'll summarise them here:
     starts the next one;
   - **Winning the Game**: The goal is for players to get rid of all of
     their cards as fast as possible. The order in which they do so,
-    determines their ranks in the next game, going from high to low.
+    determines their ranks in the next game, with the first player to
+    finish becoming the highest in rank, the second the second
+    highest, and so on.
 
 Each variant of the game adds their own rules to this, but this much
-is shared more or less by all of them. Note that I haven't said
+is shared by more or less all of them. Note that I haven't said
 anything about what cards there are in the deck---this is because
-every variant has different rules about what cards there are in a
-deck, and which is "better" than which other.
+every variant is played with a different deck, and with different
+rules as to which card is "better" than which other.
 I've played many variants of this game, but there's just something
 pleasing about the deck The Great Dalmuti uses---one one, two
 twos, three threes, up to twelve twelves---plus, I own a copy of
@@ -88,15 +92,14 @@ Anyway, The Great Dalmuti adds the following rules:
 
 ## An AI Playground
 
-Personally, I think I'd be quite easy to implement an AI which can
-competently play The Great Dalmuti. A simple, rule-based AI should
-already do quite well. As a first step in demonstrating this, I've
-written a small playground where AIs can compete with one another.
-Below, you should see a number of tabs, the first of which is labelled
-'Console'. In it, there should be a button that looks like this: <span
-class="runmain">&#9654;</span>. If you click it, the AIs in the other
-tabs will be pitted against one another in a game of The Great Dalmuti.
-Try it!
+As I mentioned above, I feel that a very simple, rule-based AI could
+already competently play The Great Dalmuti. As a first step in
+demonstrating this, I've written a small playground where AIs can
+compete with one another. Below, you should see a number of tabs, the
+first of which is labelled 'Console'. In it, there should be a button
+that looks like this: <span class="runmain">&#9654;</span>. If you
+click it, the AIs in the other tabs will be pitted against one another
+in a game of The Great Dalmuti. Try it!
 
 <div id="tabs">
   <ul>
@@ -107,16 +110,15 @@ Try it!
   <img alt="Screenshot of UI of embedded The Great Dalmuti after an example run." src="{{ "/images/dalmuti-example.png" | prepend: site.baseurl }}" />
 </div>
 
-In implementing the game, I've made one small concession in the
-rules. While it isn't *technically* forbidden by the original rules,
-most players would probably say that a pass isn't a legal opening
-move. Why would you? However, in order to keep faulty AIs from
-breaking up the flow of the game, I've implemented it such that *it
-is*. This means that, in the game above, if your AI attempts an
-illegal move, or throws an error, it is taken as a pass instead.
-Furthermore, if your AI attempts to abuse the taxation system by
-giving away too many or too few cards, it is instead penalised by
-giving *the best cards.*
+In implementing the game, I've made one small concession---while it
+isn't *technically* forbidden by the original rules, most players
+would probably say that a pass isn't a legal opening move. Why would
+you? However, in order to keep faulty AIs from breaking up the flow of
+the game, I've implemented it such that *it is*. This means that, in
+the game above, if your AI attempts an illegal move, or throws an
+error, it is taken as a pass instead. Furthermore, if your AI attempts
+to abuse the taxation system by giving away too many or too few cards,
+it is instead penalised by giving *the best cards.*
 
 The default AIs---for now---are a little disappointing. There are some
 functions built into my implementation. Most interestingy,
@@ -132,10 +134,9 @@ means giving them to other players. And then finally, there's
 Ruth. She's just very nice, and wants to give other players a chance,
 so she's been written to pass every turn, even if she's starting a
 round. And when it comes to giving away cards, she just gives away the
-cards that she would be happiest receiving.
-
-So, you know, obviously there's some room for improvement. At least,
-if competitive play is your goal.
+cards that she would be happiest receiving. So, you know, obviously
+there's some room for improvement in the department. At least, if
+competitive play is your goal.
 
 
 ## Write your own AI
@@ -173,10 +174,9 @@ ranks (in this case, Neil is top chicken).
 
 Using `game.plays`, you can find out what the players who have gone
 before you have played. As you can see, before you came Ruth, who
-passed---no surprise there, since I wrote her default AI to do nothing
-but pass---and before that, Neil played two fives. Before that came
-Ezra, and before that Abby, who started the round by playing two
-twelves.
+passed---no surprises there---and before that, Neil played two
+fives. Before that came Ezra, and before that Abby, who started the
+round by playing two twelves.
 
 Last, there's a field called "hands". Obviously, some meddling has
 gone on here, since no, the other players aren't holding hands
