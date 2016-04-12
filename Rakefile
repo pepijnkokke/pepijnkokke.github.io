@@ -8,18 +8,10 @@ require_relative 'tasks/agda'
 TheGreatDalmuti_files = ['all.js','lib.js','out.js','rts.js','runmain.js']
 
 
-task :default do
-
-  Rake::Task['pubs.md'].invoke
-
-  Dir.glob('_posts/*.lagda') do |post|
-    Rake::Task[post.ext('.md')].invoke
-  end
-
-  TheGreatDalmuti_files.each do |f|
-    Rake::Task["js/TheGreatDalmuti.jsexe/#{f}"].invoke
-  end
-end
+task :default => \
+     [['pubs.md'],
+      Dir.glob('_posts/*.lagda').collect{ |f| f.ext('.md') },
+      TheGreatDalmuti_files.collect{ |f| "js/TheGreatDalmuti.jsexe/#{f}" }].flatten
 
 
 rule '.md' => '.lagda' do |t|
@@ -62,18 +54,23 @@ end
 
 
 def TheGreatDalmuti_build
-  Dir.chdir('src/TheGreatDalmuti/') do
+  Dir.chdir('misc/TheGreatDalmuti/') do
     sh("cabal configure --ghcjs")
     sh("cabal build")
   end
   TheGreatDalmuti_files.each do |f|
-    cp "src/TheGreatDalmuti/dist/build/TheGreatDalmuti/TheGreatDalmuti.jsexe/#{f}",
+    cp "misc/TheGreatDalmuti/dist/build/TheGreatDalmuti/TheGreatDalmuti.jsexe/#{f}",
        "js/TheGreatDalmuti.jsexe/#{f}"
   end
 end
 
+file 'js/TheGreatDalmuti.jsexe' do
+  mkdir_p 'js/TheGreatDalmuti.jsexe'
+end
+
 TheGreatDalmuti_files.each do |f|
-  file "js/TheGreatDalmuti.jsexe/#{f}" => 'src/TheGreatDalmuti/TheGreatDalmuti.hs' do
+  file "js/TheGreatDalmuti.jsexe/#{f}" => ['js/TheGreatDalmuti.jsexe',
+                                           'misc/TheGreatDalmuti/TheGreatDalmuti.hs'] do
     TheGreatDalmuti_build()
   end
 end
