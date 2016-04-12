@@ -8,3 +8,4 @@ Gemfile.lock
 *.sublime-project
 *.sublime-workspace
 *.agdai
+dist/

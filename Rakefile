@@ -5,9 +5,19 @@ require          'yaml'
 require_relative 'tasks/agda'
 
 
-task :default => 'pubs.md' do
+TheGreatDalmuti_files = ['all.js','lib.js','out.js','rts.js','runmain.js']
+
+
+task :default do
+
+  Rake::Task['pubs.md'].invoke
+
   Dir.glob('_posts/*.lagda') do |post|
     Rake::Task[post.ext('.md')].invoke
+  end
+
+  TheGreatDalmuti_files.each do |f|
+    Rake::Task["js/TheGreatDalmuti.jsexe/#{f}"].invoke
   end
 end
 
@@ -47,5 +57,23 @@ file 'pubs.md' => 'pubs.bib' do |t|
     ---
     #{doc.to_html()}
     PUBS
+  end
+end
+
+
+def TheGreatDalmuti_build
+  Dir.chdir('src/TheGreatDalmuti/') do
+    sh("cabal configure --ghcjs")
+    sh("cabal build")
+  end
+  TheGreatDalmuti_files.each do |f|
+    cp "src/TheGreatDalmuti/dist/build/TheGreatDalmuti/TheGreatDalmuti.jsexe/#{f}",
+       "js/TheGreatDalmuti.jsexe/#{f}"
+  end
+end
+
+TheGreatDalmuti_files.each do |f|
+  file "js/TheGreatDalmuti.jsexe/#{f}" => 'src/TheGreatDalmuti/TheGreatDalmuti.hs' do
+    TheGreatDalmuti_build()
   end
 end

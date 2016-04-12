@@ -16,7 +16,7 @@ which has explicit structural rules: Gentzen's LJ.
 <div class="hidden">
 \begin{code}
 import 2016-03-20-one-lambda-calculus-many-times as Part1
-module 2016-03-26-one-lambda-calculus-many-times-2 where
+module one-lambda-calculus-many-times-2 where
 \end{code}
 </div>
 
@@ -79,9 +79,43 @@ $$
     cut : ∀ {A B   Γ Δ} → LJ Γ ⊢ A → LJ A ∷ Δ ⊢ B → LJ Γ ++ Δ ⊢ B
     ⇒l  : ∀ {A B C Γ Δ} → LJ Γ ⊢ A → LJ B ∷ Δ ⊢ C → LJ A ⇒ B ∷ Γ ++ Δ ⊢ C
     ⇒r  : ∀ {A B   Γ  } → LJ A ∷ Γ ⊢ B → LJ Γ ⊢ A ⇒ B
+    w   : ∀ {A B   Γ  } → LJ Γ ⊢ B → LJ A ∷ Γ ⊢ B
+    c   : ∀ {A B   Γ  } → LJ A ∷ A ∷ Γ ⊢ B → LJ A ∷ Γ ⊢ B
+    p   : ∀ {A B C Γ Δ} → LJ Γ ++ A ∷ B ∷ Δ ⊢ C → LJ Γ ++ B ∷ A ∷ Δ ⊢ C
 \end{code}
-
 
 ---
 
 [^minproplog]: Or, alternatively, as axiomatisations of minimal propositional logic.
+
+<!--
+$$
+  \begin{array}{c}
+  \frac{}{A \vdash A}{\small ax}
+  \quad
+  \frac{A , \Gamma \vdash B}{\Gamma \vdash A \Rightarrow B}{\small{\Rightarrow}\!i}
+  \quad
+  \frac{\Gamma \vdash A \Rightarrow B \quad \Delta \vdash A}{\Gamma , \Delta \vdash B}{\small{\Rightarrow}\!e}
+  \\
+  \\
+  \frac{\Gamma \vdash B}{A , \Gamma \vdash B}{\small w}
+  \quad
+  \frac{A , A , \Gamma \vdash B}{A , \Gamma \vdash B}{\small c}
+  \quad
+  \frac{\Gamma , A , B , \Delta \vdash B}{\Gamma , B , A , \Delta \vdash B}{\small p}
+  \end{array}
+$$
+
+
+\begin{code}
+  infix 3 NJ_
+
+  data NJ_ : Sequent → Set where
+    ax  : ∀ {A        } → NJ A ∷ [] ⊢ A
+    ⇒i  : ∀ {A B   Γ  } → NJ A ∷ Γ ⊢ B → NJ Γ ⊢ A ⇒ B
+    ⇒e  : ∀ {A B   Γ Δ} → NJ Γ ⊢ A ⇒ B → NJ Δ ⊢ A → NJ Γ ++ Δ ⊢ B
+    w   : ∀ {A B   Γ  } → NJ Γ ⊢ B → NJ A ∷ Γ ⊢ B
+    c   : ∀ {A B   Γ  } → NJ A ∷ A ∷ Γ ⊢ B → NJ A ∷ Γ ⊢ B
+    p   : ∀ {A B C Γ Δ} → NJ Γ ++ A ∷ B ∷ Δ ⊢ C → NJ Γ ++ B ∷ A ∷ Δ ⊢ C
+\end{code}
+-->
