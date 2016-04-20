@@ -207,8 +207,8 @@ in that enviroment with some irrelevant stuff added to it. Formally,
 we write it as:
 
 \begin{code}
-  weak : ∀ {A B Γ} → ND Γ ⊢ B → ND A ∷ Γ ⊢ B
-  weak = struct there
+  w′ : ∀ {A B Γ} → ND Γ ⊢ B → ND A ∷ Γ ⊢ B
+  w′ = struct there
 \end{code}
 
 Passing <a class="Agda InductiveConstructor" target="_blank"
@@ -259,7 +259,7 @@ variable in a context:
 \end{code}
 
 It's a little bit of a puzzle, but given <a href="#8254" class="Agda
-Function">weak</a> it becomes quite easy to show that the two logics
+Function">w′ it becomes quite easy to show that the two logics
 are in fact equivalent---that they derive the *same sequents*:
 
 \begin{code}
@@ -273,7 +273,7 @@ are in fact equivalent---that they derive the *same sequents*:
     ⟸ : ∀ {S} → SC S → ND S
     ⟸ (ax  p)   = ax p
     ⟸ (cut f g) = ⇒e (⇒i (⟸ g)) (⟸ f)
-    ⟸ (⇒l  f g) = ⇒e (weak (⇒i (⟸ g))) (⇒e ax₀ (weak (⟸ f)))
+    ⟸ (⇒l  f g) = ⇒e (w′ (⇒i (⟸ g))) (⇒e ax₀ (w′ (⟸ f)))
     ⟸ (⇒r  f)   = ⇒i (⟸ f)
 \end{code}
 
@@ -454,83 +454,3 @@ antecedent.
     the HTML source. However, it may be much easier to click the
     symbol that confuses you---that should take you directly to its
     definition in the standard library.
-
-
-<div class="hidden">
-### BONUS!
-### The Limit of Intensional Type Theory
-
-Boop.
-
-\begin{code}
-  ax₀′ : ∀ {A Γ} → Env (A ∷ Γ) → ⟦ A ⟧
-  ax₀′ = lookup (here refl)
-
-  ⇒i′ : ∀ {A Γ} {B : Set} → (Env (A ∷ Γ) → B) → Env Γ → ⟦ A ⟧ → B
-  ⇒i′ f e x = f (x ∷ e)
-
-  weak′ : ∀ {A Γ} {B : Set} → (Env Γ → B) → Env (A ∷ Γ) → B
-  weak′ f (x ∷ e) = f e
-\end{code}
-
-Boop.
-
-\begin{code}
-  instance
-    InterpretSC′ : ∀ {S} → Interpret (SC S) ⟦ S ⟧
-    InterpretSC′ = record { ⟦_⟧ = ⟦_⟧′ }
-      where
-        ⟦_⟧′ : ∀ {S} → SC S → ⟦ S ⟧
-        ⟦ ax  p   ⟧′ e = lookup p e
-        ⟦ cut f g ⟧′ e = ⟦ g ⟧′ (⟦ f ⟧′ e ∷ e)
-        ⟦ ⇒l  f g ⟧′ e = (weak′ (⇒i′ ⟦ g ⟧′)) e ((ax₀′ e) (weak′ ⟦ f ⟧′ e))
-        ⟦ ⇒r  f   ⟧′ e = λ x → ⟦ f ⟧′ (x ∷ e)
-\end{code}
-
-Boop.
-
-\begin{code}
-  module ⟦ND⟧⇔⟦SC⟧ where
-
-    ⟹ : ∀ {S} (f : ND S) → ⟦ f ⟧ ≡ ⟦ ND⇔SC.⟹ f ⟧
-    ⟹ (ax _)   = refl
-    ⟹ (⇒i f)   = cong  (λ f e x → f (x ∷ e)) (⟹ f)
-    ⟹ (⇒e f g) = cong₂ (λ f g e → f e (g e)) (⟹ f) (⟹ g)
-\end{code}
-
-Boop.
-
-\begin{code}
-    open import Relation.Binary.PropositionalEquality.TrustMe renaming (trustMe to ???)
-\end{code}
-
-\begin{code}
-    ⟸ : ∀ {S} (f : SC S) → ⟦ f ⟧ ≡ ⟦ ND⇔SC.⟸ f ⟧
-    ⟸ (ax  _)   = refl
-    ⟸ (cut f g) = cong₂ (λ f g e → g (f e ∷ e)) (⟸ f) (⟸ g)
-    ⟸ (⇒l  f g) = lem
-      where
-
-      lem : (λ e → ( weak′ (⇒i′ ⟦ g ⟧ )) e
-                       (ax₀′ e (weak′ ⟦ f ⟧ e)))
-
-          ≡ (λ e → ⟦ weak (⇒i (ND⇔SC.⟸ g)) ⟧ e
-                       (ax₀′ e (⟦ weak (ND⇔SC.⟸ f) ⟧ e)))
-      lem = ???
-
-    ⟸ (⇒r  f)   = cong  (λ f e x → f (x ∷ e)) (⟸ f)
-\end{code}
-
-Boop.
-
-\begin{code}
-    postulate
-      i⇒≡i⇒′
-        : ∀ {A B Γ} (f : ND A ∷ Γ ⊢ B)
-          → ⟦ ⇒i f ⟧ ≡ ⇒i′ {A} ⟦ f ⟧
-
-      weak≡weak′
-        : ∀ {A B Γ} (f : ND Γ ⊢ B)
-          → ⟦ weak {A} f ⟧ ≡ weak′ {A} ⟦ f ⟧
-\end{code}
-</div>
