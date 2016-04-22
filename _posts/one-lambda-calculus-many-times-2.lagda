@@ -17,7 +17,6 @@ which has explicit structural rules: Gentzen's LJ.
 
 <div class="hidden">
 \begin{code}
-{-# OPTIONS --allow-unsolved-metas #-}
 import 2016-03-20-one-lambda-calculus-many-times as Part1
 module one-lambda-calculus-many-times-2 where
 \end{code}
