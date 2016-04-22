@@ -130,8 +130,7 @@ implicit arguments are hidden. That means that any unbound
 variable---such as the As, Bs and Γs above---is implicitly universally
 quantified.
 
-I prefer to think of things of the type <a name="5371"
-href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype
+I prefer to think of things of the type <a class="Agda Datatype
 Operator">ND</a> as proofs made up of rules, but if you prefer to
 think of them as programs made up of the constructors of lambda terms,
 just use the following syntax:
@@ -239,9 +238,8 @@ variable in a context:
   </a><a name="10249" class="Keyword">pattern</a><a name="10256"> </a><a name="10257" href="/2016/one-lambda-calculus-many-times/#10257" class="InductiveConstructor">ax₁</a><a name="10260"> </a><a name="10261" class="Symbol">=</a><a name="10262"> </a><a name="10263" class="InductiveConstructor">ax</a><a name="10265"> </a><a name="10266" class="Symbol">(</a><a name="10267" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor" target="_blank">there</a><a name="10272"> </a><a name="10273" class="Symbol">(</a><a name="10274" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174" class="InductiveConstructor" target="_blank">here</a><a name="10278"> </a><a name="10279" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Equality.html#112" class="InductiveConstructor" target="_blank">refl</a><a name="10283" class="Symbol">))</a><a name="10285">
   </a><a name="10288" class="Keyword">pattern</a><a name="10295"> </a><a name="10296" href="/2016/one-lambda-calculus-many-times/#10296" class="InductiveConstructor">ax₂</a><a name="10299"> </a><a name="10300" class="Symbol">=</a><a name="10301"> </a><a name="10302" class="InductiveConstructor">ax</a><a name="10304"> </a><a name="10305" class="Symbol">(</a><a name="10306" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor" target="_blank">there</a><a name="10311"> </a><a name="10312" class="Symbol">(</a><a name="10313" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor" target="_blank">there</a><a name="10318"> </a><a name="10319" class="Symbol">(</a><a name="10320" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174" class="InductiveConstructor" target="_blank">here</a><a name="10324"> </a><a name="10325" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Equality.html#112" class="InductiveConstructor" target="_blank">refl</a><a name="10329" class="Symbol">)))</a></pre>
 
-It's a little bit of a puzzle, but given <a name="8603"
-href="/2016/one-lambda-calculus-many-times/#8603"
-class="Function">w′</a> it becomes quite easy to show that the two
+It's a little bit of a puzzle, but given <a class="Agda
+Function">w′</a> it becomes quite easy to show that the two
 logics are in fact equivalent---that they derive the *same sequents*:
 
 <pre class="Agda">  <a name="10560" class="Keyword">module</a><a name="10566"> </a><a name="10567" href="/2016/one-lambda-calculus-many-times/#10567" class="Module">ND⇔SC</a><a name="10572"> </a><a name="10573" class="Keyword">where</a><a name="10578">
