@@ -9,14 +9,14 @@ module Agda
   RE_BEGIN    = /.*\\begin\{code\}(.*)/m
   RE_END      = /.*\\end\{code\}.*/m
   RE_FILENAME = /(\d{4})-(\d{2})-(\d{2})-([0-9A-Za-z.\-\_,]+)\.html(.*)/
-  RE_IMPLICIT = %r{
-    ( <a((?!>).)*>∀<\/a> (<a((?!>).)*>\s+<\/a>)* )?  # ∀?
-    <a((?!>).)*>{<\/a>                               # {
-    (((?!\}).)*)                                      # .*
-    <a((?!>).)*>}<\/a>                               # }
-    ( (<a((?!>).)*>\s+<\/a>)* <a((?!>).)*>→<\/a> )?  # →?
-    (<a((?!>).)*>\s+<\/a>)*                          # \s*
-  }x
+  RE_IMPLICIT = Regexp.compile([
+      '((<a[^>]*>\s*&#8704;\s*<\/a[^>]*>)(<a[^>]*>\s*<\/a[^>]*>)*)?',
+      '<a[^>]*>\s*\{\s*<\/a[^>]*>',
+      '[^\}]*',
+      '<a[^>]*>\s*\}\s*<\/a[^>]*>',
+      '((<a[^>]*>\s*<\/a[^>]*>)*(<a[^>]*>\s*&#8594;\s*<\/a[^>]*>))?'].join,
+      Regexp::MULTILINE)
+
 
 
   # String -> [String]
@@ -84,7 +84,9 @@ module Agda
     end
 
     return document.css("pre").collect do |pre|
-      pre = pre.to_html
+      pre = pre.to_html.
+            gsub(/\{/,'&#123;').
+            gsub(/\}/,'&#125;')
       pre = pre.gsub(RE_IMPLICIT, '') if hide_implicit
       pre
     end

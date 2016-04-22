@@ -3,7 +3,7 @@ title         : One λ-calculus, many times...
 date          : 2016-03-20 12:00:00
 categories    : [compsci]
 tags          : [agda]
-hide_implicit : true
+hide-implicit : true
 extra-script  : agda-extra-script.html
 extra-style   : agda-extra-style.html
 ---
@@ -261,7 +261,7 @@ variable in a context:
 \end{code}
 
 It's a little bit of a puzzle, but given <a href="#8254" class="Agda
-Function">w′ it becomes quite easy to show that the two logics
+Function">w′</a> it becomes quite easy to show that the two logics
 are in fact equivalent---that they derive the *same sequents*:
 
 \begin{code}
@@ -327,7 +327,7 @@ Now, in order to interpret natural deduction proofs in Agda, we'll
 need an interpretation for the atomic types. Below we say as much:
 
 \begin{code}
-module Semantics (Atom : Set) (InterpretAtom : Interpret Atom Set) where
+module Semantics (Atom : Set) {{InterpretAtom : Interpret Atom Set}} where
 \end{code}
 
 <div class="hidden">

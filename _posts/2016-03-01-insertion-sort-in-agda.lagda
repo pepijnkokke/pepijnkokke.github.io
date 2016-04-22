@@ -70,7 +70,7 @@ module 2016-03-01-insertion-sort-in-agda where
 </div>
 
 \begin{code}
-module InsertionSort {c ℓ₁ ℓ₂} (Ord : DecTotalOrder c ℓ₁ ℓ₂) where
+module InsertionSort {c ℓ₁ ℓ₂} {{Ord : DecTotalOrder c ℓ₁ ℓ₂}} where
 
   open DecTotalOrder {{...}} using (_≤_; _≤?_; total) renaming (trans to ≤-trans)
   A = DecTotalOrder.Carrier Ord

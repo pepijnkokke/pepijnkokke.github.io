@@ -27,7 +27,7 @@ rule '.md' => '.lagda' do |t|
     front_matter = YAML.load_file(t.source)
     sh("agda -i#{tmp} -i#{ENV['AGDA_HOME']} --html --html-dir=#{tmp} #{target}")
     File.write(t.name,
-        Agda::fix_html(t.source,target.ext('.html'),front_matter['hide_implicit']))
+        Agda::fix_html(t.source,target.ext('.html'),front_matter['hide-implicit']))
   end
 end
 

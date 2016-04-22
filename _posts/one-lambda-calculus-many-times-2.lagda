@@ -3,7 +3,7 @@ title         : One λ-calculus, many times... (2)
 date          : 2016-03-26 12:00:00
 categories    : [compsci]
 tags          : [agda]
-hide_implicit : true
+hide-implicit : true
 extra-script  : agda-extra-script.html
 extra-style   : agda-extra-style.html
 ---
@@ -395,7 +395,8 @@ $$
   \frac{}{A \vdash A}{\small ax}
   \quad
   \frac{\Gamma \vdash A \quad A , \Delta \vdash B}{\Gamma, \Delta \vdash B}{\small cut}
-  \quad
+  \\
+  \\
   \frac{\Gamma \vdash A \quad B , \Delta \vdash C}{A \Rightarrow  B , \Gamma, \Delta \vdash C}{\small{\Rightarrow}\!l}
   \quad
   \frac{A , \Gamma \vdash B}{\Gamma \vdash A \Rightarrow B}{\small{\Rightarrow}\!r}
