@@ -26,8 +26,9 @@ rule '.md' => '.lagda' do |t|
     target       = "#{tmp}/#{File.basename(t.source)}"
     front_matter = YAML.load_file(t.source)
     sh("agda -i#{tmp} -i#{ENV['AGDA_HOME']} --html --html-dir=#{tmp} #{target}")
-    File.write(t.name,
-        Agda::fix_html(t.source,target.ext('.html'),front_matter['hide-implicit']))
+    agda_version = `agda --version`.strip
+    agda_html    = Agda::fix_html(t.source,target.ext('.html'),front_matter['hide-implicit'])
+    File.write(t.name,agda_html + "\n<!-- Compiled with #{agda_version}. -->\n")
   end
 end
 

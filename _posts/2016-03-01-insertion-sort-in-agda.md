@@ -332,3 +332,5 @@ a theory applies even more strongly to theories which are also
 *machine-checked*.
 
 
+
+<!-- Compiled with Agda version 2.5.1. -->

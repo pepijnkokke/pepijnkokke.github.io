@@ -409,3 +409,5 @@ antecedent.
     the HTML source. However, it may be much easier to click the
     symbol that confuses you---that should take you directly to its
     definition in the standard library.
+
+<!-- Compiled with Agda version 2.5.1. -->

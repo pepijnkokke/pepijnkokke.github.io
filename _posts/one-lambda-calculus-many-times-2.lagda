@@ -158,7 +158,6 @@ Below, I've implemented the resulting system in Agda:
 \end{code}
 
 
-
 ### More Expressive Structural Rules
 
 $$
@@ -194,17 +193,6 @@ $$
 \end{code}
 
 \begin{code}
-    contract : ∀ Γ → ∀ {Δ} → (Γ ++ Γ) ++ Δ ⊆ Γ ++ Δ
-    contract []      {Δ} i = i
-    contract (A ∷ Γ) {Δ} (here px) = here px
-    contract (A ∷ Γ) {Δ} (there i)
-      rewrite ++-assoc Γ (A ∷ Γ) Δ with forward [] Γ i
-    contract (A ∷ Γ) {Δ} (there i) | here px = here px
-    contract (A ∷ Γ) {Δ} (there i) | there j
-      rewrite sym (++-assoc Γ Γ Δ) = there (contract Γ j)
-\end{code}
-
-\begin{code}
     permute : ∀ Γ Σ Π → ∀ {Δ} → (Γ ++ Σ) ++ (Π ++ Δ) ⊆ (Γ ++ Π) ++ (Σ ++ Δ)
     permute Γ Σ [] {Δ} i
            -- x ∈ (Γ ++ Π) ++ [] ++ Δ
@@ -224,6 +212,17 @@ $$
           j rewrite ++-assoc Γ (A ∷ []) Π
                  -- x ∈ (Γ ++ A ∷ Π) ++ Σ ++ Δ
                   = forward Γ Π i
+                  \end{code}
+
+\begin{code}
+    contract : ∀ Γ → ∀ {Δ} → (Γ ++ Γ) ++ Δ ⊆ Γ ++ Δ
+    contract []      {Δ} i = i
+    contract (A ∷ Γ) {Δ} (here px) = here px
+    contract (A ∷ Γ) {Δ} (there i)
+      rewrite ++-assoc Γ (A ∷ Γ) Δ with forward [] Γ i
+    contract (A ∷ Γ) {Δ} (there i) | here px = here px
+    contract (A ∷ Γ) {Δ} (there i) | there j
+      rewrite sym (++-assoc Γ Γ Δ) = there (contract Γ j)
 \end{code}
 
 \begin{code}
@@ -260,11 +259,16 @@ $$
 \end{code}
 </div>
 
+We can derive these same extended structural rules in NJ. For
+instance, below we derive the equivalent weakening rule:
+
 \begin{code}
     w⁺′ : ∀ {A} → ∀ Γ → ∀ {Δ} → NJ Δ ⊢ A → NJ Γ ++ Δ ⊢ A
     w⁺′ []      f = f
     w⁺′ (B ∷ Γ) f = w (w⁺′ Γ f)
 \end{code}
+
+The remainder of the proofs are rather similar to those for ND,
 
 <div class="Fold">
 \begin{code}
@@ -323,7 +327,7 @@ $$
     c⁺′ : ∀ {A} → ∀ Γ → ∀ {Δ} → NJ (Γ ++ Γ) ++ Δ ⊢ A → NJ Γ ++ Δ ⊢ A
     c⁺′ {A} []      {Δ} f = f
     c⁺′ {A} (B ∷ Γ) {Δ} f = c $ p⁺′ [] Γ (B ∷ B ∷ [])        $ c⁺′ Γ
-                              $ p⁺′ [] (B ∷ B ∷ []) (Γ ++ Γ) $ g
+                      $ p⁺′ [] (B ∷ B ∷ []) (Γ ++ Γ) $ g
       where
         g : NJ (B ∷ B ∷ Γ ++ Γ) ++ Δ ⊢ A
         g rewrite ++-assoc (B ∷ B ∷ Γ) Γ Δ
@@ -334,7 +338,6 @@ $$
                       = f
 \end{code}
 </div>
-
 <div class="Fold">
 \begin{code}
     s⁺′ : ∀ {A} → ∀ Γ Σ → ∀ {Π} → NJ (Γ ++ Σ) ++ Π ⊢ A
@@ -346,6 +349,18 @@ $$
       $ f
 \end{code}
 </div>
+
+It turns out to be very useful to define two helper functions which
+introduce and eliminate the empty context to the right. This is
+because <span class="Agda"><a class="Bound" target="_blank">Γ</a> <a
+href="https://agda.github.io/agda-stdlib/Data.List.Base.html#895"
+class="Function Operator" target="_blank">++</a> <a
+href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#89"
+class="InductiveConstructor" target="_blank">[]</a></span> doesn't
+automatically reduce. Therefore, any proof in which the empty context
+occurs to the right would involve rewriting by <a
+href="https://agda.github.io/agda-stdlib/one-lambda-calculus-many-times-2.html#1963"
+class="Agda Function" target="_blank">++&#8209;identityʳ</a>.
 
 \begin{code}
     ∅i : ∀ {A Γ} → NJ Γ ⊢ A → NJ Γ ++ [] ⊢ A
@@ -383,7 +398,7 @@ $$
         ax′ {A} {B ∷ Γ} (there x)            = w (ax′ x)
 
     ⟸ (⇒i  f)     = ⇒i  (⟸ f)
-    ⟸ (⇒e  {Γ = Γ} f g)    = NJ.∅e (NJ.c⁺′ Γ (NJ.∅i (⇒e (⟸ f) (⟸ g))))
+    ⟸ (⇒e  {Γ = Γ} f g)   = NJ.∅e (NJ.c⁺′ Γ (NJ.∅i (⇒e (⟸ f) (⟸ g))))
 \end{code}
 
 
