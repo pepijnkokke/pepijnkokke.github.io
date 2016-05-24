@@ -126,6 +126,14 @@ Below, I've implemented the resulting system in Agda:
 
 ### Admissible Structural Rules in ND
 
+If we are to have any hope of proving the equivalence between the
+implicit and the explicit systems, we should be able to prove that the
+implicit systems admit[^admit] the same structural rules. In the
+previous post, we've already proven the following theorem for ND:
+
+> If $$\Gamma \subseteq \Gamma\prime$$ and $$\Gamma \vdash A$$, then
+> $$\Gamma\prime \vdash A$$.
+
 <div class="hidden">
 \begin{code}
   module ND where
@@ -133,8 +141,32 @@ Below, I've implemented the resulting system in Agda:
 \end{code}
 </div>
 
-<pre class="Agda Spec">    <a name="8603" href="/2016/one-lambda-calculus-many-times/#8603" class="Function">w′</a><a name="8605"> </a><a name="8606" class="Symbol">:</a><a name="8607"> </a><a name="8620" href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a name="8622"> </a><a name="8623" href="/2016/one-lambda-calculus-many-times/#8615" class="Bound">Γ</a><a name="8624"> </a><a name="8625" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="8626"> </a><a name="8627" href="/2016/one-lambda-calculus-many-times/#8613" class="Bound">B</a><a name="8628"> </a><a name="8629" class="Symbol">→</a><a name="8630"> </a><a name="8631" href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a name="8633"> </a><a name="8634" href="/2016/one-lambda-calculus-many-times/#8611" class="Bound">A</a><a name="8635"> </a><a name="8636" href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a name="8637"> </a><a name="8638" href="/2016/one-lambda-calculus-many-times/#8615" class="Bound">Γ</a><a name="8639"> </a><a name="8640" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="8641"> </a><a name="8642" href="/2016/one-lambda-calculus-many-times/#8613" class="Bound">B</a><a name="8643">
-    </a><a name="8646" href="/2016/one-lambda-calculus-many-times/#8603" class="Function">w′</a><a name="8648"> </a><a name="8649" class="Symbol">=</a><a name="8650"> </a><a name="8651" href="/2016/one-lambda-calculus-many-times/#7305" class="Function">struct</a><a name="8657"> </a><a name="8658" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor" target="_blank">there</a></pre>
+And we've also shown that we can very easily use this theorem to
+define weakening, because <a class="Agda InductiveConstructor Spec" target="_blank"
+href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227">there</a>
+is a proof that "weakening", i.e.
+<span class="Agda Spec"><a class="Bound">Γ</a> <a href="https://agda.github.io/agda-stdlib/Data.List.Any.html#3056" class="Function Operator" target="_blank">⊆</a> <a class="Bound">A</a> <a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a> <a class="Bound">Γ</a></span>,
+holds for the subset relationship.
+
+<pre class="Agda Spec">    <a href="/2016/one-lambda-calculus-many-times/#8603" class="Function">w′</a><a> </a><a class="Symbol">:</a><a> </a><a href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a> </a><a class="Bound">Γ</a><a> </a><a href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a> </a><a class="Bound">B</a><a> </a><a class="Symbol">→</a><a> </a><a href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a> </a><a class="Bound">A</a><a> </a><a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a> </a><a class="Bound">Γ</a><a> </a><a href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a> </a><a class="Bound">B</a><a>
+    </a><a href="/2016/one-lambda-calculus-many-times/#8603" class="Function">w′</a><a> </a><a class="Symbol">=</a><a> </a><a href="/2016/one-lambda-calculus-many-times/#7305" class="Function">struct</a><a> </a><a href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor" target="_blank">there</a></pre>
+
+Therefore, all we need to show to extend this to contraction and
+permutation is that their respective equations,
+<span class="Agda Spec"><a class="Bound">A</a> <a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a> <a class="Bound">A</a> <a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a> <a class="Bound">Γ</a> <a href="https://agda.github.io/agda-stdlib/Data.List.Any.html#3056" class="Function Operator" target="_blank">⊆</a> <a class="Bound">A</a> <a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a> <a class="Bound">Γ</a></span>
+and
+<span class="Agda Spec"><a class="Bound">Γ</a><a> </a><a href="https://agda.github.io/agda-stdlib/Data.List.Base.html#895" class="Function Operator" target="_blank">++</a><a> </a><a class="Bound">A</a><a> </a><a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a> </a><a class="Bound">B</a><a> </a><a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a> </a><a class="Bound">Δ</a><a> </a><a href="https://agda.github.io/agda-stdlib/Data.List.Any.html#3056" class="Function Operator" target="_blank">⊆</a><a> </a><a class="Bound">Γ</a><a> </a><a href="https://agda.github.io/agda-stdlib/Data.List.Base.html#895" class="Function Operator" target="_blank">++</a><a> </a><a class="Bound">B</a><a> </a><a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a> </a><a class="Bound">A</a><a> </a><a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a> </a><a class="Bound">Δ</a></span>,
+hold for the subset relation as well.
+This is simply a matter of reindexing.
+For contraction, if our "index" (made up of
+<a class="Agda Spec InductiveConstructor" target="_blank"
+href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174">here</a>
+and
+<a class="Agda InductiveConstructor Spec" target="_blank"
+href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227">there</a>)
+points to the first formula, we keep it the same. Otherwise, we
+subtract one. That way, the first two formulas are *contracted*, and
+the rest is adjusted accordingly.
 
 \begin{code}
     c′ : ∀ {A B Γ} → ND A ∷ A ∷ Γ ⊢ B → ND A ∷ Γ ⊢ B
@@ -144,6 +176,10 @@ Below, I've implemented the resulting system in Agda:
         contract′ (here px) = here px
         contract′ (there i) = i
 \end{code}
+
+And for permutation, we skip through our index until we've passed the
+$$\Gamma$$ portion of the context, and then we swap the first two
+formulas.
 
 \begin{code}
     p′ : ∀ {A B C} → ∀ Γ → ∀ {Δ} → ND Γ ++ A ∷ B ∷ Δ ⊢ C → ND Γ ++ B ∷ A ∷ Δ ⊢ C
@@ -157,8 +193,53 @@ Below, I've implemented the resulting system in Agda:
         permute′ (C ∷ Γ) (there i)         = there (permute′ Γ i)
 \end{code}
 
+So, do we have enough to prove equivalence between the two systems?
+No, sadly we do not. If we have a look at the two versions of
+$$\small{\Rightarrow}\!e$$, we see that they use contexts quite
+differently...
+
+$$
+  \frac{\Gamma \vdash A \Rightarrow B \quad \Gamma \vdash A}{\Gamma \vdash B}{\small{\Rightarrow}\!e}
+  \quad
+  \frac{\Gamma \vdash A \Rightarrow B \quad \Delta \vdash A}{\Gamma , \Delta \vdash B}{\small{\Rightarrow}\!e}
+$$
+
+If we were to try and use the second version to simulate the
+first, we'd find that we end up with *two* copies of the context
+$$\Gamma$$. We would need some souped up version of contraction to
+contract these two contexts back into one... If, on the other hand, we
+were to try and use the first version to simulate the second, we run
+into a different problem: the first version of
+$$\small{\Rightarrow}\!e$$ expects both premises to *share* a
+context, but the premises have contexts $$\Gamma$$ and $$\Delta$$,
+respectively. So we need two versions of weakening which can add an
+entire *context* to the right or left, respectively.
+
+$$
+  \frac{\Gamma , \Gamma \vdash B}{\Gamma \vdash B}{\small c^+}
+  \quad
+  \frac{\Gamma \vdash B}{\Gamma , \Delta \vdash B}{\small inl}
+  \quad
+  \frac{\Delta \vdash B}{\Gamma , \Delta \vdash B}{\small inr}
+$$
+
+At this point, it may be a better idea to just derive a new, more
+permissive set of structural rules. This is what we'll do in the next
+section.
 
 ### More Expressive Structural Rules
+
+The usual structural rules for NJ are theoretically sufficient, but in
+practice they are rather limiting. Therefore, in this section, we will
+present more permissive variants, and show that they too are
+admissible in ND. Below you will see the more expressive variants of
+the structural rules. Instead of weakening, contracting or permuting
+formulas, these rules permute entire contexts.
+
+I've added one new rule, $$\small f^+$$ or "forward". It's in
+parenthesis because it is an obvious instance of permutation.
+I've nontheless added it, though, because it will turn out to be a
+useful lemma on the way to proving permutation.
 
 $$
   \frac{\Delta \vdash B}{\Gamma , \Delta \vdash B}{\small w^+}
@@ -167,16 +248,35 @@ $$
   \frac{\Gamma , \Sigma , A , \Delta \vdash C}{\Gamma , A , \Sigma , \Delta \vdash C}{\small f^+}
   \right)
   \quad
-  \frac{\Gamma , \Gamma , \Delta \vdash B}{\Gamma , \Delta \vdash B}{\small c^+}
-  \quad
   \frac{\Gamma , \Sigma , \Pi , \Delta \vdash C}{\Gamma , \Pi , \Sigma , \Delta \vdash C}{\small p^+}
+  \quad
+  \frac{\Gamma , \Gamma , \Delta \vdash B}{\Gamma , \Delta \vdash B}{\small c^+}
 $$
+
+Since we already have a structural theorem (<a
+href="/2016/one-lambda-calculus-many-times/#7305" class="Agda
+Spec Function">struct</a>) for ND, we only have to show that these
+equations hold for the subset relationship.
+
+Weakening is still quite trivial. Instead of applying <a class="Agda
+InductiveConstructor Spec" target="_blank"
+href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227">there</a>
+once, we now apply it multiple times, until we've removed the entire
+context $$\Gamma$$.
 
 \begin{code}
     weaken : ∀ Γ → ∀ {Δ} → Δ ⊆ Γ ++ Δ
     weaken []      i = i
     weaken (A ∷ Γ) i = there (weaken Γ i)
 \end{code}
+
+Forwards movement, or $$\small f^+$$, is a little bit more involved.
+In <a class="Agda Spec Function">forward</a>, we skip the entire
+context $$\Gamma$$. If the index points to some formula *in*
+$$\Gamma$$, we don't have to do anything. Once we pass $$\Gamma$$, we
+enter the nested function  <a class="Agda Spec Function">forward′</a>,
+in which we recursively move the formula $$A$$ forward, step by step,
+across the context $$\Sigma$$.
 
 \begin{code}
     forward : ∀ {A} → ∀ Γ Σ → ∀ {Δ} → (Γ ++ Σ) ++ A ∷ Δ ⊆ (Γ ++ A ∷ Σ) ++ Δ
@@ -191,6 +291,30 @@ $$
         forward′ (C ∷ Σ) (there i) | here px = here px
         forward′ (C ∷ Σ) (there i) | there j = there (there j)
 \end{code}
+
+With a rule for forwards movement in hand, we can start to prove
+permutation. The proof itself is broken down in *two* cases: $$\Pi =
+\emptyset$$ and $$\Pi = A , \Pi'$$.
+
+$$
+    \frac
+    {\Gamma , \Sigma , \emptyset , \Delta \vdash C}
+    {\Gamma , \emptyset , \Sigma , \Delta \vdash C}
+    \quad
+    \frac
+    {\Gamma , \Sigma , A , \Pi' , \Delta \vdash C}
+    {\Gamma , A , \Pi' , \Sigma , \Delta \vdash C}
+$$
+
+The first case is trivial, and simply requires rewriting by proofs of
+right identity and associativity (as the actual sequent is
+$$((\Gamma,\Sigma), (\emptyset,\Delta))$$). For the second case, we
+prove the statement by moving the $$A$$ forwards across the $$\Sigma$$
+(using $$\small f^+$$) and then permuting $$\Sigma$$ and $$\Pi'$$.
+The proof in Agda, however, is rather hard to read. This is because
+there is no pleasant way to intersperse code and rewrites (à la <a
+class="Agda Spec Keyword">rewrite</a>). To help you decipher the
+proof, I've inserted the intermediate terms as comments.
 
 \begin{code}
     permute : ∀ Γ Σ Π → ∀ {Δ} → (Γ ++ Σ) ++ (Π ++ Δ) ⊆ (Γ ++ Π) ++ (Σ ++ Δ)
@@ -237,7 +361,7 @@ $$
     p⁺′ Γ Σ Π = struct (permute Γ Σ Π)
 \end{code}
 
-<div class="Fold">
+<div class="foldable">
 \begin{code}
     s⁺′ : ∀ {A} → ∀ Γ Σ → ∀ {Π} → ND (Γ ++ Σ) ++ Π ⊢ A
                 → ND (Γ ++ Π) ++ Σ ⊢ A
@@ -270,7 +394,7 @@ instance, below we derive the equivalent weakening rule:
 
 The remainder of the proofs are rather similar to those for ND,
 
-<div class="Fold">
+<div class="foldable">
 \begin{code}
     f⁺′ : ∀ {A B} → ∀ Γ Σ → ∀ {Δ} → NJ (Γ ++ Σ) ++ (A ∷ Δ) ⊢ B
                 → NJ (Γ ++ A ∷ Σ) ++ Δ ⊢ B
@@ -298,7 +422,7 @@ The remainder of the proofs are rather similar to those for ND,
                 h rewrite ++-assoc Γ (C ∷ []) Σ = f
 \end{code}
 </div>
-<div class="Fold">
+<div class="foldable">
 \begin{code}
     p⁺′ : ∀ {A} → ∀ Γ Σ Π → ∀ {Δ} → NJ (Γ ++ Σ) ++ (Π ++ Δ) ⊢ A
                   → NJ (Γ ++ Π) ++ (Σ ++ Δ) ⊢ A
@@ -322,7 +446,7 @@ The remainder of the proofs are rather similar to those for ND,
                   = f⁺′ Γ Σ f
 \end{code}
 </div>
-<div class="Fold">
+<div class="foldable">
 \begin{code}
     c⁺′ : ∀ {A} → ∀ Γ → ∀ {Δ} → NJ (Γ ++ Γ) ++ Δ ⊢ A → NJ Γ ++ Δ ⊢ A
     c⁺′ {A} []      {Δ} f = f
@@ -338,7 +462,7 @@ The remainder of the proofs are rather similar to those for ND,
                       = f
 \end{code}
 </div>
-<div class="Fold">
+<div class="foldable">
 \begin{code}
     s⁺′ : ∀ {A} → ∀ Γ Σ → ∀ {Π} → NJ (Γ ++ Σ) ++ Π ⊢ A
                 → NJ (Γ ++ Π) ++ Σ ⊢ A
@@ -350,17 +474,22 @@ The remainder of the proofs are rather similar to those for ND,
 \end{code}
 </div>
 
+\begin{code}
+    ax′ : ∀ {A Γ} → A ∈ Γ → NJ Γ ⊢ A
+    ax′ {A} {B ∷ Γ} (here px) rewrite px = s⁺′ [] Γ (w⁺′ Γ ax)
+    ax′ {A} {B ∷ Γ} (there x)            = w (ax′ x)
+\end{code}
+
 It turns out to be very useful to define two helper functions which
 introduce and eliminate the empty context to the right. This is
-because <span class="Agda"><a class="Bound" target="_blank">Γ</a> <a
+because <span class="Agda Spec"><a class="Bound">Γ</a> <a
 href="https://agda.github.io/agda-stdlib/Data.List.Base.html#895"
 class="Function Operator" target="_blank">++</a> <a
 href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#89"
 class="InductiveConstructor" target="_blank">[]</a></span> doesn't
 automatically reduce. Therefore, any proof in which the empty context
-occurs to the right would involve rewriting by <a
-href="https://agda.github.io/agda-stdlib/one-lambda-calculus-many-times-2.html#1963"
-class="Agda Function" target="_blank">++&#8209;identityʳ</a>.
+occurs to the right would involve rewriting by <a class="Agda Spec
+Function">++&#8209;identityʳ</a>.
 
 \begin{code}
     ∅i : ∀ {A Γ} → NJ Γ ⊢ A → NJ Γ ++ [] ⊢ A
@@ -391,12 +520,7 @@ class="Agda Function" target="_blank">++&#8209;identityʳ</a>.
     ⟹ (p  Γ f)    = ND.p′ Γ (⟹ f)
 
     ⟸ : ∀ {S} → ND S → NJ S
-    ⟸ (ax  x)     = ax′ x
-      where
-        ax′ : ∀ {A Γ} → A ∈ Γ → NJ Γ ⊢ A
-        ax′ {A} {B ∷ Γ} (here px) rewrite px = NJ.s⁺′ [] Γ (NJ.w⁺′ Γ ax)
-        ax′ {A} {B ∷ Γ} (there x)            = w (ax′ x)
-
+    ⟸ (ax  x)     = NJ.ax′ x
     ⟸ (⇒i  f)     = ⇒i  (⟸ f)
     ⟸ (⇒e  {Γ = Γ} f g)   = NJ.∅e (NJ.c⁺′ Γ (NJ.∅i (⇒e (⟸ f) (⟸ g))))
 \end{code}
@@ -495,7 +619,15 @@ $$
 
 ---
 
-[^minproplog]:  Or, alternatively, as axiomatisations of minimal propositional logic.
+[^minproplog]: Or, alternatively, as axiomatisations of minimal
+    propositional logic.
+
+[^admit]: As used here, *admit* or *admissible* is a technical term,
+    usually contrasted with *derivable*. Derivable rules are rules
+    that we can construct directly, without inspecting the
+    proofs that we're given as arguments. On the other hand,
+    admissible means that we can define these rules, but that we have
+    to inspect and rewrite the proofs we're given.
 
 <div class="hidden">
 \begin{code}
