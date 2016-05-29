@@ -12,13 +12,11 @@ module Agda
   RE_IMPLICIT = Regexp.compile([
       '((<a[^>]*>\s*∀\s*<\/a[^>]*>)(<a[^>]*>\s*<\/a[^>]*>)*)?',
       '<a[^>]*>\s*\{\s*<\/a[^>]*>',
-      '[^\}]*',
+      '[^=\}]*',
       '<a[^>]*>\s*\}\s*<\/a[^>]*>',
       '((<a[^>]*>\s*<\/a[^>]*>)*(<a[^>]*>\s*→\s*<\/a[^>]*>))?',
       '(<a[^>]*>\s*<\/a[^>]*>)*'].join,
       Regexp::MULTILINE)
-
-
 
   # String -> [String]
   def self.extract_text(contents)
