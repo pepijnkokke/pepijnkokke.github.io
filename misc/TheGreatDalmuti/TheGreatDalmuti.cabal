@@ -10,11 +10,11 @@ cabal-version:       >=1.10
 executable TheGreatDalmuti
   main-is          : TheGreatDalmuti.hs
   other-extensions : RecordWildCards
-  build-depends    : base
-                   , data-ordlist >=0.4 && <0.5
-                   , containers   >=0.5 && <0.6
-                   , MonadRandom  >=0.3 && <0.4
-                   , array        >=0.5 && <0.6
-                   , ghcjs-base   ==0.2.0.0
+  build-depends    : array        >=0.5 && <0.6
                    , aeson        ==0.9.0.1
+                   , base
+                   , containers   >=0.5 && <0.6
+                   , data-ordlist >=0.4 && <0.5
+                   , ghcjs-base   ==0.2.0.0
+                   , MonadRandom  >=0.3 && <0.5                   
   default-language : Haskell2010

@@ -8,12 +8,7 @@ extra-script  : agda-extra-script.html
 extra-style   : agda-extra-style.html
 ---
 
-This post is a continuation of *[One λ-calculus, many times...](
-{% post_url 2016-03-20-one-lambda-calculus-many-times %})*, in which I
-explored the use natural deduction and sequent calculus systems as
-type systems for the simply-typed lambda calculus.[^minproplog] In
-this post, I will have a look at a variant of one of these systems
-which has explicit structural rules: Gentzen's LJ.
+This post is a continuation of *[One λ-calculus, many times...]({% post_url 2016-03-20-one-lambda-calculus-many-times %})*, in which I explored the use of natural deduction and sequent calculus systems as type systems for the simply-typed lambda calculus.[^minproplog] In this post, I will have a look at a variant of one of these systems which has explicit structural rules: Gentzen's LJ.
 
 <div class="hidden">
 \begin{code}
@@ -22,10 +17,7 @@ module one-lambda-calculus-many-times-2 where
 \end{code}
 </div>
 
-The structure of this post will be very similar to that of part
-one---which means that we will start out by having a look at the
-syntax of NJ, and then have a look at its semantics and relation to
-the system ND we discussed last time. But first, the syntax:
+The structure of this post will be very similar to that of part one---which means that we will start out by having a look at the syntax of NJ, and then have a look at its semantics and relation to the system ND we discussed last time. But first, the syntax:
 
 \begin{code}
 module Syntax (Atom : Set) where
@@ -79,34 +71,17 @@ $$
 <br />
 There are three notable changes when comparing this to the system SC:
 
-  - **Weakening**. The axiom no longer allows for arbitrary contexts
-    to be present, it *has* to be $$A \vdash A$$. An implication of
-    this is that we no longer have the option to have *unused*
-    formulas in our context. If we *do* want to have unused formulas,
-    we can add this using the *weakening* rule (or $$w$$).
+  - **Weakening**. The axiom no longer allows for arbitrary contexts to be present, it *has* to be $$A \vdash A$$. An implication of this is that we no longer have the option to have *unused* formulas in our context. If we *do* want to have unused formulas, we can add this using the *weakening* rule (or $$w$$).
 
-  - **Contraction**. When we apply a binary rule, we no longer pass
-    the entire context to both sides---instead, we have to choose
-    how to *split* the context. So what do we do if there is a formula
-    which we want to use in *both* branches of the proof? We can use
-    the *contraction*[^contraction] (or $$c$$) rule, which *copies* a
-    formula, and then pass a copy to either branch.
+  - **Contraction**. When we apply a binary rule, we no longer pass the entire context to both sides---instead, we have to choose how to *split* the context. So what do we do if there is a formula which we want to use in *both* branches of the proof? We can use the *contraction*[^contraction] (or $$c$$) rule, which *copies* a formula, and then pass a copy to either branch.
 
-  - **Permutation**. The third change lies with the structure of our
-    contexts and with the $$ax$$ rule. In the previous system, we
-    thought of our contexts as *sets*, even though we implemented them
-    with lists. This showed itself in the definition of the $$ax$$
-    rule, which took an extra argument---a proof that the desired
-    type $$A$$ was a member of the context $$\Gamma$$:
+  - **Permutation**. The third change lies with the structure of our contexts and with the $$ax$$ rule. In the previous system, we thought of our contexts as *sets*, even though we implemented them with lists. This showed itself in the definition of the $$ax$$ rule, which took an extra argument---a proof that the desired type $$A$$ was a member of the context $$\Gamma$$:
 
     $$
       \frac{A \in \Gamma}{\Gamma \vdash A}{\small ax}
     $$
 
-    Without this, we've also lost the ability to have variables point
-    to arbitrary positions in the context. In other words, our system
-    is *ordered*. To remedy this, we've added add a third new rule:
-    permutation (or $$p$$).
+    Without this, we've also lost the ability to have variables point to arbitrary positions in the context. In other words, our system is *ordered*. To remedy this, we've added add a third new rule: permutation (or $$p$$).
 
 Below, I've implemented the resulting system in Agda:
 
@@ -126,10 +101,7 @@ Below, I've implemented the resulting system in Agda:
 
 ### Admissible Structural Rules in ND
 
-If we are to have any hope of proving the equivalence between the
-implicit and the explicit systems, we should be able to prove that the
-implicit systems admit[^admit] the same structural rules. In the
-previous post, we've already proven the following theorem for ND:
+If we are to have any hope of proving the equivalence between the implicit and the explicit systems, we should be able to prove that the implicit systems admit[^admit] the same structural rules. In the previous post, we've already proven the following theorem for ND:
 
 > If $$\Gamma \subseteq \Gamma\prime$$ and $$\Gamma \vdash A$$, then
 > $$\Gamma\prime \vdash A$$.
@@ -141,32 +113,12 @@ previous post, we've already proven the following theorem for ND:
 \end{code}
 </div>
 
-And we've also shown that we can very easily use this theorem to
-define weakening, because <a class="Agda InductiveConstructor Spec" target="_blank"
-href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227">there</a>
-is a proof that "weakening", i.e.
-<span class="Agda Spec"><a class="Bound">Γ</a> <a href="https://agda.github.io/agda-stdlib/Data.List.Any.html#3056" class="Function Operator" target="_blank">⊆</a> <a class="Bound">A</a> <a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a> <a class="Bound">Γ</a></span>,
-holds for the subset relationship.
+And we've also shown that we can very easily use this theorem to define weakening, because <a class="Agda InductiveConstructor Spec" target="_blank" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227">there</a> is a proof that "weakening", i.e. <span class="Agda Spec"><a class="Bound">Γ</a> <a href="https://agda.github.io/agda-stdlib/Data.List.Any.html#3056" class="Function Operator" target="_blank">⊆</a> <a class="Bound">A</a> <a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a> <a class="Bound">Γ</a></span>, holds for the subset relationship.
 
 <pre class="Agda Spec">    <a href="/2016/one-lambda-calculus-many-times/#8603" class="Function">w′</a><a> </a><a class="Symbol">:</a><a> </a><a href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a> </a><a class="Bound">Γ</a><a> </a><a href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a> </a><a class="Bound">B</a><a> </a><a class="Symbol">→</a><a> </a><a href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a> </a><a class="Bound">A</a><a> </a><a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a> </a><a class="Bound">Γ</a><a> </a><a href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a> </a><a class="Bound">B</a><a>
     </a><a href="/2016/one-lambda-calculus-many-times/#8603" class="Function">w′</a><a> </a><a class="Symbol">=</a><a> </a><a href="/2016/one-lambda-calculus-many-times/#7305" class="Function">struct</a><a> </a><a href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor" target="_blank">there</a></pre>
 
-Therefore, all we need to show to extend this to contraction and
-permutation is that their respective equations,
-<span class="Agda Spec"><a class="Bound">A</a> <a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a> <a class="Bound">A</a> <a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a> <a class="Bound">Γ</a> <a href="https://agda.github.io/agda-stdlib/Data.List.Any.html#3056" class="Function Operator" target="_blank">⊆</a> <a class="Bound">A</a> <a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a> <a class="Bound">Γ</a></span>
-and
-<span class="Agda Spec"><a class="Bound">Γ</a><a> </a><a href="https://agda.github.io/agda-stdlib/Data.List.Base.html#895" class="Function Operator" target="_blank">++</a><a> </a><a class="Bound">A</a><a> </a><a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a> </a><a class="Bound">B</a><a> </a><a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a> </a><a class="Bound">Δ</a><a> </a><a href="https://agda.github.io/agda-stdlib/Data.List.Any.html#3056" class="Function Operator" target="_blank">⊆</a><a> </a><a class="Bound">Γ</a><a> </a><a href="https://agda.github.io/agda-stdlib/Data.List.Base.html#895" class="Function Operator" target="_blank">++</a><a> </a><a class="Bound">B</a><a> </a><a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a> </a><a class="Bound">A</a><a> </a><a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a> </a><a class="Bound">Δ</a></span>,
-hold for the subset relation as well.
-This is simply a matter of reindexing.
-For contraction, if our "index" (made up of
-<a class="Agda Spec InductiveConstructor" target="_blank"
-href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174">here</a>
-and
-<a class="Agda InductiveConstructor Spec" target="_blank"
-href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227">there</a>)
-points to the first formula, we keep it the same. Otherwise, we
-subtract one. That way, the first two formulas are *contracted*, and
-the rest is adjusted accordingly.
+Therefore, all we need to show to extend this to contraction and permutation is that their respective equations, <span class="Agda Spec"><a class="Bound">A</a> <a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a> <a class="Bound">A</a> <a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a> <a class="Bound">Γ</a> <a href="https://agda.github.io/agda-stdlib/Data.List.Any.html#3056" class="Function Operator" target="_blank">⊆</a> <a class="Bound">A</a> <a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a> <a class="Bound">Γ</a></span> and <span class="Agda Spec"><a class="Bound">Γ</a><a> </a><a href="https://agda.github.io/agda-stdlib/Data.List.Base.html#895" class="Function Operator" target="_blank">++</a><a> </a><a class="Bound">A</a><a> </a><a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a> </a><a class="Bound">B</a><a> </a><a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a> </a><a class="Bound">Δ</a><a> </a><a href="https://agda.github.io/agda-stdlib/Data.List.Any.html#3056" class="Function Operator" target="_blank">⊆</a><a> </a><a class="Bound">Γ</a><a> </a><a href="https://agda.github.io/agda-stdlib/Data.List.Base.html#895" class="Function Operator" target="_blank">++</a><a> </a><a class="Bound">B</a><a> </a><a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a> </a><a class="Bound">A</a><a> </a><a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a> </a><a class="Bound">Δ</a></span>, hold for the subset relation as well. This is simply a matter of reindexing. For contraction, if our "index" (made up of <a class="Agda Spec InductiveConstructor" target="_blank" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174">here</a> and <a class="Agda InductiveConstructor Spec" target="_blank" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227">there</a>) points to the first formula, we keep it the same. Otherwise, we subtract one. That way, the first two formulas are *contracted*, and the rest is adjusted accordingly.
 
 \begin{code}
     c′ : ∀ {A B Γ} → ND A ∷ A ∷ Γ ⊢ B → ND A ∷ Γ ⊢ B
@@ -177,9 +129,7 @@ the rest is adjusted accordingly.
         contract′ (there i) = i
 \end{code}
 
-And for permutation, we skip through our index until we've passed the
-$$\Gamma$$ portion of the context, and then we swap the first two
-formulas.
+And for permutation, we skip through our index until we've passed the $$\Gamma$$ portion of the context, and then we swap the first two formulas.
 
 \begin{code}
     p′ : ∀ {A B C} → ∀ Γ → ∀ {Δ} → ND Γ ++ A ∷ B ∷ Δ ⊢ C → ND Γ ++ B ∷ A ∷ Δ ⊢ C
@@ -193,10 +143,7 @@ formulas.
         permute′ (C ∷ Γ) (there i)         = there (permute′ Γ i)
 \end{code}
 
-So, do we have enough to prove equivalence between the two systems?
-No, sadly we do not. If we have a look at the two versions of
-$$\small{\Rightarrow}\!e$$, we see that they use contexts quite
-differently...
+So, do we have enough to prove equivalence between the two systems? No, sadly we do not. If we have a look at the two versions of $$\small{\Rightarrow}\!e$$, we see that they use contexts quite differently...
 
 $$
   \frac{\Gamma \vdash A \Rightarrow B \quad \Gamma \vdash A}{\Gamma \vdash B}{\small{\Rightarrow}\!e}
@@ -204,16 +151,7 @@ $$
   \frac{\Gamma \vdash A \Rightarrow B \quad \Delta \vdash A}{\Gamma , \Delta \vdash B}{\small{\Rightarrow}\!e}
 $$
 
-If we were to try and use the second version to simulate the
-first, we'd find that we end up with *two* copies of the context
-$$\Gamma$$. We would need some souped up version of contraction to
-contract these two contexts back into one... If, on the other hand, we
-were to try and use the first version to simulate the second, we run
-into a different problem: the first version of
-$$\small{\Rightarrow}\!e$$ expects both premises to *share* a
-context, but the premises have contexts $$\Gamma$$ and $$\Delta$$,
-respectively. So we need two versions of weakening which can add an
-entire *context* to the right or left, respectively.
+If we were to try and use the second version to simulate the first, we'd find that we end up with *two* copies of the context $$\Gamma$$. We would need some souped up version of contraction to contract these two contexts back into one... If, on the other hand, we were to try and use the first version to simulate the second, we run into a different problem: the first version of $$\small{\Rightarrow}\!e$$ expects both premises to *share* a context, but the premises have contexts $$\Gamma$$ and $$\Delta$$, respectively. So we need two versions of weakening which can add an entire *context* to the right or left, respectively.
 
 $$
   \frac{\Gamma , \Gamma \vdash B}{\Gamma \vdash B}{\small c^+}
@@ -223,23 +161,13 @@ $$
   \frac{\Delta \vdash B}{\Gamma , \Delta \vdash B}{\small inr}
 $$
 
-At this point, it may be a better idea to just derive a new, more
-permissive set of structural rules. This is what we'll do in the next
-section.
+At this point, it may be a better idea to just derive a new, more permissive set of structural rules. This is what we'll do in the next section.
 
 ### More Expressive Structural Rules
 
-The usual structural rules for NJ are theoretically sufficient, but in
-practice they are rather limiting. Therefore, in this section, we will
-present more permissive variants, and show that they too are
-admissible in ND. Below you will see the more expressive variants of
-the structural rules. Instead of weakening, contracting or permuting
-formulas, these rules permute entire contexts.
+The usual structural rules for NJ are theoretically sufficient, but in practice they are rather limiting. Therefore, in this section, we will present more permissive variants, and show that they too are admissible in ND. Below you will see the more expressive variants of the structural rules. Instead of weakening, contracting or permuting formulas, these rules permute entire contexts.
 
-I've added one new rule, $$\small f^+$$ or "forward". It's in
-parenthesis because it is an obvious instance of permutation.
-I've nontheless added it, though, because it will turn out to be a
-useful lemma on the way to proving permutation.
+I've added one new rule, $$\small f^+$$ or "forward". It's in parenthesis because it is an obvious instance of permutation. I've nontheless added it, because it is a useful lemma on the way to proving permutation.
 
 $$
   \frac{\Delta \vdash B}{\Gamma , \Delta \vdash B}{\small w^+}
@@ -253,16 +181,9 @@ $$
   \frac{\Gamma , \Gamma , \Delta \vdash B}{\Gamma , \Delta \vdash B}{\small c^+}
 $$
 
-Since we already have a structural theorem (<a
-href="/2016/one-lambda-calculus-many-times/#7305" class="Agda
-Spec Function">struct</a>) for ND, we only have to show that these
-equations hold for the subset relationship.
+Since we already have a structural theorem (<a href="/2016/one-lambda-calculus-many-times/#7305" class="Agda Spec Function">struct</a>) for ND, we only have to show that these equations hold for the subset relationship.
 
-Weakening is still quite trivial. Instead of applying <a class="Agda
-InductiveConstructor Spec" target="_blank"
-href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227">there</a>
-once, we now apply it multiple times, until we've removed the entire
-context $$\Gamma$$.
+Weakening is still quite trivial. Instead of applying <a class="Agda InductiveConstructor Spec" target="_blank" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227">there</a> once, we now apply it multiple times, until we've removed the entire context $$\Gamma$$.
 
 \begin{code}
     weaken : ∀ Γ → ∀ {Δ} → Δ ⊆ Γ ++ Δ
@@ -270,13 +191,7 @@ context $$\Gamma$$.
     weaken (A ∷ Γ) i = there (weaken Γ i)
 \end{code}
 
-Forwards movement, or $$\small f^+$$, is a little bit more involved.
-In <a class="Agda Spec Function">forward</a>, we skip the entire
-context $$\Gamma$$. If the index points to some formula *in*
-$$\Gamma$$, we don't have to do anything. Once we pass $$\Gamma$$, we
-enter the nested function  <a class="Agda Spec Function">forward′</a>,
-in which we recursively move the formula $$A$$ forward, step by step,
-across the context $$\Sigma$$.
+Forwards movement, or $$\small f^+$$, is a little bit more involved: we move a formula $$A$$ past a context $$\Sigma$$. We do so without moving any formulas in the prefix $$\Gamma$$ or the suffix $$\Delta$$. The definition of forwards movement is split into two maps on indices: <a class="Agda Spec Function">forward</a> and <a class="Agda Spec Function">forward′</a>. In <a class="Agda Spec Function">forward</a>, we define the mapping for indices which point to some position in $$\Gamma$$; nothing changes. Once we have moved past $$\Gamma$$, we enter the nested function <a class="Agda Spec Function">forward′</a>, and $$\Sigma$$. Here, we start moving each index one position back, to make room for the formula $$A$$. Once we move past $$\Sigma$$, and find the index pointint to $$A$$, all we have to do is return <a class="Agda Spec InductiveConstructor" target="_blank" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174">here</a>. Nothing has to change for the indices pointing into $$\Delta$$.
 
 \begin{code}
     forward : ∀ {A} → ∀ Γ Σ → ∀ {Δ} → (Γ ++ Σ) ++ A ∷ Δ ⊆ (Γ ++ A ∷ Σ) ++ Δ
@@ -292,9 +207,7 @@ across the context $$\Sigma$$.
         forward′ (C ∷ Σ) (there i) | there j = there (there j)
 \end{code}
 
-With a rule for forwards movement in hand, we can start to prove
-permutation. The proof itself is broken down in *two* cases: $$\Pi =
-\emptyset$$ and $$\Pi = A , \Pi'$$.
+With a rule for forwards movement in hand, we can start to prove permutation. The proof itself is broken down in *two* cases: $$\Pi = \emptyset$$ and $$\Pi = A , \Pi'$$.
 
 $$
     \frac
@@ -306,15 +219,7 @@ $$
     {\Gamma , A , \Pi' , \Sigma , \Delta \vdash C}
 $$
 
-The first case is trivial, and simply requires rewriting by proofs of
-right identity and associativity (as the actual sequent is
-$$((\Gamma,\Sigma), (\emptyset,\Delta))$$). For the second case, we
-prove the statement by moving the $$A$$ forwards across the $$\Sigma$$
-(using $$\small f^+$$) and then permuting $$\Sigma$$ and $$\Pi'$$.
-The proof in Agda, however, is rather hard to read. This is because
-there is no pleasant way to intersperse code and rewrites (à la <a
-class="Agda Spec Keyword">rewrite</a>). To help you decipher the
-proof, I've inserted the intermediate terms as comments.
+The first case is trivial, and simply requires rewriting by proofs of right identity and associativity (as the actual sequent is $$((\Gamma,\Sigma), (\emptyset,\Delta))$$). For the second case, we prove the statement by moving the $$A$$ forwards across the $$\Sigma$$ (using $$\small f^+$$) and then permuting $$\Sigma$$ and $$\Pi'$$. The proof in Agda, however, is rather hard to read. This is because there is no pleasant way to intersperse code and rewrites (à la <a class="Agda Spec Keyword">rewrite</a>). To help you decipher the proof, I've inserted the intermediate terms as comments.
 
 \begin{code}
     permute : ∀ Γ Σ Π → ∀ {Δ} → (Γ ++ Σ) ++ (Π ++ Δ) ⊆ (Γ ++ Π) ++ (Σ ++ Δ)
@@ -383,8 +288,7 @@ proof, I've inserted the intermediate terms as comments.
 \end{code}
 </div>
 
-We can derive these same extended structural rules in NJ. For
-instance, below we derive the equivalent weakening rule:
+We can derive these same extended structural rules in NJ. For instance, below we derive the equivalent weakening rule:
 
 \begin{code}
     w⁺′ : ∀ {A} → ∀ Γ → ∀ {Δ} → NJ Δ ⊢ A → NJ Γ ++ Δ ⊢ A
@@ -480,16 +384,7 @@ The remainder of the proofs are rather similar to those for ND,
     ax′ {A} {B ∷ Γ} (there x)            = w (ax′ x)
 \end{code}
 
-It turns out to be very useful to define two helper functions which
-introduce and eliminate the empty context to the right. This is
-because <span class="Agda Spec"><a class="Bound">Γ</a> <a
-href="https://agda.github.io/agda-stdlib/Data.List.Base.html#895"
-class="Function Operator" target="_blank">++</a> <a
-href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#89"
-class="InductiveConstructor" target="_blank">[]</a></span> doesn't
-automatically reduce. Therefore, any proof in which the empty context
-occurs to the right would involve rewriting by <a class="Agda Spec
-Function">++&#8209;identityʳ</a>.
+It turns out to be very useful to define two helper functions which introduce and eliminate the empty context to the right. This is because <span class="Agda Spec"><a class="Bound">Γ</a> <a href="https://agda.github.io/agda-stdlib/Data.List.Base.html#895" class="Function Operator" target="_blank">++</a> <a href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#89" class="InductiveConstructor" target="_blank">[]</a></span> doesn't automatically reduce. Therefore, any proof in which the empty context occurs to the right would involve rewriting by <a class="Agda Spec Function">++&#8209;identityʳ</a>.
 
 \begin{code}
     ∅i : ∀ {A Γ} → NJ Γ ⊢ A → NJ Γ ++ [] ⊢ A
@@ -619,15 +514,9 @@ $$
 
 ---
 
-[^minproplog]: Or, alternatively, as axiomatisations of minimal
-    propositional logic.
+[^minproplog]: Or, alternatively, as axiomatisations of minimal propositional logic.
 
-[^admit]: As used here, *admit* or *admissible* is a technical term,
-    usually contrasted with *derivable*. Derivable rules are rules
-    that we can construct directly, without inspecting the
-    proofs that we're given as arguments. On the other hand,
-    admissible means that we can define these rules, but that we have
-    to inspect and rewrite the proofs we're given.
+[^admit]: As used here, *admit* or *admissible* is a technical term, usually contrasted with *derivable*. Derivable rules are rules that we can construct directly, without inspecting the proofs that we're given as arguments. On the other hand, admissible means that we can define these rules, but that we have to inspect and rewrite the proofs we're given.
 
 <div class="hidden">
 \begin{code}

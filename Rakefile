@@ -1,3 +1,6 @@
+# encoding: utf-8
+
+
 require          'rubygems'
 require          'bundler/setup'
 require          'tmpdir'
@@ -56,11 +59,13 @@ end
 
 def TheGreatDalmuti_build
   Dir.chdir('misc/TheGreatDalmuti/') do
-    sh("cabal configure --ghcjs")
-    sh("cabal build")
+    sh("stack setup")
+    sh("stack build")
   end
   TheGreatDalmuti_files.each do |f|
-    cp "misc/TheGreatDalmuti/dist/build/TheGreatDalmuti/TheGreatDalmuti.jsexe/#{f}",
+    cp File.join('misc/TheGreatDalmuti/.stack-work',
+                 'dist/x86_64-osx/Cabal-1.22.8.0_ghcjs',
+                 'build/TheGreatDalmuti/TheGreatDalmuti.jsexe',f),
        "js/TheGreatDalmuti.jsexe/#{f}"
   end
 end
@@ -70,8 +75,9 @@ file 'js/TheGreatDalmuti.jsexe' do
 end
 
 TheGreatDalmuti_files.each do |f|
-  file "js/TheGreatDalmuti.jsexe/#{f}" => ['js/TheGreatDalmuti.jsexe',
-                                           'misc/TheGreatDalmuti/TheGreatDalmuti.hs'] do
+  file "js/TheGreatDalmuti.jsexe/#{f}" => [
+         'js/TheGreatDalmuti.jsexe',
+         'misc/TheGreatDalmuti/TheGreatDalmuti.hs'] do
     TheGreatDalmuti_build()
   end
 end
