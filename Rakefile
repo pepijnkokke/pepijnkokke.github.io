@@ -8,14 +8,16 @@ require          'yaml'
 require_relative 'tasks/agda'
 
 
-TheGreatDalmuti_files = ['all.js','lib.js','out.js','rts.js','runmain.js']
 
+################################################################################
+### Build Agda files                                                         ###
+################################################################################
 
-task :default => \
-     [['pubs.md'],
-      Dir.glob('_posts/*.lagda').collect{ |f| f.ext('.md') },
-      TheGreatDalmuti_files.collect{ |f| "js/TheGreatDalmuti.jsexe/#{f}" }].flatten
-
+task :agda, :paths do |t, args|
+  args.paths.each do |path|
+    Rake::Task[path.ext('.md')].invoke
+  end
+end
 
 rule '.md' => '.lagda' do |t|
   Dir.mktmpdir do |tmp|
@@ -35,6 +37,10 @@ rule '.md' => '.lagda' do |t|
   end
 end
 
+
+################################################################################
+### Build the list of publications                                           ###
+################################################################################
 
 file 'pubs.md' => 'pubs.bib' do |t|
   Dir.mktmpdir do |tmp|
@@ -56,6 +62,13 @@ file 'pubs.md' => 'pubs.bib' do |t|
   end
 end
 
+
+
+################################################################################
+### Build TheGreatDalmuti using GHC-JS                                       ###
+################################################################################
+
+TheGreatDalmuti_files = ['all.js','lib.js','out.js','rts.js','runmain.js']
 
 def TheGreatDalmuti_build
   Dir.chdir('misc/TheGreatDalmuti/') do
@@ -81,3 +94,13 @@ TheGreatDalmuti_files.each do |f|
     TheGreatDalmuti_build()
   end
 end
+
+
+################################################################################
+### DEFAULT TASK                                                             ###
+################################################################################
+
+task :default => \
+     [['pubs.md'],
+      Dir.glob('_posts/*.lagda').collect{ |f| f.ext('.md') },
+      TheGreatDalmuti_files.collect{ |f| "js/TheGreatDalmuti.jsexe/#{f}" }].flatten
