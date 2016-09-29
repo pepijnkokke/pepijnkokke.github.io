@@ -1,6 +1,6 @@
 ---
 title         : One λ-calculus, many times... (2)
-date          : 2016-09-14 12:00:00
+date          : 2016-09-29 12:00:00
 categories    : [compsci]
 tags          : [agda]
 hide-implicit : true
@@ -8,7 +8,7 @@ extra-script  : agda-extra-script.html
 extra-style   : agda-extra-style.html
 ---
 
-This post is a continuation of *[One λ-calculus, many times...]({% post_url 2016-03-20-one-lambda-calculus-many-times %})*, in which I explored the use of natural deduction and sequent calculus systems as type systems for the simply-typed lambda calculus.[^minproplog] In this post, I will have a look at a variant of one of these systems which has explicit structural rules: Gentzen's LJ.
+This post is a continuation of *[One λ-calculus, many times...]({% post_url 2016-03-20-one-lambda-calculus-many-times %})*, in which I explored the use of natural deduction and sequent calculus systems as type systems for the simply-typed lambda calculus.[^minproplog] In this post, I will have a look at the variants of these systems which have explicit structural rules: Gentzen's NJ and LJ.
 
 <div class="hidden">
 \begin{code}
@@ -17,7 +17,7 @@ module one-lambda-calculus-many-times-2 where
 \end{code}
 </div>
 
-The structure of this post will be very similar to that of part one---which means that we will start out by having a look at the syntax of NJ, and then have a look at its semantics and relation to the system ND we discussed last time. But first, the syntax:
+The structure of this post will be similar to that of the previous installment---which means that we will start out by having a look at the syntax of NJ, then have a look at its semantics and relation to the system ND we discussed last time, and finally we will do the same for LJ. But first, the syntax:
 
 \begin{code}
 module Syntax (Atom : Set) where
@@ -71,17 +71,17 @@ $$
 <br />
 There are three notable changes when comparing this to the system SC:
 
-  - **Weakening**. The axiom no longer allows for arbitrary contexts to be present, it *has* to be $$A \vdash A$$. An implication of this is that we no longer have the option to have *unused* formulas in our context. If we *do* want to have unused formulas, we can add this using the *weakening* rule (or $$w$$).
+  - **Weakening**. The axiom no longer allows for arbitrary contexts to be present, it *has* to be $$A \vdash A$$. An implication of this is that we no longer have the option to have *unused* formulas in our context. If we *do* want to have unused formulas, we can add these using the *weakening* rule (or $$w$$).
 
-  - **Contraction**. When we apply a binary rule, we no longer pass the entire context to both sides---instead, we have to choose how to *split* the context. So what do we do if there is a formula which we want to use in *both* branches of the proof? We can use the *contraction*[^contraction] (or $$c$$) rule, which *copies* a formula, and then pass a copy to either branch.
+  - **Contraction**. When we apply a binary rule, we no longer pass the entire context to both sides---instead, we have to choose how to *split* the context. So what do we do if there is a formula which we want to use in *both* branches of the proof? We can use the *contraction* (or $$c$$) rule, which *copies* a formula, and then pass a copy to either branch.
 
-  - **Permutation**. The third change lies with the structure of our contexts and with the $$ax$$ rule. In the previous system, we thought of our contexts as *sets*, even though we implemented them with lists. This showed itself in the definition of the $$ax$$ rule, which took an extra argument---a proof that the desired type $$A$$ was a member of the context $$\Gamma$$:
+  - **Permutation**. The third change lies in the structure of our contexts and with the $$ax$$ rule. In the previous system, we thought of our contexts as *sets*, even though we implemented them with lists. This showed itself in the definition of the $$ax$$ rule, which took an extra argument---a proof that the desired type $$A$$ was a member of the context $$\Gamma$$:
 
     $$
       \frac{A \in \Gamma}{\Gamma \vdash A}{\small ax}
     $$
 
-    Without this, we've also lost the ability to have variables point to arbitrary positions in the context. In other words, our system is *ordered*. To remedy this, we've added add a third new rule: permutation (or $$p$$).
+    When we start thinking of the contexts as *lists*, we lose the ability to have variables point to arbitrary positions in the context---they can only point to the *first* element in the context. In other words, our system is *ordered*. To regain the freedom we've lost, we add a third new rule which allows us to swap elements in the context: permutation (or $$p$$).
 
 Below, I've implemented the resulting system in Agda:
 
@@ -156,9 +156,9 @@ If we were to try and use the second version to simulate the first, we'd find th
 $$
   \frac{\Gamma , \Gamma \vdash B}{\Gamma \vdash B}{\small c^+}
   \quad
-  \frac{\Gamma \vdash B}{\Gamma , \Delta \vdash B}{\small inl}
+  \frac{\Gamma \vdash B}{\Gamma , \Delta \vdash B}{\small w^l}
   \quad
-  \frac{\Delta \vdash B}{\Gamma , \Delta \vdash B}{\small inr}
+  \frac{\Delta \vdash B}{\Gamma , \Delta \vdash B}{\small w^r}
 $$
 
 At this point, it may be a better idea to just derive a new, more permissive set of structural rules. This is what we'll do in the next section.
@@ -180,6 +180,7 @@ $$
   \quad
   \frac{\Gamma , \Gamma , \Delta \vdash B}{\Gamma , \Delta \vdash B}{\small c^+}
 $$
+
 
 Since we already have a structural theorem (<a href="/2016/one-lambda-calculus-many-times/#7305" class="Agda Spec Function">struct</a>) for ND, we only have to show that these equations hold for the subset relationship.
 

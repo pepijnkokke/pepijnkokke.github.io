@@ -23,14 +23,14 @@ rule '.md' => '.lagda' do |t|
   Dir.mktmpdir do |tmp|
 
     # move ALL *.lagda files to tmpdir
-    Dir.glob('_posts/*.lagda') do |source|
+    Dir.glob('**/*.lagda') do |source|
       cp source, "#{tmp}/#{File.basename(source)}"
     end
 
     # compile our target and extract HTML
     target       = "#{tmp}/#{File.basename(t.source)}"
     front_matter = YAML.load_file(t.source)
-    sh("agda -i#{tmp} -i#{ENV['AGDA_HOME']} --html --html-dir=#{tmp} #{target}")
+    sh("agda --allow-unsolved-metas -i#{tmp} -i#{ENV['AGDA_HOME']} --html --html-dir=#{tmp} #{target}")
     agda_version = `agda --version`.strip
     agda_html    = Agda::fix_html(t.source,target.ext('.html'),front_matter['hide-implicit'])
     File.write(t.name,agda_html + "\n<!-- Compiled with #{agda_version}. -->\n")
@@ -102,5 +102,5 @@ end
 
 task :default => \
      [['pubs.md'],
-      Dir.glob('_posts/*.lagda').collect{ |f| f.ext('.md') },
+      Dir.glob('**/*.lagda').collect{ |f| f.ext('.md') },
       TheGreatDalmuti_files.collect{ |f| "js/TheGreatDalmuti.jsexe/#{f}" }].flatten
