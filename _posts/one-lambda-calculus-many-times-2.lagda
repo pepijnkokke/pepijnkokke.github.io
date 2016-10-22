@@ -184,6 +184,16 @@ $$
 
 Since we already have a structural theorem (<a href="/2016/one-lambda-calculus-many-times/#7305" class="Agda Spec Function">struct</a>) for ND, we only have to show that these equations hold for the subset relationship.
 
+$$
+  \begin{array}{crcl}
+  (w^{+}) & {\Delta} & \subseteq & {\Gamma , \Delta} \\
+  (f^{+}) & {\Gamma , \Sigma , A , \Delta} & \subseteq & {\Gamma , A , \Sigma , \Delta} \\
+  (p^{+}) & {\Gamma , \Sigma , \Pi , \Delta} & \subseteq & {\Gamma , \Pi , \Sigma , \Delta} \\
+  (c^{+}) & {\Gamma , \Gamma , \Delta} & \subseteq & {\Gamma , \Delta}
+  \end{array}
+$$
+
+
 Weakening is still quite trivial. Instead of applying <a class="Agda InductiveConstructor Spec" target="_blank" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227">there</a> once, we now apply it multiple times, until we've removed the entire context $$\Gamma$$.
 
 \begin{code}
@@ -242,7 +252,9 @@ The first case is trivial, and simply requires rewriting by proofs of right iden
           j rewrite ++-assoc Γ (A ∷ []) Π
                  -- x ∈ (Γ ++ A ∷ Π) ++ Σ ++ Δ
                   = forward Γ Π i
-                  \end{code}
+\end{code}
+
+In our previous version of contraction, all we had to do was merge any references to the first two formulas in our context.
 
 \begin{code}
     contract : ∀ Γ → ∀ {Δ} → (Γ ++ Γ) ++ Δ ⊆ Γ ++ Δ
@@ -255,6 +267,8 @@ The first case is trivial, and simply requires rewriting by proofs of right iden
       rewrite sym (++-assoc Γ Γ Δ) = there (contract Γ j)
 \end{code}
 
+Boop.
+
 \begin{code}
     w⁺′ : ∀ {A} → ∀ Γ → ∀ {Δ} → ND Δ ⊢ A → ND Γ ++ Δ ⊢ A
     w⁺′ Γ = struct (weaken Γ)
@@ -266,6 +280,8 @@ The first case is trivial, and simply requires rewriting by proofs of right iden
                  → ND (Γ ++ Π) ++ (Σ ++ Δ) ⊢ A
     p⁺′ Γ Σ Π = struct (permute Γ Σ Π)
 \end{code}
+
+Boop.
 
 <div class="foldable">
 \begin{code}

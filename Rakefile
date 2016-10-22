@@ -1,12 +1,9 @@
 # encoding: utf-8
 
-
-require          'rubygems'
-require          'bundler/setup'
-require          'tmpdir'
-require          'yaml'
-require_relative 'tasks/agda'
-
+require 'rubygems'
+require 'bundler/setup'
+require 'tmpdir'
+require 'yaml'
 
 
 ################################################################################
@@ -20,21 +17,15 @@ task :agda, :paths do |t, args|
 end
 
 rule '.md' => '.lagda' do |t|
-  Dir.mktmpdir do |tmp|
+  front_matter = YAML.load_file(t.source)
+  cmd = ["agda2html"]
+  cmd << "-i #{t.source}"
+  cmd << "-o #{t.name}"
+  cmd << "--link-to-agda-stdlib"
+  cmd << "--strip-implicit-args"\
+    if front_matter['hide-implicit']
+  sh(cmd.join ' ')
 
-    # move ALL *.lagda files to tmpdir
-    Dir.glob('**/*.lagda') do |source|
-      cp source, "#{tmp}/#{File.basename(source)}"
-    end
-
-    # compile our target and extract HTML
-    target       = "#{tmp}/#{File.basename(t.source)}"
-    front_matter = YAML.load_file(t.source)
-    sh("agda --allow-unsolved-metas -i#{tmp} -i#{ENV['AGDA_HOME']} --html --html-dir=#{tmp} #{target}")
-    agda_version = `agda --version`.strip
-    agda_html    = Agda::fix_html(t.source,target.ext('.html'),front_matter['hide-implicit'])
-    File.write(t.name,agda_html + "\n<!-- Compiled with #{agda_version}. -->\n")
-  end
 end
 
 
