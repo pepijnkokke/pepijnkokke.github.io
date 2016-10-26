@@ -51,6 +51,7 @@ mutable state.
 
 Starting from boolean constants and conditionals, we add three
 things:
+
   - variables
   - function abstractions
   - application
@@ -131,6 +132,7 @@ functions.
         | T1 → T2
 
 For example:
+
   - `λx:bool. false` has type `bool⇒bool`
   - `λx:bool. x` has type `bool⇒bool`
   - `(λx:bool. x) true` has type `bool`
