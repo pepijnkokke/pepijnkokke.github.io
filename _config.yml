@@ -1,6 +1,6 @@
 title            : "All The Language"
 description      : >-
-  Welcome! I'm <span class="tooltip" title="[pʌpɛin kɔ.kə]">Pepijn Kokke</span>.
+  Welcome! I'm <span class="tooltip" title="[pʌpɛin]">Pepijn</span>.
   I study natural language, programming languages and logical languages.
   Basically, all the language...
 url              : 'https://pepijnkokke.github.io'
@@ -35,3 +35,4 @@ kramdown:
 
 gems    : ['jekyll-paginate']
 exclude : ['Gemfile', 'Gemfile.lock', 'Rakefile', '*.lagda', '*.agdai', '*.lhs', '*.hs', '*.hi', '*.o']
+include : ['sf']
