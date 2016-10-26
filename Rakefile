@@ -21,6 +21,7 @@ rule '.md' => '.lagda' do |t|
   cmd = ["agda2html"]
   cmd << "-i #{t.source}"
   cmd << "-o #{t.name}"
+  cmd << "--verbose"
   cmd << "--link-to-agda-stdlib"
   cmd << "--strip-implicit-args"\
     if front_matter['hide-implicit']
