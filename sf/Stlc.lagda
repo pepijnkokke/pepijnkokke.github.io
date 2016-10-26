@@ -42,9 +42,9 @@ work to deal with these.
 
 The STLC is built on some collection of _base types_:
 booleans, numbers, strings, etc.  The exact choice of base types
-doesn't matter much -- the construction of the language and its
+doesn't matter much---the construction of the language and its
 theoretical properties work out the same no matter what we
-choose -- so for the sake of brevity let's take just `bool` for
+choose---so for the sake of brevity let's take just $$bool$$ for
 the moment.  At the end of the chapter we'll see how to add more
 base types, and in later chapters we'll enrich the pure STLC with
 other useful constructs like pairs, records, subtyping, and
@@ -58,59 +58,66 @@ things:
   - application
 
 This gives us the following collection of abstract syntax
-constructors (written out first in informal BNF notation -- we'll
+constructors (written out first in informal BNF notation---we'll
 formalize it below).
 
-    t ::= x                       variable
-        | λx:T1.t2                abstraction
-        | t1 t2                   application
-        | true                    constant true
-        | false                   constant false
-        | if t1 then t2 else t3   conditional
+$$
+  \begin{array}{rll}
+    \text{Terms}\;s,t,u
+    ::=  & x & \text{variable} \\
+    \mid & \lambda x : A . t & \text{abstraction} \\
+    \mid & s\;t & \text{application} \\
+    \mid & true & \text{constant true} \\
+    \mid & false & \text{constant false} \\
+    \mid & \text{if }s\text{ then }t\text{ else }u & \text{conditional}
+  \end{array}
+$$
 
-
-The `\` symbol in a function abstraction `λx:T1.t2` is generally
-written as a Greek letter "lambda" (hence the name of the
-calculus).  The variable `x` is called the _parameter_ to the
-function; the term `t2` is its _body_.  The annotation `:T1`
-specifies the type of arguments that the function can be applied
-to.
+In a lambda abstraction $$\lambda x : A . t$$, the variable $$x$$ is called the
+_parameter_ to the function; the term $$t$$ is its _body_.  The annotation $$:A$$
+specifies the type of arguments that the function can be applied to.
 
 Some examples:
 
-  - `λx:bool. x`
+  - The identity function for booleans:
 
-    The identity function for booleans.
-  - `(λx:bool. x) true`
+    $$\lambda x:bool. x$$.
+  - The identity function for booleans, applied to the boolean $$true$$:
 
-    The identity function for booleans, applied to the boolean `true`.
-  - `λx:bool. if x then false else true`
+    $$(\lambda x:bool. x)\;true$$.
+  - The boolean "not" function:
 
-    The boolean "not" function.
-  - `λx:bool. true`
+    $$\lambda x:bool. \text{if }x\text{ then }false\text{ else }true$$.
+  - The constant function that takes every (boolean) argument to $$true$$:
 
-    The constant function that takes every (boolean) argument to `true`.
-  - `λx:bool. λy:bool. x`
+    $$\lambda x:bool. true$$.
+  - A two-argument function that takes two booleans and returns the
+    first one:
 
-    A two-argument function that takes two booleans and returns the
-    first one.  (As in Agda, a two-argument function is really a
-    one-argument function whose body is also a one-argument function.)
-  - `(λx:bool. λy:bool. x) false true`
+    $$\lambda x:bool. \lambda y:bool. x$$.
 
-    A two-argument function that takes two booleans and returns the
-    first one, applied to the booleans `false` and `true`.
+    As in Agda, a two-argument function is really a
+    one-argument function whose body is also a one-argument function.
+  - A two-argument function that takes two booleans and returns the
+    first one, applied to the booleans $$false$$ and $$true$$:
 
-    As in Agda, application associates to the left -- i.e., this
-    expression is parsed as `((λx:bool. λy:bool. x) false) true`.
-  - `\f:bool⇒bool. f (f true)`
+    $$(\lambda x:bool. \lambda y:bool. x)\;false\;true$$.
 
-    A higher-order function that takes a _function_ `f` (from booleans
-    to booleans) as an argument, applies `f` to `true`, and applies
-    `f` again to the result.
-  - `(\f:bool⇒bool. f (f true)) (λx:bool. false)`
+    As in Agda, application associates to the left---i.e., this
+    expression is parsed as
 
-    The same higher-order function, applied to the constantly `false`
-    function.
+    $$((\lambda x:bool. \lambda y:bool. x)\;false)\;true$$.
+
+  - A higher-order function that takes a _function_ $$f$$ (from booleans
+    to booleans) as an argument, applies $$f$$ to $$true$$, and applies
+    $$f$$ again to the result:
+
+    $$\lambda f:bool\rightarrow bool. f\;(f\;true)$$.
+
+  - The same higher-order function, applied to the constantly $$false$$
+    function:
+
+    $$(\lambda f:bool\rightarrow bool. f\;(f\;true))\;(\lambda x:bool. false)$$.
 
 As the last several examples show, the STLC is a language of
 _higher-order_ functions: we can write down functions that take
@@ -118,33 +125,36 @@ other functions as arguments and/or return other functions as
 results.
 
 The STLC doesn't provide any primitive syntax for defining _named_
-functions -- all functions are "anonymous."  We'll see in chapter
+functions---all functions are "anonymous."  We'll see in chapter
 `MoreStlc` that it is easy to add named functions to what we've
-got -- indeed, the fundamental naming and binding mechanisms are
+got---indeed, the fundamental naming and binding mechanisms are
 exactly the same.
 
-The _types_ of the STLC include `bool`, which classifies the
-boolean constants `true` and `false` as well as more complex
+The _types_ of the STLC include $$bool$$, which classifies the
+boolean constants $$true$$ and $$false$$ as well as more complex
 computations that yield booleans, plus _arrow types_ that classify
 functions.
 
-
-    T ::= bool
-        | T1 → T2
+$$
+    \text{Types}\;A,B ::= bool \mid A \rightarrow B
+$$
 
 For example:
 
-  - `λx:bool. false` has type `bool⇒bool`
-  - `λx:bool. x` has type `bool⇒bool`
-  - `(λx:bool. x) true` has type `bool`
-  - `λx:bool. λy:bool. x` has type `bool⇒bool⇒bool`
-    (i.e., `bool⇒(bool⇒bool)`)
-  - `(λx:bool. λy:bool. x) false` has type `bool⇒bool`
-  - `(λx:bool. λy:bool. x) false true` has type `bool`
+  - $$\lambda x:bool. false$$ has type $$bool\rightarrow bool$$;
+  - $$\lambda x:bool. x$$ has type $$bool\rightarrow bool$$;
+  - $$(\lambda x:bool. x)\;true$$ has type $$bool$$;
+  - $$\lambda x:bool. \lambda y:bool. x$$ has type
+    $$bool\rightarrow bool\rightarrow bool$$
+    (i.e., $$bool\rightarrow (bool\rightarrow bool)$$)
+  - $$(\lambda x:bool. \lambda y:bool. x)\;false$$ has type $$bool\rightarrow bool$$
+  - $$(\lambda x:bool. \lambda y:bool. x)\;false\;true$$ has type $$bool$$
 
 ## Syntax
 
 We begin by formalizing the syntax of the STLC.
+Unfortunately, $$\rightarrow$$ is already used for Agda's function type,
+so we will STLC's function type as `_⇒_`.
 
 
 ### Types
@@ -152,10 +162,14 @@ We begin by formalizing the syntax of the STLC.
 \begin{code}
 data Type : Set where
   bool : Type
-  _⇒_ : Type → Type → Type
+  _⇒_  : Type → Type → Type
+\end{code}
 
+<div class="hidden">
+\begin{code}
 infixr 5 _⇒_
 \end{code}
+</div>
 
 
 ### Terms
@@ -167,13 +181,13 @@ data Id : Set where
 
 <div class="hidden">
 \begin{code}
-id-inj : ∀ {x y} → id x ≡ id y → x ≡ y
-id-inj refl = refl
-
 _≟_ : (x y : Id) → Dec (x ≡ y)
 id x ≟ id y with x Data.Nat.≟ y
-... | yes x=y rewrite x=y = yes refl
-... | no  x≠y = no (x≠y ∘ id-inj)
+id x ≟ id y | yes x=y rewrite x=y = yes refl
+id x ≟ id y | no  x≠y = no (x≠y ∘ id-inj)
+  where
+    id-inj : ∀ {x y} → id x ≡ id y → x ≡ y
+    id-inj refl = refl
 \end{code}
 </div>
 
@@ -185,12 +199,16 @@ data Term : Set where
   true  : Term
   false : Term
   if_then_else_ : Term → Term → Term → Term
-
-infixr 8 if_then_else_
 \end{code}
 
-Note that an abstraction `λx:A.t` (formally, `abs x A t`) is
-always annotated with the type `A` of its parameter, in contrast
+<div class="hidden">
+\begin{code}
+infixr 8 if_then_else_
+\end{code}
+</div>
+
+Note that an abstraction $$\lambda x:A.t$$ (formally, `abs x A t`) is
+always annotated with the type $$A$$ of its parameter, in contrast
 to Agda (and other functional languages like ML, Haskell, etc.),
 which use _type inference_ to fill in missing annotations.  We're
 not considering type inference here.
@@ -202,6 +220,7 @@ x = id 0
 y = id 1
 z = id 2
 \end{code}
+
 <div class="hidden">
 \begin{code}
 {-# DISPLAY zero = x #-}
@@ -210,31 +229,31 @@ z = id 2
 \end{code}
 </div>
 
-`idB = λx:bool. x`
+$$\text{idB} = \lambda x:bool. x$$.
 
 \begin{code}
 idB = (abs x bool (var x))
 \end{code}
 
-`idBB = λx:bool⇒bool. x`
+$$\text{idBB} = \lambda x:bool\rightarrow bool. x$$.
 
 \begin{code}
 idBB = (abs x (bool ⇒ bool) (var x))
 \end{code}
 
-`idBBBB = λx:(bool⇒bool) → (bool⇒bool). x`
+$$\text{idBBBB} = \lambda x:(bool\rightarrow bool)\rightarrow (bool\rightarrow bool). x$$.
 
 \begin{code}
 idBBBB = (abs x ((bool ⇒ bool) ⇒ (bool ⇒ bool)) (var x))
 \end{code}
 
-`k = λx:bool. λy:bool. x`
+$$\text{k} = \lambda x:bool. \lambda y:bool. x$$.
 
 \begin{code}
 k = (abs x bool (abs y bool (var x)))
 \end{code}
 
-`notB = λx:bool. if x then false else true`
+$$\text{notB} = \lambda x:bool. \text{if }x\text{ then }false\text{ else }true$$.
 
 \begin{code}
 notB = (abs x bool (if (var x) then false else true))
@@ -263,7 +282,7 @@ finally we give the small-step relation itself.
 To define the values of the STLC, we have a few cases to consider.
 
 First, for the boolean part of the language, the situation is
-clear: `true` and `false` are the only values.  An `if`
+clear: $$true$$ and $$false$$ are the only values.  An $$\text{if}$$
 expression is never a value.
 
 Second, an application is clearly not a value: It represents a
@@ -272,30 +291,30 @@ work left to do.
 
 Third, for abstractions, we have a choice:
 
-  - We can say that `λx:T. t1` is a value only when `t1` is a
-    value -- i.e., only if the function's body has been
+  - We can say that $$\lambda x:A. t$$ is a value only when $$t$$ is a
+    value---i.e., only if the function's body has been
     reduced (as much as it can be without knowing what argument it
     is going to be applied to).
 
-  - Or we can say that `λx:T. t1` is always a value, no matter
-    whether `t1` is one or not -- in other words, we can say that
+  - Or we can say that $$\lambda x:A. t$$ is always a value, no matter
+    whether $$t$$ is one or not---in other words, we can say that
     reduction stops at abstractions.
 
-Agda makes the first choice -- for example,
+Agda makes the first choice---for example,
 
 \begin{code}
-testNormalize : (λ (x : ℕ) → 3 + 4) ≡ (λ (x : ℕ) → 7)
-testNormalize = refl
+test_normalizeUnderLambda : (λ (x : ℕ) → 3 + 4) ≡ (λ (x : ℕ) → 7)
+test_normalizeUnderLambda = refl
 \end{code}
 
 Most real-world functional programming languages make the second
-choice -- reduction of a function's body only begins when the
+choice---reduction of a function's body only begins when the
 function is actually applied to an argument.  We also make the
 second choice here.
 
 \begin{code}
 data Value : Term → Set where
-  abs   : forall {x A t}
+  abs   : ∀ {x A t}
         → Value (abs x A t)
   true  : Value true
   false : Value false
@@ -305,13 +324,13 @@ Finally, we must consider what constitutes a _complete_ program.
 
 Intuitively, a "complete program" must not refer to any undefined
 variables.  We'll see shortly how to define the _free_ variables
-in a STLC term.  A complete program is _closed_ -- that is, it
+in a STLC term.  A complete program is _closed_---that is, it
 contains no free variables.
 
 Having made the choice not to reduce under abstractions, we don't
 need to worry about whether variables are values, since we'll
 always be reducing programs "from the outside in," and that means
-the `step` relation will always be working with closed terms.
+the small-step relation will always be working with closed terms.
 
 
 ### Substitution
@@ -323,58 +342,70 @@ function application, where we will need to substitute the
 argument term for the function parameter in the function's body.
 For example, we reduce
 
-`(λx:bool. if x then true else x) false`
+$$(\lambda x:bool. \text{if }x\text{ then }true\text{ else }x)\;false$$
 
 to
 
-`if false then true else false`
+$$\text{if }false\text{ then }true\text{ else }false$$
 
-by substituting `false` for the parameter `x` in the body of the
+by substituting $$false$$ for the parameter $$x$$ in the body of the
 function.
 
-In general, we need to be able to substitute some given term `s`
-for occurrences of some variable `x` in another term `t`.  In
-informal discussions, this is usually written `[x:=s]t` and
-pronounced "substitute `x` with `s` in `t`."
+In general, we need to be able to substitute some given term $$s$$
+for occurrences of some variable $$x$$ in another term $$t$$.  In
+informal discussions, this is usually written $$[x:=s]t$$ and
+pronounced "substitute $$x$$ with $$s$$ in $$t$$."
 
 Here are some examples:
-  - `[x:=true](if x then x else false)`
-     yields `if true then true else false`
-  - `[x:=true]x`
-    yields `true`
-  - `[x:=true](if x then x else y)`
-    yields `if true then true else y`
-  - `[x:=true]y`
-    yields `y`
-  - `[x:=true]false`
-    yields `false` (vacuous substitution)
-  - `[x:=true](λy:bool. if y then x else false)`
-    yields `λy:bool. if y then true else false`
-  - `[x:=true](λy:bool. x)`
-    yields `λy:bool. true`
-  - `[x:=true](λy:bool. y)`
-    yields `λy:bool. y`
-  - `[x:=true](λx:bool. x)`
-    yields `λx:bool. x`
 
-The last example is very important: substituting `x` with `true` in
-`λx:bool. x` does _not_ yield `λx:bool. true`!  The reason for
-this is that the `x` in the body of `λx:bool. x` is _bound_ by the
+  - $$[x:=true](\text{if }x\text{ then }x\text{ else }false)$$
+     yields $$\text{if }true\text{ then }true\text{ else }false$$
+
+  - $$[x:=true]x$$
+    yields $$true$$
+
+  - $$[x:=true](\text{if }x\text{ then }x\text{ else }y)$$
+    yields $$\text{if }true\text{ then }true\text{ else }y$$
+
+  - $$[x:=true]y$$
+    yields $$y$$
+
+  - $$[x:=true]false$$
+    yields $$false$$ (vacuous substitution)
+
+  - $$[x:=true](\lambda y:bool. \text{if }y\text{ then }x\text{ else }false)$$
+    yields $$\lambda y:bool. \text{if }y\text{ then }true\text{ else }false$$
+
+  - $$[x:=true](\lambda y:bool. x)$$
+    yields $$\lambda y:bool. true$$
+
+  - $$[x:=true](\lambda y:bool. y)$$
+    yields $$\lambda y:bool. y$$
+
+  - $$[x:=true](\lambda x:bool. x)$$
+    yields $$\lambda x:bool. x$$
+
+The last example is very important: substituting $$x$$ with $$true$$ in
+$$\lambda x:bool. x$$ does _not_ yield $$\lambda x:bool. true$$!  The reason for
+this is that the $$x$$ in the body of $$\lambda x:bool. x$$ is _bound_ by the
 abstraction: it is a new, local name that just happens to be
-spelled the same as some global name `x`.
+spelled the same as some global name $$x$$.
 
 Here is the definition, informally...
 
-    [x:=s]x         = s
-    [x:=s]y         = y                  if x ≢ y
-    [x:=s](λx:A. t) = λx:A. t
-    [x:=s](λy:A. t) = λy:A. [x:=s]t      if x ≢ y
-    [x:=s](t1 t2)   = ([x:=s]t1) ([x:=s]t2)
-    [x:=s]true      = true
-    [x:=s]false     = false
-    [x:=s](if t1 then t2 else t3) =
-      if [x:=s]t1 then [x:=s]t2 else [x:=s]t3
-
+$$
+  \begin{aligned}
+    &[x:=s]x                &&= s \\
+    &[x:=s]y                &&= y \;\{\text{if }x\neq y\} \\
+    &[x:=s](\lambda x:A. t) &&= \lambda x:A. t \\
+    &[x:=s](\lambda y:A. t) &&= \lambda y:A. [x:=s]t \;\{\text{if }x\neq y\} \\
+    &[x:=s](t1\;t2)         &&= ([x:=s]t1) ([x:=s]t2) \\
+    &[x:=s]true             &&= true \\
+    &[x:=s]false            &&= false \\
+    &[x:=s](\text{if }t1\text{ then }t2\text{ else }t3) &&=
+       \text{if }[x:=s]t1\text{ then }[x:=s]t2\text{ else }[x:=s]t3
+  \end{aligned}
+$$
 
 ... and formally:
 
@@ -396,10 +427,10 @@ infix 9 [_:=_]_
 \end{code}
 
 _Technical note_: Substitution becomes trickier to define if we
-consider the case where `s`, the term being substituted for a
+consider the case where $$s$$, the term being substituted for a
 variable in some other term, may itself contain free variables.
-Since we are only interested here in defining the `step` relation
-on closed terms (i.e., terms like `λx:bool. x` that include
+Since we are only interested here in defining the small-step relation
+on closed terms (i.e., terms like $$\lambda x:bool. x$$ that include
 binders for all of the variables they mention), we can avoid this
 extra complexity here, but it must be dealt with when formalizing
 richer languages.
@@ -409,8 +440,17 @@ richer languages.
 The definition that we gave above defines substitution as a _function_.
 Suppose, instead, we wanted to define substitution as an inductive _relation_.
 We've begun the definition by providing the `data` header and
-one of the constructors; your job is to fill in the rest of the
-constructors and prove that the relation you\begin
+one of the constructors; your job is to fill in the rest of the constructors
+and prove that the relation you've defined coincides with the function given
+above.
+\begin{code}
+data [_:=_]_==>_ (x : Id) (s : Term) : Term -> Term -> Set where
+  var1 : [ x := s ] (var x) ==> s
+  {- FILL IN HERE -}
+\end{code}
+
+\begin{code}
+subst-correct : ∀ s x t t'
               → [ x := s ] t ≡ t'
               → [ x := s ] t ==> t'
 subst-correct s x t t' p = {!!} -- FILL IN HERE
@@ -428,68 +468,61 @@ value; and finally we substitute the argument for the bound
 variable in the body of the abstraction.  This last rule, written
 informally as
 
-`(λx:T.t12) v2 ==> [x:=v2]t12`
+$$
+(\lambda x : A . t) v \Longrightarrow [x:=v]t
+$$
 
 is traditionally called "beta-reduction".
 
-    value v2
-    ----------------------------                         (red)
-    (λx:T.t12) v2 ==> [x:=v2]t12
-
-    t1 ==> t1'
-    ----------------                                     (app1)
-    t1 t2 ==> t1' t2
-
-    value v1
-    t2 ==> t2'
-    ----------------                                     (app2)
-    v1 t2 ==> v1 t2'
+$$
+\begin{array}{cl}
+  \frac{value(v)}{(\lambda x : A . t) v \Longrightarrow [x:=v]t}&(red)\\\\
+  \frac{s \Longrightarrow s'}{s\;t \Longrightarrow s'\;t}&(app1)\\\\
+  \frac{value(v)\quad t \Longrightarrow t'}{v\;t \Longrightarrow v\;t'}&(app2)
+\end{array}
+$$
 
 ... plus the usual rules for booleans:
 
-    --------------------------------                     (iftrue)
-    (if true then t1 else t2) ==> t1
-
-    ---------------------------------                    (iffalse)
-    (if false then t1 else t2) ==> t2
-
-    t1 ==> t1'
-    ---------------------------------------------------- (if)
-    (if t1 then t2 else t3) ==> (if t1' then t2 else t3)
-
+$$
+\begin{array}{cl}
+  \frac{}{(\text{if }true\text{ then }t_1\text{ else }t_2) \Longrightarrow t_1}&(iftrue)\\\\
+  \frac{}{(\text{if }false\text{ then }t_1\text{ else }t_2) \Longrightarrow t_2}&(iffalse)\\\\
+  \frac{s \Longrightarrow s'}{\text{if }s\text{ then }t_1\text{ else }t_2
+    \Longrightarrow \text{if }s\text{ then }t_1\text{ else }t_2}&(if)
+\end{array}
+$$
 
 Formally:
 
 \begin{code}
 data _==>_ : Term → Term → Set where
-  red     : forall {x A s t}
+  red     : ∀ {x A s t}
           → Value t
           → app (abs x A s) t ==> [ x := t ] s
-  app1    : forall {s s' t}
+  app1    : ∀ {s s' t}
           → s ==> s'
           → app s t ==> app s' t
-  app2    : forall {s t t'}
+  app2    : ∀ {s t t'}
           → Value s
           → t ==> t'
           → app s t ==> app s t'
-  if      : forall {s s' t u}
+  if      : ∀ {s s' t u}
           → s ==> s'
           → if s then t else u ==> if s' then t else u
-  iftrue  : forall {s t}
+  iftrue  : ∀ {s t}
           → if true then s else t ==> s
-  iffalse : forall {s t}
+  iffalse : ∀ {s t}
           → if false then s else t ==> t
 
 infix 1 _==>_
 \end{code}
 
-<div class="hidden">
 \begin{code}
 data Multi (R : Term → Term → Set) : Term → Term → Set where
-  refl : forall {x} -> Multi R x x
-  step : forall {x y z} -> R x y -> Multi R y z -> Multi R x z
+  refl : ∀ {x} -> Multi R x x
+  step : ∀ {x y z} -> R x y -> Multi R y z -> Multi R x z
 \end{code}
-</div>
 
 \begin{code}
 _==>*_ : Term → Term → Set
@@ -506,7 +539,7 @@ _==>*_ = Multi _==>_
 
 Example:
 
-    ((λx:bool⇒bool. x) (λx:bool. x)) ==>* (λx:bool. x)
+$$((\lambda x:bool\rightarrow bool. x) (\lambda x:bool. x)) \Longrightarrow^* (\lambda x:bool. x)$$.
 
 \begin{code}
 step-example1 : (app idBB idB) ==>* idB
@@ -516,8 +549,7 @@ step-example1 = step (red abs)
 
 Example:
 
-    ((λx:bool⇒bool. x) ((λx:bool⇒bool. x) (λx:bool. x)))
-    ==>* (λx:bool. x)
+$$(\lambda x:bool\rightarrow bool. x) \;((\lambda x:bool\rightarrow bool. x)\;(\lambda x:bool. x))) \Longrightarrow^* (\lambda x:bool. x)$$.
 
 \begin{code}
 step-example2 : (app idBB (app idBB idB)) ==>* idB
@@ -528,8 +560,7 @@ step-example2 = step (app2 abs (red abs))
 
 Example:
 
-    ((λx:bool⇒bool. x) (λx:bool. if x then false else true)) true)
-    ==>* false
+$$((\lambda x:bool\rightarrow bool. x)\;(\lambda x:bool. \text{if }x\text{ then }false\text{ else }true))\;true\Longrightarrow^* false$$.
 
 \begin{code}
 step-example3 : (app (app idBB notB) true) ==>* false
@@ -541,8 +572,7 @@ step-example3 = step (app1 (red abs))
 
 Example:
 
-    ((λx:bool → bool. x) ((λx:bool. if x then false else true) true))
-    ==>* false
+$$((\lambda x:bool\rightarrow bool. x)\;((\lambda x:bool. \text{if }x\text{ then }false\text{ else }true)\;true))\Longrightarrow^* false$$.
 
 \begin{code}
 step-example4 : (app idBB (app notB true)) ==>* false
@@ -552,7 +582,7 @@ step-example4 = step (app2 abs (red true))
               $ refl
 \end{code}
 
-#### Exercise: 2 stars (step_example3)
+#### Exercise: 2 stars (step-example5)
 
 \begin{code}
 step-example5 : (app (app idBBBB idBB) idB) ==>* idB
@@ -566,21 +596,21 @@ Next we consider the typing relation of the STLC.
 
 ### Contexts
 
-_Question_: What is the type of the term "`x y`"?
+_Question_: What is the type of the term "$$x\;y$$"?
 
-_Answer_: It depends on the types of `x` and `y`!
+_Answer_: It depends on the types of $$x$$ and $$y$$!
 
 I.e., in order to assign a type to a term, we need to know
 what assumptions we should make about the types of its free
 variables.
 
 This leads us to a three-place _typing judgment_, informally
-written `Γ ⊢ t ∶ T`, where `Γ` is a "typing context" -- a mapping from
--- variables to their types.
+written $$\Gamma\vdash t : A$$, where $$\Gamma$$ is a
+"typing context"---a mapping from variables to their types.
 
-Informally, we'll write `Γ, x:A` for "extend the partial function `Γ`
-to also map `x` to `A`."  Formally, we use the function `_,_∶_` (or
-"update") to add a binding to a context.
+Informally, we'll write $$\Gamma , x:A$$ for "extend the partial function
+$$\Gamma$$ to also map $$x$$ to $$A$$."  Formally, we use the function `_,_∶_`
+(or "update") to add a binding to a context.
 
 \begin{code}
 Ctxt : Set
@@ -593,59 +623,50 @@ _,_∶_ : Ctxt -> Id -> Type -> Ctxt
 (Γ , x ∶ A) y with x ≟ y
 ... | yes x=y = just A
 ... | no  x≠y = Γ y
+\end{code}
 
+<div class="hidden">
+\begin{code}
 infixl 3 _,_∶_
 \end{code}
+</div>
 
 
 ### Typing Relation
 
-    Γ x = T
-    ---------                                  (var)
-    Γ ⊢ x ∶ T
+$$
+  \begin{array}{cl}
+  \frac{\Gamma\;x = A}{\Gamma\vdash{x:A}}&(var)\\\\
+  \frac{\Gamma,x:A\vdash t:B}{\Gamma\vdash (\lambda x:A.t) : A\rightarrow B}&(abs)\\\\
+  \frac{\Gamma\vdash s:A\rightarrow B\quad\Gamma\vdash t:A}{\Gamma\vdash (s\;t) : B}&(app)\\\\
+  \frac{}{\Gamma\vdash true : bool}&(true)\\\\
+  \frac{}{\Gamma\vdash false : bool}&(true)\\\\
+  \frac{\Gamma\vdash s:bool \quad \Gamma\vdash t1:A \quad \Gamma\vdash t2:A}{\Gamma\vdash\text{if }s\text{ then }t1\text{ else }t2 : A}&(if)
+  \end{array}
+$$
 
-    Γ , x:A ⊢ t12 ∶ B
-    ------------------                         (abs)
-    Γ ⊢ λx:A.t12 ∶ A⇒B
-
-    Γ ⊢ t1 ∶ A⇒B
-    Γ ⊢ t2 ∶ A
-    -------------                              (app)
-    Γ ⊢ t1 t2 ∶ B
-
-    ---------------                            (true)
-    Γ ⊢ true ∶ bool
-
-    ----------------                           (false)
-    Γ ⊢ false ∶ bool
-
-    Γ ⊢ t1 ∶ bool    Γ ⊢ t2 ∶ T    Γ ⊢ t3 ∶ T
-    -----------------------------------------  (if)
-    Γ ⊢ if t1 then t2 else t3 ∶ T
-
-
-We can read the three-place relation `Γ ⊢ t ∶ T` as:
-"to the term `t` we can assign the type `T` using as types for
-the free variables of `t` the ones specified in the context
-`Γ`."
+We can read the three-place relation $$\Gamma\vdash (t : A)$$ as:
+"to the term $$t$$ we can assign the type $$A$$ using as types for
+the free variables of $$t$$ the ones specified in the context
+$$\Gamma$$."
 
 \begin{code}
 data _⊢_∶_ : Ctxt -> Term -> Type -> Set where
-  var           : forall {Γ} x {A}
+  var           : ∀ {Γ} x {A}
                 → Γ x ≡ just A
                 → Γ ⊢ var x ∶ A
-  abs           : forall {Γ} {x} {A} {B} {s}
+  abs           : ∀ {Γ} {x} {A} {B} {s}
                 → Γ , x ∶ A ⊢ s ∶ B
                 → Γ ⊢ abs x A s ∶ A ⇒ B
-  app           : forall {Γ} {A} {B} {s} {t}
+  app           : ∀ {Γ} {A} {B} {s} {t}
                 → Γ ⊢ s ∶ A ⇒ B
                 → Γ ⊢ t ∶ A
                 → Γ ⊢ app s t ∶ B
-  true          : forall {Γ}
+  true          : ∀ {Γ}
                 → Γ ⊢ true  ∶ bool
-  false         : forall {Γ}
+  false         : ∀ {Γ}
                 → Γ ⊢ false ∶ bool
-  if_then_else_ : forall {Γ} {s} {t} {u} {A}
+  if_then_else_ : ∀ {Γ} {s} {t} {u} {A}
                 → Γ ⊢ s ∶ bool
                 → Γ ⊢ t ∶ A
                 → Γ ⊢ u ∶ A
@@ -663,7 +684,7 @@ typing-example1 = abs (var x refl)
 
 Another example:
 
-    empty ⊢ λx:A. λy:A⇒A. y (y x)) ∶ A⇒(A⇒A)⇒A
+$$\varnothing\vdash \lambda x:A. \lambda y:A\rightarrow A. y\;(y\;x) : A\rightarrow (A\rightarrow A)\rightarrow A$$.
 
 \begin{code}
 typing-example2 : ∅ ⊢
@@ -682,7 +703,7 @@ typing-example2 =
 #### Exercise: 2 stars (typing_example_3)
 Formally prove the following typing derivation holds:
 
-    empty ⊢ λx:bool⇒B. λy:bool⇒bool. \z:bool. y (x z) ∶ T.
+$$\exists A, \varnothing\vdash \lambda x:bool\rightarrow B. \lambda y:bool\rightarrow bool. \lambda z:bool. y\;(x\;z) : A$$.
 
 \begin{code}
 typing-example3 : ∃ λ A → ∅ ⊢
@@ -695,10 +716,10 @@ typing-example3 = {!!} -- FILL IN HERE
 
 We can also show that terms are _not_ typable.  For example, let's
 formally check that there is no typing derivation assigning a type
-to the term `λx:bool. λy:bool, x y` -- i.e.,
+to the term $$\lambda x:bool. \lambda y:bool. x\;y$$---i.e.,
 
-    ~ exists T,
-    empty ⊢ λx:bool. λy:bool, x y : T.
+
+$$\nexists A, \varnothing\vdash \lambda x:bool. \lambda y:bool. x\;y : A$$.
 
 \begin{code}
 typing-nonexample1 : ∄ λ A → ∅ ⊢
@@ -711,8 +732,7 @@ typing-nonexample1 = {!!} -- FILL IN HERE
 #### Exercise: 3 stars, optional (typing_nonexample_3)
 Another nonexample:
 
-    ~ (exists S, exists T,
-    empty ⊢ λx:S. x x ∶ T).
+$$\nexists A, \exists B, \varnothing\vdash \lambda x:A. x\;x : B$$.
 
 \begin{code}
 typing-nonexample2 : ∄ λ A → ∃ λ B → ∅ ⊢
