@@ -1,0 +1,9 @@
+resolver: lts-7.5
+packages:
+  - '.'
+pvp-bounds: upper
+extra-deps: []
+extra-include-dirs: []
+extra-lib-dirs: []
+flags: {}
+extra-package-dbs: []

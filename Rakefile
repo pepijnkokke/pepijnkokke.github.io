@@ -19,8 +19,11 @@ end
 rule '.md' => '.lagda' do |t|
   front_matter = YAML.load_file(t.source)
   cmd = ["agda2html"]
-  cmd << "-i #{t.source}"
-  cmd << "-o #{t.name}"
+  cmd << "-f #{t.source}"
+  cmd << "-t #{t.name}"
+  cmd << "-i _posts"
+  cmd << "-i _drafts"
+  cmd << "-i sf"
   cmd << "--verbose"
   cmd << "--link-to-agda-stdlib"
   cmd << "--strip-implicit-args"\

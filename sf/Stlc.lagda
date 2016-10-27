@@ -436,7 +436,7 @@ extra complexity here, but it must be dealt with when formalizing
 richer languages.
 
 
-#### Exercise: 3 stars (substi)
+#### Exercise: 3 stars (subst-correct)
 The definition that we gave above defines substitution as a _function_.
 Suppose, instead, we wanted to define substitution as an inductive _relation_.
 We've begun the definition by providing the `data` header and
@@ -589,7 +589,6 @@ step-example5 : (app (app idBBBB idBB) idB) ==>* idB
 step-example5 = {!!} -- FILL IN HERE
 \end{code}
 
-
 ## Typing
 
 Next we consider the typing relation of the STLC.
@@ -700,7 +699,7 @@ typing-example2 =
         (app (var y refl) (var x refl) ))))
 \end{code}
 
-#### Exercise: 2 stars (typing_example_3)
+#### Exercise: 2 stars (typing-example3)
 Formally prove the following typing derivation holds:
 
 $$\exists A, \varnothing\vdash \lambda x:bool\rightarrow B. \lambda y:bool\rightarrow bool. \lambda z:bool. y\;(x\;z) : A$$.
@@ -729,7 +728,7 @@ typing-nonexample1 : ∄ λ A → ∅ ⊢
 typing-nonexample1 = {!!} -- FILL IN HERE
 \end{code}
 
-#### Exercise: 3 stars, optional (typing_nonexample_3)
+#### Exercise: 3 stars, optional (typing-nonexample2)
 Another nonexample:
 
 $$\nexists A, \exists B, \varnothing\vdash \lambda x:A. x\;x : B$$.

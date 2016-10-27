@@ -8260,7 +8260,702 @@ $$
 {% endraw %}</pre>
 
 <pre class="Agda">{% raw %}
-  <a name="27768" class="Keyword"
+<a name="27220" class="Keyword"
+      >module</a
+      ><a name="27226"
+      > </a
+      ><a name="27227" href="one-lambda-calculus-many-times-2.html#27227" class="Module"
+      >LJ&#8660;NJ</a
+      ><a name="27232"
+      > </a
+      ><a name="27233" class="Keyword"
+      >where</a
+      ><a name="27238"
+      >
+
+    </a
+      ><a name="27244" href="one-lambda-calculus-many-times-2.html#27244" class="Function"
+      >&#10233;</a
+      ><a name="27245"
+      > </a
+      ><a name="27246" class="Symbol"
+      >:</a
+      ><a name="27247"
+      > </a
+      ><a name="27248" class="Symbol"
+      >&#8704;</a
+      ><a name="27249"
+      > </a
+      ><a name="27254" class="Symbol"
+      >&#8594;</a
+      ><a name="27255"
+      > </a
+      ><a name="27256" href="one-lambda-calculus-many-times-2.html#26468" class="Datatype Operator"
+      >LJ</a
+      ><a name="27258"
+      > </a
+      ><a name="27259" href="one-lambda-calculus-many-times-2.html#27251" class="Bound"
+      >S</a
+      ><a name="27260"
+      > </a
+      ><a name="27261" class="Symbol"
+      >&#8594;</a
+      ><a name="27262"
+      > </a
+      ><a name="27263" href="one-lambda-calculus-many-times-2.html#6848" class="Datatype Operator"
+      >NJ</a
+      ><a name="27265"
+      > </a
+      ><a name="27266" href="one-lambda-calculus-many-times-2.html#27251" class="Bound"
+      >S</a
+      ><a name="27267"
+      >
+    </a
+      ><a name="27272" href="one-lambda-calculus-many-times-2.html#27244" class="Function"
+      >&#10233;</a
+      ><a name="27273"
+      >  </a
+      ><a name="27275" href="one-lambda-calculus-many-times-2.html#26498" class="InductiveConstructor"
+      >ax</a
+      ><a name="27277"
+      >       </a
+      ><a name="27284" class="Symbol"
+      >=</a
+      ><a name="27285"
+      > </a
+      ><a name="27286" href="one-lambda-calculus-many-times-2.html#6878" class="InductiveConstructor"
+      >ax</a
+      ><a name="27288"
+      >
+    </a
+      ><a name="27293" href="one-lambda-calculus-many-times-2.html#27244" class="Function"
+      >&#10233;</a
+      ><a name="27294"
+      > </a
+      ><a name="27295" class="Symbol"
+      >(</a
+      ><a name="27296" href="one-lambda-calculus-many-times-2.html#26538" class="InductiveConstructor"
+      >cut</a
+      ><a name="27299"
+      > </a
+      ><a name="27300" class="Symbol"
+      >{</a
+      ><a name="27301" class="Argument"
+      >&#916;</a
+      ><a name="27302"
+      > </a
+      ><a name="27303" class="Symbol"
+      >=</a
+      ><a name="27304"
+      > </a
+      ><a name="27305" href="one-lambda-calculus-many-times-2.html#27305" class="Bound"
+      >&#916;</a
+      ><a name="27306" class="Symbol"
+      >}</a
+      ><a name="27307"
+      > </a
+      ><a name="27308" href="one-lambda-calculus-many-times-2.html#27308" class="Bound"
+      >f</a
+      ><a name="27309"
+      > </a
+      ><a name="27310" href="one-lambda-calculus-many-times-2.html#27310" class="Bound"
+      >g</a
+      ><a name="27311" class="Symbol"
+      >)</a
+      ><a name="27312"
+      > </a
+      ><a name="27313" class="Symbol"
+      >=</a
+      ><a name="27314"
+      > </a
+      ><a name="27315" href="one-lambda-calculus-many-times-2.html#23795" class="Function"
+      >NJ.s&#8314;&#8242;</a
+      ><a name="27321"
+      > </a
+      ><a name="27322" href="Agda.Builtin.List.html#89" class="InductiveConstructor"
+      >[]</a
+      ><a name="27324"
+      > </a
+      ><a name="27325" href="one-lambda-calculus-many-times-2.html#27305" class="Bound"
+      >&#916;</a
+      ><a name="27326"
+      > </a
+      ><a name="27327" class="Symbol"
+      >(</a
+      ><a name="27328" href="one-lambda-calculus-many-times-2.html#6970" class="InductiveConstructor"
+      >&#8658;e</a
+      ><a name="27330"
+      > </a
+      ><a name="27331" class="Symbol"
+      >(</a
+      ><a name="27332" href="one-lambda-calculus-many-times-2.html#6917" class="InductiveConstructor"
+      >&#8658;i</a
+      ><a name="27334"
+      > </a
+      ><a name="27335" class="Symbol"
+      >(</a
+      ><a name="27336" href="one-lambda-calculus-many-times-2.html#27244" class="Function"
+      >&#10233;</a
+      ><a name="27337"
+      > </a
+      ><a name="27338" href="one-lambda-calculus-many-times-2.html#27310" class="Bound"
+      >g</a
+      ><a name="27339" class="Symbol"
+      >))</a
+      ><a name="27341"
+      > </a
+      ><a name="27342" class="Symbol"
+      >(</a
+      ><a name="27343" href="one-lambda-calculus-many-times-2.html#27244" class="Function"
+      >&#10233;</a
+      ><a name="27344"
+      > </a
+      ><a name="27345" href="one-lambda-calculus-many-times-2.html#27308" class="Bound"
+      >f</a
+      ><a name="27346" class="Symbol"
+      >))</a
+      ><a name="27348"
+      >
+    </a
+      ><a name="27353" href="one-lambda-calculus-many-times-2.html#27244" class="Function"
+      >&#10233;</a
+      ><a name="27354"
+      > </a
+      ><a name="27355" class="Symbol"
+      >(</a
+      ><a name="27356" href="one-lambda-calculus-many-times-2.html#26604" class="InductiveConstructor"
+      >&#8658;l</a
+      ><a name="27358"
+      >  </a
+      ><a name="27360" class="Symbol"
+      >{</a
+      ><a name="27361" class="Argument"
+      >&#916;</a
+      ><a name="27362"
+      > </a
+      ><a name="27363" class="Symbol"
+      >=</a
+      ><a name="27364"
+      > </a
+      ><a name="27365" href="one-lambda-calculus-many-times-2.html#27365" class="Bound"
+      >&#916;</a
+      ><a name="27366" class="Symbol"
+      >}</a
+      ><a name="27367"
+      > </a
+      ><a name="27368" href="one-lambda-calculus-many-times-2.html#27368" class="Bound"
+      >f</a
+      ><a name="27369"
+      > </a
+      ><a name="27370" href="one-lambda-calculus-many-times-2.html#27370" class="Bound"
+      >g</a
+      ><a name="27371" class="Symbol"
+      >)</a
+      ><a name="27372"
+      > </a
+      ><a name="27373" class="Symbol"
+      >=</a
+      ><a name="27374"
+      > </a
+      ><a name="27375" href="one-lambda-calculus-many-times-2.html#23795" class="Function"
+      >NJ.s&#8314;&#8242;</a
+      ><a name="27381"
+      > </a
+      ><a name="27382" href="Agda.Builtin.List.html#89" class="InductiveConstructor"
+      >[]</a
+      ><a name="27384"
+      > </a
+      ><a name="27385" href="one-lambda-calculus-many-times-2.html#27365" class="Bound"
+      >&#916;</a
+      ><a name="27386"
+      > </a
+      ><a name="27387" class="Symbol"
+      >(</a
+      ><a name="27388" href="one-lambda-calculus-many-times-2.html#6970" class="InductiveConstructor"
+      >&#8658;e</a
+      ><a name="27390"
+      > </a
+      ><a name="27391" class="Symbol"
+      >(</a
+      ><a name="27392" href="one-lambda-calculus-many-times-2.html#6917" class="InductiveConstructor"
+      >&#8658;i</a
+      ><a name="27394"
+      > </a
+      ><a name="27395" class="Symbol"
+      >(</a
+      ><a name="27396" href="one-lambda-calculus-many-times-2.html#27244" class="Function"
+      >&#10233;</a
+      ><a name="27397"
+      > </a
+      ><a name="27398" href="one-lambda-calculus-many-times-2.html#27370" class="Bound"
+      >g</a
+      ><a name="27399" class="Symbol"
+      >))</a
+      ><a name="27401"
+      > </a
+      ><a name="27402" class="Symbol"
+      >(</a
+      ><a name="27403" href="one-lambda-calculus-many-times-2.html#6970" class="InductiveConstructor"
+      >&#8658;e</a
+      ><a name="27405"
+      > </a
+      ><a name="27406" href="one-lambda-calculus-many-times-2.html#6878" class="InductiveConstructor"
+      >ax</a
+      ><a name="27408"
+      > </a
+      ><a name="27409" class="Symbol"
+      >(</a
+      ><a name="27410" href="one-lambda-calculus-many-times-2.html#27244" class="Function"
+      >&#10233;</a
+      ><a name="27411"
+      > </a
+      ><a name="27412" href="one-lambda-calculus-many-times-2.html#27368" class="Bound"
+      >f</a
+      ><a name="27413" class="Symbol"
+      >)))</a
+      ><a name="27416"
+      >
+    </a
+      ><a name="27421" href="one-lambda-calculus-many-times-2.html#27244" class="Function"
+      >&#10233;</a
+      ><a name="27422"
+      > </a
+      ><a name="27423" class="Symbol"
+      >(</a
+      ><a name="27424" href="one-lambda-calculus-many-times-2.html#26678" class="InductiveConstructor"
+      >&#8658;r</a
+      ><a name="27426"
+      >  </a
+      ><a name="27428" href="one-lambda-calculus-many-times-2.html#27428" class="Bound"
+      >f</a
+      ><a name="27429" class="Symbol"
+      >)</a
+      ><a name="27430"
+      >   </a
+      ><a name="27433" class="Symbol"
+      >=</a
+      ><a name="27434"
+      > </a
+      ><a name="27435" href="one-lambda-calculus-many-times-2.html#6917" class="InductiveConstructor"
+      >&#8658;i</a
+      ><a name="27437"
+      >  </a
+      ><a name="27439" class="Symbol"
+      >(</a
+      ><a name="27440" href="one-lambda-calculus-many-times-2.html#27244" class="Function"
+      >&#10233;</a
+      ><a name="27441"
+      > </a
+      ><a name="27442" href="one-lambda-calculus-many-times-2.html#27428" class="Bound"
+      >f</a
+      ><a name="27443" class="Symbol"
+      >)</a
+      ><a name="27444"
+      >
+    </a
+      ><a name="27449" href="one-lambda-calculus-many-times-2.html#27244" class="Function"
+      >&#10233;</a
+      ><a name="27450"
+      > </a
+      ><a name="27451" class="Symbol"
+      >(</a
+      ><a name="27452" href="one-lambda-calculus-many-times-2.html#26732" class="InductiveConstructor"
+      >w</a
+      ><a name="27453"
+      >   </a
+      ><a name="27456" href="one-lambda-calculus-many-times-2.html#27456" class="Bound"
+      >f</a
+      ><a name="27457" class="Symbol"
+      >)</a
+      ><a name="27458"
+      >   </a
+      ><a name="27461" class="Symbol"
+      >=</a
+      ><a name="27462"
+      > </a
+      ><a name="27463" href="one-lambda-calculus-many-times-2.html#7035" class="InductiveConstructor"
+      >w</a
+      ><a name="27464"
+      >   </a
+      ><a name="27467" class="Symbol"
+      >(</a
+      ><a name="27468" href="one-lambda-calculus-many-times-2.html#27244" class="Function"
+      >&#10233;</a
+      ><a name="27469"
+      > </a
+      ><a name="27470" href="one-lambda-calculus-many-times-2.html#27456" class="Bound"
+      >f</a
+      ><a name="27471" class="Symbol"
+      >)</a
+      ><a name="27472"
+      >
+    </a
+      ><a name="27477" href="one-lambda-calculus-many-times-2.html#27244" class="Function"
+      >&#10233;</a
+      ><a name="27478"
+      > </a
+      ><a name="27479" class="Symbol"
+      >(</a
+      ><a name="27480" href="one-lambda-calculus-many-times-2.html#26782" class="InductiveConstructor"
+      >c</a
+      ><a name="27481"
+      >   </a
+      ><a name="27484" href="one-lambda-calculus-many-times-2.html#27484" class="Bound"
+      >f</a
+      ><a name="27485" class="Symbol"
+      >)</a
+      ><a name="27486"
+      >   </a
+      ><a name="27489" class="Symbol"
+      >=</a
+      ><a name="27490"
+      > </a
+      ><a name="27491" href="one-lambda-calculus-many-times-2.html#7084" class="InductiveConstructor"
+      >c</a
+      ><a name="27492"
+      >   </a
+      ><a name="27495" class="Symbol"
+      >(</a
+      ><a name="27496" href="one-lambda-calculus-many-times-2.html#27244" class="Function"
+      >&#10233;</a
+      ><a name="27497"
+      > </a
+      ><a name="27498" href="one-lambda-calculus-many-times-2.html#27484" class="Bound"
+      >f</a
+      ><a name="27499" class="Symbol"
+      >)</a
+      ><a name="27500"
+      >
+    </a
+      ><a name="27505" href="one-lambda-calculus-many-times-2.html#27244" class="Function"
+      >&#10233;</a
+      ><a name="27506"
+      > </a
+      ><a name="27507" class="Symbol"
+      >(</a
+      ><a name="27508" href="one-lambda-calculus-many-times-2.html#26840" class="InductiveConstructor"
+      >p</a
+      ><a name="27509"
+      > </a
+      ><a name="27510" href="one-lambda-calculus-many-times-2.html#27510" class="Bound"
+      >&#915;</a
+      ><a name="27511"
+      > </a
+      ><a name="27512" href="one-lambda-calculus-many-times-2.html#27512" class="Bound"
+      >f</a
+      ><a name="27513" class="Symbol"
+      >)</a
+      ><a name="27514"
+      >   </a
+      ><a name="27517" class="Symbol"
+      >=</a
+      ><a name="27518"
+      > </a
+      ><a name="27519" href="one-lambda-calculus-many-times-2.html#7141" class="InductiveConstructor"
+      >p</a
+      ><a name="27520"
+      > </a
+      ><a name="27521" href="one-lambda-calculus-many-times-2.html#27510" class="Bound"
+      >&#915;</a
+      ><a name="27522"
+      > </a
+      ><a name="27523" class="Symbol"
+      >(</a
+      ><a name="27524" href="one-lambda-calculus-many-times-2.html#27244" class="Function"
+      >&#10233;</a
+      ><a name="27525"
+      > </a
+      ><a name="27526" href="one-lambda-calculus-many-times-2.html#27512" class="Bound"
+      >f</a
+      ><a name="27527" class="Symbol"
+      >)</a
+      ><a name="27528"
+      >
+
+    </a
+      ><a name="27534" href="one-lambda-calculus-many-times-2.html#27534" class="Function"
+      >&#10232;</a
+      ><a name="27535"
+      > </a
+      ><a name="27536" class="Symbol"
+      >:</a
+      ><a name="27537"
+      > </a
+      ><a name="27538" class="Symbol"
+      >&#8704;</a
+      ><a name="27539"
+      > </a
+      ><a name="27544" class="Symbol"
+      >&#8594;</a
+      ><a name="27545"
+      > </a
+      ><a name="27546" href="one-lambda-calculus-many-times-2.html#6848" class="Datatype Operator"
+      >NJ</a
+      ><a name="27548"
+      > </a
+      ><a name="27549" href="one-lambda-calculus-many-times-2.html#27541" class="Bound"
+      >S</a
+      ><a name="27550"
+      > </a
+      ><a name="27551" class="Symbol"
+      >&#8594;</a
+      ><a name="27552"
+      > </a
+      ><a name="27553" href="one-lambda-calculus-many-times-2.html#26468" class="Datatype Operator"
+      >LJ</a
+      ><a name="27555"
+      > </a
+      ><a name="27556" href="one-lambda-calculus-many-times-2.html#27541" class="Bound"
+      >S</a
+      ><a name="27557"
+      >
+    </a
+      ><a name="27562" href="one-lambda-calculus-many-times-2.html#27534" class="Function"
+      >&#10232;</a
+      ><a name="27563"
+      >  </a
+      ><a name="27565" href="one-lambda-calculus-many-times-2.html#6878" class="InductiveConstructor"
+      >ax</a
+      ><a name="27567"
+      >       </a
+      ><a name="27574" class="Symbol"
+      >=</a
+      ><a name="27575"
+      > </a
+      ><a name="27576" href="one-lambda-calculus-many-times-2.html#26498" class="InductiveConstructor"
+      >ax</a
+      ><a name="27578"
+      >
+    </a
+      ><a name="27583" href="one-lambda-calculus-many-times-2.html#27534" class="Function"
+      >&#10232;</a
+      ><a name="27584"
+      > </a
+      ><a name="27585" class="Symbol"
+      >(</a
+      ><a name="27586" href="one-lambda-calculus-many-times-2.html#6917" class="InductiveConstructor"
+      >&#8658;i</a
+      ><a name="27588"
+      >  </a
+      ><a name="27590" href="one-lambda-calculus-many-times-2.html#27590" class="Bound"
+      >f</a
+      ><a name="27591" class="Symbol"
+      >)</a
+      ><a name="27592"
+      >   </a
+      ><a name="27595" class="Symbol"
+      >=</a
+      ><a name="27596"
+      > </a
+      ><a name="27597" href="one-lambda-calculus-many-times-2.html#26678" class="InductiveConstructor"
+      >&#8658;r</a
+      ><a name="27599"
+      >  </a
+      ><a name="27601" class="Symbol"
+      >(</a
+      ><a name="27602" href="one-lambda-calculus-many-times-2.html#27534" class="Function"
+      >&#10232;</a
+      ><a name="27603"
+      > </a
+      ><a name="27604" href="one-lambda-calculus-many-times-2.html#27590" class="Bound"
+      >f</a
+      ><a name="27605" class="Symbol"
+      >)</a
+      ><a name="27606"
+      >
+    </a
+      ><a name="27611" href="one-lambda-calculus-many-times-2.html#27534" class="Function"
+      >&#10232;</a
+      ><a name="27612"
+      > </a
+      ><a name="27613" class="Symbol"
+      >(</a
+      ><a name="27614" href="one-lambda-calculus-many-times-2.html#6970" class="InductiveConstructor"
+      >&#8658;e</a
+      ><a name="27616"
+      >  </a
+      ><a name="27618" href="one-lambda-calculus-many-times-2.html#27618" class="Bound"
+      >f</a
+      ><a name="27619"
+      > </a
+      ><a name="27620" href="one-lambda-calculus-many-times-2.html#27620" class="Bound"
+      >g</a
+      ><a name="27621" class="Symbol"
+      >)</a
+      ><a name="27622"
+      > </a
+      ><a name="27623" class="Symbol"
+      >=</a
+      ><a name="27624"
+      > </a
+      ><a name="27625" href="one-lambda-calculus-many-times-2.html#26538" class="InductiveConstructor"
+      >cut</a
+      ><a name="27628"
+      > </a
+      ><a name="27629" class="Symbol"
+      >(</a
+      ><a name="27630" href="one-lambda-calculus-many-times-2.html#27534" class="Function"
+      >&#10232;</a
+      ><a name="27631"
+      > </a
+      ><a name="27632" href="one-lambda-calculus-many-times-2.html#27618" class="Bound"
+      >f</a
+      ><a name="27633" class="Symbol"
+      >)</a
+      ><a name="27634"
+      > </a
+      ><a name="27635" class="Symbol"
+      >(</a
+      ><a name="27636" href="one-lambda-calculus-many-times-2.html#27108" class="Function"
+      >LJ.&#8709;e</a
+      ><a name="27641"
+      > </a
+      ><a name="27642" class="Symbol"
+      >(</a
+      ><a name="27643" href="one-lambda-calculus-many-times-2.html#26604" class="InductiveConstructor"
+      >&#8658;l</a
+      ><a name="27645"
+      > </a
+      ><a name="27646" class="Symbol"
+      >(</a
+      ><a name="27647" href="one-lambda-calculus-many-times-2.html#27534" class="Function"
+      >&#10232;</a
+      ><a name="27648"
+      > </a
+      ><a name="27649" href="one-lambda-calculus-many-times-2.html#27620" class="Bound"
+      >g</a
+      ><a name="27650" class="Symbol"
+      >)</a
+      ><a name="27651"
+      > </a
+      ><a name="27652" href="one-lambda-calculus-many-times-2.html#26498" class="InductiveConstructor"
+      >ax</a
+      ><a name="27654" class="Symbol"
+      >))</a
+      ><a name="27656"
+      >
+    </a
+      ><a name="27661" href="one-lambda-calculus-many-times-2.html#27534" class="Function"
+      >&#10232;</a
+      ><a name="27662"
+      > </a
+      ><a name="27663" class="Symbol"
+      >(</a
+      ><a name="27664" href="one-lambda-calculus-many-times-2.html#7035" class="InductiveConstructor"
+      >w</a
+      ><a name="27665"
+      >   </a
+      ><a name="27668" href="one-lambda-calculus-many-times-2.html#27668" class="Bound"
+      >f</a
+      ><a name="27669" class="Symbol"
+      >)</a
+      ><a name="27670"
+      >   </a
+      ><a name="27673" class="Symbol"
+      >=</a
+      ><a name="27674"
+      > </a
+      ><a name="27675" href="one-lambda-calculus-many-times-2.html#26732" class="InductiveConstructor"
+      >w</a
+      ><a name="27676"
+      >   </a
+      ><a name="27679" class="Symbol"
+      >(</a
+      ><a name="27680" href="one-lambda-calculus-many-times-2.html#27534" class="Function"
+      >&#10232;</a
+      ><a name="27681"
+      > </a
+      ><a name="27682" href="one-lambda-calculus-many-times-2.html#27668" class="Bound"
+      >f</a
+      ><a name="27683" class="Symbol"
+      >)</a
+      ><a name="27684"
+      >
+    </a
+      ><a name="27689" href="one-lambda-calculus-many-times-2.html#27534" class="Function"
+      >&#10232;</a
+      ><a name="27690"
+      > </a
+      ><a name="27691" class="Symbol"
+      >(</a
+      ><a name="27692" href="one-lambda-calculus-many-times-2.html#7084" class="InductiveConstructor"
+      >c</a
+      ><a name="27693"
+      >   </a
+      ><a name="27696" href="one-lambda-calculus-many-times-2.html#27696" class="Bound"
+      >f</a
+      ><a name="27697" class="Symbol"
+      >)</a
+      ><a name="27698"
+      >   </a
+      ><a name="27701" class="Symbol"
+      >=</a
+      ><a name="27702"
+      > </a
+      ><a name="27703" href="one-lambda-calculus-many-times-2.html#26782" class="InductiveConstructor"
+      >c</a
+      ><a name="27704"
+      >   </a
+      ><a name="27707" class="Symbol"
+      >(</a
+      ><a name="27708" href="one-lambda-calculus-many-times-2.html#27534" class="Function"
+      >&#10232;</a
+      ><a name="27709"
+      > </a
+      ><a name="27710" href="one-lambda-calculus-many-times-2.html#27696" class="Bound"
+      >f</a
+      ><a name="27711" class="Symbol"
+      >)</a
+      ><a name="27712"
+      >
+    </a
+      ><a name="27717" href="one-lambda-calculus-many-times-2.html#27534" class="Function"
+      >&#10232;</a
+      ><a name="27718"
+      > </a
+      ><a name="27719" class="Symbol"
+      >(</a
+      ><a name="27720" href="one-lambda-calculus-many-times-2.html#7141" class="InductiveConstructor"
+      >p</a
+      ><a name="27721"
+      > </a
+      ><a name="27722" href="one-lambda-calculus-many-times-2.html#27722" class="Bound"
+      >&#915;</a
+      ><a name="27723"
+      > </a
+      ><a name="27724" href="one-lambda-calculus-many-times-2.html#27724" class="Bound"
+      >f</a
+      ><a name="27725" class="Symbol"
+      >)</a
+      ><a name="27726"
+      >   </a
+      ><a name="27729" class="Symbol"
+      >=</a
+      ><a name="27730"
+      > </a
+      ><a name="27731" href="one-lambda-calculus-many-times-2.html#26840" class="InductiveConstructor"
+      >p</a
+      ><a name="27732"
+      > </a
+      ><a name="27733" href="one-lambda-calculus-many-times-2.html#27722" class="Bound"
+      >&#915;</a
+      ><a name="27734"
+      > </a
+      ><a name="27735" class="Symbol"
+      >(</a
+      ><a name="27736" href="one-lambda-calculus-many-times-2.html#27534" class="Function"
+      >&#10232;</a
+      ><a name="27737"
+      > </a
+      ><a name="27738" href="one-lambda-calculus-many-times-2.html#27724" class="Bound"
+      >f</a
+      ><a name="27739" class="Symbol"
+      >)</a
+      >
+{% endraw %}</pre>
+
+<pre class="Agda">{% raw %}
+<a name="27768" class="Keyword"
       >module</a
       ><a name="27774"
       > </a
@@ -8419,6 +9114,24 @@ $$
       >
 {% endraw %}</pre>
 
+
+$$
+  \begin{array}{ccccc}
+  NJ           & \leftrightarrow & ND           & \rightarrow & Agda \\
+  \\
+  \updownarrow &                 & \updownarrow &             &      \\
+  \\
+  LJ           & \leftrightarrow & SC           &             &
+  \end{array}
+$$
+
+---
+
+[^minproplog]: Or, alternatively, as axiomatisations of minimal propositional logic.
+
+[^admit]: As used here, *admit* or *admissible* is a technical term, usually contrasted with *derivable*. Derivable rules are rules that we can construct directly, without inspecting the proofs that we're given as arguments. On the other hand, admissible means that we can define these rules, but that we have to inspect and rewrite the proofs we're given.
+
+<div class="hidden">
 <pre class="Agda">{% raw %}
 <a name="28683" class="Comment"
       >-- -}</a
@@ -8444,23 +9157,4 @@ $$
       >-- -}</a
       >
 {% endraw %}</pre>
-
-
-$$
-  \begin{array}{ccccc}
-  NJ           & \leftrightarrow & ND           & \rightarrow & Agda \\
-  \\
-  \updownarrow &                 & \updownarrow &             &      \\
-  \\
-  LJ           & \leftrightarrow & SC           &             &
-  \end{array}
-$$
-
----
-
-[^minproplog]: Or, alternatively, as axiomatisations of minimal propositional logic.
-
-[^admit]: As used here, *admit* or *admissible* is a technical term, usually contrasted with *derivable*. Derivable rules are rules that we can construct directly, without inspecting the proofs that we're given as arguments. On the other hand, admissible means that we can define these rules, but that we have to inspect and rewrite the proofs we're given.
-
-<div class="hidden">
 </div>
