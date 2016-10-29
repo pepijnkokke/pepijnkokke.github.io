@@ -328,7 +328,7 @@ $$\Gamma \vdash t \in T$$.
     $$\Gamma' \vdash \lambda y:A. t' : A\to B$$.
 
     By $$abs$$, it suffices to show that $$\Gamma', y:A \vdash t' : t'$$.
-    By the IH (setting $$\Gamma'' = Gamma', y:A$$), it suffices to show
+    By the IH (setting $$\Gamma'' = \Gamma', y:A$$), it suffices to show
     that $$\Gamma, y:A$$ and $$\Gamma', y:A$$ agree on all the variables
     that appear free in $$t'$$.
 
