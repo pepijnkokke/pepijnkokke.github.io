@@ -1,8 +1,8 @@
 ---
 title         : One λ-calculus, many times... (2)
-date          : 2016-09-29 12:00:00
+date          : 2016-10-30 12:00:00
 categories    : [compsci]
-tags          : [agda]
+tags          : [draft, agda]
 hide-implicit : true
 extra-script  : agda-extra-script.html
 extra-style   : agda-extra-style.html
@@ -13,7 +13,7 @@ This post is a continuation of *[One λ-calculus, many times...]({% post_url 201
 <div class="hidden">
 \begin{code}
 import 2016-03-20-one-lambda-calculus-many-times as Part1
-module one-lambda-calculus-many-times-2 where
+module 2016-10-30-one-lambda-calculus-many-times-2 where
 \end{code}
 </div>
 

@@ -2,7 +2,7 @@
 title        : "Linear Types for Erlang OTP (1)"
 date         : 2016-10-25 12:00:00
 categories   : []
-tags         : [agda, erlang, process calculus]
+tags         : [draft, agda, erlang, process calculus]
 extra-script : agda-extra-script.html
 extra-style  : agda-extra-style.html
 ---

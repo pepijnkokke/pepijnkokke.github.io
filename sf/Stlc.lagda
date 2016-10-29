@@ -9,6 +9,16 @@ permalink     : "/sf/Stlc.html"
 
 <div class="hidden">
 \begin{code}
+{-# OPTIONS --allow-unsolved-metas #-}
+\end{code}
+</div>
+
+\begin{code}
+module Stlc where
+\end{code}
+
+<div class="hidden">
+\begin{code}
 open import Data.Empty using (⊥; ⊥-elim)
 open import Data.Maybe using (Maybe; just; nothing)
 open import Data.Nat using (ℕ; suc; zero; _+_)
@@ -18,10 +28,6 @@ open import Relation.Nullary using (Dec; yes; no)
 open import Relation.Binary.PropositionalEquality using (_≡_; _≢_; refl)
 \end{code}
 </div>
-
-\begin{code}
-module Stlc where
-\end{code}
 
 # The Simply Typed Lambda-Calculus
 
@@ -422,9 +428,13 @@ $$
 [ x := v ] false = false
 [ x := v ] (if s then t else u) =
   if [ x := v ] s then [ x := v ] t else  [ x := v ] u
+\end{code}
 
+<div class="hidden">
+\begin{code}
 infix 9 [_:=_]_
 \end{code}
+</div>
 
 _Technical note_: Substitution becomes trickier to define if we
 consider the case where $$s$$, the term being substituted for a
@@ -450,10 +460,10 @@ data [_:=_]_==>_ (x : Id) (s : Term) : Term -> Term -> Set where
 \end{code}
 
 \begin{code}
-subst-correct : ∀ s x t t'
-              → [ x := s ] t ≡ t'
-              → [ x := s ] t ==> t'
-subst-correct s x t t' p = {!!} -- FILL IN HERE
+postulate
+  subst-correct : ∀ s x t t'
+                → [ x := s ] t ≡ t'
+                → [ x := s ] t ==> t'
 \end{code}
 
 
@@ -514,9 +524,13 @@ data _==>_ : Term → Term → Set where
           → if true then s else t ==> s
   iffalse : ∀ {s t}
           → if false then s else t ==> t
+\end{code}
 
+<div class="hidden">
+\begin{code}
 infix 1 _==>_
 \end{code}
+</div>
 
 \begin{code}
 data Multi (R : Term → Term → Set) : Term → Term → Set where
@@ -585,8 +599,8 @@ step-example4 = step (app2 abs (red true))
 #### Exercise: 2 stars (step-example5)
 
 \begin{code}
-step-example5 : (app (app idBBBB idBB) idB) ==>* idB
-step-example5 = {!!} -- FILL IN HERE
+postulate
+  step-example5 : (app (app idBBBB idBB) idB) ==>* idB
 \end{code}
 
 ## Typing
@@ -670,9 +684,14 @@ data _⊢_∶_ : Ctxt -> Term -> Type -> Set where
                 → Γ ⊢ t ∶ A
                 → Γ ⊢ u ∶ A
                 → Γ ⊢ if s then t else u ∶ A
+\end{code}
 
+<div class="hidden">
+\begin{code}
 infix 1 _⊢_∶_
 \end{code}
+</div>
+
 
 ### Examples
 
@@ -705,12 +724,12 @@ Formally prove the following typing derivation holds:
 $$\exists A, \varnothing\vdash \lambda x:bool\rightarrow B. \lambda y:bool\rightarrow bool. \lambda z:bool. y\;(x\;z) : A$$.
 
 \begin{code}
-typing-example3 : ∃ λ A → ∅ ⊢
-  (abs x (bool ⇒ bool)
-    (abs y (bool ⇒ bool)
-      (abs z bool
-        (app (var y) (app (var x) (var z)))))) ∶ A
-typing-example3 = {!!} -- FILL IN HERE
+postulate
+  typing-example3 : ∃ λ A → ∅ ⊢
+    (abs x (bool ⇒ bool)
+      (abs y (bool ⇒ bool)
+        (abs z bool
+          (app (var y) (app (var x) (var z)))))) ∶ A
 \end{code}
 
 We can also show that terms are _not_ typable.  For example, let's
@@ -721,11 +740,11 @@ to the term $$\lambda x:bool. \lambda y:bool. x\;y$$---i.e.,
 $$\nexists A, \varnothing\vdash \lambda x:bool. \lambda y:bool. x\;y : A$$.
 
 \begin{code}
-typing-nonexample1 : ∄ λ A → ∅ ⊢
-  (abs x bool
-    (abs y bool
-      (app (var x) (var y)))) ∶ A
-typing-nonexample1 = {!!} -- FILL IN HERE
+postulate
+  typing-nonexample1 : ∄ λ A → ∅ ⊢
+    (abs x bool
+      (abs y bool
+        (app (var x) (var y)))) ∶ A
 \end{code}
 
 #### Exercise: 3 stars, optional (typing-nonexample2)
@@ -734,7 +753,7 @@ Another nonexample:
 $$\nexists A, \exists B, \varnothing\vdash \lambda x:A. x\;x : B$$.
 
 \begin{code}
-typing-nonexample2 : ∄ λ A → ∃ λ B → ∅ ⊢
-  (abs x B (app (var x) (var x))) ∶ A
-typing-nonexample2 = {!!} -- FILL IN HERE
+postulate
+  typing-nonexample2 : ∄ λ A → ∃ λ B → ∅ ⊢
+    (abs x B (app (var x) (var x))) ∶ A
 \end{code}
