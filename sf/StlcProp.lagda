@@ -7,6 +7,7 @@ extra-style   : agda-extra-style.html
 permalink     : "/sf/StlcProp.html"
 ---
 
+<div class="hidden">
 \begin{code}
 open import Function using (_∘_)
 open import Data.Empty using (⊥; ⊥-elim)
@@ -17,6 +18,7 @@ open import Relation.Nullary using (¬_; Dec; yes; no)
 open import Relation.Binary.PropositionalEquality using (_≡_; _≢_; refl)
 open import Stlc
 \end{code}
+</div>
 
 \begin{code}
 module StlcProp where
