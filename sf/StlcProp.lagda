@@ -258,9 +258,9 @@ _Proof_: We show, by induction on the proof that $$x$$ appears
 freeInCtxt var (var _ x∶A) = (_ , x∶A)
 freeInCtxt (app1 x∈t₁) (app t₁∶A _   ) = freeInCtxt x∈t₁ t₁∶A
 freeInCtxt (app2 x∈t₂) (app _    t₂∶A) = freeInCtxt x∈t₂ t₂∶A
-freeInCtxt (if1 x∈t₁) (if t₁∶A then _    else _   ) = freeInCtxt x∈t₁ t₁∶A
-freeInCtxt (if2 x∈t₂) (if _    then t₂∶A else _   ) = freeInCtxt x∈t₂ t₂∶A
-freeInCtxt (if3 x∈t₃) (if _    then _    else t₃∶A) = freeInCtxt x∈t₃ t₃∶A
+freeInCtxt (if1  x∈t₁) (if t₁∶A then _    else _   ) = freeInCtxt x∈t₁ t₁∶A
+freeInCtxt (if2  x∈t₂) (if _    then t₂∶A else _   ) = freeInCtxt x∈t₂ t₂∶A
+freeInCtxt (if3  x∈t₃) (if _    then _    else t₃∶A) = freeInCtxt x∈t₃ t₃∶A
 freeInCtxt {x} (abs {y} y≠x x∈t) (abs t∶B)
     with freeInCtxt x∈t t∶B
 ... | x∶A
