@@ -25,9 +25,10 @@ rule '.md' => '.lagda' do |t|
   cmd << "-i _drafts"
   cmd << "-i sf"
   cmd << "--verbose"
-  cmd << "--link-to-agda-stdlib"
   cmd << "--strip-implicit-args"\
     if front_matter['hide-implicit']
+  cmd << "--link-to-agda-stdlib"
+  cmd << "--link-local"
   sh(cmd.join ' ')
 
 end

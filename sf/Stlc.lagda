@@ -4,7 +4,6 @@ layout        : default
 hide-implicit : false
 extra-script  : agda-extra-script.html
 extra-style   : agda-extra-style.html
-permalink     : "/sf/Stlc.html"
 ---
 
 <div class="hidden">
