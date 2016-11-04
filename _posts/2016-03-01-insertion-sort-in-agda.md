@@ -3,8 +3,8 @@ title        : "Insertion sort in Agda"
 date         : 2016-03-01 12:00:00
 categories   : [compsci]
 tags         : [agda]
-extra-script : agda-extra-script.html
-extra-style  : agda-extra-style.html
+extra-script : [agda-extra-script.html]
+extra-style  : [agda-extra-style.html]
 ---
 
 I wrote this code a long time ago, and verifiying the correctness of
@@ -35,15 +35,279 @@ post, or in the Agda standard library!
 
 Obligatory "this is literate code, here are my imports."
 
-<pre class="Agda"><a name="1715" class="Keyword">open</a><a name="1719"> </a><a name="1720" class="Keyword">import</a><a name="1726"> </a><a name="1727" href="https://agda.github.io/agda-stdlib/Level.html#1" class="Module" target="_blank">Level</a><a name="1732">            </a><a name="1744" class="Keyword">using</a><a name="1749"> </a><a name="1750" class="Symbol">(</a><a name="1751" href="https://agda.github.io/agda-stdlib/Agda.Primitive.html#626" class="Primitive Operator" target="_blank">_⊔_</a><a name="1754" class="Symbol">)</a><a name="1755">
-</a><a name="1756" class="Keyword">open</a><a name="1760"> </a><a name="1761" class="Keyword">import</a><a name="1767"> </a><a name="1768" href="https://agda.github.io/agda-stdlib/Data.Vec.html#1" class="Module" target="_blank">Data.Vec</a><a name="1776">         </a><a name="1785" class="Keyword">using</a><a name="1790"> </a><a name="1791" class="Symbol">(</a><a name="1792" href="https://agda.github.io/agda-stdlib/Data.Vec.html#609" class="Datatype" target="_blank">Vec</a><a name="1795" class="Symbol">;</a><a name="1796"> </a><a name="1797" href="https://agda.github.io/agda-stdlib/Data.Vec.html#649" class="InductiveConstructor" target="_blank">[]</a><a name="1799" class="Symbol">;</a><a name="1800"> </a><a name="1801" href="https://agda.github.io/agda-stdlib/Data.Vec.html#668" class="InductiveConstructor Operator" target="_blank">_∷_</a><a name="1804" class="Symbol">)</a><a name="1805">
-</a><a name="1806" class="Keyword">open</a><a name="1810"> </a><a name="1811" class="Keyword">import</a><a name="1817"> </a><a name="1818" href="https://agda.github.io/agda-stdlib/Data.Nat.html#1" class="Module" target="_blank">Data.Nat</a><a name="1826">         </a><a name="1835" class="Keyword">using</a><a name="1840"> </a><a name="1841" class="Symbol">(</a><a name="1842" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#69" class="Datatype" target="_blank">ℕ</a><a name="1843" class="Symbol">;</a><a name="1844"> </a><a name="1845" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#87" class="InductiveConstructor" target="_blank">zero</a><a name="1849" class="Symbol">;</a><a name="1850"> </a><a name="1851" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#100" class="InductiveConstructor" target="_blank">suc</a><a name="1854" class="Symbol">)</a><a name="1855">
-</a><a name="1856" class="Keyword">open</a><a name="1860"> </a><a name="1861" class="Keyword">import</a><a name="1867"> </a><a name="1868" href="https://agda.github.io/agda-stdlib/Data.Sum.html#1" class="Module" target="_blank">Data.Sum</a><a name="1876">         </a><a name="1885" class="Keyword">using</a><a name="1890"> </a><a name="1891" class="Symbol">(</a><a name="1892" href="https://agda.github.io/agda-stdlib/Data.Sum.html#433" class="Datatype Operator" target="_blank">_⊎_</a><a name="1895" class="Symbol">;</a><a name="1896"> </a><a name="1897" href="https://agda.github.io/agda-stdlib/Data.Sum.html#489" class="InductiveConstructor" target="_blank">inj₁</a><a name="1901" class="Symbol">;</a><a name="1902"> </a><a name="1903" href="https://agda.github.io/agda-stdlib/Data.Sum.html#514" class="InductiveConstructor" target="_blank">inj₂</a><a name="1907" class="Symbol">)</a><a name="1908">
-</a><a name="1909" class="Keyword">open</a><a name="1913"> </a><a name="1914" class="Keyword">import</a><a name="1920"> </a><a name="1921" href="https://agda.github.io/agda-stdlib/Data.Product.html#1" class="Module" target="_blank">Data.Product</a><a name="1933">     </a><a name="1938" class="Keyword">using</a><a name="1943"> </a><a name="1944" class="Symbol">(</a><a name="1945" href="https://agda.github.io/agda-stdlib/Data.Product.html#823" class="Function" target="_blank">∃</a><a name="1946" class="Symbol">;</a><a name="1947"> </a><a name="1948" href="https://agda.github.io/agda-stdlib/Data.Product.html#509" class="InductiveConstructor Operator" target="_blank">_,_</a><a name="1951" class="Symbol">;</a><a name="1952"> </a><a name="1953" href="https://agda.github.io/agda-stdlib/Data.Product.html#525" class="Field" target="_blank">proj₁</a><a name="1958" class="Symbol">;</a><a name="1959"> </a><a name="1960" href="https://agda.github.io/agda-stdlib/Data.Product.html#539" class="Field" target="_blank">proj₂</a><a name="1965" class="Symbol">)</a><a name="1966">
-</a><a name="1967" class="Keyword">open</a><a name="1971"> </a><a name="1972" class="Keyword">import</a><a name="1978"> </a><a name="1979" href="https://agda.github.io/agda-stdlib/Data.Empty.html#1" class="Module" target="_blank">Data.Empty</a><a name="1989">       </a><a name="1996" class="Keyword">using</a><a name="2001"> </a><a name="2002" class="Symbol">(</a><a name="2003" href="https://agda.github.io/agda-stdlib/Data.Empty.html#348" class="Function" target="_blank">⊥-elim</a><a name="2009" class="Symbol">)</a><a name="2010">
-</a><a name="2011" class="Keyword">open</a><a name="2015"> </a><a name="2016" class="Keyword">import</a><a name="2022"> </a><a name="2023" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#1" class="Module" target="_blank">Relation.Nullary</a><a name="2039"> </a><a name="2040" class="Keyword">using</a><a name="2045"> </a><a name="2046" class="Symbol">(</a><a name="2047" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#414" class="Function Operator" target="_blank">¬_</a><a name="2049" class="Symbol">;</a><a name="2050"> </a><a name="2051" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#484" class="Datatype" target="_blank">Dec</a><a name="2054" class="Symbol">;</a><a name="2055"> </a><a name="2056" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#520" class="InductiveConstructor" target="_blank">yes</a><a name="2059" class="Symbol">;</a><a name="2060"> </a><a name="2061" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#547" class="InductiveConstructor" target="_blank">no</a><a name="2063" class="Symbol">)</a><a name="2064">
-</a><a name="2065" class="Keyword">open</a><a name="2069"> </a><a name="2070" class="Keyword">import</a><a name="2076"> </a><a name="2077" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#1" class="Module" target="_blank">Relation.Binary</a><a name="2092">
-</a><a name="2093" class="Keyword">open</a><a name="2097"> </a><a name="2098" class="Keyword">import</a><a name="2104"> </a><a name="2105" href="https://agda.github.io/agda-stdlib/Relation.Binary.PropositionalEquality.html#1" class="Module" target="_blank">Relation.Binary.PropositionalEquality</a></pre>
+<!--{% raw %}--><pre class="Agda">
+<a name="1719" class="Keyword"
+      >open</a
+      ><a name="1723"
+      > </a
+      ><a name="1724" class="Keyword"
+      >import</a
+      ><a name="1730"
+      > </a
+      ><a name="1731" href="https://agda.github.io/agda-stdlib/Level.html#1" class="Module"
+      >Level</a
+      ><a name="1736"
+      >            </a
+      ><a name="1748" class="Keyword"
+      >using</a
+      ><a name="1753"
+      > </a
+      ><a name="1754" class="Symbol"
+      >(</a
+      ><a name="1755" href="Agda.Primitive.html#626" class="Primitive Operator"
+      >_&#8852;_</a
+      ><a name="1758" class="Symbol"
+      >)</a
+      ><a name="1759"
+      >
+</a
+      ><a name="1760" class="Keyword"
+      >open</a
+      ><a name="1764"
+      > </a
+      ><a name="1765" class="Keyword"
+      >import</a
+      ><a name="1771"
+      > </a
+      ><a name="1772" href="https://agda.github.io/agda-stdlib/Data.Vec.html#1" class="Module"
+      >Data.Vec</a
+      ><a name="1780"
+      >         </a
+      ><a name="1789" class="Keyword"
+      >using</a
+      ><a name="1794"
+      > </a
+      ><a name="1795" class="Symbol"
+      >(</a
+      ><a name="1796" href="https://agda.github.io/agda-stdlib/Data.Vec.html#609" class="Datatype"
+      >Vec</a
+      ><a name="1799" class="Symbol"
+      >;</a
+      ><a name="1800"
+      > </a
+      ><a name="1801" href="https://agda.github.io/agda-stdlib/Data.Vec.html#649" class="InductiveConstructor"
+      >[]</a
+      ><a name="1803" class="Symbol"
+      >;</a
+      ><a name="1804"
+      > </a
+      ><a name="1805" href="https://agda.github.io/agda-stdlib/Data.Vec.html#668" class="InductiveConstructor Operator"
+      >_&#8759;_</a
+      ><a name="1808" class="Symbol"
+      >)</a
+      ><a name="1809"
+      >
+</a
+      ><a name="1810" class="Keyword"
+      >open</a
+      ><a name="1814"
+      > </a
+      ><a name="1815" class="Keyword"
+      >import</a
+      ><a name="1821"
+      > </a
+      ><a name="1822" href="https://agda.github.io/agda-stdlib/Data.Nat.html#1" class="Module"
+      >Data.Nat</a
+      ><a name="1830"
+      >         </a
+      ><a name="1839" class="Keyword"
+      >using</a
+      ><a name="1844"
+      > </a
+      ><a name="1845" class="Symbol"
+      >(</a
+      ><a name="1846" href="Agda.Builtin.Nat.html#69" class="Datatype"
+      >&#8469;</a
+      ><a name="1847" class="Symbol"
+      >;</a
+      ><a name="1848"
+      > </a
+      ><a name="1849" href="Agda.Builtin.Nat.html#87" class="InductiveConstructor"
+      >zero</a
+      ><a name="1853" class="Symbol"
+      >;</a
+      ><a name="1854"
+      > </a
+      ><a name="1855" href="Agda.Builtin.Nat.html#100" class="InductiveConstructor"
+      >suc</a
+      ><a name="1858" class="Symbol"
+      >)</a
+      ><a name="1859"
+      >
+</a
+      ><a name="1860" class="Keyword"
+      >open</a
+      ><a name="1864"
+      > </a
+      ><a name="1865" class="Keyword"
+      >import</a
+      ><a name="1871"
+      > </a
+      ><a name="1872" href="https://agda.github.io/agda-stdlib/Data.Sum.html#1" class="Module"
+      >Data.Sum</a
+      ><a name="1880"
+      >         </a
+      ><a name="1889" class="Keyword"
+      >using</a
+      ><a name="1894"
+      > </a
+      ><a name="1895" class="Symbol"
+      >(</a
+      ><a name="1896" href="https://agda.github.io/agda-stdlib/Data.Sum.html#433" class="Datatype Operator"
+      >_&#8846;_</a
+      ><a name="1899" class="Symbol"
+      >;</a
+      ><a name="1900"
+      > </a
+      ><a name="1901" href="https://agda.github.io/agda-stdlib/Data.Sum.html#489" class="InductiveConstructor"
+      >inj&#8321;</a
+      ><a name="1905" class="Symbol"
+      >;</a
+      ><a name="1906"
+      > </a
+      ><a name="1907" href="https://agda.github.io/agda-stdlib/Data.Sum.html#514" class="InductiveConstructor"
+      >inj&#8322;</a
+      ><a name="1911" class="Symbol"
+      >)</a
+      ><a name="1912"
+      >
+</a
+      ><a name="1913" class="Keyword"
+      >open</a
+      ><a name="1917"
+      > </a
+      ><a name="1918" class="Keyword"
+      >import</a
+      ><a name="1924"
+      > </a
+      ><a name="1925" href="https://agda.github.io/agda-stdlib/Data.Product.html#1" class="Module"
+      >Data.Product</a
+      ><a name="1937"
+      >     </a
+      ><a name="1942" class="Keyword"
+      >using</a
+      ><a name="1947"
+      > </a
+      ><a name="1948" class="Symbol"
+      >(</a
+      ><a name="1949" href="https://agda.github.io/agda-stdlib/Data.Product.html#823" class="Function"
+      >&#8707;</a
+      ><a name="1950" class="Symbol"
+      >;</a
+      ><a name="1951"
+      > </a
+      ><a name="1952" href="https://agda.github.io/agda-stdlib/Data.Product.html#509" class="InductiveConstructor Operator"
+      >_,_</a
+      ><a name="1955" class="Symbol"
+      >;</a
+      ><a name="1956"
+      > </a
+      ><a name="1957" href="https://agda.github.io/agda-stdlib/Data.Product.html#525" class="Field"
+      >proj&#8321;</a
+      ><a name="1962" class="Symbol"
+      >;</a
+      ><a name="1963"
+      > </a
+      ><a name="1964" href="https://agda.github.io/agda-stdlib/Data.Product.html#539" class="Field"
+      >proj&#8322;</a
+      ><a name="1969" class="Symbol"
+      >)</a
+      ><a name="1970"
+      >
+</a
+      ><a name="1971" class="Keyword"
+      >open</a
+      ><a name="1975"
+      > </a
+      ><a name="1976" class="Keyword"
+      >import</a
+      ><a name="1982"
+      > </a
+      ><a name="1983" href="https://agda.github.io/agda-stdlib/Data.Empty.html#1" class="Module"
+      >Data.Empty</a
+      ><a name="1993"
+      >       </a
+      ><a name="2000" class="Keyword"
+      >using</a
+      ><a name="2005"
+      > </a
+      ><a name="2006" class="Symbol"
+      >(</a
+      ><a name="2007" href="https://agda.github.io/agda-stdlib/Data.Empty.html#348" class="Function"
+      >&#8869;-elim</a
+      ><a name="2013" class="Symbol"
+      >)</a
+      ><a name="2014"
+      >
+</a
+      ><a name="2015" class="Keyword"
+      >open</a
+      ><a name="2019"
+      > </a
+      ><a name="2020" class="Keyword"
+      >import</a
+      ><a name="2026"
+      > </a
+      ><a name="2027" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#1" class="Module"
+      >Relation.Nullary</a
+      ><a name="2043"
+      > </a
+      ><a name="2044" class="Keyword"
+      >using</a
+      ><a name="2049"
+      > </a
+      ><a name="2050" class="Symbol"
+      >(</a
+      ><a name="2051" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#414" class="Function Operator"
+      >&#172;_</a
+      ><a name="2053" class="Symbol"
+      >;</a
+      ><a name="2054"
+      > </a
+      ><a name="2055" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#484" class="Datatype"
+      >Dec</a
+      ><a name="2058" class="Symbol"
+      >;</a
+      ><a name="2059"
+      > </a
+      ><a name="2060" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#520" class="InductiveConstructor"
+      >yes</a
+      ><a name="2063" class="Symbol"
+      >;</a
+      ><a name="2064"
+      > </a
+      ><a name="2065" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#547" class="InductiveConstructor"
+      >no</a
+      ><a name="2067" class="Symbol"
+      >)</a
+      ><a name="2068"
+      >
+</a
+      ><a name="2069" class="Keyword"
+      >open</a
+      ><a name="2073"
+      > </a
+      ><a name="2074" class="Keyword"
+      >import</a
+      ><a name="2080"
+      > </a
+      ><a name="2081" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#1" class="Module"
+      >Relation.Binary</a
+      ><a name="2096"
+      >
+</a
+      ><a name="2097" class="Keyword"
+      >open</a
+      ><a name="2101"
+      > </a
+      ><a name="2102" class="Keyword"
+      >import</a
+      ><a name="2108"
+      > </a
+      ><a name="2109" href="https://agda.github.io/agda-stdlib/Relation.Binary.PropositionalEquality.html#1" class="Module"
+      >Relation.Binary.PropositionalEquality</a
+      >
+</pre><!--{% endraw %}-->
 
 So the first question is "What do we want to sort?" The boring answer
 would be "lists of integers", but let's be a little bit more
@@ -62,13 +326,145 @@ y` will tell you whether or not `x ≤ y`, whereas `total` will tell you
 whether it is `x ≤ y` or `y ≤ x`.
 
 <div style="display:none;">
-<pre class="Agda"><a name="2951" class="Keyword">module</a><a name="2957"> </a><a name="2958" href="/2016/insertion-sort-in-agda/#1" class="Module">2016-03-01-insertion-sort-in-agda</a><a name="2991"> </a><a name="2992" class="Keyword">where</a></pre>
+<!--{% raw %}--><pre class="Agda">
+<a name="2955" class="Keyword"
+      >module</a
+      ><a name="2961"
+      > </a
+      ><a name="2962" href="2016-03-01-insertion-sort-in-agda.html#1" class="Module"
+      >2016-03-01-insertion-sort-in-agda</a
+      ><a name="2995"
+      > </a
+      ><a name="2996" class="Keyword"
+      >where</a
+      >
+</pre><!--{% endraw %}-->
 </div>
 
-<pre class="Agda"><a name="3030" class="Keyword">module</a><a name="3036"> </a><a name="3037" href="/2016/insertion-sort-in-agda/#3037" class="Module">InsertionSort</a><a name="3050"> </a><a name="3051" class="Symbol">&#123;</a><a name="3052" href="/2016/insertion-sort-in-agda/#3052" class="Bound">c</a><a name="3053"> </a><a name="3054" href="/2016/insertion-sort-in-agda/#3054" class="Bound">ℓ₁</a><a name="3056"> </a><a name="3057" href="/2016/insertion-sort-in-agda/#3057" class="Bound">ℓ₂</a><a name="3059" class="Symbol">&#125;</a><a name="3060"> </a><a name="3061" class="Symbol">&#123;&#123;</a><a name="3063" href="/2016/insertion-sort-in-agda/#3063" class="Bound">Ord</a><a name="3066"> </a><a name="3067" class="Symbol">:</a><a name="3068"> </a><a name="3069" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#9224" class="Record" target="_blank">DecTotalOrder</a><a name="3082"> </a><a name="3083" href="/2016/insertion-sort-in-agda/#3052" class="Bound">c</a><a name="3084"> </a><a name="3085" href="/2016/insertion-sort-in-agda/#3054" class="Bound">ℓ₁</a><a name="3087"> </a><a name="3088" href="/2016/insertion-sort-in-agda/#3057" class="Bound">ℓ₂</a><a name="3090" class="Symbol">&#125;&#125;</a><a name="3092"> </a><a name="3093" class="Keyword">where</a><a name="3098">
+<!--{% raw %}--><pre class="Agda">
+<a name="3034" class="Keyword"
+      >module</a
+      ><a name="3040"
+      > </a
+      ><a name="3041" href="2016-03-01-insertion-sort-in-agda.html#3041" class="Module"
+      >InsertionSort</a
+      ><a name="3054"
+      > </a
+      ><a name="3055" class="Symbol"
+      >{</a
+      ><a name="3056" href="2016-03-01-insertion-sort-in-agda.html#3056" class="Bound"
+      >c</a
+      ><a name="3057"
+      > </a
+      ><a name="3058" href="2016-03-01-insertion-sort-in-agda.html#3058" class="Bound"
+      >&#8467;&#8321;</a
+      ><a name="3060"
+      > </a
+      ><a name="3061" href="2016-03-01-insertion-sort-in-agda.html#3061" class="Bound"
+      >&#8467;&#8322;</a
+      ><a name="3063" class="Symbol"
+      >}</a
+      ><a name="3064"
+      > </a
+      ><a name="3065" class="Symbol"
+      >{{</a
+      ><a name="3067" href="2016-03-01-insertion-sort-in-agda.html#3067" class="Bound"
+      >Ord</a
+      ><a name="3070"
+      > </a
+      ><a name="3071" class="Symbol"
+      >:</a
+      ><a name="3072"
+      > </a
+      ><a name="3073" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#9224" class="Record"
+      >DecTotalOrder</a
+      ><a name="3086"
+      > </a
+      ><a name="3087" href="2016-03-01-insertion-sort-in-agda.html#3056" class="Bound"
+      >c</a
+      ><a name="3088"
+      > </a
+      ><a name="3089" href="2016-03-01-insertion-sort-in-agda.html#3058" class="Bound"
+      >&#8467;&#8321;</a
+      ><a name="3091"
+      > </a
+      ><a name="3092" href="2016-03-01-insertion-sort-in-agda.html#3061" class="Bound"
+      >&#8467;&#8322;</a
+      ><a name="3094" class="Symbol"
+      >}}</a
+      ><a name="3096"
+      > </a
+      ><a name="3097" class="Keyword"
+      >where</a
+      ><a name="3102"
+      >
 
-  </a><a name="3102" class="Keyword">open</a><a name="3106"> </a><a name="3107" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#9224" class="Module" target="_blank">DecTotalOrder</a><a name="3120"> </a><a name="3121" class="Symbol">&#123;&#123;...&#125;&#125;</a><a name="3128"> </a><a name="3129" class="Keyword">using</a><a name="3134"> </a><a name="3135" class="Symbol">(</a><a name="3136">_≤_</a><a name="3139" class="Symbol">;</a><a name="3140"> _≤?_</a><a name="3145" class="Symbol">;</a><a name="3146"> total</a><a name="3152" class="Symbol">)</a><a name="3153"> </a><a name="3154" class="Keyword">renaming</a><a name="3162"> </a><a name="3163" class="Symbol">(</a><a name="3164">trans </a><a name="3170" class="Symbol">to</a><a name="3172"> ≤-trans</a><a name="3180" class="Symbol">)</a><a name="3181">
-  </a><a name="3184" href="/2016/insertion-sort-in-agda/#3184" class="Function">A</a><a name="3185"> </a><a name="3186" class="Symbol">=</a><a name="3187"> </a><a name="3188" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#9308" class="Field" target="_blank">DecTotalOrder.Carrier</a><a name="3209"> </a><a name="3210" href="/2016/insertion-sort-in-agda/#3063" class="Bound">Ord</a></pre>
+  </a
+      ><a name="3106" class="Keyword"
+      >open</a
+      ><a name="3110"
+      > </a
+      ><a name="3111" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#9224" class="Module"
+      >DecTotalOrder</a
+      ><a name="3124"
+      > </a
+      ><a name="3125" class="Symbol"
+      >{{...}}</a
+      ><a name="3132"
+      > </a
+      ><a name="3133" class="Keyword"
+      >using</a
+      ><a name="3138"
+      > </a
+      ><a name="3139" class="Symbol"
+      >(</a
+      ><a name="3140"
+      >_&#8804;_</a
+      ><a name="3143" class="Symbol"
+      >;</a
+      ><a name="3144"
+      > _&#8804;?_</a
+      ><a name="3149" class="Symbol"
+      >;</a
+      ><a name="3150"
+      > total</a
+      ><a name="3156" class="Symbol"
+      >)</a
+      ><a name="3157"
+      > </a
+      ><a name="3158" class="Keyword"
+      >renaming</a
+      ><a name="3166"
+      > </a
+      ><a name="3167" class="Symbol"
+      >(</a
+      ><a name="3168"
+      >trans </a
+      ><a name="3174" class="Symbol"
+      >to</a
+      ><a name="3176"
+      > &#8804;-trans</a
+      ><a name="3184" class="Symbol"
+      >)</a
+      ><a name="3185"
+      >
+  </a
+      ><a name="3188" href="2016-03-01-insertion-sort-in-agda.html#3188" class="Function"
+      >A</a
+      ><a name="3189"
+      > </a
+      ><a name="3190" class="Symbol"
+      >=</a
+      ><a name="3191"
+      > </a
+      ><a name="3192" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#9308" class="Field"
+      >DecTotalOrder.Carrier</a
+      ><a name="3213"
+      > </a
+      ><a name="3214" href="2016-03-01-insertion-sort-in-agda.html#3067" class="Bound"
+      >Ord</a
+      >
+</pre><!--{% endraw %}-->
 
 The type A is already ordered, but it would be incredibly convenient
 if it were also *bounded*---meaning that it has a value which is
@@ -76,56 +472,1260 @@ smaller than everything else, and a value which is bigger than
 everything else. Below, we define a wrapper for A which is bounded at
 the top by ⊤ and at the bottom by ⊥:
 
-<pre class="Agda">  <a name="3546" class="Keyword">data</a><a name="3550"> </a><a name="3551" href="/2016/insertion-sort-in-agda/#3551" class="Datatype">Â</a><a name="3553"> </a><a name="3554" class="Symbol">:</a><a name="3555"> </a><a name="3556" class="PrimitiveType">Set</a><a name="3559"> </a><a name="3560" href="/2016/insertion-sort-in-agda/#3052" class="Bound">c</a><a name="3561"> </a><a name="3562" class="Keyword">where</a><a name="3567">
-    </a><a name="3572" href="/2016/insertion-sort-in-agda/#3572" class="InductiveConstructor">⊤</a><a name="3573"> </a><a name="3574" class="Symbol">:</a><a name="3575"> </a><a name="3576" href="/2016/insertion-sort-in-agda/#3551" class="Datatype">Â</a><a name="3578">
-    </a><a name="3583" href="/2016/insertion-sort-in-agda/#3583" class="InductiveConstructor">⊥</a><a name="3584"> </a><a name="3585" class="Symbol">:</a><a name="3586"> </a><a name="3587" href="/2016/insertion-sort-in-agda/#3551" class="Datatype">Â</a><a name="3589">
-    </a><a name="3594" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦_⟧</a><a name="3597"> </a><a name="3598" class="Symbol">:</a><a name="3599"> </a><a name="3600" href="/2016/insertion-sort-in-agda/#3184" class="Function">A</a><a name="3601"> </a><a name="3602" class="Symbol">→</a><a name="3603"> </a><a name="3604" href="/2016/insertion-sort-in-agda/#3551" class="Datatype">Â</a></pre>
+<!--{% raw %}--><pre class="Agda">
+  <a name="3550" class="Keyword"
+      >data</a
+      ><a name="3554"
+      > </a
+      ><a name="3555" href="2016-03-01-insertion-sort-in-agda.html#3555" class="Datatype"
+      >A&#770;</a
+      ><a name="3557"
+      > </a
+      ><a name="3558" class="Symbol"
+      >:</a
+      ><a name="3559"
+      > </a
+      ><a name="3560" class="PrimitiveType"
+      >Set</a
+      ><a name="3563"
+      > </a
+      ><a name="3564" href="2016-03-01-insertion-sort-in-agda.html#3056" class="Bound"
+      >c</a
+      ><a name="3565"
+      > </a
+      ><a name="3566" class="Keyword"
+      >where</a
+      ><a name="3571"
+      >
+    </a
+      ><a name="3576" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      >&#8868;</a
+      ><a name="3577"
+      > </a
+      ><a name="3578" class="Symbol"
+      >:</a
+      ><a name="3579"
+      > </a
+      ><a name="3580" href="2016-03-01-insertion-sort-in-agda.html#3555" class="Datatype"
+      >A&#770;</a
+      ><a name="3582"
+      >
+    </a
+      ><a name="3587" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      >&#8869;</a
+      ><a name="3588"
+      > </a
+      ><a name="3589" class="Symbol"
+      >:</a
+      ><a name="3590"
+      > </a
+      ><a name="3591" href="2016-03-01-insertion-sort-in-agda.html#3555" class="Datatype"
+      >A&#770;</a
+      ><a name="3593"
+      >
+    </a
+      ><a name="3598" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;_&#10215;</a
+      ><a name="3601"
+      > </a
+      ><a name="3602" class="Symbol"
+      >:</a
+      ><a name="3603"
+      > </a
+      ><a name="3604" href="2016-03-01-insertion-sort-in-agda.html#3188" class="Function"
+      >A</a
+      ><a name="3605"
+      > </a
+      ><a name="3606" class="Symbol"
+      >&#8594;</a
+      ><a name="3607"
+      > </a
+      ><a name="3608" href="2016-03-01-insertion-sort-in-agda.html#3555" class="Datatype"
+      >A&#770;</a
+      >
+</pre><!--{% endraw %}-->
 
 We still need to encode the fact that ⊥ and ⊤ are in fact smaller and
 bigger than all other values. Below, we defined the order ≲ on bounded
 Â... where we simply state these facts as ⊥≲ and ≲⊤:
 
-<pre class="Agda">  <a name="3830" class="Keyword">infix</a><a name="3835"> </a><a name="3836" class="Number">4</a><a name="3837"> _≲_
+<!--{% raw %}--><pre class="Agda">
+  <a name="3834" class="Keyword"
+      >infix</a
+      ><a name="3839"
+      > </a
+      ><a name="3840" class="Number"
+      >4</a
+      ><a name="3841"
+      > _&#8818;_
 
-  </a><a name="3845" class="Keyword">data</a><a name="3849"> </a><a name="3850" href="/2016/insertion-sort-in-agda/#3850" class="Datatype Operator">_≲_</a><a name="3853"> </a><a name="3854" class="Symbol">:</a><a name="3855"> </a><a name="3856" href="https://agda.github.io/agda-stdlib/Relation.Binary.Core.html#740" class="Function" target="_blank">Rel</a><a name="3859"> </a><a name="3860" href="/2016/insertion-sort-in-agda/#3551" class="Datatype">Â</a><a name="3862"> </a><a name="3863" class="Symbol">(</a><a name="3864" href="/2016/insertion-sort-in-agda/#3052" class="Bound">c</a><a name="3865"> </a><a name="3866" href="https://agda.github.io/agda-stdlib/Agda.Primitive.html#626" class="Primitive Operator" target="_blank">⊔</a><a name="3867"> </a><a name="3868" href="/2016/insertion-sort-in-agda/#3057" class="Bound">ℓ₂</a><a name="3870" class="Symbol">)</a><a name="3871"> </a><a name="3872" class="Keyword">where</a><a name="3877">
-    </a><a name="3882" href="/2016/insertion-sort-in-agda/#3882" class="InductiveConstructor">⊥≲</a><a name="3884"> </a><a name="3885" class="Symbol">:</a><a name="3886"> </a><a name="3887" class="Symbol">∀</a><a name="3888"> </a><a name="3889" class="Symbol">&#123;</a><a name="3890" href="/2016/insertion-sort-in-agda/#3890" class="Bound">x</a><a name="3891" class="Symbol">&#125;</a><a name="3892"> </a><a name="3893" class="Symbol">→</a><a name="3894"> </a><a name="3895" href="/2016/insertion-sort-in-agda/#3583" class="InductiveConstructor">⊥</a><a name="3896"> </a><a name="3897" href="/2016/insertion-sort-in-agda/#3850" class="Datatype Operator">≲</a><a name="3898"> </a><a name="3899" href="/2016/insertion-sort-in-agda/#3890" class="Bound">x</a><a name="3900">
-    </a><a name="3905" href="/2016/insertion-sort-in-agda/#3905" class="InductiveConstructor">≲⊤</a><a name="3907"> </a><a name="3908" class="Symbol">:</a><a name="3909"> </a><a name="3910" class="Symbol">∀</a><a name="3911"> </a><a name="3912" class="Symbol">&#123;</a><a name="3913" href="/2016/insertion-sort-in-agda/#3913" class="Bound">x</a><a name="3914" class="Symbol">&#125;</a><a name="3915"> </a><a name="3916" class="Symbol">→</a><a name="3917"> </a><a name="3918" href="/2016/insertion-sort-in-agda/#3913" class="Bound">x</a><a name="3919"> </a><a name="3920" href="/2016/insertion-sort-in-agda/#3850" class="Datatype Operator">≲</a><a name="3921"> </a><a name="3922" href="/2016/insertion-sort-in-agda/#3572" class="InductiveConstructor">⊤</a><a name="3923">
-    </a><a name="3928" href="/2016/insertion-sort-in-agda/#3928" class="InductiveConstructor">≤-lift</a><a name="3934"> </a><a name="3935" class="Symbol">:</a><a name="3936"> </a><a name="3937" class="Symbol">∀</a><a name="3938"> </a><a name="3939" class="Symbol">&#123;</a><a name="3940" href="/2016/insertion-sort-in-agda/#3940" class="Bound">x</a><a name="3941"> </a><a name="3942" href="/2016/insertion-sort-in-agda/#3942" class="Bound">y</a><a name="3943" class="Symbol">&#125;</a><a name="3944"> </a><a name="3945" class="Symbol">→</a><a name="3946"> </a><a name="3947" href="/2016/insertion-sort-in-agda/#3940" class="Bound">x</a><a name="3948"> </a><a name="3949" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#9373" class="Field Operator" target="_blank">≤</a><a name="3950"> </a><a name="3951" href="/2016/insertion-sort-in-agda/#3942" class="Bound">y</a><a name="3952"> </a><a name="3953" class="Symbol">→</a><a name="3954"> </a><a name="3955" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="3956"> </a><a name="3957" href="/2016/insertion-sort-in-agda/#3940" class="Bound">x</a><a name="3958"> </a><a name="3959" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="3960"> </a><a name="3961" href="/2016/insertion-sort-in-agda/#3850" class="Datatype Operator">≲</a><a name="3962"> </a><a name="3963" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="3964"> </a><a name="3965" href="/2016/insertion-sort-in-agda/#3942" class="Bound">y</a><a name="3966"> </a><a name="3967" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a></pre>
+  </a
+      ><a name="3849" class="Keyword"
+      >data</a
+      ><a name="3853"
+      > </a
+      ><a name="3854" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      >_&#8818;_</a
+      ><a name="3857"
+      > </a
+      ><a name="3858" class="Symbol"
+      >:</a
+      ><a name="3859"
+      > </a
+      ><a name="3860" href="https://agda.github.io/agda-stdlib/Relation.Binary.Core.html#740" class="Function"
+      >Rel</a
+      ><a name="3863"
+      > </a
+      ><a name="3864" href="2016-03-01-insertion-sort-in-agda.html#3555" class="Datatype"
+      >A&#770;</a
+      ><a name="3866"
+      > </a
+      ><a name="3867" class="Symbol"
+      >(</a
+      ><a name="3868" href="2016-03-01-insertion-sort-in-agda.html#3056" class="Bound"
+      >c</a
+      ><a name="3869"
+      > </a
+      ><a name="3870" href="Agda.Primitive.html#626" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="3871"
+      > </a
+      ><a name="3872" href="2016-03-01-insertion-sort-in-agda.html#3061" class="Bound"
+      >&#8467;&#8322;</a
+      ><a name="3874" class="Symbol"
+      >)</a
+      ><a name="3875"
+      > </a
+      ><a name="3876" class="Keyword"
+      >where</a
+      ><a name="3881"
+      >
+    </a
+      ><a name="3886" href="2016-03-01-insertion-sort-in-agda.html#3886" class="InductiveConstructor"
+      >&#8869;&#8818;</a
+      ><a name="3888"
+      > </a
+      ><a name="3889" class="Symbol"
+      >:</a
+      ><a name="3890"
+      > </a
+      ><a name="3891" class="Symbol"
+      >&#8704;</a
+      ><a name="3892"
+      > </a
+      ><a name="3893" class="Symbol"
+      >{</a
+      ><a name="3894" href="2016-03-01-insertion-sort-in-agda.html#3894" class="Bound"
+      >x</a
+      ><a name="3895" class="Symbol"
+      >}</a
+      ><a name="3896"
+      > </a
+      ><a name="3897" class="Symbol"
+      >&#8594;</a
+      ><a name="3898"
+      > </a
+      ><a name="3899" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      >&#8869;</a
+      ><a name="3900"
+      > </a
+      ><a name="3901" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      >&#8818;</a
+      ><a name="3902"
+      > </a
+      ><a name="3903" href="2016-03-01-insertion-sort-in-agda.html#3894" class="Bound"
+      >x</a
+      ><a name="3904"
+      >
+    </a
+      ><a name="3909" href="2016-03-01-insertion-sort-in-agda.html#3909" class="InductiveConstructor"
+      >&#8818;&#8868;</a
+      ><a name="3911"
+      > </a
+      ><a name="3912" class="Symbol"
+      >:</a
+      ><a name="3913"
+      > </a
+      ><a name="3914" class="Symbol"
+      >&#8704;</a
+      ><a name="3915"
+      > </a
+      ><a name="3916" class="Symbol"
+      >{</a
+      ><a name="3917" href="2016-03-01-insertion-sort-in-agda.html#3917" class="Bound"
+      >x</a
+      ><a name="3918" class="Symbol"
+      >}</a
+      ><a name="3919"
+      > </a
+      ><a name="3920" class="Symbol"
+      >&#8594;</a
+      ><a name="3921"
+      > </a
+      ><a name="3922" href="2016-03-01-insertion-sort-in-agda.html#3917" class="Bound"
+      >x</a
+      ><a name="3923"
+      > </a
+      ><a name="3924" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      >&#8818;</a
+      ><a name="3925"
+      > </a
+      ><a name="3926" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      >&#8868;</a
+      ><a name="3927"
+      >
+    </a
+      ><a name="3932" href="2016-03-01-insertion-sort-in-agda.html#3932" class="InductiveConstructor"
+      >&#8804;-lift</a
+      ><a name="3938"
+      > </a
+      ><a name="3939" class="Symbol"
+      >:</a
+      ><a name="3940"
+      > </a
+      ><a name="3941" class="Symbol"
+      >&#8704;</a
+      ><a name="3942"
+      > </a
+      ><a name="3943" class="Symbol"
+      >{</a
+      ><a name="3944" href="2016-03-01-insertion-sort-in-agda.html#3944" class="Bound"
+      >x</a
+      ><a name="3945"
+      > </a
+      ><a name="3946" href="2016-03-01-insertion-sort-in-agda.html#3946" class="Bound"
+      >y</a
+      ><a name="3947" class="Symbol"
+      >}</a
+      ><a name="3948"
+      > </a
+      ><a name="3949" class="Symbol"
+      >&#8594;</a
+      ><a name="3950"
+      > </a
+      ><a name="3951" href="2016-03-01-insertion-sort-in-agda.html#3944" class="Bound"
+      >x</a
+      ><a name="3952"
+      > </a
+      ><a name="3953" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#9373" class="Field Operator"
+      >&#8804;</a
+      ><a name="3954"
+      > </a
+      ><a name="3955" href="2016-03-01-insertion-sort-in-agda.html#3946" class="Bound"
+      >y</a
+      ><a name="3956"
+      > </a
+      ><a name="3957" class="Symbol"
+      >&#8594;</a
+      ><a name="3958"
+      > </a
+      ><a name="3959" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="3960"
+      > </a
+      ><a name="3961" href="2016-03-01-insertion-sort-in-agda.html#3944" class="Bound"
+      >x</a
+      ><a name="3962"
+      > </a
+      ><a name="3963" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="3964"
+      > </a
+      ><a name="3965" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      >&#8818;</a
+      ><a name="3966"
+      > </a
+      ><a name="3967" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="3968"
+      > </a
+      ><a name="3969" href="2016-03-01-insertion-sort-in-agda.html#3946" class="Bound"
+      >y</a
+      ><a name="3970"
+      > </a
+      ><a name="3971" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      >
+</pre><!--{% endraw %}-->
 
 Note that with the last constructor, we can lift the order of any two
 values in A into ≲. However, if we only have a proof of ≰, then the
 lifting is slightly more involved. Therefore, we define a function
 which does this for us:
 
-<pre class="Agda">  <a name="4226" href="/2016/insertion-sort-in-agda/#4226" class="Function">≰-lift</a><a name="4232"> </a><a name="4233" class="Symbol">:</a><a name="4234"> </a><a name="4235" class="Symbol">∀</a><a name="4236"> </a><a name="4237" class="Symbol">&#123;</a><a name="4238" href="/2016/insertion-sort-in-agda/#4238" class="Bound">x</a><a name="4239"> </a><a name="4240" href="/2016/insertion-sort-in-agda/#4240" class="Bound">y</a><a name="4241" class="Symbol">&#125;</a><a name="4242"> </a><a name="4243" class="Symbol">→</a><a name="4244"> </a><a name="4245" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#414" class="Function Operator" target="_blank">¬</a><a name="4246"> </a><a name="4247" class="Symbol">(</a><a name="4248" href="/2016/insertion-sort-in-agda/#4240" class="Bound">y</a><a name="4249"> </a><a name="4250" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#9373" class="Field Operator" target="_blank">≤</a><a name="4251"> </a><a name="4252" href="/2016/insertion-sort-in-agda/#4238" class="Bound">x</a><a name="4253" class="Symbol">)</a><a name="4254"> </a><a name="4255" class="Symbol">→</a><a name="4256"> </a><a name="4257" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="4258"> </a><a name="4259" href="/2016/insertion-sort-in-agda/#4238" class="Bound">x</a><a name="4260"> </a><a name="4261" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="4262"> </a><a name="4263" href="/2016/insertion-sort-in-agda/#3850" class="Datatype Operator">≲</a><a name="4264"> </a><a name="4265" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="4266"> </a><a name="4267" href="/2016/insertion-sort-in-agda/#4240" class="Bound">y</a><a name="4268"> </a><a name="4269" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="4270">
-  </a><a name="4273" href="/2016/insertion-sort-in-agda/#4226" class="Function">≰-lift</a><a name="4279"> </a><a name="4280" class="Symbol">&#123;</a><a name="4281" href="/2016/insertion-sort-in-agda/#4281" class="Bound">x</a><a name="4282" class="Symbol">&#125;</a><a name="4283"> </a><a name="4284" class="Symbol">&#123;</a><a name="4285" href="/2016/insertion-sort-in-agda/#4285" class="Bound">y</a><a name="4286" class="Symbol">&#125;</a><a name="4287"> </a><a name="4288" href="/2016/insertion-sort-in-agda/#4288" class="Bound">y≰x</a><a name="4291"> </a><a name="4292" class="Keyword">with</a><a name="4296"> </a><a name="4297" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#8067" class="Function" target="_blank">total</a><a name="4302"> </a><a name="4303" href="/2016/insertion-sort-in-agda/#4281" class="Bound">x</a><a name="4304"> </a><a name="4305" href="/2016/insertion-sort-in-agda/#4285" class="Bound">y</a><a name="4306">
-  </a><a name="4309" href="/2016/insertion-sort-in-agda/#4226" class="Function">≰-lift</a><a name="4315"> </a><a name="4316" href="/2016/insertion-sort-in-agda/#4316" class="Bound">y≰x</a><a name="4319"> </a><a name="4320" class="Symbol">|</a><a name="4321"> </a><a name="4322" href="https://agda.github.io/agda-stdlib/Data.Sum.html#489" class="InductiveConstructor" target="_blank">inj₁</a><a name="4326"> </a><a name="4327" href="/2016/insertion-sort-in-agda/#4327" class="Bound">x≤y</a><a name="4330"> </a><a name="4331" class="Symbol">=</a><a name="4332"> </a><a name="4333" href="/2016/insertion-sort-in-agda/#3928" class="InductiveConstructor">≤-lift</a><a name="4339"> </a><a name="4340" href="/2016/insertion-sort-in-agda/#4327" class="Bound">x≤y</a><a name="4343">
-  </a><a name="4346" href="/2016/insertion-sort-in-agda/#4226" class="Function">≰-lift</a><a name="4352"> </a><a name="4353" href="/2016/insertion-sort-in-agda/#4353" class="Bound">y≰x</a><a name="4356"> </a><a name="4357" class="Symbol">|</a><a name="4358"> </a><a name="4359" href="https://agda.github.io/agda-stdlib/Data.Sum.html#514" class="InductiveConstructor" target="_blank">inj₂</a><a name="4363"> </a><a name="4364" href="/2016/insertion-sort-in-agda/#4364" class="Bound">y≤x</a><a name="4367"> </a><a name="4368" class="Symbol">=</a><a name="4369"> </a><a name="4370" href="https://agda.github.io/agda-stdlib/Data.Empty.html#348" class="Function" target="_blank">⊥-elim</a><a name="4376"> </a><a name="4377" class="Symbol">(</a><a name="4378" href="/2016/insertion-sort-in-agda/#4353" class="Bound">y≰x</a><a name="4381"> </a><a name="4382" href="/2016/insertion-sort-in-agda/#4364" class="Bound">y≤x</a><a name="4385" class="Symbol">)</a></pre>
+<!--{% raw %}--><pre class="Agda">
+  <a name="4230" href="2016-03-01-insertion-sort-in-agda.html#4230" class="Function"
+      >&#8816;-lift</a
+      ><a name="4236"
+      > </a
+      ><a name="4237" class="Symbol"
+      >:</a
+      ><a name="4238"
+      > </a
+      ><a name="4239" class="Symbol"
+      >&#8704;</a
+      ><a name="4240"
+      > </a
+      ><a name="4241" class="Symbol"
+      >{</a
+      ><a name="4242" href="2016-03-01-insertion-sort-in-agda.html#4242" class="Bound"
+      >x</a
+      ><a name="4243"
+      > </a
+      ><a name="4244" href="2016-03-01-insertion-sort-in-agda.html#4244" class="Bound"
+      >y</a
+      ><a name="4245" class="Symbol"
+      >}</a
+      ><a name="4246"
+      > </a
+      ><a name="4247" class="Symbol"
+      >&#8594;</a
+      ><a name="4248"
+      > </a
+      ><a name="4249" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#414" class="Function Operator"
+      >&#172;</a
+      ><a name="4250"
+      > </a
+      ><a name="4251" class="Symbol"
+      >(</a
+      ><a name="4252" href="2016-03-01-insertion-sort-in-agda.html#4244" class="Bound"
+      >y</a
+      ><a name="4253"
+      > </a
+      ><a name="4254" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#9373" class="Field Operator"
+      >&#8804;</a
+      ><a name="4255"
+      > </a
+      ><a name="4256" href="2016-03-01-insertion-sort-in-agda.html#4242" class="Bound"
+      >x</a
+      ><a name="4257" class="Symbol"
+      >)</a
+      ><a name="4258"
+      > </a
+      ><a name="4259" class="Symbol"
+      >&#8594;</a
+      ><a name="4260"
+      > </a
+      ><a name="4261" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="4262"
+      > </a
+      ><a name="4263" href="2016-03-01-insertion-sort-in-agda.html#4242" class="Bound"
+      >x</a
+      ><a name="4264"
+      > </a
+      ><a name="4265" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="4266"
+      > </a
+      ><a name="4267" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      >&#8818;</a
+      ><a name="4268"
+      > </a
+      ><a name="4269" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="4270"
+      > </a
+      ><a name="4271" href="2016-03-01-insertion-sort-in-agda.html#4244" class="Bound"
+      >y</a
+      ><a name="4272"
+      > </a
+      ><a name="4273" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="4274"
+      >
+  </a
+      ><a name="4277" href="2016-03-01-insertion-sort-in-agda.html#4230" class="Function"
+      >&#8816;-lift</a
+      ><a name="4283"
+      > </a
+      ><a name="4284" class="Symbol"
+      >{</a
+      ><a name="4285" href="2016-03-01-insertion-sort-in-agda.html#4285" class="Bound"
+      >x</a
+      ><a name="4286" class="Symbol"
+      >}</a
+      ><a name="4287"
+      > </a
+      ><a name="4288" class="Symbol"
+      >{</a
+      ><a name="4289" href="2016-03-01-insertion-sort-in-agda.html#4289" class="Bound"
+      >y</a
+      ><a name="4290" class="Symbol"
+      >}</a
+      ><a name="4291"
+      > </a
+      ><a name="4292" href="2016-03-01-insertion-sort-in-agda.html#4292" class="Bound"
+      >y&#8816;x</a
+      ><a name="4295"
+      > </a
+      ><a name="4296" class="Keyword"
+      >with</a
+      ><a name="4300"
+      > </a
+      ><a name="4301" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#8067" class="Function"
+      >total</a
+      ><a name="4306"
+      > </a
+      ><a name="4307" href="2016-03-01-insertion-sort-in-agda.html#4285" class="Bound"
+      >x</a
+      ><a name="4308"
+      > </a
+      ><a name="4309" href="2016-03-01-insertion-sort-in-agda.html#4289" class="Bound"
+      >y</a
+      ><a name="4310"
+      >
+  </a
+      ><a name="4313" href="2016-03-01-insertion-sort-in-agda.html#4230" class="Function"
+      >&#8816;-lift</a
+      ><a name="4319"
+      > </a
+      ><a name="4320" href="2016-03-01-insertion-sort-in-agda.html#4320" class="Bound"
+      >y&#8816;x</a
+      ><a name="4323"
+      > </a
+      ><a name="4324" class="Symbol"
+      >|</a
+      ><a name="4325"
+      > </a
+      ><a name="4326" href="https://agda.github.io/agda-stdlib/Data.Sum.html#489" class="InductiveConstructor"
+      >inj&#8321;</a
+      ><a name="4330"
+      > </a
+      ><a name="4331" href="2016-03-01-insertion-sort-in-agda.html#4331" class="Bound"
+      >x&#8804;y</a
+      ><a name="4334"
+      > </a
+      ><a name="4335" class="Symbol"
+      >=</a
+      ><a name="4336"
+      > </a
+      ><a name="4337" href="2016-03-01-insertion-sort-in-agda.html#3932" class="InductiveConstructor"
+      >&#8804;-lift</a
+      ><a name="4343"
+      > </a
+      ><a name="4344" href="2016-03-01-insertion-sort-in-agda.html#4331" class="Bound"
+      >x&#8804;y</a
+      ><a name="4347"
+      >
+  </a
+      ><a name="4350" href="2016-03-01-insertion-sort-in-agda.html#4230" class="Function"
+      >&#8816;-lift</a
+      ><a name="4356"
+      > </a
+      ><a name="4357" href="2016-03-01-insertion-sort-in-agda.html#4357" class="Bound"
+      >y&#8816;x</a
+      ><a name="4360"
+      > </a
+      ><a name="4361" class="Symbol"
+      >|</a
+      ><a name="4362"
+      > </a
+      ><a name="4363" href="https://agda.github.io/agda-stdlib/Data.Sum.html#514" class="InductiveConstructor"
+      >inj&#8322;</a
+      ><a name="4367"
+      > </a
+      ><a name="4368" href="2016-03-01-insertion-sort-in-agda.html#4368" class="Bound"
+      >y&#8804;x</a
+      ><a name="4371"
+      > </a
+      ><a name="4372" class="Symbol"
+      >=</a
+      ><a name="4373"
+      > </a
+      ><a name="4374" href="https://agda.github.io/agda-stdlib/Data.Empty.html#348" class="Function"
+      >&#8869;-elim</a
+      ><a name="4380"
+      > </a
+      ><a name="4381" class="Symbol"
+      >(</a
+      ><a name="4382" href="2016-03-01-insertion-sort-in-agda.html#4357" class="Bound"
+      >y&#8816;x</a
+      ><a name="4385"
+      > </a
+      ><a name="4386" href="2016-03-01-insertion-sort-in-agda.html#4368" class="Bound"
+      >y&#8804;x</a
+      ><a name="4389" class="Symbol"
+      >)</a
+      >
+</pre><!--{% endraw %}-->
 
 Another thing we can do with two values of type Â is compute their
 *minimum*. This is one example where we deviate from *correctness by
 construction*: we define minimum function ⊓, and only then prove its
 correctness:
 
-<pre class="Agda">  <a name="4634" class="Keyword">infix</a><a name="4639"> </a><a name="4640" class="Number">5</a><a name="4641"> _⊓_
+<!--{% raw %}--><pre class="Agda">
+  <a name="4638" class="Keyword"
+      >infix</a
+      ><a name="4643"
+      > </a
+      ><a name="4644" class="Number"
+      >5</a
+      ><a name="4645"
+      > _&#8851;_
 
-  </a><a name="4649" href="/2016/insertion-sort-in-agda/#4649" class="Function Operator">_⊓_</a><a name="4652"> </a><a name="4653" class="Symbol">:</a><a name="4654"> </a><a name="4655" href="/2016/insertion-sort-in-agda/#3551" class="Datatype">Â</a><a name="4657"> </a><a name="4658" class="Symbol">→</a><a name="4659"> </a><a name="4660" href="/2016/insertion-sort-in-agda/#3551" class="Datatype">Â</a><a name="4662"> </a><a name="4663" class="Symbol">→</a><a name="4664"> </a><a name="4665" href="/2016/insertion-sort-in-agda/#3551" class="Datatype">Â</a><a name="4667">
-  </a><a name="4670" href="/2016/insertion-sort-in-agda/#3572" class="InductiveConstructor">⊤</a><a name="4671"> </a><a name="4672" href="/2016/insertion-sort-in-agda/#4649" class="Function Operator">⊓</a><a name="4673"> </a><a name="4674" href="/2016/insertion-sort-in-agda/#4674" class="Bound">y</a><a name="4675"> </a><a name="4676" class="Symbol">=</a><a name="4677"> </a><a name="4678" href="/2016/insertion-sort-in-agda/#4674" class="Bound">y</a><a name="4679">
-  </a><a name="4682" href="/2016/insertion-sort-in-agda/#3583" class="InductiveConstructor">⊥</a><a name="4683"> </a><a name="4684" href="/2016/insertion-sort-in-agda/#4649" class="Function Operator">⊓</a><a name="4685"> </a><a name="4686" class="Symbol">_</a><a name="4687"> </a><a name="4688" class="Symbol">=</a><a name="4689"> </a><a name="4690" href="/2016/insertion-sort-in-agda/#3583" class="InductiveConstructor">⊥</a><a name="4691">
-  </a><a name="4694" href="/2016/insertion-sort-in-agda/#4694" class="Bound">x</a><a name="4695"> </a><a name="4696" href="/2016/insertion-sort-in-agda/#4649" class="Function Operator">⊓</a><a name="4697"> </a><a name="4698" href="/2016/insertion-sort-in-agda/#3572" class="InductiveConstructor">⊤</a><a name="4699"> </a><a name="4700" class="Symbol">=</a><a name="4701"> </a><a name="4702" href="/2016/insertion-sort-in-agda/#4694" class="Bound">x</a><a name="4703">
-  </a><a name="4706" class="Symbol">_</a><a name="4707"> </a><a name="4708" href="/2016/insertion-sort-in-agda/#4649" class="Function Operator">⊓</a><a name="4709"> </a><a name="4710" href="/2016/insertion-sort-in-agda/#3583" class="InductiveConstructor">⊥</a><a name="4711"> </a><a name="4712" class="Symbol">=</a><a name="4713"> </a><a name="4714" href="/2016/insertion-sort-in-agda/#3583" class="InductiveConstructor">⊥</a><a name="4715">
-  </a><a name="4718" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="4719"> </a><a name="4720" href="/2016/insertion-sort-in-agda/#4720" class="Bound">x</a><a name="4721"> </a><a name="4722" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="4723"> </a><a name="4724" href="/2016/insertion-sort-in-agda/#4649" class="Function Operator">⊓</a><a name="4725"> </a><a name="4726" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="4727"> </a><a name="4728" href="/2016/insertion-sort-in-agda/#4728" class="Bound">y</a><a name="4729"> </a><a name="4730" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="4731"> </a><a name="4732" class="Keyword">with</a><a name="4736"> </a><a name="4737" href="/2016/insertion-sort-in-agda/#4720" class="Bound">x</a><a name="4738"> </a><a name="4739" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#8876" class="Function Operator" target="_blank">≤?</a><a name="4741"> </a><a name="4742" href="/2016/insertion-sort-in-agda/#4728" class="Bound">y</a><a name="4743">
-  </a><a name="4746" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="4747"> </a><a name="4748" href="/2016/insertion-sort-in-agda/#4748" class="Bound">x</a><a name="4749"> </a><a name="4750" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="4751"> </a><a name="4752" href="/2016/insertion-sort-in-agda/#4649" class="Function Operator">⊓</a><a name="4753"> </a><a name="4754" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="4755"> </a><a name="4756" href="/2016/insertion-sort-in-agda/#4756" class="Bound">y</a><a name="4757"> </a><a name="4758" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="4759"> </a><a name="4760" class="Symbol">|</a><a name="4761"> </a><a name="4762" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#520" class="InductiveConstructor" target="_blank">yes</a><a name="4765"> </a><a name="4766" href="/2016/insertion-sort-in-agda/#4766" class="Bound">x≤y</a><a name="4769"> </a><a name="4770" class="Symbol">=</a><a name="4771"> </a><a name="4772" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="4773"> </a><a name="4774" href="/2016/insertion-sort-in-agda/#4748" class="Bound">x</a><a name="4775"> </a><a name="4776" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="4777">
-  </a><a name="4780" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="4781"> </a><a name="4782" href="/2016/insertion-sort-in-agda/#4782" class="Bound">x</a><a name="4783"> </a><a name="4784" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="4785"> </a><a name="4786" href="/2016/insertion-sort-in-agda/#4649" class="Function Operator">⊓</a><a name="4787"> </a><a name="4788" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="4789"> </a><a name="4790" href="/2016/insertion-sort-in-agda/#4790" class="Bound">y</a><a name="4791"> </a><a name="4792" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="4793"> </a><a name="4794" class="Symbol">|</a><a name="4795"> </a><a name="4796" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#547" class="InductiveConstructor" target="_blank">no</a><a name="4798">  </a><a name="4800" href="/2016/insertion-sort-in-agda/#4800" class="Bound">x&gt;y</a><a name="4803"> </a><a name="4804" class="Symbol">=</a><a name="4805"> </a><a name="4806" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="4807"> </a><a name="4808" href="/2016/insertion-sort-in-agda/#4790" class="Bound">y</a><a name="4809"> </a><a name="4810" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="4811">
+  </a
+      ><a name="4653" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      >_&#8851;_</a
+      ><a name="4656"
+      > </a
+      ><a name="4657" class="Symbol"
+      >:</a
+      ><a name="4658"
+      > </a
+      ><a name="4659" href="2016-03-01-insertion-sort-in-agda.html#3555" class="Datatype"
+      >A&#770;</a
+      ><a name="4661"
+      > </a
+      ><a name="4662" class="Symbol"
+      >&#8594;</a
+      ><a name="4663"
+      > </a
+      ><a name="4664" href="2016-03-01-insertion-sort-in-agda.html#3555" class="Datatype"
+      >A&#770;</a
+      ><a name="4666"
+      > </a
+      ><a name="4667" class="Symbol"
+      >&#8594;</a
+      ><a name="4668"
+      > </a
+      ><a name="4669" href="2016-03-01-insertion-sort-in-agda.html#3555" class="Datatype"
+      >A&#770;</a
+      ><a name="4671"
+      >
+  </a
+      ><a name="4674" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      >&#8868;</a
+      ><a name="4675"
+      > </a
+      ><a name="4676" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      >&#8851;</a
+      ><a name="4677"
+      > </a
+      ><a name="4678" href="2016-03-01-insertion-sort-in-agda.html#4678" class="Bound"
+      >y</a
+      ><a name="4679"
+      > </a
+      ><a name="4680" class="Symbol"
+      >=</a
+      ><a name="4681"
+      > </a
+      ><a name="4682" href="2016-03-01-insertion-sort-in-agda.html#4678" class="Bound"
+      >y</a
+      ><a name="4683"
+      >
+  </a
+      ><a name="4686" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      >&#8869;</a
+      ><a name="4687"
+      > </a
+      ><a name="4688" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      >&#8851;</a
+      ><a name="4689"
+      > </a
+      ><a name="4690" class="Symbol"
+      >_</a
+      ><a name="4691"
+      > </a
+      ><a name="4692" class="Symbol"
+      >=</a
+      ><a name="4693"
+      > </a
+      ><a name="4694" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      >&#8869;</a
+      ><a name="4695"
+      >
+  </a
+      ><a name="4698" href="2016-03-01-insertion-sort-in-agda.html#4698" class="Bound"
+      >x</a
+      ><a name="4699"
+      > </a
+      ><a name="4700" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      >&#8851;</a
+      ><a name="4701"
+      > </a
+      ><a name="4702" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      >&#8868;</a
+      ><a name="4703"
+      > </a
+      ><a name="4704" class="Symbol"
+      >=</a
+      ><a name="4705"
+      > </a
+      ><a name="4706" href="2016-03-01-insertion-sort-in-agda.html#4698" class="Bound"
+      >x</a
+      ><a name="4707"
+      >
+  </a
+      ><a name="4710" class="Symbol"
+      >_</a
+      ><a name="4711"
+      > </a
+      ><a name="4712" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      >&#8851;</a
+      ><a name="4713"
+      > </a
+      ><a name="4714" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      >&#8869;</a
+      ><a name="4715"
+      > </a
+      ><a name="4716" class="Symbol"
+      >=</a
+      ><a name="4717"
+      > </a
+      ><a name="4718" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      >&#8869;</a
+      ><a name="4719"
+      >
+  </a
+      ><a name="4722" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="4723"
+      > </a
+      ><a name="4724" href="2016-03-01-insertion-sort-in-agda.html#4724" class="Bound"
+      >x</a
+      ><a name="4725"
+      > </a
+      ><a name="4726" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="4727"
+      > </a
+      ><a name="4728" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      >&#8851;</a
+      ><a name="4729"
+      > </a
+      ><a name="4730" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="4731"
+      > </a
+      ><a name="4732" href="2016-03-01-insertion-sort-in-agda.html#4732" class="Bound"
+      >y</a
+      ><a name="4733"
+      > </a
+      ><a name="4734" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="4735"
+      > </a
+      ><a name="4736" class="Keyword"
+      >with</a
+      ><a name="4740"
+      > </a
+      ><a name="4741" href="2016-03-01-insertion-sort-in-agda.html#4724" class="Bound"
+      >x</a
+      ><a name="4742"
+      > </a
+      ><a name="4743" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#8876" class="Function Operator"
+      >&#8804;?</a
+      ><a name="4745"
+      > </a
+      ><a name="4746" href="2016-03-01-insertion-sort-in-agda.html#4732" class="Bound"
+      >y</a
+      ><a name="4747"
+      >
+  </a
+      ><a name="4750" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="4751"
+      > </a
+      ><a name="4752" href="2016-03-01-insertion-sort-in-agda.html#4752" class="Bound"
+      >x</a
+      ><a name="4753"
+      > </a
+      ><a name="4754" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="4755"
+      > </a
+      ><a name="4756" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      >&#8851;</a
+      ><a name="4757"
+      > </a
+      ><a name="4758" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="4759"
+      > </a
+      ><a name="4760" href="2016-03-01-insertion-sort-in-agda.html#4760" class="Bound"
+      >y</a
+      ><a name="4761"
+      > </a
+      ><a name="4762" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="4763"
+      > </a
+      ><a name="4764" class="Symbol"
+      >|</a
+      ><a name="4765"
+      > </a
+      ><a name="4766" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#520" class="InductiveConstructor"
+      >yes</a
+      ><a name="4769"
+      > </a
+      ><a name="4770" href="2016-03-01-insertion-sort-in-agda.html#4770" class="Bound"
+      >x&#8804;y</a
+      ><a name="4773"
+      > </a
+      ><a name="4774" class="Symbol"
+      >=</a
+      ><a name="4775"
+      > </a
+      ><a name="4776" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="4777"
+      > </a
+      ><a name="4778" href="2016-03-01-insertion-sort-in-agda.html#4752" class="Bound"
+      >x</a
+      ><a name="4779"
+      > </a
+      ><a name="4780" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="4781"
+      >
+  </a
+      ><a name="4784" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="4785"
+      > </a
+      ><a name="4786" href="2016-03-01-insertion-sort-in-agda.html#4786" class="Bound"
+      >x</a
+      ><a name="4787"
+      > </a
+      ><a name="4788" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="4789"
+      > </a
+      ><a name="4790" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      >&#8851;</a
+      ><a name="4791"
+      > </a
+      ><a name="4792" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="4793"
+      > </a
+      ><a name="4794" href="2016-03-01-insertion-sort-in-agda.html#4794" class="Bound"
+      >y</a
+      ><a name="4795"
+      > </a
+      ><a name="4796" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="4797"
+      > </a
+      ><a name="4798" class="Symbol"
+      >|</a
+      ><a name="4799"
+      > </a
+      ><a name="4800" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#547" class="InductiveConstructor"
+      >no</a
+      ><a name="4802"
+      >  </a
+      ><a name="4804" href="2016-03-01-insertion-sort-in-agda.html#4804" class="Bound"
+      >x&gt;y</a
+      ><a name="4807"
+      > </a
+      ><a name="4808" class="Symbol"
+      >=</a
+      ><a name="4809"
+      > </a
+      ><a name="4810" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="4811"
+      > </a
+      ><a name="4812" href="2016-03-01-insertion-sort-in-agda.html#4794" class="Bound"
+      >y</a
+      ><a name="4813"
+      > </a
+      ><a name="4814" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="4815"
+      >
 
-  </a><a name="4815" href="/2016/insertion-sort-in-agda/#4815" class="Function">⊓-conserves-≲</a><a name="4828"> </a><a name="4829" class="Symbol">:</a><a name="4830"> </a><a name="4831" class="Symbol">∀</a><a name="4832"> </a><a name="4833" class="Symbol">&#123;</a><a name="4834" href="/2016/insertion-sort-in-agda/#4834" class="Bound">x</a><a name="4835"> </a><a name="4836" href="/2016/insertion-sort-in-agda/#4836" class="Bound">y</a><a name="4837"> </a><a name="4838" href="/2016/insertion-sort-in-agda/#4838" class="Bound">z</a><a name="4839" class="Symbol">&#125;</a><a name="4840"> </a><a name="4841" class="Symbol">→</a><a name="4842"> </a><a name="4843" href="/2016/insertion-sort-in-agda/#4834" class="Bound">x</a><a name="4844"> </a><a name="4845" href="/2016/insertion-sort-in-agda/#3850" class="Datatype Operator">≲</a><a name="4846"> </a><a name="4847" href="/2016/insertion-sort-in-agda/#4836" class="Bound">y</a><a name="4848"> </a><a name="4849" class="Symbol">→</a><a name="4850"> </a><a name="4851" href="/2016/insertion-sort-in-agda/#4834" class="Bound">x</a><a name="4852"> </a><a name="4853" href="/2016/insertion-sort-in-agda/#3850" class="Datatype Operator">≲</a><a name="4854"> </a><a name="4855" href="/2016/insertion-sort-in-agda/#4838" class="Bound">z</a><a name="4856"> </a><a name="4857" class="Symbol">→</a><a name="4858"> </a><a name="4859" href="/2016/insertion-sort-in-agda/#4834" class="Bound">x</a><a name="4860"> </a><a name="4861" href="/2016/insertion-sort-in-agda/#3850" class="Datatype Operator">≲</a><a name="4862"> </a><a name="4863" href="/2016/insertion-sort-in-agda/#4836" class="Bound">y</a><a name="4864"> </a><a name="4865" href="/2016/insertion-sort-in-agda/#4649" class="Function Operator">⊓</a><a name="4866"> </a><a name="4867" href="/2016/insertion-sort-in-agda/#4838" class="Bound">z</a><a name="4868">
-  </a><a name="4871" href="/2016/insertion-sort-in-agda/#4815" class="Function">⊓-conserves-≲</a><a name="4884"> </a><a name="4885" class="Symbol">&#123;</a><a name="4886" href="/2016/insertion-sort-in-agda/#4886" class="Bound">x</a><a name="4887" class="Symbol">&#125;</a><a name="4888"> </a><a name="4889" class="Symbol">&#123;</a><a name="4890" href="/2016/insertion-sort-in-agda/#3572" class="InductiveConstructor">⊤</a><a name="4891" class="Symbol">&#125;</a><a name="4892"> </a><a name="4893" class="Symbol">&#123;_&#125;</a><a name="4896"> </a><a name="4897" class="Symbol">_</a><a name="4898"> </a><a name="4899" href="/2016/insertion-sort-in-agda/#4899" class="Bound">q</a><a name="4900"> </a><a name="4901" class="Symbol">=</a><a name="4902"> </a><a name="4903" href="/2016/insertion-sort-in-agda/#4899" class="Bound">q</a><a name="4904">
-  </a><a name="4907" href="/2016/insertion-sort-in-agda/#4815" class="Function">⊓-conserves-≲</a><a name="4920"> </a><a name="4921" class="Symbol">&#123;</a><a name="4922" href="/2016/insertion-sort-in-agda/#4922" class="Bound">x</a><a name="4923" class="Symbol">&#125;</a><a name="4924"> </a><a name="4925" class="Symbol">&#123;</a><a name="4926" href="/2016/insertion-sort-in-agda/#3583" class="InductiveConstructor">⊥</a><a name="4927" class="Symbol">&#125;</a><a name="4928"> </a><a name="4929" class="Symbol">&#123;_&#125;</a><a name="4932"> </a><a name="4933" href="/2016/insertion-sort-in-agda/#4933" class="Bound">p</a><a name="4934"> </a><a name="4935" class="Symbol">_</a><a name="4936"> </a><a name="4937" class="Symbol">=</a><a name="4938"> </a><a name="4939" href="/2016/insertion-sort-in-agda/#4933" class="Bound">p</a><a name="4940">
-  </a><a name="4943" href="/2016/insertion-sort-in-agda/#4815" class="Function">⊓-conserves-≲</a><a name="4956"> </a><a name="4957" class="Symbol">&#123;</a><a name="4958" href="/2016/insertion-sort-in-agda/#4958" class="Bound">x</a><a name="4959" class="Symbol">&#125;</a><a name="4960"> </a><a name="4961" class="Symbol">&#123;</a><a name="4962" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="4963"> </a><a name="4964" class="Symbol">_</a><a name="4965"> </a><a name="4966" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="4967" class="Symbol">&#125;</a><a name="4968"> </a><a name="4969" class="Symbol">&#123;</a><a name="4970" href="/2016/insertion-sort-in-agda/#3572" class="InductiveConstructor">⊤</a><a name="4971" class="Symbol">&#125;</a><a name="4972"> </a><a name="4973" href="/2016/insertion-sort-in-agda/#4973" class="Bound">p</a><a name="4974"> </a><a name="4975" class="Symbol">_</a><a name="4976"> </a><a name="4977" class="Symbol">=</a><a name="4978"> </a><a name="4979" href="/2016/insertion-sort-in-agda/#4973" class="Bound">p</a><a name="4980">
-  </a><a name="4983" href="/2016/insertion-sort-in-agda/#4815" class="Function">⊓-conserves-≲</a><a name="4996"> </a><a name="4997" class="Symbol">&#123;</a><a name="4998" href="/2016/insertion-sort-in-agda/#4998" class="Bound">x</a><a name="4999" class="Symbol">&#125;</a><a name="5000"> </a><a name="5001" class="Symbol">&#123;</a><a name="5002" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="5003"> </a><a name="5004" class="Symbol">_</a><a name="5005"> </a><a name="5006" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="5007" class="Symbol">&#125;</a><a name="5008"> </a><a name="5009" class="Symbol">&#123;</a><a name="5010" href="/2016/insertion-sort-in-agda/#3583" class="InductiveConstructor">⊥</a><a name="5011" class="Symbol">&#125;</a><a name="5012"> </a><a name="5013" class="Symbol">_</a><a name="5014"> </a><a name="5015" href="/2016/insertion-sort-in-agda/#5015" class="Bound">q</a><a name="5016"> </a><a name="5017" class="Symbol">=</a><a name="5018"> </a><a name="5019" href="/2016/insertion-sort-in-agda/#5015" class="Bound">q</a><a name="5020">
-  </a><a name="5023" href="/2016/insertion-sort-in-agda/#4815" class="Function">⊓-conserves-≲</a><a name="5036"> </a><a name="5037" class="Symbol">&#123;</a><a name="5038" href="/2016/insertion-sort-in-agda/#5038" class="Bound">x</a><a name="5039" class="Symbol">&#125;</a><a name="5040"> </a><a name="5041" class="Symbol">&#123;</a><a name="5042" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="5043"> </a><a name="5044" href="/2016/insertion-sort-in-agda/#5044" class="Bound">y</a><a name="5045"> </a><a name="5046" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="5047" class="Symbol">&#125;</a><a name="5048"> </a><a name="5049" class="Symbol">&#123;</a><a name="5050" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="5051"> </a><a name="5052" href="/2016/insertion-sort-in-agda/#5052" class="Bound">z</a><a name="5053"> </a><a name="5054" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="5055" class="Symbol">&#125;</a><a name="5056"> </a><a name="5057" href="/2016/insertion-sort-in-agda/#5057" class="Bound">p</a><a name="5058"> </a><a name="5059" href="/2016/insertion-sort-in-agda/#5059" class="Bound">q</a><a name="5060"> </a><a name="5061" class="Keyword">with</a><a name="5065"> </a><a name="5066" href="/2016/insertion-sort-in-agda/#5044" class="Bound">y</a><a name="5067"> </a><a name="5068" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#8876" class="Function Operator" target="_blank">≤?</a><a name="5070"> </a><a name="5071" href="/2016/insertion-sort-in-agda/#5052" class="Bound">z</a><a name="5072">
-  </a><a name="5075" href="/2016/insertion-sort-in-agda/#4815" class="Function">⊓-conserves-≲</a><a name="5088"> </a><a name="5089" class="Symbol">&#123;</a><a name="5090" href="/2016/insertion-sort-in-agda/#5090" class="Bound">x</a><a name="5091" class="Symbol">&#125;</a><a name="5092"> </a><a name="5093" class="Symbol">&#123;</a><a name="5094" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="5095"> </a><a name="5096" href="/2016/insertion-sort-in-agda/#5096" class="Bound">y</a><a name="5097"> </a><a name="5098" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="5099" class="Symbol">&#125;</a><a name="5100"> </a><a name="5101" class="Symbol">&#123;</a><a name="5102" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="5103"> </a><a name="5104" href="/2016/insertion-sort-in-agda/#5104" class="Bound">z</a><a name="5105"> </a><a name="5106" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="5107" class="Symbol">&#125;</a><a name="5108"> </a><a name="5109" href="/2016/insertion-sort-in-agda/#5109" class="Bound">p</a><a name="5110"> </a><a name="5111" class="Symbol">_</a><a name="5112"> </a><a name="5113" class="Symbol">|</a><a name="5114"> </a><a name="5115" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#520" class="InductiveConstructor" target="_blank">yes</a><a name="5118"> </a><a name="5119" href="/2016/insertion-sort-in-agda/#5119" class="Bound">y≤z</a><a name="5122"> </a><a name="5123" class="Symbol">=</a><a name="5124"> </a><a name="5125" href="/2016/insertion-sort-in-agda/#5109" class="Bound">p</a><a name="5126">
-  </a><a name="5129" href="/2016/insertion-sort-in-agda/#4815" class="Function">⊓-conserves-≲</a><a name="5142"> </a><a name="5143" class="Symbol">&#123;</a><a name="5144" href="/2016/insertion-sort-in-agda/#5144" class="Bound">x</a><a name="5145" class="Symbol">&#125;</a><a name="5146"> </a><a name="5147" class="Symbol">&#123;</a><a name="5148" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="5149"> </a><a name="5150" href="/2016/insertion-sort-in-agda/#5150" class="Bound">y</a><a name="5151"> </a><a name="5152" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="5153" class="Symbol">&#125;</a><a name="5154"> </a><a name="5155" class="Symbol">&#123;</a><a name="5156" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="5157"> </a><a name="5158" href="/2016/insertion-sort-in-agda/#5158" class="Bound">z</a><a name="5159"> </a><a name="5160" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="5161" class="Symbol">&#125;</a><a name="5162"> </a><a name="5163" class="Symbol">_</a><a name="5164"> </a><a name="5165" href="/2016/insertion-sort-in-agda/#5165" class="Bound">q</a><a name="5166"> </a><a name="5167" class="Symbol">|</a><a name="5168"> </a><a name="5169" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#547" class="InductiveConstructor" target="_blank">no</a><a name="5171">  </a><a name="5173" href="/2016/insertion-sort-in-agda/#5173" class="Bound">y≰z</a><a name="5176"> </a><a name="5177" class="Symbol">=</a><a name="5178"> </a><a name="5179" href="/2016/insertion-sort-in-agda/#5165" class="Bound">q</a></pre>
+  </a
+      ><a name="4819" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      >&#8851;-conserves-&#8818;</a
+      ><a name="4832"
+      > </a
+      ><a name="4833" class="Symbol"
+      >:</a
+      ><a name="4834"
+      > </a
+      ><a name="4835" class="Symbol"
+      >&#8704;</a
+      ><a name="4836"
+      > </a
+      ><a name="4837" class="Symbol"
+      >{</a
+      ><a name="4838" href="2016-03-01-insertion-sort-in-agda.html#4838" class="Bound"
+      >x</a
+      ><a name="4839"
+      > </a
+      ><a name="4840" href="2016-03-01-insertion-sort-in-agda.html#4840" class="Bound"
+      >y</a
+      ><a name="4841"
+      > </a
+      ><a name="4842" href="2016-03-01-insertion-sort-in-agda.html#4842" class="Bound"
+      >z</a
+      ><a name="4843" class="Symbol"
+      >}</a
+      ><a name="4844"
+      > </a
+      ><a name="4845" class="Symbol"
+      >&#8594;</a
+      ><a name="4846"
+      > </a
+      ><a name="4847" href="2016-03-01-insertion-sort-in-agda.html#4838" class="Bound"
+      >x</a
+      ><a name="4848"
+      > </a
+      ><a name="4849" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      >&#8818;</a
+      ><a name="4850"
+      > </a
+      ><a name="4851" href="2016-03-01-insertion-sort-in-agda.html#4840" class="Bound"
+      >y</a
+      ><a name="4852"
+      > </a
+      ><a name="4853" class="Symbol"
+      >&#8594;</a
+      ><a name="4854"
+      > </a
+      ><a name="4855" href="2016-03-01-insertion-sort-in-agda.html#4838" class="Bound"
+      >x</a
+      ><a name="4856"
+      > </a
+      ><a name="4857" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      >&#8818;</a
+      ><a name="4858"
+      > </a
+      ><a name="4859" href="2016-03-01-insertion-sort-in-agda.html#4842" class="Bound"
+      >z</a
+      ><a name="4860"
+      > </a
+      ><a name="4861" class="Symbol"
+      >&#8594;</a
+      ><a name="4862"
+      > </a
+      ><a name="4863" href="2016-03-01-insertion-sort-in-agda.html#4838" class="Bound"
+      >x</a
+      ><a name="4864"
+      > </a
+      ><a name="4865" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      >&#8818;</a
+      ><a name="4866"
+      > </a
+      ><a name="4867" href="2016-03-01-insertion-sort-in-agda.html#4840" class="Bound"
+      >y</a
+      ><a name="4868"
+      > </a
+      ><a name="4869" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      >&#8851;</a
+      ><a name="4870"
+      > </a
+      ><a name="4871" href="2016-03-01-insertion-sort-in-agda.html#4842" class="Bound"
+      >z</a
+      ><a name="4872"
+      >
+  </a
+      ><a name="4875" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      >&#8851;-conserves-&#8818;</a
+      ><a name="4888"
+      > </a
+      ><a name="4889" class="Symbol"
+      >{</a
+      ><a name="4890" href="2016-03-01-insertion-sort-in-agda.html#4890" class="Bound"
+      >x</a
+      ><a name="4891" class="Symbol"
+      >}</a
+      ><a name="4892"
+      > </a
+      ><a name="4893" class="Symbol"
+      >{</a
+      ><a name="4894" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      >&#8868;</a
+      ><a name="4895" class="Symbol"
+      >}</a
+      ><a name="4896"
+      > </a
+      ><a name="4897" class="Symbol"
+      >{_}</a
+      ><a name="4900"
+      > </a
+      ><a name="4901" class="Symbol"
+      >_</a
+      ><a name="4902"
+      > </a
+      ><a name="4903" href="2016-03-01-insertion-sort-in-agda.html#4903" class="Bound"
+      >q</a
+      ><a name="4904"
+      > </a
+      ><a name="4905" class="Symbol"
+      >=</a
+      ><a name="4906"
+      > </a
+      ><a name="4907" href="2016-03-01-insertion-sort-in-agda.html#4903" class="Bound"
+      >q</a
+      ><a name="4908"
+      >
+  </a
+      ><a name="4911" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      >&#8851;-conserves-&#8818;</a
+      ><a name="4924"
+      > </a
+      ><a name="4925" class="Symbol"
+      >{</a
+      ><a name="4926" href="2016-03-01-insertion-sort-in-agda.html#4926" class="Bound"
+      >x</a
+      ><a name="4927" class="Symbol"
+      >}</a
+      ><a name="4928"
+      > </a
+      ><a name="4929" class="Symbol"
+      >{</a
+      ><a name="4930" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      >&#8869;</a
+      ><a name="4931" class="Symbol"
+      >}</a
+      ><a name="4932"
+      > </a
+      ><a name="4933" class="Symbol"
+      >{_}</a
+      ><a name="4936"
+      > </a
+      ><a name="4937" href="2016-03-01-insertion-sort-in-agda.html#4937" class="Bound"
+      >p</a
+      ><a name="4938"
+      > </a
+      ><a name="4939" class="Symbol"
+      >_</a
+      ><a name="4940"
+      > </a
+      ><a name="4941" class="Symbol"
+      >=</a
+      ><a name="4942"
+      > </a
+      ><a name="4943" href="2016-03-01-insertion-sort-in-agda.html#4937" class="Bound"
+      >p</a
+      ><a name="4944"
+      >
+  </a
+      ><a name="4947" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      >&#8851;-conserves-&#8818;</a
+      ><a name="4960"
+      > </a
+      ><a name="4961" class="Symbol"
+      >{</a
+      ><a name="4962" href="2016-03-01-insertion-sort-in-agda.html#4962" class="Bound"
+      >x</a
+      ><a name="4963" class="Symbol"
+      >}</a
+      ><a name="4964"
+      > </a
+      ><a name="4965" class="Symbol"
+      >{</a
+      ><a name="4966" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="4967"
+      > </a
+      ><a name="4968" class="Symbol"
+      >_</a
+      ><a name="4969"
+      > </a
+      ><a name="4970" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="4971" class="Symbol"
+      >}</a
+      ><a name="4972"
+      > </a
+      ><a name="4973" class="Symbol"
+      >{</a
+      ><a name="4974" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      >&#8868;</a
+      ><a name="4975" class="Symbol"
+      >}</a
+      ><a name="4976"
+      > </a
+      ><a name="4977" href="2016-03-01-insertion-sort-in-agda.html#4977" class="Bound"
+      >p</a
+      ><a name="4978"
+      > </a
+      ><a name="4979" class="Symbol"
+      >_</a
+      ><a name="4980"
+      > </a
+      ><a name="4981" class="Symbol"
+      >=</a
+      ><a name="4982"
+      > </a
+      ><a name="4983" href="2016-03-01-insertion-sort-in-agda.html#4977" class="Bound"
+      >p</a
+      ><a name="4984"
+      >
+  </a
+      ><a name="4987" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      >&#8851;-conserves-&#8818;</a
+      ><a name="5000"
+      > </a
+      ><a name="5001" class="Symbol"
+      >{</a
+      ><a name="5002" href="2016-03-01-insertion-sort-in-agda.html#5002" class="Bound"
+      >x</a
+      ><a name="5003" class="Symbol"
+      >}</a
+      ><a name="5004"
+      > </a
+      ><a name="5005" class="Symbol"
+      >{</a
+      ><a name="5006" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="5007"
+      > </a
+      ><a name="5008" class="Symbol"
+      >_</a
+      ><a name="5009"
+      > </a
+      ><a name="5010" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="5011" class="Symbol"
+      >}</a
+      ><a name="5012"
+      > </a
+      ><a name="5013" class="Symbol"
+      >{</a
+      ><a name="5014" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      >&#8869;</a
+      ><a name="5015" class="Symbol"
+      >}</a
+      ><a name="5016"
+      > </a
+      ><a name="5017" class="Symbol"
+      >_</a
+      ><a name="5018"
+      > </a
+      ><a name="5019" href="2016-03-01-insertion-sort-in-agda.html#5019" class="Bound"
+      >q</a
+      ><a name="5020"
+      > </a
+      ><a name="5021" class="Symbol"
+      >=</a
+      ><a name="5022"
+      > </a
+      ><a name="5023" href="2016-03-01-insertion-sort-in-agda.html#5019" class="Bound"
+      >q</a
+      ><a name="5024"
+      >
+  </a
+      ><a name="5027" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      >&#8851;-conserves-&#8818;</a
+      ><a name="5040"
+      > </a
+      ><a name="5041" class="Symbol"
+      >{</a
+      ><a name="5042" href="2016-03-01-insertion-sort-in-agda.html#5042" class="Bound"
+      >x</a
+      ><a name="5043" class="Symbol"
+      >}</a
+      ><a name="5044"
+      > </a
+      ><a name="5045" class="Symbol"
+      >{</a
+      ><a name="5046" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="5047"
+      > </a
+      ><a name="5048" href="2016-03-01-insertion-sort-in-agda.html#5048" class="Bound"
+      >y</a
+      ><a name="5049"
+      > </a
+      ><a name="5050" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="5051" class="Symbol"
+      >}</a
+      ><a name="5052"
+      > </a
+      ><a name="5053" class="Symbol"
+      >{</a
+      ><a name="5054" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="5055"
+      > </a
+      ><a name="5056" href="2016-03-01-insertion-sort-in-agda.html#5056" class="Bound"
+      >z</a
+      ><a name="5057"
+      > </a
+      ><a name="5058" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="5059" class="Symbol"
+      >}</a
+      ><a name="5060"
+      > </a
+      ><a name="5061" href="2016-03-01-insertion-sort-in-agda.html#5061" class="Bound"
+      >p</a
+      ><a name="5062"
+      > </a
+      ><a name="5063" href="2016-03-01-insertion-sort-in-agda.html#5063" class="Bound"
+      >q</a
+      ><a name="5064"
+      > </a
+      ><a name="5065" class="Keyword"
+      >with</a
+      ><a name="5069"
+      > </a
+      ><a name="5070" href="2016-03-01-insertion-sort-in-agda.html#5048" class="Bound"
+      >y</a
+      ><a name="5071"
+      > </a
+      ><a name="5072" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#8876" class="Function Operator"
+      >&#8804;?</a
+      ><a name="5074"
+      > </a
+      ><a name="5075" href="2016-03-01-insertion-sort-in-agda.html#5056" class="Bound"
+      >z</a
+      ><a name="5076"
+      >
+  </a
+      ><a name="5079" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      >&#8851;-conserves-&#8818;</a
+      ><a name="5092"
+      > </a
+      ><a name="5093" class="Symbol"
+      >{</a
+      ><a name="5094" href="2016-03-01-insertion-sort-in-agda.html#5094" class="Bound"
+      >x</a
+      ><a name="5095" class="Symbol"
+      >}</a
+      ><a name="5096"
+      > </a
+      ><a name="5097" class="Symbol"
+      >{</a
+      ><a name="5098" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="5099"
+      > </a
+      ><a name="5100" href="2016-03-01-insertion-sort-in-agda.html#5100" class="Bound"
+      >y</a
+      ><a name="5101"
+      > </a
+      ><a name="5102" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="5103" class="Symbol"
+      >}</a
+      ><a name="5104"
+      > </a
+      ><a name="5105" class="Symbol"
+      >{</a
+      ><a name="5106" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="5107"
+      > </a
+      ><a name="5108" href="2016-03-01-insertion-sort-in-agda.html#5108" class="Bound"
+      >z</a
+      ><a name="5109"
+      > </a
+      ><a name="5110" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="5111" class="Symbol"
+      >}</a
+      ><a name="5112"
+      > </a
+      ><a name="5113" href="2016-03-01-insertion-sort-in-agda.html#5113" class="Bound"
+      >p</a
+      ><a name="5114"
+      > </a
+      ><a name="5115" class="Symbol"
+      >_</a
+      ><a name="5116"
+      > </a
+      ><a name="5117" class="Symbol"
+      >|</a
+      ><a name="5118"
+      > </a
+      ><a name="5119" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#520" class="InductiveConstructor"
+      >yes</a
+      ><a name="5122"
+      > </a
+      ><a name="5123" href="2016-03-01-insertion-sort-in-agda.html#5123" class="Bound"
+      >y&#8804;z</a
+      ><a name="5126"
+      > </a
+      ><a name="5127" class="Symbol"
+      >=</a
+      ><a name="5128"
+      > </a
+      ><a name="5129" href="2016-03-01-insertion-sort-in-agda.html#5113" class="Bound"
+      >p</a
+      ><a name="5130"
+      >
+  </a
+      ><a name="5133" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      >&#8851;-conserves-&#8818;</a
+      ><a name="5146"
+      > </a
+      ><a name="5147" class="Symbol"
+      >{</a
+      ><a name="5148" href="2016-03-01-insertion-sort-in-agda.html#5148" class="Bound"
+      >x</a
+      ><a name="5149" class="Symbol"
+      >}</a
+      ><a name="5150"
+      > </a
+      ><a name="5151" class="Symbol"
+      >{</a
+      ><a name="5152" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="5153"
+      > </a
+      ><a name="5154" href="2016-03-01-insertion-sort-in-agda.html#5154" class="Bound"
+      >y</a
+      ><a name="5155"
+      > </a
+      ><a name="5156" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="5157" class="Symbol"
+      >}</a
+      ><a name="5158"
+      > </a
+      ><a name="5159" class="Symbol"
+      >{</a
+      ><a name="5160" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="5161"
+      > </a
+      ><a name="5162" href="2016-03-01-insertion-sort-in-agda.html#5162" class="Bound"
+      >z</a
+      ><a name="5163"
+      > </a
+      ><a name="5164" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="5165" class="Symbol"
+      >}</a
+      ><a name="5166"
+      > </a
+      ><a name="5167" class="Symbol"
+      >_</a
+      ><a name="5168"
+      > </a
+      ><a name="5169" href="2016-03-01-insertion-sort-in-agda.html#5169" class="Bound"
+      >q</a
+      ><a name="5170"
+      > </a
+      ><a name="5171" class="Symbol"
+      >|</a
+      ><a name="5172"
+      > </a
+      ><a name="5173" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#547" class="InductiveConstructor"
+      >no</a
+      ><a name="5175"
+      >  </a
+      ><a name="5177" href="2016-03-01-insertion-sort-in-agda.html#5177" class="Bound"
+      >y&#8816;z</a
+      ><a name="5180"
+      > </a
+      ><a name="5181" class="Symbol"
+      >=</a
+      ><a name="5182"
+      > </a
+      ><a name="5183" href="2016-03-01-insertion-sort-in-agda.html#5169" class="Bound"
+      >q</a
+      >
+</pre><!--{% endraw %}-->
 
 Insertion sort has rather complicated invariants. If we were implementing
 mergesort, that we could define ordered lists as lists in which every
@@ -165,15 +1765,351 @@ There are three ways to construct an `OVec`:
   - and finally, we can forgo all sorting, and just add some unsorted
     elements to the front of the list.
 
-<pre class="Agda">  <a name="7272" class="Keyword">data</a><a name="7276"> </a><a name="7277" href="/2016/insertion-sort-in-agda/#7277" class="Datatype">OVec</a><a name="7281"> </a><a name="7282" class="Symbol">:</a><a name="7283"> </a><a name="7284" class="Symbol">(</a><a name="7285" href="/2016/insertion-sort-in-agda/#7285" class="Bound">l</a><a name="7286"> </a><a name="7287" class="Symbol">:</a><a name="7288"> </a><a name="7289" href="/2016/insertion-sort-in-agda/#3551" class="Datatype">Â</a><a name="7291" class="Symbol">)</a><a name="7292"> </a><a name="7293" class="Symbol">(</a><a name="7294" href="/2016/insertion-sort-in-agda/#7294" class="Bound">n</a><a name="7295"> </a><a name="7296" href="/2016/insertion-sort-in-agda/#7296" class="Bound">k</a><a name="7297"> </a><a name="7298" class="Symbol">:</a><a name="7299"> </a><a name="7300" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#69" class="Datatype" target="_blank">ℕ</a><a name="7301" class="Symbol">)</a><a name="7302"> </a><a name="7303" class="Symbol">→</a><a name="7304"> </a><a name="7305" class="PrimitiveType">Set</a><a name="7308"> </a><a name="7309" class="Symbol">(</a><a name="7310" href="/2016/insertion-sort-in-agda/#3052" class="Bound">c</a><a name="7311"> </a><a name="7312" href="https://agda.github.io/agda-stdlib/Agda.Primitive.html#626" class="Primitive Operator" target="_blank">⊔</a><a name="7313"> </a><a name="7314" href="/2016/insertion-sort-in-agda/#3057" class="Bound">ℓ₂</a><a name="7316" class="Symbol">)</a><a name="7317"> </a><a name="7318" class="Keyword">where</a><a name="7323">
+<!--{% raw %}--><pre class="Agda">
+  <a name="7276" class="Keyword"
+      >data</a
+      ><a name="7280"
+      > </a
+      ><a name="7281" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      >OVec</a
+      ><a name="7285"
+      > </a
+      ><a name="7286" class="Symbol"
+      >:</a
+      ><a name="7287"
+      > </a
+      ><a name="7288" class="Symbol"
+      >(</a
+      ><a name="7289" href="2016-03-01-insertion-sort-in-agda.html#7289" class="Bound"
+      >l</a
+      ><a name="7290"
+      > </a
+      ><a name="7291" class="Symbol"
+      >:</a
+      ><a name="7292"
+      > </a
+      ><a name="7293" href="2016-03-01-insertion-sort-in-agda.html#3555" class="Datatype"
+      >A&#770;</a
+      ><a name="7295" class="Symbol"
+      >)</a
+      ><a name="7296"
+      > </a
+      ><a name="7297" class="Symbol"
+      >(</a
+      ><a name="7298" href="2016-03-01-insertion-sort-in-agda.html#7298" class="Bound"
+      >n</a
+      ><a name="7299"
+      > </a
+      ><a name="7300" href="2016-03-01-insertion-sort-in-agda.html#7300" class="Bound"
+      >k</a
+      ><a name="7301"
+      > </a
+      ><a name="7302" class="Symbol"
+      >:</a
+      ><a name="7303"
+      > </a
+      ><a name="7304" href="Agda.Builtin.Nat.html#69" class="Datatype"
+      >&#8469;</a
+      ><a name="7305" class="Symbol"
+      >)</a
+      ><a name="7306"
+      > </a
+      ><a name="7307" class="Symbol"
+      >&#8594;</a
+      ><a name="7308"
+      > </a
+      ><a name="7309" class="PrimitiveType"
+      >Set</a
+      ><a name="7312"
+      > </a
+      ><a name="7313" class="Symbol"
+      >(</a
+      ><a name="7314" href="2016-03-01-insertion-sort-in-agda.html#3056" class="Bound"
+      >c</a
+      ><a name="7315"
+      > </a
+      ><a name="7316" href="Agda.Primitive.html#626" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="7317"
+      > </a
+      ><a name="7318" href="2016-03-01-insertion-sort-in-agda.html#3061" class="Bound"
+      >&#8467;&#8322;</a
+      ><a name="7320" class="Symbol"
+      >)</a
+      ><a name="7321"
+      > </a
+      ><a name="7322" class="Keyword"
+      >where</a
+      ><a name="7327"
+      >
 
-    </a><a name="7329" href="/2016/insertion-sort-in-agda/#7329" class="InductiveConstructor">[]</a><a name="7331">     </a><a name="7336" class="Symbol">:</a><a name="7337"> </a><a name="7338" href="/2016/insertion-sort-in-agda/#7277" class="Datatype">OVec</a><a name="7342"> </a><a name="7343" href="/2016/insertion-sort-in-agda/#3572" class="InductiveConstructor">⊤</a><a name="7344"> </a><a name="7345" class="Number">0</a><a name="7346"> </a><a name="7347" class="Number">0</a><a name="7348">
+    </a
+      ><a name="7333" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      >[]</a
+      ><a name="7335"
+      >     </a
+      ><a name="7340" class="Symbol"
+      >:</a
+      ><a name="7341"
+      > </a
+      ><a name="7342" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      >OVec</a
+      ><a name="7346"
+      > </a
+      ><a name="7347" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      >&#8868;</a
+      ><a name="7348"
+      > </a
+      ><a name="7349" class="Number"
+      >0</a
+      ><a name="7350"
+      > </a
+      ><a name="7351" class="Number"
+      >0</a
+      ><a name="7352"
+      >
 
-    </a><a name="7354" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">_∷_by_</a><a name="7360"> </a><a name="7361" class="Symbol">:</a><a name="7362"> </a><a name="7363" class="Symbol">∀</a><a name="7364"> </a><a name="7365" class="Symbol">&#123;</a><a name="7366" href="/2016/insertion-sort-in-agda/#7366" class="Bound">l</a><a name="7367"> </a><a name="7368" href="/2016/insertion-sort-in-agda/#7368" class="Bound">n</a><a name="7369" class="Symbol">&#125;</a><a name="7370"> </a><a name="7371" class="Symbol">(</a><a name="7372" href="/2016/insertion-sort-in-agda/#7372" class="Bound">x</a><a name="7373"> </a><a name="7374" class="Symbol">:</a><a name="7375"> </a><a name="7376" href="/2016/insertion-sort-in-agda/#3184" class="Function">A</a><a name="7377" class="Symbol">)</a><a name="7378"> </a><a name="7379" class="Symbol">(</a><a name="7380" href="/2016/insertion-sort-in-agda/#7380" class="Bound">xs</a><a name="7382"> </a><a name="7383" class="Symbol">:</a><a name="7384"> </a><a name="7385" href="/2016/insertion-sort-in-agda/#7277" class="Datatype">OVec</a><a name="7389"> </a><a name="7390" href="/2016/insertion-sort-in-agda/#7366" class="Bound">l</a><a name="7391"> </a><a name="7392" href="/2016/insertion-sort-in-agda/#7368" class="Bound">n</a><a name="7393"> </a><a name="7394" class="Number">0</a><a name="7395" class="Symbol">)</a><a name="7396">
-           </a><a name="7408" class="Symbol">→</a><a name="7409"> </a><a name="7410" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="7411"> </a><a name="7412" href="/2016/insertion-sort-in-agda/#7372" class="Bound">x</a><a name="7413"> </a><a name="7414" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="7415"> </a><a name="7416" href="/2016/insertion-sort-in-agda/#3850" class="Datatype Operator">≲</a><a name="7417"> </a><a name="7418" href="/2016/insertion-sort-in-agda/#7366" class="Bound">l</a><a name="7419"> </a><a name="7420" class="Symbol">→</a><a name="7421"> </a><a name="7422" href="/2016/insertion-sort-in-agda/#7277" class="Datatype">OVec</a><a name="7426"> </a><a name="7427" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="7428"> </a><a name="7429" href="/2016/insertion-sort-in-agda/#7372" class="Bound">x</a><a name="7430"> </a><a name="7431" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="7432"> </a><a name="7433" class="Symbol">(</a><a name="7434" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#100" class="InductiveConstructor" target="_blank">suc</a><a name="7437"> </a><a name="7438" href="/2016/insertion-sort-in-agda/#7368" class="Bound">n</a><a name="7439" class="Symbol">)</a><a name="7440"> </a><a name="7441" class="Number">0</a><a name="7442">
+    </a
+      ><a name="7358" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >_&#8759;_by_</a
+      ><a name="7364"
+      > </a
+      ><a name="7365" class="Symbol"
+      >:</a
+      ><a name="7366"
+      > </a
+      ><a name="7367" class="Symbol"
+      >&#8704;</a
+      ><a name="7368"
+      > </a
+      ><a name="7369" class="Symbol"
+      >{</a
+      ><a name="7370" href="2016-03-01-insertion-sort-in-agda.html#7370" class="Bound"
+      >l</a
+      ><a name="7371"
+      > </a
+      ><a name="7372" href="2016-03-01-insertion-sort-in-agda.html#7372" class="Bound"
+      >n</a
+      ><a name="7373" class="Symbol"
+      >}</a
+      ><a name="7374"
+      > </a
+      ><a name="7375" class="Symbol"
+      >(</a
+      ><a name="7376" href="2016-03-01-insertion-sort-in-agda.html#7376" class="Bound"
+      >x</a
+      ><a name="7377"
+      > </a
+      ><a name="7378" class="Symbol"
+      >:</a
+      ><a name="7379"
+      > </a
+      ><a name="7380" href="2016-03-01-insertion-sort-in-agda.html#3188" class="Function"
+      >A</a
+      ><a name="7381" class="Symbol"
+      >)</a
+      ><a name="7382"
+      > </a
+      ><a name="7383" class="Symbol"
+      >(</a
+      ><a name="7384" href="2016-03-01-insertion-sort-in-agda.html#7384" class="Bound"
+      >xs</a
+      ><a name="7386"
+      > </a
+      ><a name="7387" class="Symbol"
+      >:</a
+      ><a name="7388"
+      > </a
+      ><a name="7389" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      >OVec</a
+      ><a name="7393"
+      > </a
+      ><a name="7394" href="2016-03-01-insertion-sort-in-agda.html#7370" class="Bound"
+      >l</a
+      ><a name="7395"
+      > </a
+      ><a name="7396" href="2016-03-01-insertion-sort-in-agda.html#7372" class="Bound"
+      >n</a
+      ><a name="7397"
+      > </a
+      ><a name="7398" class="Number"
+      >0</a
+      ><a name="7399" class="Symbol"
+      >)</a
+      ><a name="7400"
+      >
+           </a
+      ><a name="7412" class="Symbol"
+      >&#8594;</a
+      ><a name="7413"
+      > </a
+      ><a name="7414" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="7415"
+      > </a
+      ><a name="7416" href="2016-03-01-insertion-sort-in-agda.html#7376" class="Bound"
+      >x</a
+      ><a name="7417"
+      > </a
+      ><a name="7418" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="7419"
+      > </a
+      ><a name="7420" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      >&#8818;</a
+      ><a name="7421"
+      > </a
+      ><a name="7422" href="2016-03-01-insertion-sort-in-agda.html#7370" class="Bound"
+      >l</a
+      ><a name="7423"
+      > </a
+      ><a name="7424" class="Symbol"
+      >&#8594;</a
+      ><a name="7425"
+      > </a
+      ><a name="7426" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      >OVec</a
+      ><a name="7430"
+      > </a
+      ><a name="7431" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="7432"
+      > </a
+      ><a name="7433" href="2016-03-01-insertion-sort-in-agda.html#7376" class="Bound"
+      >x</a
+      ><a name="7434"
+      > </a
+      ><a name="7435" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="7436"
+      > </a
+      ><a name="7437" class="Symbol"
+      >(</a
+      ><a name="7438" href="Agda.Builtin.Nat.html#100" class="InductiveConstructor"
+      >suc</a
+      ><a name="7441"
+      > </a
+      ><a name="7442" href="2016-03-01-insertion-sort-in-agda.html#7372" class="Bound"
+      >n</a
+      ><a name="7443" class="Symbol"
+      >)</a
+      ><a name="7444"
+      > </a
+      ><a name="7445" class="Number"
+      >0</a
+      ><a name="7446"
+      >
 
-    </a><a name="7448" href="/2016/insertion-sort-in-agda/#7448" class="InductiveConstructor Operator">_∷_</a><a name="7451">    </a><a name="7455" class="Symbol">:</a><a name="7456"> </a><a name="7457" class="Symbol">∀</a><a name="7458"> </a><a name="7459" class="Symbol">&#123;</a><a name="7460" href="/2016/insertion-sort-in-agda/#7460" class="Bound">l</a><a name="7461"> </a><a name="7462" href="/2016/insertion-sort-in-agda/#7462" class="Bound">n</a><a name="7463"> </a><a name="7464" href="/2016/insertion-sort-in-agda/#7464" class="Bound">k</a><a name="7465" class="Symbol">&#125;</a><a name="7466"> </a><a name="7467" class="Symbol">(</a><a name="7468" href="/2016/insertion-sort-in-agda/#7468" class="Bound">x</a><a name="7469"> </a><a name="7470" class="Symbol">:</a><a name="7471"> </a><a name="7472" href="/2016/insertion-sort-in-agda/#3184" class="Function">A</a><a name="7473" class="Symbol">)</a><a name="7474"> </a><a name="7475" class="Symbol">(</a><a name="7476" href="/2016/insertion-sort-in-agda/#7476" class="Bound">xs</a><a name="7478"> </a><a name="7479" class="Symbol">:</a><a name="7480"> </a><a name="7481" href="/2016/insertion-sort-in-agda/#7277" class="Datatype">OVec</a><a name="7485"> </a><a name="7486" href="/2016/insertion-sort-in-agda/#7460" class="Bound">l</a><a name="7487"> </a><a name="7488" href="/2016/insertion-sort-in-agda/#7462" class="Bound">n</a><a name="7489"> </a><a name="7490" href="/2016/insertion-sort-in-agda/#7464" class="Bound">k</a><a name="7491" class="Symbol">)</a><a name="7492">
-           </a><a name="7504" class="Symbol">→</a><a name="7505"> </a><a name="7506" href="/2016/insertion-sort-in-agda/#7277" class="Datatype">OVec</a><a name="7510"> </a><a name="7511" href="/2016/insertion-sort-in-agda/#3583" class="InductiveConstructor">⊥</a><a name="7512"> </a><a name="7513" class="Symbol">(</a><a name="7514" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#100" class="InductiveConstructor" target="_blank">suc</a><a name="7517"> </a><a name="7518" href="/2016/insertion-sort-in-agda/#7462" class="Bound">n</a><a name="7519" class="Symbol">)</a><a name="7520"> </a><a name="7521" class="Symbol">(</a><a name="7522" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#100" class="InductiveConstructor" target="_blank">suc</a><a name="7525"> </a><a name="7526" href="/2016/insertion-sort-in-agda/#7464" class="Bound">k</a><a name="7527" class="Symbol">)</a></pre>
+    </a
+      ><a name="7452" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      >_&#8759;_</a
+      ><a name="7455"
+      >    </a
+      ><a name="7459" class="Symbol"
+      >:</a
+      ><a name="7460"
+      > </a
+      ><a name="7461" class="Symbol"
+      >&#8704;</a
+      ><a name="7462"
+      > </a
+      ><a name="7463" class="Symbol"
+      >{</a
+      ><a name="7464" href="2016-03-01-insertion-sort-in-agda.html#7464" class="Bound"
+      >l</a
+      ><a name="7465"
+      > </a
+      ><a name="7466" href="2016-03-01-insertion-sort-in-agda.html#7466" class="Bound"
+      >n</a
+      ><a name="7467"
+      > </a
+      ><a name="7468" href="2016-03-01-insertion-sort-in-agda.html#7468" class="Bound"
+      >k</a
+      ><a name="7469" class="Symbol"
+      >}</a
+      ><a name="7470"
+      > </a
+      ><a name="7471" class="Symbol"
+      >(</a
+      ><a name="7472" href="2016-03-01-insertion-sort-in-agda.html#7472" class="Bound"
+      >x</a
+      ><a name="7473"
+      > </a
+      ><a name="7474" class="Symbol"
+      >:</a
+      ><a name="7475"
+      > </a
+      ><a name="7476" href="2016-03-01-insertion-sort-in-agda.html#3188" class="Function"
+      >A</a
+      ><a name="7477" class="Symbol"
+      >)</a
+      ><a name="7478"
+      > </a
+      ><a name="7479" class="Symbol"
+      >(</a
+      ><a name="7480" href="2016-03-01-insertion-sort-in-agda.html#7480" class="Bound"
+      >xs</a
+      ><a name="7482"
+      > </a
+      ><a name="7483" class="Symbol"
+      >:</a
+      ><a name="7484"
+      > </a
+      ><a name="7485" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      >OVec</a
+      ><a name="7489"
+      > </a
+      ><a name="7490" href="2016-03-01-insertion-sort-in-agda.html#7464" class="Bound"
+      >l</a
+      ><a name="7491"
+      > </a
+      ><a name="7492" href="2016-03-01-insertion-sort-in-agda.html#7466" class="Bound"
+      >n</a
+      ><a name="7493"
+      > </a
+      ><a name="7494" href="2016-03-01-insertion-sort-in-agda.html#7468" class="Bound"
+      >k</a
+      ><a name="7495" class="Symbol"
+      >)</a
+      ><a name="7496"
+      >
+           </a
+      ><a name="7508" class="Symbol"
+      >&#8594;</a
+      ><a name="7509"
+      > </a
+      ><a name="7510" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      >OVec</a
+      ><a name="7514"
+      > </a
+      ><a name="7515" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      >&#8869;</a
+      ><a name="7516"
+      > </a
+      ><a name="7517" class="Symbol"
+      >(</a
+      ><a name="7518" href="Agda.Builtin.Nat.html#100" class="InductiveConstructor"
+      >suc</a
+      ><a name="7521"
+      > </a
+      ><a name="7522" href="2016-03-01-insertion-sort-in-agda.html#7466" class="Bound"
+      >n</a
+      ><a name="7523" class="Symbol"
+      >)</a
+      ><a name="7524"
+      > </a
+      ><a name="7525" class="Symbol"
+      >(</a
+      ><a name="7526" href="Agda.Builtin.Nat.html#100" class="InductiveConstructor"
+      >suc</a
+      ><a name="7529"
+      > </a
+      ><a name="7530" href="2016-03-01-insertion-sort-in-agda.html#7468" class="Bound"
+      >k</a
+      ><a name="7531" class="Symbol"
+      >)</a
+      >
+</pre><!--{% endraw %}-->
 
 If we have a regular vector---a list which tracks its length---we can
 turn it into a k-ordered vector together with some lower bound. (This
@@ -182,32 +2118,924 @@ another existential with the lists length in it.) Our naive process of
 just inserting all elements in the vector as *unsorted* means that the
 lower bound will be either ⊤ or ⊥. And we can show that!
 
-<pre class="Agda">  <a name="7967" href="/2016/insertion-sort-in-agda/#7967" class="Function">fromVec</a><a name="7974"> </a><a name="7975" class="Symbol">:</a><a name="7976"> </a><a name="7977" class="Symbol">∀</a><a name="7978"> </a><a name="7979" class="Symbol">&#123;</a><a name="7980" href="/2016/insertion-sort-in-agda/#7980" class="Bound">n</a><a name="7981" class="Symbol">&#125;</a><a name="7982"> </a><a name="7983" class="Symbol">→</a><a name="7984"> </a><a name="7985" href="https://agda.github.io/agda-stdlib/Data.Vec.html#609" class="Datatype" target="_blank">Vec</a><a name="7988"> </a><a name="7989" href="/2016/insertion-sort-in-agda/#3184" class="Function">A</a><a name="7990"> </a><a name="7991" href="/2016/insertion-sort-in-agda/#7980" class="Bound">n</a><a name="7992"> </a><a name="7993" class="Symbol">→</a><a name="7994"> </a><a name="7995" href="https://agda.github.io/agda-stdlib/Data.Product.html#823" class="Function" target="_blank">∃</a><a name="7996"> </a><a name="7997" class="Symbol">(λ</a><a name="7999"> </a><a name="8000" href="/2016/insertion-sort-in-agda/#8000" class="Bound">l</a><a name="8001"> </a><a name="8002" class="Symbol">→</a><a name="8003"> </a><a name="8004" href="/2016/insertion-sort-in-agda/#7277" class="Datatype">OVec</a><a name="8008"> </a><a name="8009" href="/2016/insertion-sort-in-agda/#8000" class="Bound">l</a><a name="8010"> </a><a name="8011" href="/2016/insertion-sort-in-agda/#7980" class="Bound">n</a><a name="8012"> </a><a name="8013" href="/2016/insertion-sort-in-agda/#7980" class="Bound">n</a><a name="8014" class="Symbol">)</a><a name="8015">
-  </a><a name="8018" href="/2016/insertion-sort-in-agda/#7967" class="Function">fromVec</a><a name="8025"> </a><a name="8026" href="https://agda.github.io/agda-stdlib/Data.Vec.html#649" class="InductiveConstructor" target="_blank">[]</a><a name="8028"> </a><a name="8029" class="Symbol">=</a><a name="8030"> </a><a name="8031" href="/2016/insertion-sort-in-agda/#3572" class="InductiveConstructor">⊤</a><a name="8032"> </a><a name="8033" href="https://agda.github.io/agda-stdlib/Data.Product.html#509" class="InductiveConstructor Operator" target="_blank">,</a><a name="8034"> </a><a name="8035" href="/2016/insertion-sort-in-agda/#7329" class="InductiveConstructor">[]</a><a name="8037">
-  </a><a name="8040" href="/2016/insertion-sort-in-agda/#7967" class="Function">fromVec</a><a name="8047"> </a><a name="8048" class="Symbol">(</a><a name="8049" href="/2016/insertion-sort-in-agda/#8049" class="Bound">x</a><a name="8050"> </a><a name="8051" href="https://agda.github.io/agda-stdlib/Data.Vec.html#668" class="InductiveConstructor Operator" target="_blank">∷</a><a name="8052"> </a><a name="8053" href="/2016/insertion-sort-in-agda/#8053" class="Bound">xs</a><a name="8055" class="Symbol">)</a><a name="8056"> </a><a name="8057" class="Symbol">=</a><a name="8058"> </a><a name="8059" href="/2016/insertion-sort-in-agda/#3583" class="InductiveConstructor">⊥</a><a name="8060"> </a><a name="8061" href="https://agda.github.io/agda-stdlib/Data.Product.html#509" class="InductiveConstructor Operator" target="_blank">,</a><a name="8062"> </a><a name="8063" href="/2016/insertion-sort-in-agda/#8049" class="Bound">x</a><a name="8064"> </a><a name="8065" href="/2016/insertion-sort-in-agda/#7448" class="InductiveConstructor Operator">∷</a><a name="8066"> </a><a name="8067" href="https://agda.github.io/agda-stdlib/Data.Product.html#539" class="Field" target="_blank">proj₂</a><a name="8072"> </a><a name="8073" class="Symbol">(</a><a name="8074" href="/2016/insertion-sort-in-agda/#7967" class="Function">fromVec</a><a name="8081"> </a><a name="8082" href="/2016/insertion-sort-in-agda/#8053" class="Bound">xs</a><a name="8084" class="Symbol">)</a><a name="8085">
+<!--{% raw %}--><pre class="Agda">
+  <a name="7971" href="2016-03-01-insertion-sort-in-agda.html#7971" class="Function"
+      >fromVec</a
+      ><a name="7978"
+      > </a
+      ><a name="7979" class="Symbol"
+      >:</a
+      ><a name="7980"
+      > </a
+      ><a name="7981" class="Symbol"
+      >&#8704;</a
+      ><a name="7982"
+      > </a
+      ><a name="7983" class="Symbol"
+      >{</a
+      ><a name="7984" href="2016-03-01-insertion-sort-in-agda.html#7984" class="Bound"
+      >n</a
+      ><a name="7985" class="Symbol"
+      >}</a
+      ><a name="7986"
+      > </a
+      ><a name="7987" class="Symbol"
+      >&#8594;</a
+      ><a name="7988"
+      > </a
+      ><a name="7989" href="https://agda.github.io/agda-stdlib/Data.Vec.html#609" class="Datatype"
+      >Vec</a
+      ><a name="7992"
+      > </a
+      ><a name="7993" href="2016-03-01-insertion-sort-in-agda.html#3188" class="Function"
+      >A</a
+      ><a name="7994"
+      > </a
+      ><a name="7995" href="2016-03-01-insertion-sort-in-agda.html#7984" class="Bound"
+      >n</a
+      ><a name="7996"
+      > </a
+      ><a name="7997" class="Symbol"
+      >&#8594;</a
+      ><a name="7998"
+      > </a
+      ><a name="7999" href="https://agda.github.io/agda-stdlib/Data.Product.html#823" class="Function"
+      >&#8707;</a
+      ><a name="8000"
+      > </a
+      ><a name="8001" class="Symbol"
+      >(&#955;</a
+      ><a name="8003"
+      > </a
+      ><a name="8004" href="2016-03-01-insertion-sort-in-agda.html#8004" class="Bound"
+      >l</a
+      ><a name="8005"
+      > </a
+      ><a name="8006" class="Symbol"
+      >&#8594;</a
+      ><a name="8007"
+      > </a
+      ><a name="8008" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      >OVec</a
+      ><a name="8012"
+      > </a
+      ><a name="8013" href="2016-03-01-insertion-sort-in-agda.html#8004" class="Bound"
+      >l</a
+      ><a name="8014"
+      > </a
+      ><a name="8015" href="2016-03-01-insertion-sort-in-agda.html#7984" class="Bound"
+      >n</a
+      ><a name="8016"
+      > </a
+      ><a name="8017" href="2016-03-01-insertion-sort-in-agda.html#7984" class="Bound"
+      >n</a
+      ><a name="8018" class="Symbol"
+      >)</a
+      ><a name="8019"
+      >
+  </a
+      ><a name="8022" href="2016-03-01-insertion-sort-in-agda.html#7971" class="Function"
+      >fromVec</a
+      ><a name="8029"
+      > </a
+      ><a name="8030" href="https://agda.github.io/agda-stdlib/Data.Vec.html#649" class="InductiveConstructor"
+      >[]</a
+      ><a name="8032"
+      > </a
+      ><a name="8033" class="Symbol"
+      >=</a
+      ><a name="8034"
+      > </a
+      ><a name="8035" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      >&#8868;</a
+      ><a name="8036"
+      > </a
+      ><a name="8037" href="https://agda.github.io/agda-stdlib/Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="8038"
+      > </a
+      ><a name="8039" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      >[]</a
+      ><a name="8041"
+      >
+  </a
+      ><a name="8044" href="2016-03-01-insertion-sort-in-agda.html#7971" class="Function"
+      >fromVec</a
+      ><a name="8051"
+      > </a
+      ><a name="8052" class="Symbol"
+      >(</a
+      ><a name="8053" href="2016-03-01-insertion-sort-in-agda.html#8053" class="Bound"
+      >x</a
+      ><a name="8054"
+      > </a
+      ><a name="8055" href="https://agda.github.io/agda-stdlib/Data.Vec.html#668" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="8056"
+      > </a
+      ><a name="8057" href="2016-03-01-insertion-sort-in-agda.html#8057" class="Bound"
+      >xs</a
+      ><a name="8059" class="Symbol"
+      >)</a
+      ><a name="8060"
+      > </a
+      ><a name="8061" class="Symbol"
+      >=</a
+      ><a name="8062"
+      > </a
+      ><a name="8063" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      >&#8869;</a
+      ><a name="8064"
+      > </a
+      ><a name="8065" href="https://agda.github.io/agda-stdlib/Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="8066"
+      > </a
+      ><a name="8067" href="2016-03-01-insertion-sort-in-agda.html#8053" class="Bound"
+      >x</a
+      ><a name="8068"
+      > </a
+      ><a name="8069" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="8070"
+      > </a
+      ><a name="8071" href="https://agda.github.io/agda-stdlib/Data.Product.html#539" class="Field"
+      >proj&#8322;</a
+      ><a name="8076"
+      > </a
+      ><a name="8077" class="Symbol"
+      >(</a
+      ><a name="8078" href="2016-03-01-insertion-sort-in-agda.html#7971" class="Function"
+      >fromVec</a
+      ><a name="8085"
+      > </a
+      ><a name="8086" href="2016-03-01-insertion-sort-in-agda.html#8057" class="Bound"
+      >xs</a
+      ><a name="8088" class="Symbol"
+      >)</a
+      ><a name="8089"
+      >
 
-  </a><a name="8089" href="/2016/insertion-sort-in-agda/#8089" class="Function">fromVec-⊤or⊥</a><a name="8101"> </a><a name="8102" class="Symbol">:</a><a name="8103"> </a><a name="8104" class="Symbol">∀</a><a name="8105"> </a><a name="8106" class="Symbol">&#123;</a><a name="8107" href="/2016/insertion-sort-in-agda/#8107" class="Bound">n</a><a name="8108" class="Symbol">&#125;</a><a name="8109"> </a><a name="8110" class="Symbol">&#123;</a><a name="8111" href="/2016/insertion-sort-in-agda/#8111" class="Bound">xs</a><a name="8113"> </a><a name="8114" class="Symbol">:</a><a name="8115"> </a><a name="8116" href="https://agda.github.io/agda-stdlib/Data.Vec.html#609" class="Datatype" target="_blank">Vec</a><a name="8119"> </a><a name="8120" href="/2016/insertion-sort-in-agda/#3184" class="Function">A</a><a name="8121"> </a><a name="8122" href="/2016/insertion-sort-in-agda/#8107" class="Bound">n</a><a name="8123" class="Symbol">&#125;</a><a name="8124">
-    </a><a name="8129" class="Symbol">→</a><a name="8130"> </a><a name="8131" class="Keyword">let</a><a name="8134"> </a><a name="8135" href="/2016/insertion-sort-in-agda/#8135" class="Bound">l</a><a name="8136"> </a><a name="8137" class="Symbol">=</a><a name="8138"> </a><a name="8139" href="https://agda.github.io/agda-stdlib/Data.Product.html#525" class="Field" target="_blank">proj₁</a><a name="8144"> </a><a name="8145" class="Symbol">(</a><a name="8146" href="/2016/insertion-sort-in-agda/#7967" class="Function">fromVec</a><a name="8153"> </a><a name="8154" href="/2016/insertion-sort-in-agda/#8111" class="Bound">xs</a><a name="8156" class="Symbol">)</a><a name="8157"> </a><a name="8158" class="Keyword">in</a><a name="8160"> </a><a name="8161" href="/2016/insertion-sort-in-agda/#8135" class="Bound">l</a><a name="8162"> </a><a name="8163" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Equality.html#55" class="Datatype Operator" target="_blank">≡</a><a name="8164"> </a><a name="8165" href="/2016/insertion-sort-in-agda/#3572" class="InductiveConstructor">⊤</a><a name="8166"> </a><a name="8167" href="https://agda.github.io/agda-stdlib/Data.Sum.html#433" class="Datatype Operator" target="_blank">⊎</a><a name="8168"> </a><a name="8169" href="/2016/insertion-sort-in-agda/#8135" class="Bound">l</a><a name="8170"> </a><a name="8171" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Equality.html#55" class="Datatype Operator" target="_blank">≡</a><a name="8172"> </a><a name="8173" href="/2016/insertion-sort-in-agda/#3583" class="InductiveConstructor">⊥</a><a name="8174">
-  </a><a name="8177" href="/2016/insertion-sort-in-agda/#8089" class="Function">fromVec-⊤or⊥</a><a name="8189"> </a><a name="8190" class="Symbol">&#123;</a><a name="8191" class="DottedPattern Symbol">.</a><a name="8192" class="DottedPattern Number">0</a><a name="8193" class="Symbol">&#125;</a><a name="8194">       </a><a name="8201" class="Symbol">&#123;</a><a name="8202" href="https://agda.github.io/agda-stdlib/Data.Vec.html#649" class="InductiveConstructor" target="_blank">[]</a><a name="8204" class="Symbol">&#125;</a><a name="8205">     </a><a name="8210" class="Symbol">=</a><a name="8211"> </a><a name="8212" href="https://agda.github.io/agda-stdlib/Data.Sum.html#489" class="InductiveConstructor" target="_blank">inj₁</a><a name="8216"> </a><a name="8217" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Equality.html#112" class="InductiveConstructor" target="_blank">refl</a><a name="8221">
-  </a><a name="8224" href="/2016/insertion-sort-in-agda/#8089" class="Function">fromVec-⊤or⊥</a><a name="8236"> </a><a name="8237" class="Symbol">&#123;</a><a name="8238" class="DottedPattern Symbol">.(</a><a name="8240" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#100" class="DottedPattern InductiveConstructor" target="_blank">suc</a><a name="8243"> </a><a name="8244" class="DottedPattern Symbol">_)</a><a name="8246" class="Symbol">&#125;</a><a name="8247"> </a><a name="8248" class="Symbol">&#123;</a><a name="8249" href="/2016/insertion-sort-in-agda/#8249" class="Bound">x</a><a name="8250"> </a><a name="8251" href="https://agda.github.io/agda-stdlib/Data.Vec.html#668" class="InductiveConstructor Operator" target="_blank">∷</a><a name="8252"> </a><a name="8253" href="/2016/insertion-sort-in-agda/#8253" class="Bound">xs</a><a name="8255" class="Symbol">&#125;</a><a name="8256"> </a><a name="8257" class="Symbol">=</a><a name="8258"> </a><a name="8259" href="https://agda.github.io/agda-stdlib/Data.Sum.html#514" class="InductiveConstructor" target="_blank">inj₂</a><a name="8263"> </a><a name="8264" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Equality.html#112" class="InductiveConstructor" target="_blank">refl</a></pre>
+  </a
+      ><a name="8093" href="2016-03-01-insertion-sort-in-agda.html#8093" class="Function"
+      >fromVec-&#8868;or&#8869;</a
+      ><a name="8105"
+      > </a
+      ><a name="8106" class="Symbol"
+      >:</a
+      ><a name="8107"
+      > </a
+      ><a name="8108" class="Symbol"
+      >&#8704;</a
+      ><a name="8109"
+      > </a
+      ><a name="8110" class="Symbol"
+      >{</a
+      ><a name="8111" href="2016-03-01-insertion-sort-in-agda.html#8111" class="Bound"
+      >n</a
+      ><a name="8112" class="Symbol"
+      >}</a
+      ><a name="8113"
+      > </a
+      ><a name="8114" class="Symbol"
+      >{</a
+      ><a name="8115" href="2016-03-01-insertion-sort-in-agda.html#8115" class="Bound"
+      >xs</a
+      ><a name="8117"
+      > </a
+      ><a name="8118" class="Symbol"
+      >:</a
+      ><a name="8119"
+      > </a
+      ><a name="8120" href="https://agda.github.io/agda-stdlib/Data.Vec.html#609" class="Datatype"
+      >Vec</a
+      ><a name="8123"
+      > </a
+      ><a name="8124" href="2016-03-01-insertion-sort-in-agda.html#3188" class="Function"
+      >A</a
+      ><a name="8125"
+      > </a
+      ><a name="8126" href="2016-03-01-insertion-sort-in-agda.html#8111" class="Bound"
+      >n</a
+      ><a name="8127" class="Symbol"
+      >}</a
+      ><a name="8128"
+      >
+    </a
+      ><a name="8133" class="Symbol"
+      >&#8594;</a
+      ><a name="8134"
+      > </a
+      ><a name="8135" class="Keyword"
+      >let</a
+      ><a name="8138"
+      > </a
+      ><a name="8139" href="2016-03-01-insertion-sort-in-agda.html#8139" class="Bound"
+      >l</a
+      ><a name="8140"
+      > </a
+      ><a name="8141" class="Symbol"
+      >=</a
+      ><a name="8142"
+      > </a
+      ><a name="8143" href="https://agda.github.io/agda-stdlib/Data.Product.html#525" class="Field"
+      >proj&#8321;</a
+      ><a name="8148"
+      > </a
+      ><a name="8149" class="Symbol"
+      >(</a
+      ><a name="8150" href="2016-03-01-insertion-sort-in-agda.html#7971" class="Function"
+      >fromVec</a
+      ><a name="8157"
+      > </a
+      ><a name="8158" href="2016-03-01-insertion-sort-in-agda.html#8115" class="Bound"
+      >xs</a
+      ><a name="8160" class="Symbol"
+      >)</a
+      ><a name="8161"
+      > </a
+      ><a name="8162" class="Keyword"
+      >in</a
+      ><a name="8164"
+      > </a
+      ><a name="8165" href="2016-03-01-insertion-sort-in-agda.html#8139" class="Bound"
+      >l</a
+      ><a name="8166"
+      > </a
+      ><a name="8167" href="Agda.Builtin.Equality.html#55" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="8168"
+      > </a
+      ><a name="8169" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      >&#8868;</a
+      ><a name="8170"
+      > </a
+      ><a name="8171" href="https://agda.github.io/agda-stdlib/Data.Sum.html#433" class="Datatype Operator"
+      >&#8846;</a
+      ><a name="8172"
+      > </a
+      ><a name="8173" href="2016-03-01-insertion-sort-in-agda.html#8139" class="Bound"
+      >l</a
+      ><a name="8174"
+      > </a
+      ><a name="8175" href="Agda.Builtin.Equality.html#55" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="8176"
+      > </a
+      ><a name="8177" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      >&#8869;</a
+      ><a name="8178"
+      >
+  </a
+      ><a name="8181" href="2016-03-01-insertion-sort-in-agda.html#8093" class="Function"
+      >fromVec-&#8868;or&#8869;</a
+      ><a name="8193"
+      > </a
+      ><a name="8194" class="Symbol"
+      >{</a
+      ><a name="8195" class="DottedPattern Symbol"
+      >.</a
+      ><a name="8196" class="DottedPattern Number"
+      >0</a
+      ><a name="8197" class="Symbol"
+      >}</a
+      ><a name="8198"
+      >       </a
+      ><a name="8205" class="Symbol"
+      >{</a
+      ><a name="8206" href="https://agda.github.io/agda-stdlib/Data.Vec.html#649" class="InductiveConstructor"
+      >[]</a
+      ><a name="8208" class="Symbol"
+      >}</a
+      ><a name="8209"
+      >     </a
+      ><a name="8214" class="Symbol"
+      >=</a
+      ><a name="8215"
+      > </a
+      ><a name="8216" href="https://agda.github.io/agda-stdlib/Data.Sum.html#489" class="InductiveConstructor"
+      >inj&#8321;</a
+      ><a name="8220"
+      > </a
+      ><a name="8221" href="Agda.Builtin.Equality.html#112" class="InductiveConstructor"
+      >refl</a
+      ><a name="8225"
+      >
+  </a
+      ><a name="8228" href="2016-03-01-insertion-sort-in-agda.html#8093" class="Function"
+      >fromVec-&#8868;or&#8869;</a
+      ><a name="8240"
+      > </a
+      ><a name="8241" class="Symbol"
+      >{</a
+      ><a name="8242" class="DottedPattern Symbol"
+      >.(</a
+      ><a name="8244" href="Agda.Builtin.Nat.html#100" class="DottedPattern InductiveConstructor"
+      >suc</a
+      ><a name="8247"
+      > </a
+      ><a name="8248" class="DottedPattern Symbol"
+      >_)</a
+      ><a name="8250" class="Symbol"
+      >}</a
+      ><a name="8251"
+      > </a
+      ><a name="8252" class="Symbol"
+      >{</a
+      ><a name="8253" href="2016-03-01-insertion-sort-in-agda.html#8253" class="Bound"
+      >x</a
+      ><a name="8254"
+      > </a
+      ><a name="8255" href="https://agda.github.io/agda-stdlib/Data.Vec.html#668" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="8256"
+      > </a
+      ><a name="8257" href="2016-03-01-insertion-sort-in-agda.html#8257" class="Bound"
+      >xs</a
+      ><a name="8259" class="Symbol"
+      >}</a
+      ><a name="8260"
+      > </a
+      ><a name="8261" class="Symbol"
+      >=</a
+      ><a name="8262"
+      > </a
+      ><a name="8263" href="https://agda.github.io/agda-stdlib/Data.Sum.html#514" class="InductiveConstructor"
+      >inj&#8322;</a
+      ><a name="8267"
+      > </a
+      ><a name="8268" href="Agda.Builtin.Equality.html#112" class="InductiveConstructor"
+      >refl</a
+      >
+</pre><!--{% endraw %}-->
 
 And obviously, we can also turn any k-ordered vector into a regular
 vector simply by forgetting about all the order evidence:
 
-<pre class="Agda">  <a name="8423" href="/2016/insertion-sort-in-agda/#8423" class="Function">toVec</a><a name="8428"> </a><a name="8429" class="Symbol">:</a><a name="8430"> </a><a name="8431" class="Symbol">∀</a><a name="8432"> </a><a name="8433" class="Symbol">&#123;</a><a name="8434" href="/2016/insertion-sort-in-agda/#8434" class="Bound">l</a><a name="8435"> </a><a name="8436" href="/2016/insertion-sort-in-agda/#8436" class="Bound">n</a><a name="8437"> </a><a name="8438" href="/2016/insertion-sort-in-agda/#8438" class="Bound">k</a><a name="8439" class="Symbol">&#125;</a><a name="8440"> </a><a name="8441" class="Symbol">→</a><a name="8442"> </a><a name="8443" href="/2016/insertion-sort-in-agda/#7277" class="Datatype">OVec</a><a name="8447"> </a><a name="8448" href="/2016/insertion-sort-in-agda/#8434" class="Bound">l</a><a name="8449"> </a><a name="8450" href="/2016/insertion-sort-in-agda/#8436" class="Bound">n</a><a name="8451"> </a><a name="8452" href="/2016/insertion-sort-in-agda/#8438" class="Bound">k</a><a name="8453"> </a><a name="8454" class="Symbol">→</a><a name="8455"> </a><a name="8456" href="https://agda.github.io/agda-stdlib/Data.Vec.html#609" class="Datatype" target="_blank">Vec</a><a name="8459"> </a><a name="8460" href="/2016/insertion-sort-in-agda/#3184" class="Function">A</a><a name="8461"> </a><a name="8462" href="/2016/insertion-sort-in-agda/#8436" class="Bound">n</a><a name="8463">
-  </a><a name="8466" href="/2016/insertion-sort-in-agda/#8423" class="Function">toVec</a><a name="8471"> </a><a name="8472" href="/2016/insertion-sort-in-agda/#7329" class="InductiveConstructor">[]</a><a name="8474"> </a><a name="8475" class="Symbol">=</a><a name="8476"> </a><a name="8477" href="https://agda.github.io/agda-stdlib/Data.Vec.html#649" class="InductiveConstructor" target="_blank">[]</a><a name="8479">
-  </a><a name="8482" href="/2016/insertion-sort-in-agda/#8423" class="Function">toVec</a><a name="8487"> </a><a name="8488" class="Symbol">(</a><a name="8489" href="/2016/insertion-sort-in-agda/#8489" class="Bound">x</a><a name="8490"> </a><a name="8491" href="/2016/insertion-sort-in-agda/#7448" class="InductiveConstructor Operator">∷</a><a name="8492"> </a><a name="8493" href="/2016/insertion-sort-in-agda/#8493" class="Bound">xs</a><a name="8495" class="Symbol">)</a><a name="8496"> </a><a name="8497" class="Symbol">=</a><a name="8498"> </a><a name="8499" href="/2016/insertion-sort-in-agda/#8489" class="Bound">x</a><a name="8500"> </a><a name="8501" href="https://agda.github.io/agda-stdlib/Data.Vec.html#668" class="InductiveConstructor Operator" target="_blank">∷</a><a name="8502"> </a><a name="8503" href="/2016/insertion-sort-in-agda/#8423" class="Function">toVec</a><a name="8508"> </a><a name="8509" href="/2016/insertion-sort-in-agda/#8493" class="Bound">xs</a><a name="8511">
-  </a><a name="8514" href="/2016/insertion-sort-in-agda/#8423" class="Function">toVec</a><a name="8519"> </a><a name="8520" class="Symbol">(</a><a name="8521" href="/2016/insertion-sort-in-agda/#8521" class="Bound">x</a><a name="8522"> </a><a name="8523" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">∷</a><a name="8524"> </a><a name="8525" href="/2016/insertion-sort-in-agda/#8525" class="Bound">xs</a><a name="8527"> </a><a name="8528" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">by</a><a name="8530"> </a><a name="8531" class="Symbol">_)</a><a name="8533"> </a><a name="8534" class="Symbol">=</a><a name="8535"> </a><a name="8536" href="/2016/insertion-sort-in-agda/#8521" class="Bound">x</a><a name="8537"> </a><a name="8538" href="https://agda.github.io/agda-stdlib/Data.Vec.html#668" class="InductiveConstructor Operator" target="_blank">∷</a><a name="8539"> </a><a name="8540" href="/2016/insertion-sort-in-agda/#8423" class="Function">toVec</a><a name="8545"> </a><a name="8546" href="/2016/insertion-sort-in-agda/#8525" class="Bound">xs</a></pre>
+<!--{% raw %}--><pre class="Agda">
+  <a name="8427" href="2016-03-01-insertion-sort-in-agda.html#8427" class="Function"
+      >toVec</a
+      ><a name="8432"
+      > </a
+      ><a name="8433" class="Symbol"
+      >:</a
+      ><a name="8434"
+      > </a
+      ><a name="8435" class="Symbol"
+      >&#8704;</a
+      ><a name="8436"
+      > </a
+      ><a name="8437" class="Symbol"
+      >{</a
+      ><a name="8438" href="2016-03-01-insertion-sort-in-agda.html#8438" class="Bound"
+      >l</a
+      ><a name="8439"
+      > </a
+      ><a name="8440" href="2016-03-01-insertion-sort-in-agda.html#8440" class="Bound"
+      >n</a
+      ><a name="8441"
+      > </a
+      ><a name="8442" href="2016-03-01-insertion-sort-in-agda.html#8442" class="Bound"
+      >k</a
+      ><a name="8443" class="Symbol"
+      >}</a
+      ><a name="8444"
+      > </a
+      ><a name="8445" class="Symbol"
+      >&#8594;</a
+      ><a name="8446"
+      > </a
+      ><a name="8447" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      >OVec</a
+      ><a name="8451"
+      > </a
+      ><a name="8452" href="2016-03-01-insertion-sort-in-agda.html#8438" class="Bound"
+      >l</a
+      ><a name="8453"
+      > </a
+      ><a name="8454" href="2016-03-01-insertion-sort-in-agda.html#8440" class="Bound"
+      >n</a
+      ><a name="8455"
+      > </a
+      ><a name="8456" href="2016-03-01-insertion-sort-in-agda.html#8442" class="Bound"
+      >k</a
+      ><a name="8457"
+      > </a
+      ><a name="8458" class="Symbol"
+      >&#8594;</a
+      ><a name="8459"
+      > </a
+      ><a name="8460" href="https://agda.github.io/agda-stdlib/Data.Vec.html#609" class="Datatype"
+      >Vec</a
+      ><a name="8463"
+      > </a
+      ><a name="8464" href="2016-03-01-insertion-sort-in-agda.html#3188" class="Function"
+      >A</a
+      ><a name="8465"
+      > </a
+      ><a name="8466" href="2016-03-01-insertion-sort-in-agda.html#8440" class="Bound"
+      >n</a
+      ><a name="8467"
+      >
+  </a
+      ><a name="8470" href="2016-03-01-insertion-sort-in-agda.html#8427" class="Function"
+      >toVec</a
+      ><a name="8475"
+      > </a
+      ><a name="8476" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      >[]</a
+      ><a name="8478"
+      > </a
+      ><a name="8479" class="Symbol"
+      >=</a
+      ><a name="8480"
+      > </a
+      ><a name="8481" href="https://agda.github.io/agda-stdlib/Data.Vec.html#649" class="InductiveConstructor"
+      >[]</a
+      ><a name="8483"
+      >
+  </a
+      ><a name="8486" href="2016-03-01-insertion-sort-in-agda.html#8427" class="Function"
+      >toVec</a
+      ><a name="8491"
+      > </a
+      ><a name="8492" class="Symbol"
+      >(</a
+      ><a name="8493" href="2016-03-01-insertion-sort-in-agda.html#8493" class="Bound"
+      >x</a
+      ><a name="8494"
+      > </a
+      ><a name="8495" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="8496"
+      > </a
+      ><a name="8497" href="2016-03-01-insertion-sort-in-agda.html#8497" class="Bound"
+      >xs</a
+      ><a name="8499" class="Symbol"
+      >)</a
+      ><a name="8500"
+      > </a
+      ><a name="8501" class="Symbol"
+      >=</a
+      ><a name="8502"
+      > </a
+      ><a name="8503" href="2016-03-01-insertion-sort-in-agda.html#8493" class="Bound"
+      >x</a
+      ><a name="8504"
+      > </a
+      ><a name="8505" href="https://agda.github.io/agda-stdlib/Data.Vec.html#668" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="8506"
+      > </a
+      ><a name="8507" href="2016-03-01-insertion-sort-in-agda.html#8427" class="Function"
+      >toVec</a
+      ><a name="8512"
+      > </a
+      ><a name="8513" href="2016-03-01-insertion-sort-in-agda.html#8497" class="Bound"
+      >xs</a
+      ><a name="8515"
+      >
+  </a
+      ><a name="8518" href="2016-03-01-insertion-sort-in-agda.html#8427" class="Function"
+      >toVec</a
+      ><a name="8523"
+      > </a
+      ><a name="8524" class="Symbol"
+      >(</a
+      ><a name="8525" href="2016-03-01-insertion-sort-in-agda.html#8525" class="Bound"
+      >x</a
+      ><a name="8526"
+      > </a
+      ><a name="8527" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="8528"
+      > </a
+      ><a name="8529" href="2016-03-01-insertion-sort-in-agda.html#8529" class="Bound"
+      >xs</a
+      ><a name="8531"
+      > </a
+      ><a name="8532" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >by</a
+      ><a name="8534"
+      > </a
+      ><a name="8535" class="Symbol"
+      >_)</a
+      ><a name="8537"
+      > </a
+      ><a name="8538" class="Symbol"
+      >=</a
+      ><a name="8539"
+      > </a
+      ><a name="8540" href="2016-03-01-insertion-sort-in-agda.html#8525" class="Bound"
+      >x</a
+      ><a name="8541"
+      > </a
+      ><a name="8542" href="https://agda.github.io/agda-stdlib/Data.Vec.html#668" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="8543"
+      > </a
+      ><a name="8544" href="2016-03-01-insertion-sort-in-agda.html#8427" class="Function"
+      >toVec</a
+      ><a name="8549"
+      > </a
+      ><a name="8550" href="2016-03-01-insertion-sort-in-agda.html#8529" class="Bound"
+      >xs</a
+      >
+</pre><!--{% endraw %}-->
 
 Finally! We've developed enough vocabulary to write down what it
 really means to perform an insertion:
 
-<pre class="Agda">  <a name="8680" href="/2016/insertion-sort-in-agda/#8680" class="Function">insert</a><a name="8686"> </a><a name="8687" class="Symbol">:</a><a name="8688"> </a><a name="8689" class="Symbol">∀</a><a name="8690"> </a><a name="8691" class="Symbol">&#123;</a><a name="8692" href="/2016/insertion-sort-in-agda/#8692" class="Bound">l</a><a name="8693"> </a><a name="8694" href="/2016/insertion-sort-in-agda/#8694" class="Bound">n</a><a name="8695"> </a><a name="8696" href="/2016/insertion-sort-in-agda/#8696" class="Bound">k</a><a name="8697" class="Symbol">&#125;</a><a name="8698"> </a><a name="8699" class="Symbol">(</a><a name="8700" href="/2016/insertion-sort-in-agda/#8700" class="Bound">x</a><a name="8701"> </a><a name="8702" class="Symbol">:</a><a name="8703"> </a><a name="8704" href="/2016/insertion-sort-in-agda/#3184" class="Function">A</a><a name="8705" class="Symbol">)</a><a name="8706"> </a><a name="8707" class="Symbol">→</a><a name="8708"> </a><a name="8709" href="/2016/insertion-sort-in-agda/#7277" class="Datatype">OVec</a><a name="8713"> </a><a name="8714" href="/2016/insertion-sort-in-agda/#8692" class="Bound">l</a><a name="8715"> </a><a name="8716" href="/2016/insertion-sort-in-agda/#8694" class="Bound">n</a><a name="8717"> </a><a name="8718" href="/2016/insertion-sort-in-agda/#8696" class="Bound">k</a><a name="8719"> </a><a name="8720" class="Symbol">→</a><a name="8721"> </a><a name="8722" href="/2016/insertion-sort-in-agda/#7277" class="Datatype">OVec</a><a name="8726"> </a><a name="8727" class="Symbol">(</a><a name="8728" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="8729"> </a><a name="8730" href="/2016/insertion-sort-in-agda/#8700" class="Bound">x</a><a name="8731"> </a><a name="8732" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="8733"> </a><a name="8734" href="/2016/insertion-sort-in-agda/#4649" class="Function Operator">⊓</a><a name="8735"> </a><a name="8736" href="/2016/insertion-sort-in-agda/#8692" class="Bound">l</a><a name="8737" class="Symbol">)</a><a name="8738"> </a><a name="8739" class="Symbol">(</a><a name="8740" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#100" class="InductiveConstructor" target="_blank">suc</a><a name="8743"> </a><a name="8744" href="/2016/insertion-sort-in-agda/#8694" class="Bound">n</a><a name="8745" class="Symbol">)</a><a name="8746"> </a><a name="8747" href="/2016/insertion-sort-in-agda/#8696" class="Bound">k</a><a name="8748">
-  </a><a name="8751" href="/2016/insertion-sort-in-agda/#8680" class="Function">insert</a><a name="8757"> </a><a name="8758" href="/2016/insertion-sort-in-agda/#8758" class="Bound">x</a><a name="8759"> </a><a name="8760" href="/2016/insertion-sort-in-agda/#7329" class="InductiveConstructor">[]</a><a name="8762">       </a><a name="8769" class="Symbol">=</a><a name="8770"> </a><a name="8771" href="/2016/insertion-sort-in-agda/#8758" class="Bound">x</a><a name="8772"> </a><a name="8773" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">∷</a><a name="8774"> </a><a name="8775" href="/2016/insertion-sort-in-agda/#7329" class="InductiveConstructor">[]</a><a name="8777"> </a><a name="8778" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">by</a><a name="8780"> </a><a name="8781" href="/2016/insertion-sort-in-agda/#3905" class="InductiveConstructor">≲⊤</a><a name="8783">
-  </a><a name="8786" href="/2016/insertion-sort-in-agda/#8680" class="Function">insert</a><a name="8792"> </a><a name="8793" href="/2016/insertion-sort-in-agda/#8793" class="Bound">x</a><a name="8794"> </a><a name="8795" class="Symbol">(</a><a name="8796" href="/2016/insertion-sort-in-agda/#8796" class="Bound">y</a><a name="8797"> </a><a name="8798" href="/2016/insertion-sort-in-agda/#7448" class="InductiveConstructor Operator">∷</a><a name="8799"> </a><a name="8800" href="/2016/insertion-sort-in-agda/#8800" class="Bound">xs</a><a name="8802" class="Symbol">)</a><a name="8803"> </a><a name="8804" class="Symbol">=</a><a name="8805"> </a><a name="8806" href="/2016/insertion-sort-in-agda/#8796" class="Bound">y</a><a name="8807"> </a><a name="8808" href="/2016/insertion-sort-in-agda/#7448" class="InductiveConstructor Operator">∷</a><a name="8809"> </a><a name="8810" href="/2016/insertion-sort-in-agda/#8680" class="Function">insert</a><a name="8816"> </a><a name="8817" href="/2016/insertion-sort-in-agda/#8793" class="Bound">x</a><a name="8818"> </a><a name="8819" href="/2016/insertion-sort-in-agda/#8800" class="Bound">xs</a><a name="8821">
-  </a><a name="8824" href="/2016/insertion-sort-in-agda/#8680" class="Function">insert</a><a name="8830"> </a><a name="8831" href="/2016/insertion-sort-in-agda/#8831" class="Bound">x</a><a name="8832"> </a><a name="8833" class="Symbol">(</a><a name="8834" href="/2016/insertion-sort-in-agda/#8834" class="Bound">y</a><a name="8835"> </a><a name="8836" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">∷</a><a name="8837"> </a><a name="8838" href="/2016/insertion-sort-in-agda/#8838" class="Bound">xs</a><a name="8840"> </a><a name="8841" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">by</a><a name="8843"> </a><a name="8844" href="/2016/insertion-sort-in-agda/#8844" class="Bound">p</a><a name="8845" class="Symbol">)</a><a name="8846"> </a><a name="8847" class="Keyword">with</a><a name="8851"> </a><a name="8852" href="/2016/insertion-sort-in-agda/#8831" class="Bound">x</a><a name="8853"> </a><a name="8854" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#8876" class="Function Operator" target="_blank">≤?</a><a name="8856"> </a><a name="8857" href="/2016/insertion-sort-in-agda/#8834" class="Bound">y</a><a name="8858">
-  </a><a name="8861" class="Symbol">...</a><a name="8864"> </a><a name="8865" class="Symbol">|</a><a name="8866"> </a><a name="8867" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#520" class="InductiveConstructor" target="_blank">yes</a><a name="8870"> </a><a name="8871" href="/2016/insertion-sort-in-agda/#8871" class="Bound">x≤y</a><a name="8874"> </a><a name="8875" class="Symbol">=</a><a name="8876"> </a><a name="8877" href="/2016/insertion-sort-in-agda/#8831" class="Bound">x</a><a name="8878"> </a><a name="8879" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">∷</a><a name="8880"> </a><a name="8881" class="Symbol">(</a><a name="8882" href="/2016/insertion-sort-in-agda/#8834" class="Bound">y</a><a name="8883"> </a><a name="8884" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">∷</a><a name="8885"> </a><a name="8886" href="/2016/insertion-sort-in-agda/#8838" class="Bound">xs</a><a name="8888"> </a><a name="8889" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">by</a><a name="8891"> </a><a name="8892" href="/2016/insertion-sort-in-agda/#8844" class="Bound">p</a><a name="8893" class="Symbol">)</a><a name="8894"> </a><a name="8895" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">by</a><a name="8897"> </a><a name="8898" class="Symbol">(</a><a name="8899" href="/2016/insertion-sort-in-agda/#3928" class="InductiveConstructor">≤-lift</a><a name="8905"> </a><a name="8906" href="/2016/insertion-sort-in-agda/#8871" class="Bound">x≤y</a><a name="8909" class="Symbol">)</a><a name="8910">
-  </a><a name="8913" class="Symbol">...</a><a name="8916"> </a><a name="8917" class="Symbol">|</a><a name="8918"> </a><a name="8919" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#547" class="InductiveConstructor" target="_blank">no</a><a name="8921">  </a><a name="8923" href="/2016/insertion-sort-in-agda/#8923" class="Bound">x≰y</a><a name="8926"> </a><a name="8927" class="Symbol">=</a><a name="8928"> </a><a name="8929" href="/2016/insertion-sort-in-agda/#8834" class="Bound">y</a><a name="8930"> </a><a name="8931" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">∷</a><a name="8932"> </a><a name="8933" class="Symbol">(</a><a name="8934" href="/2016/insertion-sort-in-agda/#8680" class="Function">insert</a><a name="8940"> </a><a name="8941" href="/2016/insertion-sort-in-agda/#8831" class="Bound">x</a><a name="8942"> </a><a name="8943" href="/2016/insertion-sort-in-agda/#8838" class="Bound">xs</a><a name="8945" class="Symbol">)</a><a name="8946"> </a><a name="8947" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">by</a><a name="8949"> </a><a name="8950" class="Symbol">(</a><a name="8951" href="/2016/insertion-sort-in-agda/#4815" class="Function">⊓-conserves-≲</a><a name="8964"> </a><a name="8965" class="Symbol">(</a><a name="8966" href="/2016/insertion-sort-in-agda/#4226" class="Function">≰-lift</a><a name="8972"> </a><a name="8973" href="/2016/insertion-sort-in-agda/#8923" class="Bound">x≰y</a><a name="8976" class="Symbol">)</a><a name="8977"> </a><a name="8978" href="/2016/insertion-sort-in-agda/#8844" class="Bound">p</a><a name="8979" class="Symbol">)</a></pre>
+<!--{% raw %}--><pre class="Agda">
+  <a name="8684" href="2016-03-01-insertion-sort-in-agda.html#8684" class="Function"
+      >insert</a
+      ><a name="8690"
+      > </a
+      ><a name="8691" class="Symbol"
+      >:</a
+      ><a name="8692"
+      > </a
+      ><a name="8693" class="Symbol"
+      >&#8704;</a
+      ><a name="8694"
+      > </a
+      ><a name="8695" class="Symbol"
+      >{</a
+      ><a name="8696" href="2016-03-01-insertion-sort-in-agda.html#8696" class="Bound"
+      >l</a
+      ><a name="8697"
+      > </a
+      ><a name="8698" href="2016-03-01-insertion-sort-in-agda.html#8698" class="Bound"
+      >n</a
+      ><a name="8699"
+      > </a
+      ><a name="8700" href="2016-03-01-insertion-sort-in-agda.html#8700" class="Bound"
+      >k</a
+      ><a name="8701" class="Symbol"
+      >}</a
+      ><a name="8702"
+      > </a
+      ><a name="8703" class="Symbol"
+      >(</a
+      ><a name="8704" href="2016-03-01-insertion-sort-in-agda.html#8704" class="Bound"
+      >x</a
+      ><a name="8705"
+      > </a
+      ><a name="8706" class="Symbol"
+      >:</a
+      ><a name="8707"
+      > </a
+      ><a name="8708" href="2016-03-01-insertion-sort-in-agda.html#3188" class="Function"
+      >A</a
+      ><a name="8709" class="Symbol"
+      >)</a
+      ><a name="8710"
+      > </a
+      ><a name="8711" class="Symbol"
+      >&#8594;</a
+      ><a name="8712"
+      > </a
+      ><a name="8713" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      >OVec</a
+      ><a name="8717"
+      > </a
+      ><a name="8718" href="2016-03-01-insertion-sort-in-agda.html#8696" class="Bound"
+      >l</a
+      ><a name="8719"
+      > </a
+      ><a name="8720" href="2016-03-01-insertion-sort-in-agda.html#8698" class="Bound"
+      >n</a
+      ><a name="8721"
+      > </a
+      ><a name="8722" href="2016-03-01-insertion-sort-in-agda.html#8700" class="Bound"
+      >k</a
+      ><a name="8723"
+      > </a
+      ><a name="8724" class="Symbol"
+      >&#8594;</a
+      ><a name="8725"
+      > </a
+      ><a name="8726" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      >OVec</a
+      ><a name="8730"
+      > </a
+      ><a name="8731" class="Symbol"
+      >(</a
+      ><a name="8732" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="8733"
+      > </a
+      ><a name="8734" href="2016-03-01-insertion-sort-in-agda.html#8704" class="Bound"
+      >x</a
+      ><a name="8735"
+      > </a
+      ><a name="8736" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="8737"
+      > </a
+      ><a name="8738" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      >&#8851;</a
+      ><a name="8739"
+      > </a
+      ><a name="8740" href="2016-03-01-insertion-sort-in-agda.html#8696" class="Bound"
+      >l</a
+      ><a name="8741" class="Symbol"
+      >)</a
+      ><a name="8742"
+      > </a
+      ><a name="8743" class="Symbol"
+      >(</a
+      ><a name="8744" href="Agda.Builtin.Nat.html#100" class="InductiveConstructor"
+      >suc</a
+      ><a name="8747"
+      > </a
+      ><a name="8748" href="2016-03-01-insertion-sort-in-agda.html#8698" class="Bound"
+      >n</a
+      ><a name="8749" class="Symbol"
+      >)</a
+      ><a name="8750"
+      > </a
+      ><a name="8751" href="2016-03-01-insertion-sort-in-agda.html#8700" class="Bound"
+      >k</a
+      ><a name="8752"
+      >
+  </a
+      ><a name="8755" href="2016-03-01-insertion-sort-in-agda.html#8684" class="Function"
+      >insert</a
+      ><a name="8761"
+      > </a
+      ><a name="8762" href="2016-03-01-insertion-sort-in-agda.html#8762" class="Bound"
+      >x</a
+      ><a name="8763"
+      > </a
+      ><a name="8764" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      >[]</a
+      ><a name="8766"
+      >       </a
+      ><a name="8773" class="Symbol"
+      >=</a
+      ><a name="8774"
+      > </a
+      ><a name="8775" href="2016-03-01-insertion-sort-in-agda.html#8762" class="Bound"
+      >x</a
+      ><a name="8776"
+      > </a
+      ><a name="8777" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="8778"
+      > </a
+      ><a name="8779" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      >[]</a
+      ><a name="8781"
+      > </a
+      ><a name="8782" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >by</a
+      ><a name="8784"
+      > </a
+      ><a name="8785" href="2016-03-01-insertion-sort-in-agda.html#3909" class="InductiveConstructor"
+      >&#8818;&#8868;</a
+      ><a name="8787"
+      >
+  </a
+      ><a name="8790" href="2016-03-01-insertion-sort-in-agda.html#8684" class="Function"
+      >insert</a
+      ><a name="8796"
+      > </a
+      ><a name="8797" href="2016-03-01-insertion-sort-in-agda.html#8797" class="Bound"
+      >x</a
+      ><a name="8798"
+      > </a
+      ><a name="8799" class="Symbol"
+      >(</a
+      ><a name="8800" href="2016-03-01-insertion-sort-in-agda.html#8800" class="Bound"
+      >y</a
+      ><a name="8801"
+      > </a
+      ><a name="8802" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="8803"
+      > </a
+      ><a name="8804" href="2016-03-01-insertion-sort-in-agda.html#8804" class="Bound"
+      >xs</a
+      ><a name="8806" class="Symbol"
+      >)</a
+      ><a name="8807"
+      > </a
+      ><a name="8808" class="Symbol"
+      >=</a
+      ><a name="8809"
+      > </a
+      ><a name="8810" href="2016-03-01-insertion-sort-in-agda.html#8800" class="Bound"
+      >y</a
+      ><a name="8811"
+      > </a
+      ><a name="8812" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="8813"
+      > </a
+      ><a name="8814" href="2016-03-01-insertion-sort-in-agda.html#8684" class="Function"
+      >insert</a
+      ><a name="8820"
+      > </a
+      ><a name="8821" href="2016-03-01-insertion-sort-in-agda.html#8797" class="Bound"
+      >x</a
+      ><a name="8822"
+      > </a
+      ><a name="8823" href="2016-03-01-insertion-sort-in-agda.html#8804" class="Bound"
+      >xs</a
+      ><a name="8825"
+      >
+  </a
+      ><a name="8828" href="2016-03-01-insertion-sort-in-agda.html#8684" class="Function"
+      >insert</a
+      ><a name="8834"
+      > </a
+      ><a name="8835" href="2016-03-01-insertion-sort-in-agda.html#8835" class="Bound"
+      >x</a
+      ><a name="8836"
+      > </a
+      ><a name="8837" class="Symbol"
+      >(</a
+      ><a name="8838" href="2016-03-01-insertion-sort-in-agda.html#8838" class="Bound"
+      >y</a
+      ><a name="8839"
+      > </a
+      ><a name="8840" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="8841"
+      > </a
+      ><a name="8842" href="2016-03-01-insertion-sort-in-agda.html#8842" class="Bound"
+      >xs</a
+      ><a name="8844"
+      > </a
+      ><a name="8845" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >by</a
+      ><a name="8847"
+      > </a
+      ><a name="8848" href="2016-03-01-insertion-sort-in-agda.html#8848" class="Bound"
+      >p</a
+      ><a name="8849" class="Symbol"
+      >)</a
+      ><a name="8850"
+      > </a
+      ><a name="8851" class="Keyword"
+      >with</a
+      ><a name="8855"
+      > </a
+      ><a name="8856" href="2016-03-01-insertion-sort-in-agda.html#8835" class="Bound"
+      >x</a
+      ><a name="8857"
+      > </a
+      ><a name="8858" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#8876" class="Function Operator"
+      >&#8804;?</a
+      ><a name="8860"
+      > </a
+      ><a name="8861" href="2016-03-01-insertion-sort-in-agda.html#8838" class="Bound"
+      >y</a
+      ><a name="8862"
+      >
+  </a
+      ><a name="8865" class="Symbol"
+      >...</a
+      ><a name="8868"
+      > </a
+      ><a name="8869" class="Symbol"
+      >|</a
+      ><a name="8870"
+      > </a
+      ><a name="8871" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#520" class="InductiveConstructor"
+      >yes</a
+      ><a name="8874"
+      > </a
+      ><a name="8875" href="2016-03-01-insertion-sort-in-agda.html#8875" class="Bound"
+      >x&#8804;y</a
+      ><a name="8878"
+      > </a
+      ><a name="8879" class="Symbol"
+      >=</a
+      ><a name="8880"
+      > </a
+      ><a name="8881" href="2016-03-01-insertion-sort-in-agda.html#8835" class="Bound"
+      >x</a
+      ><a name="8882"
+      > </a
+      ><a name="8883" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="8884"
+      > </a
+      ><a name="8885" class="Symbol"
+      >(</a
+      ><a name="8886" href="2016-03-01-insertion-sort-in-agda.html#8838" class="Bound"
+      >y</a
+      ><a name="8887"
+      > </a
+      ><a name="8888" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="8889"
+      > </a
+      ><a name="8890" href="2016-03-01-insertion-sort-in-agda.html#8842" class="Bound"
+      >xs</a
+      ><a name="8892"
+      > </a
+      ><a name="8893" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >by</a
+      ><a name="8895"
+      > </a
+      ><a name="8896" href="2016-03-01-insertion-sort-in-agda.html#8848" class="Bound"
+      >p</a
+      ><a name="8897" class="Symbol"
+      >)</a
+      ><a name="8898"
+      > </a
+      ><a name="8899" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >by</a
+      ><a name="8901"
+      > </a
+      ><a name="8902" class="Symbol"
+      >(</a
+      ><a name="8903" href="2016-03-01-insertion-sort-in-agda.html#3932" class="InductiveConstructor"
+      >&#8804;-lift</a
+      ><a name="8909"
+      > </a
+      ><a name="8910" href="2016-03-01-insertion-sort-in-agda.html#8875" class="Bound"
+      >x&#8804;y</a
+      ><a name="8913" class="Symbol"
+      >)</a
+      ><a name="8914"
+      >
+  </a
+      ><a name="8917" class="Symbol"
+      >...</a
+      ><a name="8920"
+      > </a
+      ><a name="8921" class="Symbol"
+      >|</a
+      ><a name="8922"
+      > </a
+      ><a name="8923" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#547" class="InductiveConstructor"
+      >no</a
+      ><a name="8925"
+      >  </a
+      ><a name="8927" href="2016-03-01-insertion-sort-in-agda.html#8927" class="Bound"
+      >x&#8816;y</a
+      ><a name="8930"
+      > </a
+      ><a name="8931" class="Symbol"
+      >=</a
+      ><a name="8932"
+      > </a
+      ><a name="8933" href="2016-03-01-insertion-sort-in-agda.html#8838" class="Bound"
+      >y</a
+      ><a name="8934"
+      > </a
+      ><a name="8935" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="8936"
+      > </a
+      ><a name="8937" class="Symbol"
+      >(</a
+      ><a name="8938" href="2016-03-01-insertion-sort-in-agda.html#8684" class="Function"
+      >insert</a
+      ><a name="8944"
+      > </a
+      ><a name="8945" href="2016-03-01-insertion-sort-in-agda.html#8835" class="Bound"
+      >x</a
+      ><a name="8946"
+      > </a
+      ><a name="8947" href="2016-03-01-insertion-sort-in-agda.html#8842" class="Bound"
+      >xs</a
+      ><a name="8949" class="Symbol"
+      >)</a
+      ><a name="8950"
+      > </a
+      ><a name="8951" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >by</a
+      ><a name="8953"
+      > </a
+      ><a name="8954" class="Symbol"
+      >(</a
+      ><a name="8955" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      >&#8851;-conserves-&#8818;</a
+      ><a name="8968"
+      > </a
+      ><a name="8969" class="Symbol"
+      >(</a
+      ><a name="8970" href="2016-03-01-insertion-sort-in-agda.html#4230" class="Function"
+      >&#8816;-lift</a
+      ><a name="8976"
+      > </a
+      ><a name="8977" href="2016-03-01-insertion-sort-in-agda.html#8927" class="Bound"
+      >x&#8816;y</a
+      ><a name="8980" class="Symbol"
+      >)</a
+      ><a name="8981"
+      > </a
+      ><a name="8982" href="2016-03-01-insertion-sort-in-agda.html#8848" class="Bound"
+      >p</a
+      ><a name="8983" class="Symbol"
+      >)</a
+      >
+</pre><!--{% endraw %}-->
 
 Note that insert takes a vector with *k* unsorted elements, and
 returns a vector which has one more element, but still only *k*
@@ -219,10 +3047,232 @@ element in the sorted portion of the vector, that if we take elements
 from the unsorted portion, insert it, and repeat this *k* times, we'll
 have sorted *k* elements... and therefore the list.
 
-<pre class="Agda">  <a name="9527" href="/2016/insertion-sort-in-agda/#9527" class="Function">insertsort</a><a name="9537"> </a><a name="9538" class="Symbol">:</a><a name="9539"> </a><a name="9540" class="Symbol">∀</a><a name="9541"> </a><a name="9542" class="Symbol">&#123;</a><a name="9543" href="/2016/insertion-sort-in-agda/#9543" class="Bound">l</a><a name="9544"> </a><a name="9545" href="/2016/insertion-sort-in-agda/#9545" class="Bound">n</a><a name="9546"> </a><a name="9547" href="/2016/insertion-sort-in-agda/#9547" class="Bound">k</a><a name="9548" class="Symbol">&#125;</a><a name="9549"> </a><a name="9550" class="Symbol">→</a><a name="9551"> </a><a name="9552" href="/2016/insertion-sort-in-agda/#7277" class="Datatype">OVec</a><a name="9556"> </a><a name="9557" href="/2016/insertion-sort-in-agda/#9543" class="Bound">l</a><a name="9558"> </a><a name="9559" href="/2016/insertion-sort-in-agda/#9545" class="Bound">n</a><a name="9560"> </a><a name="9561" href="/2016/insertion-sort-in-agda/#9547" class="Bound">k</a><a name="9562"> </a><a name="9563" class="Symbol">→</a><a name="9564"> </a><a name="9565" href="https://agda.github.io/agda-stdlib/Data.Product.html#823" class="Function" target="_blank">∃</a><a name="9566"> </a><a name="9567" class="Symbol">(λ</a><a name="9569"> </a><a name="9570" href="/2016/insertion-sort-in-agda/#9570" class="Bound">l</a><a name="9571"> </a><a name="9572" class="Symbol">→</a><a name="9573"> </a><a name="9574" href="/2016/insertion-sort-in-agda/#7277" class="Datatype">OVec</a><a name="9578"> </a><a name="9579" href="/2016/insertion-sort-in-agda/#9570" class="Bound">l</a><a name="9580"> </a><a name="9581" href="/2016/insertion-sort-in-agda/#9545" class="Bound">n</a><a name="9582"> </a><a name="9583" class="Number">0</a><a name="9584" class="Symbol">)</a><a name="9585">
-  </a><a name="9588" href="/2016/insertion-sort-in-agda/#9527" class="Function">insertsort</a><a name="9598"> </a><a name="9599" href="/2016/insertion-sort-in-agda/#7329" class="InductiveConstructor">[]</a><a name="9601">            </a><a name="9613" class="Symbol">=</a><a name="9614"> </a><a name="9615" href="/2016/insertion-sort-in-agda/#3572" class="InductiveConstructor">⊤</a><a name="9616"> </a><a name="9617" href="https://agda.github.io/agda-stdlib/Data.Product.html#509" class="InductiveConstructor Operator" target="_blank">,</a><a name="9618"> </a><a name="9619" href="/2016/insertion-sort-in-agda/#7329" class="InductiveConstructor">[]</a><a name="9621">
-  </a><a name="9624" href="/2016/insertion-sort-in-agda/#9527" class="Function">insertsort</a><a name="9634"> </a><a name="9635" class="Symbol">(</a><a name="9636" href="/2016/insertion-sort-in-agda/#9636" class="Bound">x</a><a name="9637"> </a><a name="9638" href="/2016/insertion-sort-in-agda/#7448" class="InductiveConstructor Operator">∷</a><a name="9639"> </a><a name="9640" href="/2016/insertion-sort-in-agda/#9640" class="Bound">xs</a><a name="9642" class="Symbol">)</a><a name="9643">      </a><a name="9649" class="Symbol">=</a><a name="9650"> </a><a name="9651" href="/2016/insertion-sort-in-agda/#9527" class="Function">insertsort</a><a name="9661"> </a><a name="9662" class="Symbol">(</a><a name="9663" href="/2016/insertion-sort-in-agda/#8680" class="Function">insert</a><a name="9669"> </a><a name="9670" href="/2016/insertion-sort-in-agda/#9636" class="Bound">x</a><a name="9671"> </a><a name="9672" href="/2016/insertion-sort-in-agda/#9640" class="Bound">xs</a><a name="9674" class="Symbol">)</a><a name="9675">
-  </a><a name="9678" href="/2016/insertion-sort-in-agda/#9527" class="Function">insertsort</a><a name="9688"> </a><a name="9689" class="Symbol">(</a><a name="9690" href="/2016/insertion-sort-in-agda/#9690" class="Bound">x</a><a name="9691"> </a><a name="9692" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">∷</a><a name="9693"> </a><a name="9694" href="/2016/insertion-sort-in-agda/#9694" class="Bound">xs</a><a name="9696"> </a><a name="9697" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">by</a><a name="9699"> </a><a name="9700" href="/2016/insertion-sort-in-agda/#9700" class="Bound">p</a><a name="9701" class="Symbol">)</a><a name="9702"> </a><a name="9703" class="Symbol">=</a><a name="9704"> </a><a name="9705" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="9706"> </a><a name="9707" href="/2016/insertion-sort-in-agda/#9690" class="Bound">x</a><a name="9708"> </a><a name="9709" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="9710"> </a><a name="9711" href="https://agda.github.io/agda-stdlib/Data.Product.html#509" class="InductiveConstructor Operator" target="_blank">,</a><a name="9712"> </a><a name="9713" href="/2016/insertion-sort-in-agda/#9690" class="Bound">x</a><a name="9714"> </a><a name="9715" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">∷</a><a name="9716"> </a><a name="9717" href="/2016/insertion-sort-in-agda/#9694" class="Bound">xs</a><a name="9719"> </a><a name="9720" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">by</a><a name="9722"> </a><a name="9723" href="/2016/insertion-sort-in-agda/#9700" class="Bound">p</a></pre>
+<!--{% raw %}--><pre class="Agda">
+  <a name="9531" href="2016-03-01-insertion-sort-in-agda.html#9531" class="Function"
+      >insertsort</a
+      ><a name="9541"
+      > </a
+      ><a name="9542" class="Symbol"
+      >:</a
+      ><a name="9543"
+      > </a
+      ><a name="9544" class="Symbol"
+      >&#8704;</a
+      ><a name="9545"
+      > </a
+      ><a name="9546" class="Symbol"
+      >{</a
+      ><a name="9547" href="2016-03-01-insertion-sort-in-agda.html#9547" class="Bound"
+      >l</a
+      ><a name="9548"
+      > </a
+      ><a name="9549" href="2016-03-01-insertion-sort-in-agda.html#9549" class="Bound"
+      >n</a
+      ><a name="9550"
+      > </a
+      ><a name="9551" href="2016-03-01-insertion-sort-in-agda.html#9551" class="Bound"
+      >k</a
+      ><a name="9552" class="Symbol"
+      >}</a
+      ><a name="9553"
+      > </a
+      ><a name="9554" class="Symbol"
+      >&#8594;</a
+      ><a name="9555"
+      > </a
+      ><a name="9556" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      >OVec</a
+      ><a name="9560"
+      > </a
+      ><a name="9561" href="2016-03-01-insertion-sort-in-agda.html#9547" class="Bound"
+      >l</a
+      ><a name="9562"
+      > </a
+      ><a name="9563" href="2016-03-01-insertion-sort-in-agda.html#9549" class="Bound"
+      >n</a
+      ><a name="9564"
+      > </a
+      ><a name="9565" href="2016-03-01-insertion-sort-in-agda.html#9551" class="Bound"
+      >k</a
+      ><a name="9566"
+      > </a
+      ><a name="9567" class="Symbol"
+      >&#8594;</a
+      ><a name="9568"
+      > </a
+      ><a name="9569" href="https://agda.github.io/agda-stdlib/Data.Product.html#823" class="Function"
+      >&#8707;</a
+      ><a name="9570"
+      > </a
+      ><a name="9571" class="Symbol"
+      >(&#955;</a
+      ><a name="9573"
+      > </a
+      ><a name="9574" href="2016-03-01-insertion-sort-in-agda.html#9574" class="Bound"
+      >l</a
+      ><a name="9575"
+      > </a
+      ><a name="9576" class="Symbol"
+      >&#8594;</a
+      ><a name="9577"
+      > </a
+      ><a name="9578" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      >OVec</a
+      ><a name="9582"
+      > </a
+      ><a name="9583" href="2016-03-01-insertion-sort-in-agda.html#9574" class="Bound"
+      >l</a
+      ><a name="9584"
+      > </a
+      ><a name="9585" href="2016-03-01-insertion-sort-in-agda.html#9549" class="Bound"
+      >n</a
+      ><a name="9586"
+      > </a
+      ><a name="9587" class="Number"
+      >0</a
+      ><a name="9588" class="Symbol"
+      >)</a
+      ><a name="9589"
+      >
+  </a
+      ><a name="9592" href="2016-03-01-insertion-sort-in-agda.html#9531" class="Function"
+      >insertsort</a
+      ><a name="9602"
+      > </a
+      ><a name="9603" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      >[]</a
+      ><a name="9605"
+      >            </a
+      ><a name="9617" class="Symbol"
+      >=</a
+      ><a name="9618"
+      > </a
+      ><a name="9619" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      >&#8868;</a
+      ><a name="9620"
+      > </a
+      ><a name="9621" href="https://agda.github.io/agda-stdlib/Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9622"
+      > </a
+      ><a name="9623" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      >[]</a
+      ><a name="9625"
+      >
+  </a
+      ><a name="9628" href="2016-03-01-insertion-sort-in-agda.html#9531" class="Function"
+      >insertsort</a
+      ><a name="9638"
+      > </a
+      ><a name="9639" class="Symbol"
+      >(</a
+      ><a name="9640" href="2016-03-01-insertion-sort-in-agda.html#9640" class="Bound"
+      >x</a
+      ><a name="9641"
+      > </a
+      ><a name="9642" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="9643"
+      > </a
+      ><a name="9644" href="2016-03-01-insertion-sort-in-agda.html#9644" class="Bound"
+      >xs</a
+      ><a name="9646" class="Symbol"
+      >)</a
+      ><a name="9647"
+      >      </a
+      ><a name="9653" class="Symbol"
+      >=</a
+      ><a name="9654"
+      > </a
+      ><a name="9655" href="2016-03-01-insertion-sort-in-agda.html#9531" class="Function"
+      >insertsort</a
+      ><a name="9665"
+      > </a
+      ><a name="9666" class="Symbol"
+      >(</a
+      ><a name="9667" href="2016-03-01-insertion-sort-in-agda.html#8684" class="Function"
+      >insert</a
+      ><a name="9673"
+      > </a
+      ><a name="9674" href="2016-03-01-insertion-sort-in-agda.html#9640" class="Bound"
+      >x</a
+      ><a name="9675"
+      > </a
+      ><a name="9676" href="2016-03-01-insertion-sort-in-agda.html#9644" class="Bound"
+      >xs</a
+      ><a name="9678" class="Symbol"
+      >)</a
+      ><a name="9679"
+      >
+  </a
+      ><a name="9682" href="2016-03-01-insertion-sort-in-agda.html#9531" class="Function"
+      >insertsort</a
+      ><a name="9692"
+      > </a
+      ><a name="9693" class="Symbol"
+      >(</a
+      ><a name="9694" href="2016-03-01-insertion-sort-in-agda.html#9694" class="Bound"
+      >x</a
+      ><a name="9695"
+      > </a
+      ><a name="9696" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="9697"
+      > </a
+      ><a name="9698" href="2016-03-01-insertion-sort-in-agda.html#9698" class="Bound"
+      >xs</a
+      ><a name="9700"
+      > </a
+      ><a name="9701" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >by</a
+      ><a name="9703"
+      > </a
+      ><a name="9704" href="2016-03-01-insertion-sort-in-agda.html#9704" class="Bound"
+      >p</a
+      ><a name="9705" class="Symbol"
+      >)</a
+      ><a name="9706"
+      > </a
+      ><a name="9707" class="Symbol"
+      >=</a
+      ><a name="9708"
+      > </a
+      ><a name="9709" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="9710"
+      > </a
+      ><a name="9711" href="2016-03-01-insertion-sort-in-agda.html#9694" class="Bound"
+      >x</a
+      ><a name="9712"
+      > </a
+      ><a name="9713" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="9714"
+      > </a
+      ><a name="9715" href="https://agda.github.io/agda-stdlib/Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9716"
+      > </a
+      ><a name="9717" href="2016-03-01-insertion-sort-in-agda.html#9694" class="Bound"
+      >x</a
+      ><a name="9718"
+      > </a
+      ><a name="9719" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="9720"
+      > </a
+      ><a name="9721" href="2016-03-01-insertion-sort-in-agda.html#9698" class="Bound"
+      >xs</a
+      ><a name="9723"
+      > </a
+      ><a name="9724" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >by</a
+      ><a name="9726"
+      > </a
+      ><a name="9727" href="2016-03-01-insertion-sort-in-agda.html#9704" class="Bound"
+      >p</a
+      >
+</pre><!--{% endraw %}-->
 
 There is one thing we haven't verified so far---and I've hinted at this
 possibility above. It is fairly simple to implement an insertion sort
@@ -247,16 +3297,484 @@ incredibly similar to insert. However, as opposed to inserting the
 first element in the correct position, "bubble" has trouble making up
 its mind and drops whatever it's holding when it sees a bigger element!
 
-<pre class="Agda">  <a name="11107" href="/2016/insertion-sort-in-agda/#11107" class="Function">bubble</a><a name="11113"> </a><a name="11114" class="Symbol">:</a><a name="11115"> </a><a name="11116" class="Symbol">∀</a><a name="11117"> </a><a name="11118" class="Symbol">&#123;</a><a name="11119" href="/2016/insertion-sort-in-agda/#11119" class="Bound">l</a><a name="11120"> </a><a name="11121" href="/2016/insertion-sort-in-agda/#11121" class="Bound">n</a><a name="11122"> </a><a name="11123" href="/2016/insertion-sort-in-agda/#11123" class="Bound">k</a><a name="11124" class="Symbol">&#125;</a><a name="11125"> </a><a name="11126" class="Symbol">(</a><a name="11127" href="/2016/insertion-sort-in-agda/#11127" class="Bound">x</a><a name="11128"> </a><a name="11129" class="Symbol">:</a><a name="11130"> </a><a name="11131" href="/2016/insertion-sort-in-agda/#3184" class="Function">A</a><a name="11132" class="Symbol">)</a><a name="11133"> </a><a name="11134" class="Symbol">→</a><a name="11135"> </a><a name="11136" href="/2016/insertion-sort-in-agda/#7277" class="Datatype">OVec</a><a name="11140"> </a><a name="11141" href="/2016/insertion-sort-in-agda/#11119" class="Bound">l</a><a name="11142"> </a><a name="11143" href="/2016/insertion-sort-in-agda/#11121" class="Bound">n</a><a name="11144"> </a><a name="11145" href="/2016/insertion-sort-in-agda/#11123" class="Bound">k</a><a name="11146"> </a><a name="11147" class="Symbol">→</a><a name="11148"> </a><a name="11149" href="/2016/insertion-sort-in-agda/#7277" class="Datatype">OVec</a><a name="11153"> </a><a name="11154" class="Symbol">(</a><a name="11155" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="11156"> </a><a name="11157" href="/2016/insertion-sort-in-agda/#11127" class="Bound">x</a><a name="11158"> </a><a name="11159" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="11160"> </a><a name="11161" href="/2016/insertion-sort-in-agda/#4649" class="Function Operator">⊓</a><a name="11162"> </a><a name="11163" href="/2016/insertion-sort-in-agda/#11119" class="Bound">l</a><a name="11164" class="Symbol">)</a><a name="11165"> </a><a name="11166" class="Symbol">(</a><a name="11167" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#100" class="InductiveConstructor" target="_blank">suc</a><a name="11170"> </a><a name="11171" href="/2016/insertion-sort-in-agda/#11121" class="Bound">n</a><a name="11172" class="Symbol">)</a><a name="11173"> </a><a name="11174" href="/2016/insertion-sort-in-agda/#11123" class="Bound">k</a><a name="11175">
-  </a><a name="11178" href="/2016/insertion-sort-in-agda/#11107" class="Function">bubble</a><a name="11184"> </a><a name="11185" href="/2016/insertion-sort-in-agda/#11185" class="Bound">x</a><a name="11186"> </a><a name="11187" href="/2016/insertion-sort-in-agda/#7329" class="InductiveConstructor">[]</a><a name="11189">            </a><a name="11201" class="Symbol">=</a><a name="11202"> </a><a name="11203" href="/2016/insertion-sort-in-agda/#11185" class="Bound">x</a><a name="11204"> </a><a name="11205" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">∷</a><a name="11206"> </a><a name="11207" href="/2016/insertion-sort-in-agda/#7329" class="InductiveConstructor">[]</a><a name="11209"> </a><a name="11210" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">by</a><a name="11212"> </a><a name="11213" href="/2016/insertion-sort-in-agda/#3905" class="InductiveConstructor">≲⊤</a><a name="11215">
-  </a><a name="11218" href="/2016/insertion-sort-in-agda/#11107" class="Function">bubble</a><a name="11224"> </a><a name="11225" href="/2016/insertion-sort-in-agda/#11225" class="Bound">x</a><a name="11226"> </a><a name="11227" class="Symbol">(</a><a name="11228" href="/2016/insertion-sort-in-agda/#11228" class="Bound">y</a><a name="11229"> </a><a name="11230" href="/2016/insertion-sort-in-agda/#7448" class="InductiveConstructor Operator">∷</a><a name="11231"> </a><a name="11232" href="/2016/insertion-sort-in-agda/#11232" class="Bound">xs</a><a name="11234" class="Symbol">)</a><a name="11235">      </a><a name="11241" class="Keyword">with</a><a name="11245"> </a><a name="11246" href="/2016/insertion-sort-in-agda/#11225" class="Bound">x</a><a name="11247"> </a><a name="11248" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#8876" class="Function Operator" target="_blank">≤?</a><a name="11250"> </a><a name="11251" href="/2016/insertion-sort-in-agda/#11228" class="Bound">y</a><a name="11252">
-  </a><a name="11255" class="Symbol">...</a><a name="11258"> </a><a name="11259" class="Symbol">|</a><a name="11260"> </a><a name="11261" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#547" class="InductiveConstructor" target="_blank">no</a><a name="11263">  </a><a name="11265" href="/2016/insertion-sort-in-agda/#11265" class="Bound">x≰y</a><a name="11268"> </a><a name="11269" class="Symbol">=</a><a name="11270"> </a><a name="11271" href="/2016/insertion-sort-in-agda/#11228" class="Bound">y</a><a name="11272"> </a><a name="11273" href="/2016/insertion-sort-in-agda/#7448" class="InductiveConstructor Operator">∷</a><a name="11274"> </a><a name="11275" href="/2016/insertion-sort-in-agda/#11107" class="Function">bubble</a><a name="11281"> </a><a name="11282" href="/2016/insertion-sort-in-agda/#11225" class="Bound">x</a><a name="11283"> </a><a name="11284" href="/2016/insertion-sort-in-agda/#11232" class="Bound">xs</a><a name="11286">
-  </a><a name="11289" class="Symbol">...</a><a name="11292"> </a><a name="11293" class="Symbol">|</a><a name="11294"> </a><a name="11295" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#520" class="InductiveConstructor" target="_blank">yes</a><a name="11298"> </a><a name="11299" href="/2016/insertion-sort-in-agda/#11299" class="Bound">x≤y</a><a name="11302"> </a><a name="11303" class="Symbol">=</a><a name="11304"> </a><a name="11305" href="/2016/insertion-sort-in-agda/#11225" class="Bound">x</a><a name="11306"> </a><a name="11307" href="/2016/insertion-sort-in-agda/#7448" class="InductiveConstructor Operator">∷</a><a name="11308"> </a><a name="11309" href="/2016/insertion-sort-in-agda/#11107" class="Function">bubble</a><a name="11315"> </a><a name="11316" href="/2016/insertion-sort-in-agda/#11228" class="Bound">y</a><a name="11317"> </a><a name="11318" href="/2016/insertion-sort-in-agda/#11232" class="Bound">xs</a><a name="11320">
-  </a><a name="11323" href="/2016/insertion-sort-in-agda/#11107" class="Function">bubble</a><a name="11329"> </a><a name="11330" href="/2016/insertion-sort-in-agda/#11330" class="Bound">x</a><a name="11331"> </a><a name="11332" class="Symbol">(</a><a name="11333" href="/2016/insertion-sort-in-agda/#11333" class="Bound">y</a><a name="11334"> </a><a name="11335" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">∷</a><a name="11336"> </a><a name="11337" href="/2016/insertion-sort-in-agda/#11337" class="Bound">xs</a><a name="11339"> </a><a name="11340" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">by</a><a name="11342"> </a><a name="11343" href="/2016/insertion-sort-in-agda/#11343" class="Bound">p</a><a name="11344" class="Symbol">)</a><a name="11345"> </a><a name="11346" class="Keyword">with</a><a name="11350"> </a><a name="11351" href="/2016/insertion-sort-in-agda/#11330" class="Bound">x</a><a name="11352"> </a><a name="11353" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#8876" class="Function Operator" target="_blank">≤?</a><a name="11355"> </a><a name="11356" href="/2016/insertion-sort-in-agda/#11333" class="Bound">y</a><a name="11357">
-  </a><a name="11360" class="Symbol">...</a><a name="11363"> </a><a name="11364" class="Symbol">|</a><a name="11365"> </a><a name="11366" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#547" class="InductiveConstructor" target="_blank">no</a><a name="11368">  </a><a name="11370" href="/2016/insertion-sort-in-agda/#11370" class="Bound">x≰y</a><a name="11373"> </a><a name="11374" class="Symbol">=</a><a name="11375"> </a><a name="11376" href="/2016/insertion-sort-in-agda/#11333" class="Bound">y</a><a name="11377"> </a><a name="11378" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">∷</a><a name="11379"> </a><a name="11380" href="/2016/insertion-sort-in-agda/#11107" class="Function">bubble</a><a name="11386"> </a><a name="11387" href="/2016/insertion-sort-in-agda/#11330" class="Bound">x</a><a name="11388"> </a><a name="11389" href="/2016/insertion-sort-in-agda/#11337" class="Bound">xs</a><a name="11391"> </a><a name="11392" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">by</a><a name="11394"> </a><a name="11395" href="/2016/insertion-sort-in-agda/#4815" class="Function">⊓-conserves-≲</a><a name="11408"> </a><a name="11409" class="Symbol">(</a><a name="11410" href="/2016/insertion-sort-in-agda/#4226" class="Function">≰-lift</a><a name="11416"> </a><a name="11417" href="/2016/insertion-sort-in-agda/#11370" class="Bound">x≰y</a><a name="11420" class="Symbol">)</a><a name="11421"> </a><a name="11422" href="/2016/insertion-sort-in-agda/#11343" class="Bound">p</a><a name="11423">
-  </a><a name="11426" class="Symbol">...</a><a name="11429"> </a><a name="11430" class="Symbol">|</a><a name="11431"> </a><a name="11432" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#520" class="InductiveConstructor" target="_blank">yes</a><a name="11435"> </a><a name="11436" href="/2016/insertion-sort-in-agda/#11436" class="Bound">x≤y</a><a name="11439"> </a><a name="11440" class="Symbol">=</a><a name="11441"> </a><a name="11442" href="/2016/insertion-sort-in-agda/#11330" class="Bound">x</a><a name="11443"> </a><a name="11444" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">∷</a><a name="11445"> </a><a name="11446" href="/2016/insertion-sort-in-agda/#11107" class="Function">bubble</a><a name="11452"> </a><a name="11453" href="/2016/insertion-sort-in-agda/#11333" class="Bound">y</a><a name="11454"> </a><a name="11455" href="/2016/insertion-sort-in-agda/#11337" class="Bound">xs</a><a name="11457"> </a><a name="11458" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">by</a><a name="11460"> </a><a name="11461" href="/2016/insertion-sort-in-agda/#4815" class="Function">⊓-conserves-≲</a><a name="11474"> </a><a name="11475" href="/2016/insertion-sort-in-agda/#11511" class="Function">x≲y</a><a name="11478"> </a><a name="11479" class="Symbol">(</a><a name="11480" href="/2016/insertion-sort-in-agda/#11853" class="Function">≲-trans</a><a name="11487"> </a><a name="11488" href="/2016/insertion-sort-in-agda/#11511" class="Function">x≲y</a><a name="11491"> </a><a name="11492" href="/2016/insertion-sort-in-agda/#11343" class="Bound">p</a><a name="11493" class="Symbol">)</a><a name="11494">
-    </a><a name="11499" class="Keyword">where</a><a name="11504">
-      </a><a name="11511" href="/2016/insertion-sort-in-agda/#11511" class="Function">x≲y</a><a name="11514"> </a><a name="11515" class="Symbol">=</a><a name="11516"> </a><a name="11517" href="/2016/insertion-sort-in-agda/#3928" class="InductiveConstructor">≤-lift</a><a name="11523"> </a><a name="11524" href="/2016/insertion-sort-in-agda/#11436" class="Bound">x≤y</a></pre>
+<!--{% raw %}--><pre class="Agda">
+  <a name="11111" href="2016-03-01-insertion-sort-in-agda.html#11111" class="Function"
+      >bubble</a
+      ><a name="11117"
+      > </a
+      ><a name="11118" class="Symbol"
+      >:</a
+      ><a name="11119"
+      > </a
+      ><a name="11120" class="Symbol"
+      >&#8704;</a
+      ><a name="11121"
+      > </a
+      ><a name="11122" class="Symbol"
+      >{</a
+      ><a name="11123" href="2016-03-01-insertion-sort-in-agda.html#11123" class="Bound"
+      >l</a
+      ><a name="11124"
+      > </a
+      ><a name="11125" href="2016-03-01-insertion-sort-in-agda.html#11125" class="Bound"
+      >n</a
+      ><a name="11126"
+      > </a
+      ><a name="11127" href="2016-03-01-insertion-sort-in-agda.html#11127" class="Bound"
+      >k</a
+      ><a name="11128" class="Symbol"
+      >}</a
+      ><a name="11129"
+      > </a
+      ><a name="11130" class="Symbol"
+      >(</a
+      ><a name="11131" href="2016-03-01-insertion-sort-in-agda.html#11131" class="Bound"
+      >x</a
+      ><a name="11132"
+      > </a
+      ><a name="11133" class="Symbol"
+      >:</a
+      ><a name="11134"
+      > </a
+      ><a name="11135" href="2016-03-01-insertion-sort-in-agda.html#3188" class="Function"
+      >A</a
+      ><a name="11136" class="Symbol"
+      >)</a
+      ><a name="11137"
+      > </a
+      ><a name="11138" class="Symbol"
+      >&#8594;</a
+      ><a name="11139"
+      > </a
+      ><a name="11140" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      >OVec</a
+      ><a name="11144"
+      > </a
+      ><a name="11145" href="2016-03-01-insertion-sort-in-agda.html#11123" class="Bound"
+      >l</a
+      ><a name="11146"
+      > </a
+      ><a name="11147" href="2016-03-01-insertion-sort-in-agda.html#11125" class="Bound"
+      >n</a
+      ><a name="11148"
+      > </a
+      ><a name="11149" href="2016-03-01-insertion-sort-in-agda.html#11127" class="Bound"
+      >k</a
+      ><a name="11150"
+      > </a
+      ><a name="11151" class="Symbol"
+      >&#8594;</a
+      ><a name="11152"
+      > </a
+      ><a name="11153" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      >OVec</a
+      ><a name="11157"
+      > </a
+      ><a name="11158" class="Symbol"
+      >(</a
+      ><a name="11159" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="11160"
+      > </a
+      ><a name="11161" href="2016-03-01-insertion-sort-in-agda.html#11131" class="Bound"
+      >x</a
+      ><a name="11162"
+      > </a
+      ><a name="11163" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="11164"
+      > </a
+      ><a name="11165" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      >&#8851;</a
+      ><a name="11166"
+      > </a
+      ><a name="11167" href="2016-03-01-insertion-sort-in-agda.html#11123" class="Bound"
+      >l</a
+      ><a name="11168" class="Symbol"
+      >)</a
+      ><a name="11169"
+      > </a
+      ><a name="11170" class="Symbol"
+      >(</a
+      ><a name="11171" href="Agda.Builtin.Nat.html#100" class="InductiveConstructor"
+      >suc</a
+      ><a name="11174"
+      > </a
+      ><a name="11175" href="2016-03-01-insertion-sort-in-agda.html#11125" class="Bound"
+      >n</a
+      ><a name="11176" class="Symbol"
+      >)</a
+      ><a name="11177"
+      > </a
+      ><a name="11178" href="2016-03-01-insertion-sort-in-agda.html#11127" class="Bound"
+      >k</a
+      ><a name="11179"
+      >
+  </a
+      ><a name="11182" href="2016-03-01-insertion-sort-in-agda.html#11111" class="Function"
+      >bubble</a
+      ><a name="11188"
+      > </a
+      ><a name="11189" href="2016-03-01-insertion-sort-in-agda.html#11189" class="Bound"
+      >x</a
+      ><a name="11190"
+      > </a
+      ><a name="11191" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      >[]</a
+      ><a name="11193"
+      >            </a
+      ><a name="11205" class="Symbol"
+      >=</a
+      ><a name="11206"
+      > </a
+      ><a name="11207" href="2016-03-01-insertion-sort-in-agda.html#11189" class="Bound"
+      >x</a
+      ><a name="11208"
+      > </a
+      ><a name="11209" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="11210"
+      > </a
+      ><a name="11211" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      >[]</a
+      ><a name="11213"
+      > </a
+      ><a name="11214" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >by</a
+      ><a name="11216"
+      > </a
+      ><a name="11217" href="2016-03-01-insertion-sort-in-agda.html#3909" class="InductiveConstructor"
+      >&#8818;&#8868;</a
+      ><a name="11219"
+      >
+  </a
+      ><a name="11222" href="2016-03-01-insertion-sort-in-agda.html#11111" class="Function"
+      >bubble</a
+      ><a name="11228"
+      > </a
+      ><a name="11229" href="2016-03-01-insertion-sort-in-agda.html#11229" class="Bound"
+      >x</a
+      ><a name="11230"
+      > </a
+      ><a name="11231" class="Symbol"
+      >(</a
+      ><a name="11232" href="2016-03-01-insertion-sort-in-agda.html#11232" class="Bound"
+      >y</a
+      ><a name="11233"
+      > </a
+      ><a name="11234" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="11235"
+      > </a
+      ><a name="11236" href="2016-03-01-insertion-sort-in-agda.html#11236" class="Bound"
+      >xs</a
+      ><a name="11238" class="Symbol"
+      >)</a
+      ><a name="11239"
+      >      </a
+      ><a name="11245" class="Keyword"
+      >with</a
+      ><a name="11249"
+      > </a
+      ><a name="11250" href="2016-03-01-insertion-sort-in-agda.html#11229" class="Bound"
+      >x</a
+      ><a name="11251"
+      > </a
+      ><a name="11252" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#8876" class="Function Operator"
+      >&#8804;?</a
+      ><a name="11254"
+      > </a
+      ><a name="11255" href="2016-03-01-insertion-sort-in-agda.html#11232" class="Bound"
+      >y</a
+      ><a name="11256"
+      >
+  </a
+      ><a name="11259" class="Symbol"
+      >...</a
+      ><a name="11262"
+      > </a
+      ><a name="11263" class="Symbol"
+      >|</a
+      ><a name="11264"
+      > </a
+      ><a name="11265" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#547" class="InductiveConstructor"
+      >no</a
+      ><a name="11267"
+      >  </a
+      ><a name="11269" href="2016-03-01-insertion-sort-in-agda.html#11269" class="Bound"
+      >x&#8816;y</a
+      ><a name="11272"
+      > </a
+      ><a name="11273" class="Symbol"
+      >=</a
+      ><a name="11274"
+      > </a
+      ><a name="11275" href="2016-03-01-insertion-sort-in-agda.html#11232" class="Bound"
+      >y</a
+      ><a name="11276"
+      > </a
+      ><a name="11277" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="11278"
+      > </a
+      ><a name="11279" href="2016-03-01-insertion-sort-in-agda.html#11111" class="Function"
+      >bubble</a
+      ><a name="11285"
+      > </a
+      ><a name="11286" href="2016-03-01-insertion-sort-in-agda.html#11229" class="Bound"
+      >x</a
+      ><a name="11287"
+      > </a
+      ><a name="11288" href="2016-03-01-insertion-sort-in-agda.html#11236" class="Bound"
+      >xs</a
+      ><a name="11290"
+      >
+  </a
+      ><a name="11293" class="Symbol"
+      >...</a
+      ><a name="11296"
+      > </a
+      ><a name="11297" class="Symbol"
+      >|</a
+      ><a name="11298"
+      > </a
+      ><a name="11299" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#520" class="InductiveConstructor"
+      >yes</a
+      ><a name="11302"
+      > </a
+      ><a name="11303" href="2016-03-01-insertion-sort-in-agda.html#11303" class="Bound"
+      >x&#8804;y</a
+      ><a name="11306"
+      > </a
+      ><a name="11307" class="Symbol"
+      >=</a
+      ><a name="11308"
+      > </a
+      ><a name="11309" href="2016-03-01-insertion-sort-in-agda.html#11229" class="Bound"
+      >x</a
+      ><a name="11310"
+      > </a
+      ><a name="11311" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="11312"
+      > </a
+      ><a name="11313" href="2016-03-01-insertion-sort-in-agda.html#11111" class="Function"
+      >bubble</a
+      ><a name="11319"
+      > </a
+      ><a name="11320" href="2016-03-01-insertion-sort-in-agda.html#11232" class="Bound"
+      >y</a
+      ><a name="11321"
+      > </a
+      ><a name="11322" href="2016-03-01-insertion-sort-in-agda.html#11236" class="Bound"
+      >xs</a
+      ><a name="11324"
+      >
+  </a
+      ><a name="11327" href="2016-03-01-insertion-sort-in-agda.html#11111" class="Function"
+      >bubble</a
+      ><a name="11333"
+      > </a
+      ><a name="11334" href="2016-03-01-insertion-sort-in-agda.html#11334" class="Bound"
+      >x</a
+      ><a name="11335"
+      > </a
+      ><a name="11336" class="Symbol"
+      >(</a
+      ><a name="11337" href="2016-03-01-insertion-sort-in-agda.html#11337" class="Bound"
+      >y</a
+      ><a name="11338"
+      > </a
+      ><a name="11339" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="11340"
+      > </a
+      ><a name="11341" href="2016-03-01-insertion-sort-in-agda.html#11341" class="Bound"
+      >xs</a
+      ><a name="11343"
+      > </a
+      ><a name="11344" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >by</a
+      ><a name="11346"
+      > </a
+      ><a name="11347" href="2016-03-01-insertion-sort-in-agda.html#11347" class="Bound"
+      >p</a
+      ><a name="11348" class="Symbol"
+      >)</a
+      ><a name="11349"
+      > </a
+      ><a name="11350" class="Keyword"
+      >with</a
+      ><a name="11354"
+      > </a
+      ><a name="11355" href="2016-03-01-insertion-sort-in-agda.html#11334" class="Bound"
+      >x</a
+      ><a name="11356"
+      > </a
+      ><a name="11357" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#8876" class="Function Operator"
+      >&#8804;?</a
+      ><a name="11359"
+      > </a
+      ><a name="11360" href="2016-03-01-insertion-sort-in-agda.html#11337" class="Bound"
+      >y</a
+      ><a name="11361"
+      >
+  </a
+      ><a name="11364" class="Symbol"
+      >...</a
+      ><a name="11367"
+      > </a
+      ><a name="11368" class="Symbol"
+      >|</a
+      ><a name="11369"
+      > </a
+      ><a name="11370" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#547" class="InductiveConstructor"
+      >no</a
+      ><a name="11372"
+      >  </a
+      ><a name="11374" href="2016-03-01-insertion-sort-in-agda.html#11374" class="Bound"
+      >x&#8816;y</a
+      ><a name="11377"
+      > </a
+      ><a name="11378" class="Symbol"
+      >=</a
+      ><a name="11379"
+      > </a
+      ><a name="11380" href="2016-03-01-insertion-sort-in-agda.html#11337" class="Bound"
+      >y</a
+      ><a name="11381"
+      > </a
+      ><a name="11382" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="11383"
+      > </a
+      ><a name="11384" href="2016-03-01-insertion-sort-in-agda.html#11111" class="Function"
+      >bubble</a
+      ><a name="11390"
+      > </a
+      ><a name="11391" href="2016-03-01-insertion-sort-in-agda.html#11334" class="Bound"
+      >x</a
+      ><a name="11392"
+      > </a
+      ><a name="11393" href="2016-03-01-insertion-sort-in-agda.html#11341" class="Bound"
+      >xs</a
+      ><a name="11395"
+      > </a
+      ><a name="11396" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >by</a
+      ><a name="11398"
+      > </a
+      ><a name="11399" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      >&#8851;-conserves-&#8818;</a
+      ><a name="11412"
+      > </a
+      ><a name="11413" class="Symbol"
+      >(</a
+      ><a name="11414" href="2016-03-01-insertion-sort-in-agda.html#4230" class="Function"
+      >&#8816;-lift</a
+      ><a name="11420"
+      > </a
+      ><a name="11421" href="2016-03-01-insertion-sort-in-agda.html#11374" class="Bound"
+      >x&#8816;y</a
+      ><a name="11424" class="Symbol"
+      >)</a
+      ><a name="11425"
+      > </a
+      ><a name="11426" href="2016-03-01-insertion-sort-in-agda.html#11347" class="Bound"
+      >p</a
+      ><a name="11427"
+      >
+  </a
+      ><a name="11430" class="Symbol"
+      >...</a
+      ><a name="11433"
+      > </a
+      ><a name="11434" class="Symbol"
+      >|</a
+      ><a name="11435"
+      > </a
+      ><a name="11436" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#520" class="InductiveConstructor"
+      >yes</a
+      ><a name="11439"
+      > </a
+      ><a name="11440" href="2016-03-01-insertion-sort-in-agda.html#11440" class="Bound"
+      >x&#8804;y</a
+      ><a name="11443"
+      > </a
+      ><a name="11444" class="Symbol"
+      >=</a
+      ><a name="11445"
+      > </a
+      ><a name="11446" href="2016-03-01-insertion-sort-in-agda.html#11334" class="Bound"
+      >x</a
+      ><a name="11447"
+      > </a
+      ><a name="11448" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="11449"
+      > </a
+      ><a name="11450" href="2016-03-01-insertion-sort-in-agda.html#11111" class="Function"
+      >bubble</a
+      ><a name="11456"
+      > </a
+      ><a name="11457" href="2016-03-01-insertion-sort-in-agda.html#11337" class="Bound"
+      >y</a
+      ><a name="11458"
+      > </a
+      ><a name="11459" href="2016-03-01-insertion-sort-in-agda.html#11341" class="Bound"
+      >xs</a
+      ><a name="11461"
+      > </a
+      ><a name="11462" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >by</a
+      ><a name="11464"
+      > </a
+      ><a name="11465" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      >&#8851;-conserves-&#8818;</a
+      ><a name="11478"
+      > </a
+      ><a name="11479" href="2016-03-01-insertion-sort-in-agda.html#11515" class="Function"
+      >x&#8818;y</a
+      ><a name="11482"
+      > </a
+      ><a name="11483" class="Symbol"
+      >(</a
+      ><a name="11484" href="2016-03-01-insertion-sort-in-agda.html#11857" class="Function"
+      >&#8818;-trans</a
+      ><a name="11491"
+      > </a
+      ><a name="11492" href="2016-03-01-insertion-sort-in-agda.html#11515" class="Function"
+      >x&#8818;y</a
+      ><a name="11495"
+      > </a
+      ><a name="11496" href="2016-03-01-insertion-sort-in-agda.html#11347" class="Bound"
+      >p</a
+      ><a name="11497" class="Symbol"
+      >)</a
+      ><a name="11498"
+      >
+    </a
+      ><a name="11503" class="Keyword"
+      >where</a
+      ><a name="11508"
+      >
+      </a
+      ><a name="11515" href="2016-03-01-insertion-sort-in-agda.html#11515" class="Function"
+      >x&#8818;y</a
+      ><a name="11518"
+      > </a
+      ><a name="11519" class="Symbol"
+      >=</a
+      ><a name="11520"
+      > </a
+      ><a name="11521" href="2016-03-01-insertion-sort-in-agda.html#3932" class="InductiveConstructor"
+      >&#8804;-lift</a
+      ><a name="11527"
+      > </a
+      ><a name="11528" href="2016-03-01-insertion-sort-in-agda.html#11440" class="Bound"
+      >x&#8804;y</a
+      >
+</pre><!--{% endraw %}-->
 
 All that we need is to show that our home-brewed ≲-relation is
 transitive. This follows immediately from the underlying
@@ -264,19 +3782,409 @@ order. This kind of stuff---the adding of bounds to total
 order---should really be provided by the standard library. And perhaps
 it is, and I've simply failed to find it...
 
-<pre class="Agda">      <a name="11853" href="/2016/insertion-sort-in-agda/#11853" class="Function">≲-trans</a><a name="11860"> </a><a name="11861" class="Symbol">:</a><a name="11862"> </a><a name="11863" class="Symbol">∀</a><a name="11864"> </a><a name="11865" class="Symbol">&#123;</a><a name="11866" href="/2016/insertion-sort-in-agda/#11866" class="Bound">x</a><a name="11867"> </a><a name="11868" href="/2016/insertion-sort-in-agda/#11868" class="Bound">y</a><a name="11869"> </a><a name="11870" href="/2016/insertion-sort-in-agda/#11870" class="Bound">z</a><a name="11871" class="Symbol">&#125;</a><a name="11872"> </a><a name="11873" class="Symbol">→</a><a name="11874"> </a><a name="11875" href="/2016/insertion-sort-in-agda/#11866" class="Bound">x</a><a name="11876"> </a><a name="11877" href="/2016/insertion-sort-in-agda/#3850" class="Datatype Operator">≲</a><a name="11878"> </a><a name="11879" href="/2016/insertion-sort-in-agda/#11868" class="Bound">y</a><a name="11880"> </a><a name="11881" class="Symbol">→</a><a name="11882"> </a><a name="11883" href="/2016/insertion-sort-in-agda/#11868" class="Bound">y</a><a name="11884"> </a><a name="11885" href="/2016/insertion-sort-in-agda/#3850" class="Datatype Operator">≲</a><a name="11886"> </a><a name="11887" href="/2016/insertion-sort-in-agda/#11870" class="Bound">z</a><a name="11888"> </a><a name="11889" class="Symbol">→</a><a name="11890"> </a><a name="11891" href="/2016/insertion-sort-in-agda/#11866" class="Bound">x</a><a name="11892"> </a><a name="11893" href="/2016/insertion-sort-in-agda/#3850" class="Datatype Operator">≲</a><a name="11894"> </a><a name="11895" href="/2016/insertion-sort-in-agda/#11870" class="Bound">z</a><a name="11896">
-      </a><a name="11903" href="/2016/insertion-sort-in-agda/#11853" class="Function">≲-trans</a><a name="11910">  </a><a name="11912" href="/2016/insertion-sort-in-agda/#3882" class="InductiveConstructor">⊥≲</a><a name="11914">         </a><a name="11923" class="Symbol">_</a><a name="11924">         </a><a name="11933" class="Symbol">=</a><a name="11934"> </a><a name="11935" href="/2016/insertion-sort-in-agda/#3882" class="InductiveConstructor">⊥≲</a><a name="11937">
-      </a><a name="11944" href="/2016/insertion-sort-in-agda/#11853" class="Function">≲-trans</a><a name="11951">  </a><a name="11953" class="Symbol">_</a><a name="11954">          </a><a name="11964" href="/2016/insertion-sort-in-agda/#3905" class="InductiveConstructor">≲⊤</a><a name="11966">        </a><a name="11974" class="Symbol">=</a><a name="11975"> </a><a name="11976" href="/2016/insertion-sort-in-agda/#3905" class="InductiveConstructor">≲⊤</a><a name="11978">
-      </a><a name="11985" href="/2016/insertion-sort-in-agda/#11853" class="Function">≲-trans</a><a name="11992"> </a><a name="11993" class="Symbol">(</a><a name="11994" href="/2016/insertion-sort-in-agda/#3928" class="InductiveConstructor">≤-lift</a><a name="12000"> </a><a name="12001" href="/2016/insertion-sort-in-agda/#12001" class="Bound">p</a><a name="12002" class="Symbol">)</a><a name="12003"> </a><a name="12004" class="Symbol">(</a><a name="12005" href="/2016/insertion-sort-in-agda/#3928" class="InductiveConstructor">≤-lift</a><a name="12011"> </a><a name="12012" href="/2016/insertion-sort-in-agda/#12012" class="Bound">q</a><a name="12013" class="Symbol">)</a><a name="12014"> </a><a name="12015" class="Symbol">=</a><a name="12016"> </a><a name="12017" href="/2016/insertion-sort-in-agda/#3928" class="InductiveConstructor">≤-lift</a><a name="12023"> </a><a name="12024" class="Symbol">(</a><a name="12025" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#1190" class="Function" target="_blank">≤-trans</a><a name="12032"> </a><a name="12033" href="/2016/insertion-sort-in-agda/#12001" class="Bound">p</a><a name="12034"> </a><a name="12035" href="/2016/insertion-sort-in-agda/#12012" class="Bound">q</a><a name="12036" class="Symbol">)</a></pre>
+<!--{% raw %}--><pre class="Agda">
+      <a name="11857" href="2016-03-01-insertion-sort-in-agda.html#11857" class="Function"
+      >&#8818;-trans</a
+      ><a name="11864"
+      > </a
+      ><a name="11865" class="Symbol"
+      >:</a
+      ><a name="11866"
+      > </a
+      ><a name="11867" class="Symbol"
+      >&#8704;</a
+      ><a name="11868"
+      > </a
+      ><a name="11869" class="Symbol"
+      >{</a
+      ><a name="11870" href="2016-03-01-insertion-sort-in-agda.html#11870" class="Bound"
+      >x</a
+      ><a name="11871"
+      > </a
+      ><a name="11872" href="2016-03-01-insertion-sort-in-agda.html#11872" class="Bound"
+      >y</a
+      ><a name="11873"
+      > </a
+      ><a name="11874" href="2016-03-01-insertion-sort-in-agda.html#11874" class="Bound"
+      >z</a
+      ><a name="11875" class="Symbol"
+      >}</a
+      ><a name="11876"
+      > </a
+      ><a name="11877" class="Symbol"
+      >&#8594;</a
+      ><a name="11878"
+      > </a
+      ><a name="11879" href="2016-03-01-insertion-sort-in-agda.html#11870" class="Bound"
+      >x</a
+      ><a name="11880"
+      > </a
+      ><a name="11881" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      >&#8818;</a
+      ><a name="11882"
+      > </a
+      ><a name="11883" href="2016-03-01-insertion-sort-in-agda.html#11872" class="Bound"
+      >y</a
+      ><a name="11884"
+      > </a
+      ><a name="11885" class="Symbol"
+      >&#8594;</a
+      ><a name="11886"
+      > </a
+      ><a name="11887" href="2016-03-01-insertion-sort-in-agda.html#11872" class="Bound"
+      >y</a
+      ><a name="11888"
+      > </a
+      ><a name="11889" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      >&#8818;</a
+      ><a name="11890"
+      > </a
+      ><a name="11891" href="2016-03-01-insertion-sort-in-agda.html#11874" class="Bound"
+      >z</a
+      ><a name="11892"
+      > </a
+      ><a name="11893" class="Symbol"
+      >&#8594;</a
+      ><a name="11894"
+      > </a
+      ><a name="11895" href="2016-03-01-insertion-sort-in-agda.html#11870" class="Bound"
+      >x</a
+      ><a name="11896"
+      > </a
+      ><a name="11897" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      >&#8818;</a
+      ><a name="11898"
+      > </a
+      ><a name="11899" href="2016-03-01-insertion-sort-in-agda.html#11874" class="Bound"
+      >z</a
+      ><a name="11900"
+      >
+      </a
+      ><a name="11907" href="2016-03-01-insertion-sort-in-agda.html#11857" class="Function"
+      >&#8818;-trans</a
+      ><a name="11914"
+      >  </a
+      ><a name="11916" href="2016-03-01-insertion-sort-in-agda.html#3886" class="InductiveConstructor"
+      >&#8869;&#8818;</a
+      ><a name="11918"
+      >         </a
+      ><a name="11927" class="Symbol"
+      >_</a
+      ><a name="11928"
+      >         </a
+      ><a name="11937" class="Symbol"
+      >=</a
+      ><a name="11938"
+      > </a
+      ><a name="11939" href="2016-03-01-insertion-sort-in-agda.html#3886" class="InductiveConstructor"
+      >&#8869;&#8818;</a
+      ><a name="11941"
+      >
+      </a
+      ><a name="11948" href="2016-03-01-insertion-sort-in-agda.html#11857" class="Function"
+      >&#8818;-trans</a
+      ><a name="11955"
+      >  </a
+      ><a name="11957" class="Symbol"
+      >_</a
+      ><a name="11958"
+      >          </a
+      ><a name="11968" href="2016-03-01-insertion-sort-in-agda.html#3909" class="InductiveConstructor"
+      >&#8818;&#8868;</a
+      ><a name="11970"
+      >        </a
+      ><a name="11978" class="Symbol"
+      >=</a
+      ><a name="11979"
+      > </a
+      ><a name="11980" href="2016-03-01-insertion-sort-in-agda.html#3909" class="InductiveConstructor"
+      >&#8818;&#8868;</a
+      ><a name="11982"
+      >
+      </a
+      ><a name="11989" href="2016-03-01-insertion-sort-in-agda.html#11857" class="Function"
+      >&#8818;-trans</a
+      ><a name="11996"
+      > </a
+      ><a name="11997" class="Symbol"
+      >(</a
+      ><a name="11998" href="2016-03-01-insertion-sort-in-agda.html#3932" class="InductiveConstructor"
+      >&#8804;-lift</a
+      ><a name="12004"
+      > </a
+      ><a name="12005" href="2016-03-01-insertion-sort-in-agda.html#12005" class="Bound"
+      >p</a
+      ><a name="12006" class="Symbol"
+      >)</a
+      ><a name="12007"
+      > </a
+      ><a name="12008" class="Symbol"
+      >(</a
+      ><a name="12009" href="2016-03-01-insertion-sort-in-agda.html#3932" class="InductiveConstructor"
+      >&#8804;-lift</a
+      ><a name="12015"
+      > </a
+      ><a name="12016" href="2016-03-01-insertion-sort-in-agda.html#12016" class="Bound"
+      >q</a
+      ><a name="12017" class="Symbol"
+      >)</a
+      ><a name="12018"
+      > </a
+      ><a name="12019" class="Symbol"
+      >=</a
+      ><a name="12020"
+      > </a
+      ><a name="12021" href="2016-03-01-insertion-sort-in-agda.html#3932" class="InductiveConstructor"
+      >&#8804;-lift</a
+      ><a name="12027"
+      > </a
+      ><a name="12028" class="Symbol"
+      >(</a
+      ><a name="12029" href="https://agda.github.io/agda-stdlib/Relation.Binary.html#1190" class="Function"
+      >&#8804;-trans</a
+      ><a name="12036"
+      > </a
+      ><a name="12037" href="2016-03-01-insertion-sort-in-agda.html#12005" class="Bound"
+      >p</a
+      ><a name="12038"
+      > </a
+      ><a name="12039" href="2016-03-01-insertion-sort-in-agda.html#12016" class="Bound"
+      >q</a
+      ><a name="12040" class="Symbol"
+      >)</a
+      >
+</pre><!--{% endraw %}-->
 
 At any rate, once we have our "bubble" function, the implementation of
 the sorting algorithm is trivial---and exactly identical to the
 definition of insertion sort!
 
-<pre class="Agda">  <a name="12231" href="/2016/insertion-sort-in-agda/#12231" class="Function">bubblesort</a><a name="12241"> </a><a name="12242" class="Symbol">:</a><a name="12243"> </a><a name="12244" class="Symbol">∀</a><a name="12245"> </a><a name="12246" class="Symbol">&#123;</a><a name="12247" href="/2016/insertion-sort-in-agda/#12247" class="Bound">l</a><a name="12248"> </a><a name="12249" href="/2016/insertion-sort-in-agda/#12249" class="Bound">n</a><a name="12250"> </a><a name="12251" href="/2016/insertion-sort-in-agda/#12251" class="Bound">k</a><a name="12252" class="Symbol">&#125;</a><a name="12253"> </a><a name="12254" class="Symbol">→</a><a name="12255"> </a><a name="12256" href="/2016/insertion-sort-in-agda/#7277" class="Datatype">OVec</a><a name="12260"> </a><a name="12261" href="/2016/insertion-sort-in-agda/#12247" class="Bound">l</a><a name="12262"> </a><a name="12263" href="/2016/insertion-sort-in-agda/#12249" class="Bound">n</a><a name="12264"> </a><a name="12265" href="/2016/insertion-sort-in-agda/#12251" class="Bound">k</a><a name="12266"> </a><a name="12267" class="Symbol">→</a><a name="12268"> </a><a name="12269" href="https://agda.github.io/agda-stdlib/Data.Product.html#823" class="Function" target="_blank">∃</a><a name="12270"> </a><a name="12271" class="Symbol">(λ</a><a name="12273"> </a><a name="12274" href="/2016/insertion-sort-in-agda/#12274" class="Bound">l</a><a name="12275"> </a><a name="12276" class="Symbol">→</a><a name="12277"> </a><a name="12278" href="/2016/insertion-sort-in-agda/#7277" class="Datatype">OVec</a><a name="12282"> </a><a name="12283" href="/2016/insertion-sort-in-agda/#12274" class="Bound">l</a><a name="12284"> </a><a name="12285" href="/2016/insertion-sort-in-agda/#12249" class="Bound">n</a><a name="12286"> </a><a name="12287" class="Number">0</a><a name="12288" class="Symbol">)</a><a name="12289">
-  </a><a name="12292" href="/2016/insertion-sort-in-agda/#12231" class="Function">bubblesort</a><a name="12302"> </a><a name="12303" href="/2016/insertion-sort-in-agda/#7329" class="InductiveConstructor">[]</a><a name="12305">            </a><a name="12317" class="Symbol">=</a><a name="12318"> </a><a name="12319" href="/2016/insertion-sort-in-agda/#3572" class="InductiveConstructor">⊤</a><a name="12320"> </a><a name="12321" href="https://agda.github.io/agda-stdlib/Data.Product.html#509" class="InductiveConstructor Operator" target="_blank">,</a><a name="12322"> </a><a name="12323" href="/2016/insertion-sort-in-agda/#7329" class="InductiveConstructor">[]</a><a name="12325">
-  </a><a name="12328" href="/2016/insertion-sort-in-agda/#12231" class="Function">bubblesort</a><a name="12338"> </a><a name="12339" class="Symbol">(</a><a name="12340" href="/2016/insertion-sort-in-agda/#12340" class="Bound">x</a><a name="12341"> </a><a name="12342" href="/2016/insertion-sort-in-agda/#7448" class="InductiveConstructor Operator">∷</a><a name="12343"> </a><a name="12344" href="/2016/insertion-sort-in-agda/#12344" class="Bound">xs</a><a name="12346" class="Symbol">)</a><a name="12347">      </a><a name="12353" class="Symbol">=</a><a name="12354"> </a><a name="12355" href="/2016/insertion-sort-in-agda/#12231" class="Function">bubblesort</a><a name="12365"> </a><a name="12366" class="Symbol">(</a><a name="12367" href="/2016/insertion-sort-in-agda/#11107" class="Function">bubble</a><a name="12373"> </a><a name="12374" href="/2016/insertion-sort-in-agda/#12340" class="Bound">x</a><a name="12375"> </a><a name="12376" href="/2016/insertion-sort-in-agda/#12344" class="Bound">xs</a><a name="12378" class="Symbol">)</a><a name="12379">
-  </a><a name="12382" href="/2016/insertion-sort-in-agda/#12231" class="Function">bubblesort</a><a name="12392"> </a><a name="12393" class="Symbol">(</a><a name="12394" href="/2016/insertion-sort-in-agda/#12394" class="Bound">x</a><a name="12395"> </a><a name="12396" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">∷</a><a name="12397"> </a><a name="12398" href="/2016/insertion-sort-in-agda/#12398" class="Bound">xs</a><a name="12400"> </a><a name="12401" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">by</a><a name="12403"> </a><a name="12404" href="/2016/insertion-sort-in-agda/#12404" class="Bound">p</a><a name="12405" class="Symbol">)</a><a name="12406"> </a><a name="12407" class="Symbol">=</a><a name="12408"> </a><a name="12409" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟦</a><a name="12410"> </a><a name="12411" href="/2016/insertion-sort-in-agda/#12394" class="Bound">x</a><a name="12412"> </a><a name="12413" href="/2016/insertion-sort-in-agda/#3594" class="InductiveConstructor Operator">⟧</a><a name="12414"> </a><a name="12415" href="https://agda.github.io/agda-stdlib/Data.Product.html#509" class="InductiveConstructor Operator" target="_blank">,</a><a name="12416"> </a><a name="12417" href="/2016/insertion-sort-in-agda/#12394" class="Bound">x</a><a name="12418"> </a><a name="12419" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">∷</a><a name="12420"> </a><a name="12421" href="/2016/insertion-sort-in-agda/#12398" class="Bound">xs</a><a name="12423"> </a><a name="12424" href="/2016/insertion-sort-in-agda/#7354" class="InductiveConstructor Operator">by</a><a name="12426"> </a><a name="12427" href="/2016/insertion-sort-in-agda/#12404" class="Bound">p</a></pre>
+<!--{% raw %}--><pre class="Agda">
+  <a name="12235" href="2016-03-01-insertion-sort-in-agda.html#12235" class="Function"
+      >bubblesort</a
+      ><a name="12245"
+      > </a
+      ><a name="12246" class="Symbol"
+      >:</a
+      ><a name="12247"
+      > </a
+      ><a name="12248" class="Symbol"
+      >&#8704;</a
+      ><a name="12249"
+      > </a
+      ><a name="12250" class="Symbol"
+      >{</a
+      ><a name="12251" href="2016-03-01-insertion-sort-in-agda.html#12251" class="Bound"
+      >l</a
+      ><a name="12252"
+      > </a
+      ><a name="12253" href="2016-03-01-insertion-sort-in-agda.html#12253" class="Bound"
+      >n</a
+      ><a name="12254"
+      > </a
+      ><a name="12255" href="2016-03-01-insertion-sort-in-agda.html#12255" class="Bound"
+      >k</a
+      ><a name="12256" class="Symbol"
+      >}</a
+      ><a name="12257"
+      > </a
+      ><a name="12258" class="Symbol"
+      >&#8594;</a
+      ><a name="12259"
+      > </a
+      ><a name="12260" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      >OVec</a
+      ><a name="12264"
+      > </a
+      ><a name="12265" href="2016-03-01-insertion-sort-in-agda.html#12251" class="Bound"
+      >l</a
+      ><a name="12266"
+      > </a
+      ><a name="12267" href="2016-03-01-insertion-sort-in-agda.html#12253" class="Bound"
+      >n</a
+      ><a name="12268"
+      > </a
+      ><a name="12269" href="2016-03-01-insertion-sort-in-agda.html#12255" class="Bound"
+      >k</a
+      ><a name="12270"
+      > </a
+      ><a name="12271" class="Symbol"
+      >&#8594;</a
+      ><a name="12272"
+      > </a
+      ><a name="12273" href="https://agda.github.io/agda-stdlib/Data.Product.html#823" class="Function"
+      >&#8707;</a
+      ><a name="12274"
+      > </a
+      ><a name="12275" class="Symbol"
+      >(&#955;</a
+      ><a name="12277"
+      > </a
+      ><a name="12278" href="2016-03-01-insertion-sort-in-agda.html#12278" class="Bound"
+      >l</a
+      ><a name="12279"
+      > </a
+      ><a name="12280" class="Symbol"
+      >&#8594;</a
+      ><a name="12281"
+      > </a
+      ><a name="12282" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      >OVec</a
+      ><a name="12286"
+      > </a
+      ><a name="12287" href="2016-03-01-insertion-sort-in-agda.html#12278" class="Bound"
+      >l</a
+      ><a name="12288"
+      > </a
+      ><a name="12289" href="2016-03-01-insertion-sort-in-agda.html#12253" class="Bound"
+      >n</a
+      ><a name="12290"
+      > </a
+      ><a name="12291" class="Number"
+      >0</a
+      ><a name="12292" class="Symbol"
+      >)</a
+      ><a name="12293"
+      >
+  </a
+      ><a name="12296" href="2016-03-01-insertion-sort-in-agda.html#12235" class="Function"
+      >bubblesort</a
+      ><a name="12306"
+      > </a
+      ><a name="12307" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      >[]</a
+      ><a name="12309"
+      >            </a
+      ><a name="12321" class="Symbol"
+      >=</a
+      ><a name="12322"
+      > </a
+      ><a name="12323" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      >&#8868;</a
+      ><a name="12324"
+      > </a
+      ><a name="12325" href="https://agda.github.io/agda-stdlib/Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="12326"
+      > </a
+      ><a name="12327" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      >[]</a
+      ><a name="12329"
+      >
+  </a
+      ><a name="12332" href="2016-03-01-insertion-sort-in-agda.html#12235" class="Function"
+      >bubblesort</a
+      ><a name="12342"
+      > </a
+      ><a name="12343" class="Symbol"
+      >(</a
+      ><a name="12344" href="2016-03-01-insertion-sort-in-agda.html#12344" class="Bound"
+      >x</a
+      ><a name="12345"
+      > </a
+      ><a name="12346" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="12347"
+      > </a
+      ><a name="12348" href="2016-03-01-insertion-sort-in-agda.html#12348" class="Bound"
+      >xs</a
+      ><a name="12350" class="Symbol"
+      >)</a
+      ><a name="12351"
+      >      </a
+      ><a name="12357" class="Symbol"
+      >=</a
+      ><a name="12358"
+      > </a
+      ><a name="12359" href="2016-03-01-insertion-sort-in-agda.html#12235" class="Function"
+      >bubblesort</a
+      ><a name="12369"
+      > </a
+      ><a name="12370" class="Symbol"
+      >(</a
+      ><a name="12371" href="2016-03-01-insertion-sort-in-agda.html#11111" class="Function"
+      >bubble</a
+      ><a name="12377"
+      > </a
+      ><a name="12378" href="2016-03-01-insertion-sort-in-agda.html#12344" class="Bound"
+      >x</a
+      ><a name="12379"
+      > </a
+      ><a name="12380" href="2016-03-01-insertion-sort-in-agda.html#12348" class="Bound"
+      >xs</a
+      ><a name="12382" class="Symbol"
+      >)</a
+      ><a name="12383"
+      >
+  </a
+      ><a name="12386" href="2016-03-01-insertion-sort-in-agda.html#12235" class="Function"
+      >bubblesort</a
+      ><a name="12396"
+      > </a
+      ><a name="12397" class="Symbol"
+      >(</a
+      ><a name="12398" href="2016-03-01-insertion-sort-in-agda.html#12398" class="Bound"
+      >x</a
+      ><a name="12399"
+      > </a
+      ><a name="12400" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="12401"
+      > </a
+      ><a name="12402" href="2016-03-01-insertion-sort-in-agda.html#12402" class="Bound"
+      >xs</a
+      ><a name="12404"
+      > </a
+      ><a name="12405" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >by</a
+      ><a name="12407"
+      > </a
+      ><a name="12408" href="2016-03-01-insertion-sort-in-agda.html#12408" class="Bound"
+      >p</a
+      ><a name="12409" class="Symbol"
+      >)</a
+      ><a name="12410"
+      > </a
+      ><a name="12411" class="Symbol"
+      >=</a
+      ><a name="12412"
+      > </a
+      ><a name="12413" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10214;</a
+      ><a name="12414"
+      > </a
+      ><a name="12415" href="2016-03-01-insertion-sort-in-agda.html#12398" class="Bound"
+      >x</a
+      ><a name="12416"
+      > </a
+      ><a name="12417" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      >&#10215;</a
+      ><a name="12418"
+      > </a
+      ><a name="12419" href="https://agda.github.io/agda-stdlib/Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="12420"
+      > </a
+      ><a name="12421" href="2016-03-01-insertion-sort-in-agda.html#12398" class="Bound"
+      >x</a
+      ><a name="12422"
+      > </a
+      ><a name="12423" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="12424"
+      > </a
+      ><a name="12425" href="2016-03-01-insertion-sort-in-agda.html#12402" class="Bound"
+      >xs</a
+      ><a name="12427"
+      > </a
+      ><a name="12428" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      >by</a
+      ><a name="12430"
+      > </a
+      ><a name="12431" href="2016-03-01-insertion-sort-in-agda.html#12408" class="Bound"
+      >p</a
+      >
+</pre><!--{% endraw %}-->
 
 This does lead to an interesting point: how do you know that what
 you've implemented is actually what you *wanted* to implement?
@@ -331,6 +4239,3 @@ lemma, your next proof will *fail*. And obviously, the notion that the
 a theory applies even more strongly to theories which are also
 *machine-checked*.
 
-
-
-<!-- Compiled with Agda version 2.5.1. -->

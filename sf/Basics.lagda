@@ -2,8 +2,8 @@
 title         : "Basics: Functional Programming in Agda"
 layout        : default
 hide-implicit : false
-extra-script  : agda-extra-script.html
-extra-style   : agda-extra-style.html
+extra-script : [agda-extra-script.html]
+extra-style  : [agda-extra-style.html]
 ---
 
 <div class="hidden">

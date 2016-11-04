@@ -4,8 +4,8 @@ date          : 2016-03-20 12:00:00
 categories    : [compsci]
 tags          : [agda]
 hide-implicit : true
-extra-script  : agda-extra-script.html
-extra-style   : agda-extra-style.html
+extra-script : [agda-extra-script.html]
+extra-style  : [agda-extra-style.html]
 ---
 
 Previously, I mentioned that one of the most common posts on Agda blogs
@@ -28,7 +28,19 @@ implementing the simply-typed λ-calculus. Today, natural deduction and
 the sequent calculus.
 
 <div class="hidden">
-<pre class="Agda"><a name="1212" class="Keyword">module</a><a name="1218"> </a><a name="1219" href="/2016/one-lambda-calculus-many-times/#1" class="Module">2016-03-20-one-lambda-calculus-many-times</a><a name="1260"> </a><a name="1261" class="Keyword">where</a></pre>
+<!--{% raw %}--><pre class="Agda">
+<a name="1214" class="Keyword"
+      >module</a
+      ><a name="1220"
+      > </a
+      ><a name="1221" href="2016-03-20-one-lambda-calculus-many-times.html#1" class="Module"
+      >2016-03-20-one-lambda-calculus-many-times</a
+      ><a name="1262"
+      > </a
+      ><a name="1263" class="Keyword"
+      >where</a
+      >
+</pre><!--{% endraw %}-->
 </div>
 
 ### Natural Deduction and the λ-Calculus
@@ -38,7 +50,35 @@ are defined inductively over some set of atomic types. We don't really
 care what these atomic types will be, so we might as well abstract
 over them:
 
-<pre class="Agda"><a name="1559" class="Keyword">module</a><a name="1565"> </a><a name="1566" href="/2016/one-lambda-calculus-many-times/#1566" class="Module">Syntax</a><a name="1572"> </a><a name="1573" class="Symbol">(</a><a name="1574" href="/2016/one-lambda-calculus-many-times/#1574" class="Bound">Atom</a><a name="1578"> </a><a name="1579" class="Symbol">:</a><a name="1580"> </a><a name="1581" class="PrimitiveType">Set</a><a name="1584" class="Symbol">)</a><a name="1585"> </a><a name="1586" class="Keyword">where</a></pre>
+<!--{% raw %}--><pre class="Agda">
+<a name="1561" class="Keyword"
+      >module</a
+      ><a name="1567"
+      > </a
+      ><a name="1568" href="2016-03-20-one-lambda-calculus-many-times.html#1568" class="Module"
+      >Syntax</a
+      ><a name="1574"
+      > </a
+      ><a name="1575" class="Symbol"
+      >(</a
+      ><a name="1576" href="2016-03-20-one-lambda-calculus-many-times.html#1576" class="Bound"
+      >Atom</a
+      ><a name="1580"
+      > </a
+      ><a name="1581" class="Symbol"
+      >:</a
+      ><a name="1582"
+      > </a
+      ><a name="1583" class="PrimitiveType"
+      >Set</a
+      ><a name="1586" class="Symbol"
+      >)</a
+      ><a name="1587"
+      > </a
+      ><a name="1588" class="Keyword"
+      >where</a
+      >
+</pre><!--{% endraw %}-->
 
 But, if it makes you feel better, we can pretend that they'll be some
 like this:
@@ -49,11 +89,87 @@ Next, we defined our types. Since we're talking about minimal
 propositional logic, a type is either atomic (marked by <a class="Agda
 InductiveConstructor">El</a>) or an implication:
 
-<pre class="Agda">  <a name="2628" class="Keyword">infixr</a><a name="2634"> </a><a name="2635" class="Number">6</a><a name="2636"> _⇒_
+<!--{% raw %}--><pre class="Agda">
+  <a name="2630" class="Keyword"
+      >infixr</a
+      ><a name="2636"
+      > </a
+      ><a name="2637" class="Number"
+      >6</a
+      ><a name="2638"
+      > _&#8658;_
 
-  </a><a name="2644" class="Keyword">data</a><a name="2648"> </a><a name="2649" href="/2016/one-lambda-calculus-many-times/#2649" class="Datatype">Type</a><a name="2653"> </a><a name="2654" class="Symbol">:</a><a name="2655"> </a><a name="2656" class="PrimitiveType">Set</a><a name="2659"> </a><a name="2660" class="Keyword">where</a><a name="2665">
-    </a><a name="2670" href="/2016/one-lambda-calculus-many-times/#2670" class="InductiveConstructor">El</a><a name="2672">  </a><a name="2674" class="Symbol">:</a><a name="2675"> </a><a name="2676" href="/2016/one-lambda-calculus-many-times/#1574" class="Bound">Atom</a><a name="2680"> </a><a name="2681" class="Symbol">→</a><a name="2682"> </a><a name="2683" href="/2016/one-lambda-calculus-many-times/#2649" class="Datatype">Type</a><a name="2687">
-    </a><a name="2692" href="/2016/one-lambda-calculus-many-times/#2692" class="InductiveConstructor Operator">_⇒_</a><a name="2695"> </a><a name="2696" class="Symbol">:</a><a name="2697"> </a><a name="2698" href="/2016/one-lambda-calculus-many-times/#2649" class="Datatype">Type</a><a name="2702"> </a><a name="2703" class="Symbol">→</a><a name="2704"> </a><a name="2705" href="/2016/one-lambda-calculus-many-times/#2649" class="Datatype">Type</a><a name="2709"> </a><a name="2710" class="Symbol">→</a><a name="2711"> </a><a name="2712" href="/2016/one-lambda-calculus-many-times/#2649" class="Datatype">Type</a></pre>
+  </a
+      ><a name="2646" class="Keyword"
+      >data</a
+      ><a name="2650"
+      > </a
+      ><a name="2651" href="2016-03-20-one-lambda-calculus-many-times.html#2651" class="Datatype"
+      >Type</a
+      ><a name="2655"
+      > </a
+      ><a name="2656" class="Symbol"
+      >:</a
+      ><a name="2657"
+      > </a
+      ><a name="2658" class="PrimitiveType"
+      >Set</a
+      ><a name="2661"
+      > </a
+      ><a name="2662" class="Keyword"
+      >where</a
+      ><a name="2667"
+      >
+    </a
+      ><a name="2672" href="2016-03-20-one-lambda-calculus-many-times.html#2672" class="InductiveConstructor"
+      >El</a
+      ><a name="2674"
+      >  </a
+      ><a name="2676" class="Symbol"
+      >:</a
+      ><a name="2677"
+      > </a
+      ><a name="2678" href="2016-03-20-one-lambda-calculus-many-times.html#1576" class="Bound"
+      >Atom</a
+      ><a name="2682"
+      > </a
+      ><a name="2683" class="Symbol"
+      >&#8594;</a
+      ><a name="2684"
+      > </a
+      ><a name="2685" href="2016-03-20-one-lambda-calculus-many-times.html#2651" class="Datatype"
+      >Type</a
+      ><a name="2689"
+      >
+    </a
+      ><a name="2694" href="2016-03-20-one-lambda-calculus-many-times.html#2694" class="InductiveConstructor Operator"
+      >_&#8658;_</a
+      ><a name="2697"
+      > </a
+      ><a name="2698" class="Symbol"
+      >:</a
+      ><a name="2699"
+      > </a
+      ><a name="2700" href="2016-03-20-one-lambda-calculus-many-times.html#2651" class="Datatype"
+      >Type</a
+      ><a name="2704"
+      > </a
+      ><a name="2705" class="Symbol"
+      >&#8594;</a
+      ><a name="2706"
+      > </a
+      ><a name="2707" href="2016-03-20-one-lambda-calculus-many-times.html#2651" class="Datatype"
+      >Type</a
+      ><a name="2711"
+      > </a
+      ><a name="2712" class="Symbol"
+      >&#8594;</a
+      ><a name="2713"
+      > </a
+      ><a name="2714" href="2016-03-20-one-lambda-calculus-many-times.html#2651" class="Datatype"
+      >Type</a
+      >
+</pre><!--{% endraw %}-->
 
 Now we'll define sequents. Even though this is just a tiny piece of
 syntax, we should put some thought behind it...
@@ -69,18 +185,322 @@ done, but implementation-wise a bag is actually a rather complex
 beast. For this reason, we'll use a *list*:[^imports]
 
 <div class="hidden">
-<pre class="Agda">  <a name="3480" class="Keyword">open</a><a name="3484"> </a><a name="3485" class="Keyword">import</a><a name="3491"> </a><a name="3492" href="https://agda.github.io/agda-stdlib/Data.Nat.html#1" class="Module" target="_blank">Data.Nat</a><a name="3500">             </a><a name="3513" class="Keyword">using</a><a name="3518"> </a><a name="3519" class="Symbol">(</a><a name="3520" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#69" class="Datatype" target="_blank">ℕ</a><a name="3521" class="Symbol">;</a><a name="3522"> </a><a name="3523" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#100" class="InductiveConstructor" target="_blank">suc</a><a name="3526" class="Symbol">;</a><a name="3527"> </a><a name="3528" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#87" class="InductiveConstructor" target="_blank">zero</a><a name="3532" class="Symbol">)</a><a name="3533">
-  </a><a name="3536" class="Keyword">open</a><a name="3540"> </a><a name="3541" class="Keyword">import</a><a name="3547"> </a><a name="3548" href="https://agda.github.io/agda-stdlib/Data.Fin.html#1" class="Module" target="_blank">Data.Fin</a><a name="3556">             </a><a name="3569" class="Keyword">using</a><a name="3574"> </a><a name="3575" class="Symbol">(</a><a name="3576" href="https://agda.github.io/agda-stdlib/Data.Fin.html#842" class="Datatype" target="_blank">Fin</a><a name="3579" class="Symbol">;</a><a name="3580"> </a><a name="3581" href="https://agda.github.io/agda-stdlib/Data.Fin.html#895" class="InductiveConstructor" target="_blank">suc</a><a name="3584" class="Symbol">;</a><a name="3585"> </a><a name="3586" href="https://agda.github.io/agda-stdlib/Data.Fin.html#864" class="InductiveConstructor" target="_blank">zero</a><a name="3590" class="Symbol">)</a><a name="3591">
-  </a><a name="3594" class="Keyword">open</a><a name="3598"> </a><a name="3599" class="Keyword">import</a><a name="3605"> </a><a name="3606" href="https://agda.github.io/agda-stdlib/Data.List.html#1" class="Module" target="_blank">Data.List</a><a name="3615">            </a><a name="3627" class="Keyword">using</a><a name="3632"> </a><a name="3633" class="Symbol">(</a><a name="3634" href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#52" class="Datatype" target="_blank">List</a><a name="3638" class="Symbol">;</a><a name="3639"> </a><a name="3640" href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">_∷_</a><a name="3643" class="Symbol">;</a><a name="3644"> </a><a name="3645" href="https://agda.github.io/agda-stdlib/Data.List.Base.html#5519" class="InductiveConstructor" target="_blank">[]</a><a name="3647" class="Symbol">;</a><a name="3648"> </a><a name="3649" href="https://agda.github.io/agda-stdlib/Data.List.Base.html#895" class="Function Operator" target="_blank">_++_</a><a name="3653" class="Symbol">)</a><a name="3654">
-  </a><a name="3657" class="Keyword">open</a><a name="3661"> </a><a name="3662" class="Keyword">import</a><a name="3668"> </a><a name="3669" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1" class="Module" target="_blank">Data.List.Any</a><a name="3682">        </a><a name="3690" class="Keyword">using</a><a name="3695"> </a><a name="3696" class="Symbol">(</a><a name="3697" class="Keyword">module</a><a name="3703"> </a><a name="3704" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#250" class="Module" target="_blank">Membership</a><a name="3714" class="Symbol">;</a><a name="3715"> </a><a name="3716" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174" class="InductiveConstructor" target="_blank">here</a><a name="3720" class="Symbol">;</a><a name="3721"> </a><a name="3722" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor" target="_blank">there</a><a name="3727" class="Symbol">)</a><a name="3728">
-  </a><a name="3731" class="Keyword">open</a><a name="3735"> </a><a name="3736" class="Keyword">import</a><a name="3742"> </a><a name="3743" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#1" class="Module" target="_blank">Function.Equivalence</a><a name="3763"> </a><a name="3764" class="Keyword">using</a><a name="3769"> </a><a name="3770" class="Symbol">(</a><a name="3771" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#711" class="Function Operator" target="_blank">_⇔_</a><a name="3774" class="Symbol">;</a><a name="3775"> </a><a name="3776" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#2131" class="Function" target="_blank">id</a><a name="3778" class="Symbol">;</a><a name="3779"> </a><a name="3780" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#1070" class="Function" target="_blank">map</a><a name="3783" class="Symbol">;</a><a name="3784"> </a><a name="3785" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#804" class="Function" target="_blank">equivalence</a><a name="3796" class="Symbol">)</a><a name="3797">
-  </a><a name="3800" class="Keyword">open</a><a name="3804"> </a><a name="3805" class="Keyword">import</a><a name="3811"> </a><a name="3812" href="https://agda.github.io/agda-stdlib/Relation.Binary.PropositionalEquality.html#1" class="Module" target="_blank">Relation.Binary.PropositionalEquality</a><a name="3849">
-  </a><a name="3852" class="Keyword">open</a><a name="3856"> </a><a name="3857" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#2298" class="Module" target="_blank">Membership</a><a name="3867"> </a><a name="3868" class="Symbol">(</a><a name="3869" href="https://agda.github.io/agda-stdlib/Relation.Binary.PropositionalEquality.html#1526" class="Function" target="_blank">setoid</a><a name="3875"> </a><a name="3876" href="/2016/one-lambda-calculus-many-times/#2649" class="Datatype">Type</a><a name="3880" class="Symbol">)</a><a name="3881">    </a><a name="3885" class="Keyword">using</a><a name="3890"> </a><a name="3891" class="Symbol">(</a><a name="3892">_∈_</a><a name="3895" class="Symbol">;</a><a name="3896"> _⊆_</a><a name="3900" class="Symbol">)</a></pre>
+<!--{% raw %}--><pre class="Agda">
+  <a name="3482" class="Keyword"
+      >open</a
+      ><a name="3486"
+      > </a
+      ><a name="3487" class="Keyword"
+      >import</a
+      ><a name="3493"
+      > </a
+      ><a name="3494" href="https://agda.github.io/agda-stdlib/Data.Nat.html#1" class="Module"
+      >Data.Nat</a
+      ><a name="3502"
+      >             </a
+      ><a name="3515" class="Keyword"
+      >using</a
+      ><a name="3520"
+      > </a
+      ><a name="3521" class="Symbol"
+      >(</a
+      ><a name="3522" href="Agda.Builtin.Nat.html#69" class="Datatype"
+      >&#8469;</a
+      ><a name="3523" class="Symbol"
+      >;</a
+      ><a name="3524"
+      > </a
+      ><a name="3525" href="Agda.Builtin.Nat.html#100" class="InductiveConstructor"
+      >suc</a
+      ><a name="3528" class="Symbol"
+      >;</a
+      ><a name="3529"
+      > </a
+      ><a name="3530" href="Agda.Builtin.Nat.html#87" class="InductiveConstructor"
+      >zero</a
+      ><a name="3534" class="Symbol"
+      >)</a
+      ><a name="3535"
+      >
+  </a
+      ><a name="3538" class="Keyword"
+      >open</a
+      ><a name="3542"
+      > </a
+      ><a name="3543" class="Keyword"
+      >import</a
+      ><a name="3549"
+      > </a
+      ><a name="3550" href="https://agda.github.io/agda-stdlib/Data.Fin.html#1" class="Module"
+      >Data.Fin</a
+      ><a name="3558"
+      >             </a
+      ><a name="3571" class="Keyword"
+      >using</a
+      ><a name="3576"
+      > </a
+      ><a name="3577" class="Symbol"
+      >(</a
+      ><a name="3578" href="https://agda.github.io/agda-stdlib/Data.Fin.html#842" class="Datatype"
+      >Fin</a
+      ><a name="3581" class="Symbol"
+      >;</a
+      ><a name="3582"
+      > </a
+      ><a name="3583" href="https://agda.github.io/agda-stdlib/Data.Fin.html#895" class="InductiveConstructor"
+      >suc</a
+      ><a name="3586" class="Symbol"
+      >;</a
+      ><a name="3587"
+      > </a
+      ><a name="3588" href="https://agda.github.io/agda-stdlib/Data.Fin.html#864" class="InductiveConstructor"
+      >zero</a
+      ><a name="3592" class="Symbol"
+      >)</a
+      ><a name="3593"
+      >
+  </a
+      ><a name="3596" class="Keyword"
+      >open</a
+      ><a name="3600"
+      > </a
+      ><a name="3601" class="Keyword"
+      >import</a
+      ><a name="3607"
+      > </a
+      ><a name="3608" href="https://agda.github.io/agda-stdlib/Data.List.html#1" class="Module"
+      >Data.List</a
+      ><a name="3617"
+      >            </a
+      ><a name="3629" class="Keyword"
+      >using</a
+      ><a name="3634"
+      > </a
+      ><a name="3635" class="Symbol"
+      >(</a
+      ><a name="3636" href="Agda.Builtin.List.html#52" class="Datatype"
+      >List</a
+      ><a name="3640" class="Symbol"
+      >;</a
+      ><a name="3641"
+      > </a
+      ><a name="3642" href="Agda.Builtin.List.html#104" class="InductiveConstructor Operator"
+      >_&#8759;_</a
+      ><a name="3645" class="Symbol"
+      >;</a
+      ><a name="3646"
+      > </a
+      ><a name="3647" href="https://agda.github.io/agda-stdlib/Data.List.Base.html#5519" class="InductiveConstructor"
+      >[]</a
+      ><a name="3649" class="Symbol"
+      >;</a
+      ><a name="3650"
+      > </a
+      ><a name="3651" href="https://agda.github.io/agda-stdlib/Data.List.Base.html#895" class="Function Operator"
+      >_++_</a
+      ><a name="3655" class="Symbol"
+      >)</a
+      ><a name="3656"
+      >
+  </a
+      ><a name="3659" class="Keyword"
+      >open</a
+      ><a name="3663"
+      > </a
+      ><a name="3664" class="Keyword"
+      >import</a
+      ><a name="3670"
+      > </a
+      ><a name="3671" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1" class="Module"
+      >Data.List.Any</a
+      ><a name="3684"
+      >        </a
+      ><a name="3692" class="Keyword"
+      >using</a
+      ><a name="3697"
+      > </a
+      ><a name="3698" class="Symbol"
+      >(</a
+      ><a name="3699" class="Keyword"
+      >module</a
+      ><a name="3705"
+      > </a
+      ><a name="3706" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#250" class="Module"
+      >Membership</a
+      ><a name="3716" class="Symbol"
+      >;</a
+      ><a name="3717"
+      > </a
+      ><a name="3718" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174" class="InductiveConstructor"
+      >here</a
+      ><a name="3722" class="Symbol"
+      >;</a
+      ><a name="3723"
+      > </a
+      ><a name="3724" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor"
+      >there</a
+      ><a name="3729" class="Symbol"
+      >)</a
+      ><a name="3730"
+      >
+  </a
+      ><a name="3733" class="Keyword"
+      >open</a
+      ><a name="3737"
+      > </a
+      ><a name="3738" class="Keyword"
+      >import</a
+      ><a name="3744"
+      > </a
+      ><a name="3745" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#1" class="Module"
+      >Function.Equivalence</a
+      ><a name="3765"
+      > </a
+      ><a name="3766" class="Keyword"
+      >using</a
+      ><a name="3771"
+      > </a
+      ><a name="3772" class="Symbol"
+      >(</a
+      ><a name="3773" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#711" class="Function Operator"
+      >_&#8660;_</a
+      ><a name="3776" class="Symbol"
+      >;</a
+      ><a name="3777"
+      > </a
+      ><a name="3778" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#2131" class="Function"
+      >id</a
+      ><a name="3780" class="Symbol"
+      >;</a
+      ><a name="3781"
+      > </a
+      ><a name="3782" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#1070" class="Function"
+      >map</a
+      ><a name="3785" class="Symbol"
+      >;</a
+      ><a name="3786"
+      > </a
+      ><a name="3787" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#804" class="Function"
+      >equivalence</a
+      ><a name="3798" class="Symbol"
+      >)</a
+      ><a name="3799"
+      >
+  </a
+      ><a name="3802" class="Keyword"
+      >open</a
+      ><a name="3806"
+      > </a
+      ><a name="3807" class="Keyword"
+      >import</a
+      ><a name="3813"
+      > </a
+      ><a name="3814" href="https://agda.github.io/agda-stdlib/Relation.Binary.PropositionalEquality.html#1" class="Module"
+      >Relation.Binary.PropositionalEquality</a
+      ><a name="3851"
+      >
+  </a
+      ><a name="3854" class="Keyword"
+      >open</a
+      ><a name="3858"
+      > </a
+      ><a name="3859" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#2298" class="Module"
+      >Membership</a
+      ><a name="3869"
+      > </a
+      ><a name="3870" class="Symbol"
+      >(</a
+      ><a name="3871" href="https://agda.github.io/agda-stdlib/Relation.Binary.PropositionalEquality.html#1526" class="Function"
+      >setoid</a
+      ><a name="3877"
+      > </a
+      ><a name="3878" href="2016-03-20-one-lambda-calculus-many-times.html#2651" class="Datatype"
+      >Type</a
+      ><a name="3882" class="Symbol"
+      >)</a
+      ><a name="3883"
+      >    </a
+      ><a name="3887" class="Keyword"
+      >using</a
+      ><a name="3892"
+      > </a
+      ><a name="3893" class="Symbol"
+      >(</a
+      ><a name="3894"
+      >_&#8712;_</a
+      ><a name="3897" class="Symbol"
+      >;</a
+      ><a name="3898"
+      > _&#8838;_</a
+      ><a name="3902" class="Symbol"
+      >)</a
+      >
+</pre><!--{% endraw %}-->
 </div>
-<pre class="Agda">  <a name="3935" class="Keyword">infix</a><a name="3940"> </a><a name="3941" class="Number">4</a><a name="3942"> _⊢_
+<!--{% raw %}--><pre class="Agda">
+  <a name="3937" class="Keyword"
+      >infix</a
+      ><a name="3942"
+      > </a
+      ><a name="3943" class="Number"
+      >4</a
+      ><a name="3944"
+      > _&#8866;_
 
-  </a><a name="3950" class="Keyword">data</a><a name="3954"> </a><a name="3955" href="/2016/one-lambda-calculus-many-times/#3955" class="Datatype">Sequent</a><a name="3962"> </a><a name="3963" class="Symbol">:</a><a name="3964"> </a><a name="3965" class="PrimitiveType">Set</a><a name="3968"> </a><a name="3969" class="Keyword">where</a><a name="3974">
-    </a><a name="3979" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">_⊢_</a><a name="3982"> </a><a name="3983" class="Symbol">:</a><a name="3984"> </a><a name="3985" href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#52" class="Datatype" target="_blank">List</a><a name="3989"> </a><a name="3990" href="/2016/one-lambda-calculus-many-times/#2649" class="Datatype">Type</a><a name="3994"> </a><a name="3995" class="Symbol">→</a><a name="3996"> </a><a name="3997" href="/2016/one-lambda-calculus-many-times/#2649" class="Datatype">Type</a><a name="4001"> </a><a name="4002" class="Symbol">→</a><a name="4003"> </a><a name="4004" href="/2016/one-lambda-calculus-many-times/#3955" class="Datatype">Sequent</a></pre>
+  </a
+      ><a name="3952" class="Keyword"
+      >data</a
+      ><a name="3956"
+      > </a
+      ><a name="3957" href="2016-03-20-one-lambda-calculus-many-times.html#3957" class="Datatype"
+      >Sequent</a
+      ><a name="3964"
+      > </a
+      ><a name="3965" class="Symbol"
+      >:</a
+      ><a name="3966"
+      > </a
+      ><a name="3967" class="PrimitiveType"
+      >Set</a
+      ><a name="3970"
+      > </a
+      ><a name="3971" class="Keyword"
+      >where</a
+      ><a name="3976"
+      >
+    </a
+      ><a name="3981" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >_&#8866;_</a
+      ><a name="3984"
+      > </a
+      ><a name="3985" class="Symbol"
+      >:</a
+      ><a name="3986"
+      > </a
+      ><a name="3987" href="Agda.Builtin.List.html#52" class="Datatype"
+      >List</a
+      ><a name="3991"
+      > </a
+      ><a name="3992" href="2016-03-20-one-lambda-calculus-many-times.html#2651" class="Datatype"
+      >Type</a
+      ><a name="3996"
+      > </a
+      ><a name="3997" class="Symbol"
+      >&#8594;</a
+      ><a name="3998"
+      > </a
+      ><a name="3999" href="2016-03-20-one-lambda-calculus-many-times.html#2651" class="Datatype"
+      >Type</a
+      ><a name="4003"
+      > </a
+      ><a name="4004" class="Symbol"
+      >&#8594;</a
+      ><a name="4005"
+      > </a
+      ><a name="4006" href="2016-03-20-one-lambda-calculus-many-times.html#3957" class="Datatype"
+      >Sequent</a
+      >
+</pre><!--{% endraw %}-->
 
 So what does a *proof* of a sequent look like? The logical system that
 is most familiar to a computer scientist is probably *natural
@@ -118,12 +538,244 @@ interest of keeping things simple I will use that.
 We encode the natural deduction system as a datatype, with each rule
 corresponding to a *constructor*, and each proof a *value*:
 
-<pre class="Agda">  <a name="5351" class="Keyword">infix</a><a name="5356"> </a><a name="5357" class="Number">3</a><a name="5358"> ND_
+<!--{% raw %}--><pre class="Agda">
+  <a name="5353" class="Keyword"
+      >infix</a
+      ><a name="5358"
+      > </a
+      ><a name="5359" class="Number"
+      >3</a
+      ><a name="5360"
+      > ND_
 
-  </a><a name="5366" class="Keyword">data</a><a name="5370"> </a><a name="5371" href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND_</a><a name="5374"> </a><a name="5375" class="Symbol">:</a><a name="5376"> </a><a name="5377" href="/2016/one-lambda-calculus-many-times/#3955" class="Datatype">Sequent</a><a name="5384"> </a><a name="5385" class="Symbol">→</a><a name="5386"> </a><a name="5387" class="PrimitiveType">Set</a><a name="5390"> </a><a name="5391" class="Keyword">where</a><a name="5396">
-    </a><a name="5401" href="/2016/one-lambda-calculus-many-times/#5401" class="InductiveConstructor">ax</a><a name="5403"> </a><a name="5404" class="Symbol">:</a><a name="5405"> </a><a name="5418" href="/2016/one-lambda-calculus-many-times/#5409" class="Bound">A</a><a name="5419"> </a><a name="5420" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#2920" class="Function Operator" target="_blank">∈</a><a name="5421"> </a><a name="5422" href="/2016/one-lambda-calculus-many-times/#5413" class="Bound">Γ</a><a name="5423"> </a><a name="5424" class="Symbol">→</a><a name="5425"> </a><a name="5426" href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a name="5428"> </a><a name="5429" href="/2016/one-lambda-calculus-many-times/#5413" class="Bound">Γ</a><a name="5430"> </a><a name="5431" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="5432"> </a><a name="5433" href="/2016/one-lambda-calculus-many-times/#5409" class="Bound">A</a><a name="5434">
-    </a><a name="5439" href="/2016/one-lambda-calculus-many-times/#5439" class="InductiveConstructor">⇒i</a><a name="5441"> </a><a name="5442" class="Symbol">:</a><a name="5443"> </a><a name="5456" href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a name="5458"> </a><a name="5459" href="/2016/one-lambda-calculus-many-times/#5447" class="Bound">A</a><a name="5460"> </a><a name="5461" href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a name="5462"> </a><a name="5463" href="/2016/one-lambda-calculus-many-times/#5451" class="Bound">Γ</a><a name="5464"> </a><a name="5465" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="5466"> </a><a name="5467" href="/2016/one-lambda-calculus-many-times/#5449" class="Bound">B</a><a name="5468"> </a><a name="5469" class="Symbol">→</a><a name="5470"> </a><a name="5471" href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a name="5473"> </a><a name="5474" href="/2016/one-lambda-calculus-many-times/#5451" class="Bound">Γ</a><a name="5475"> </a><a name="5476" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="5477"> </a><a name="5478" href="/2016/one-lambda-calculus-many-times/#5447" class="Bound">A</a><a name="5479"> </a><a name="5480" href="/2016/one-lambda-calculus-many-times/#2692" class="InductiveConstructor Operator">⇒</a><a name="5481"> </a><a name="5482" href="/2016/one-lambda-calculus-many-times/#5449" class="Bound">B</a><a name="5483">
-    </a><a name="5488" href="/2016/one-lambda-calculus-many-times/#5488" class="InductiveConstructor">⇒e</a><a name="5490"> </a><a name="5491" class="Symbol">:</a><a name="5492"> </a><a name="5505" href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a name="5507"> </a><a name="5508" href="/2016/one-lambda-calculus-many-times/#5500" class="Bound">Γ</a><a name="5509"> </a><a name="5510" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="5511"> </a><a name="5512" href="/2016/one-lambda-calculus-many-times/#5496" class="Bound">A</a><a name="5513"> </a><a name="5514" href="/2016/one-lambda-calculus-many-times/#2692" class="InductiveConstructor Operator">⇒</a><a name="5515"> </a><a name="5516" href="/2016/one-lambda-calculus-many-times/#5498" class="Bound">B</a><a name="5517"> </a><a name="5518" class="Symbol">→</a><a name="5519"> </a><a name="5520" href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a name="5522"> </a><a name="5523" href="/2016/one-lambda-calculus-many-times/#5500" class="Bound">Γ</a><a name="5524"> </a><a name="5525" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="5526"> </a><a name="5527" href="/2016/one-lambda-calculus-many-times/#5496" class="Bound">A</a><a name="5528"> </a><a name="5529" class="Symbol">→</a><a name="5530"> </a><a name="5531" href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a name="5533"> </a><a name="5534" href="/2016/one-lambda-calculus-many-times/#5500" class="Bound">Γ</a><a name="5535"> </a><a name="5536" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="5537"> </a><a name="5538" href="/2016/one-lambda-calculus-many-times/#5498" class="Bound">B</a></pre>
+  </a
+      ><a name="5368" class="Keyword"
+      >data</a
+      ><a name="5372"
+      > </a
+      ><a name="5373" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
+      >ND_</a
+      ><a name="5376"
+      > </a
+      ><a name="5377" class="Symbol"
+      >:</a
+      ><a name="5378"
+      > </a
+      ><a name="5379" href="2016-03-20-one-lambda-calculus-many-times.html#3957" class="Datatype"
+      >Sequent</a
+      ><a name="5386"
+      > </a
+      ><a name="5387" class="Symbol"
+      >&#8594;</a
+      ><a name="5388"
+      > </a
+      ><a name="5389" class="PrimitiveType"
+      >Set</a
+      ><a name="5392"
+      > </a
+      ><a name="5393" class="Keyword"
+      >where</a
+      ><a name="5398"
+      >
+    </a
+      ><a name="5403" href="2016-03-20-one-lambda-calculus-many-times.html#5403" class="InductiveConstructor"
+      >ax</a
+      ><a name="5405"
+      > </a
+      ><a name="5406" class="Symbol"
+      >:</a
+      ><a name="5407"
+      > </a
+      ><a name="5408" class="Symbol"
+      >&#8704;</a
+      ><a name="5409"
+      > </a
+      ><a name="5418" class="Symbol"
+      >&#8594;</a
+      ><a name="5419"
+      > </a
+      ><a name="5420" href="2016-03-20-one-lambda-calculus-many-times.html#5411" class="Bound"
+      >A</a
+      ><a name="5421"
+      > </a
+      ><a name="5422" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#2920" class="Function Operator"
+      >&#8712;</a
+      ><a name="5423"
+      > </a
+      ><a name="5424" href="2016-03-20-one-lambda-calculus-many-times.html#5415" class="Bound"
+      >&#915;</a
+      ><a name="5425"
+      > </a
+      ><a name="5426" class="Symbol"
+      >&#8594;</a
+      ><a name="5427"
+      > </a
+      ><a name="5428" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
+      >ND</a
+      ><a name="5430"
+      > </a
+      ><a name="5431" href="2016-03-20-one-lambda-calculus-many-times.html#5415" class="Bound"
+      >&#915;</a
+      ><a name="5432"
+      > </a
+      ><a name="5433" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="5434"
+      > </a
+      ><a name="5435" href="2016-03-20-one-lambda-calculus-many-times.html#5411" class="Bound"
+      >A</a
+      ><a name="5436"
+      >
+    </a
+      ><a name="5441" href="2016-03-20-one-lambda-calculus-many-times.html#5441" class="InductiveConstructor"
+      >&#8658;i</a
+      ><a name="5443"
+      > </a
+      ><a name="5444" class="Symbol"
+      >:</a
+      ><a name="5445"
+      > </a
+      ><a name="5446" class="Symbol"
+      >&#8704;</a
+      ><a name="5447"
+      > </a
+      ><a name="5456" class="Symbol"
+      >&#8594;</a
+      ><a name="5457"
+      > </a
+      ><a name="5458" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
+      >ND</a
+      ><a name="5460"
+      > </a
+      ><a name="5461" href="2016-03-20-one-lambda-calculus-many-times.html#5449" class="Bound"
+      >A</a
+      ><a name="5462"
+      > </a
+      ><a name="5463" href="Agda.Builtin.List.html#104" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="5464"
+      > </a
+      ><a name="5465" href="2016-03-20-one-lambda-calculus-many-times.html#5453" class="Bound"
+      >&#915;</a
+      ><a name="5466"
+      > </a
+      ><a name="5467" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="5468"
+      > </a
+      ><a name="5469" href="2016-03-20-one-lambda-calculus-many-times.html#5451" class="Bound"
+      >B</a
+      ><a name="5470"
+      > </a
+      ><a name="5471" class="Symbol"
+      >&#8594;</a
+      ><a name="5472"
+      > </a
+      ><a name="5473" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
+      >ND</a
+      ><a name="5475"
+      > </a
+      ><a name="5476" href="2016-03-20-one-lambda-calculus-many-times.html#5453" class="Bound"
+      >&#915;</a
+      ><a name="5477"
+      > </a
+      ><a name="5478" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="5479"
+      > </a
+      ><a name="5480" href="2016-03-20-one-lambda-calculus-many-times.html#5449" class="Bound"
+      >A</a
+      ><a name="5481"
+      > </a
+      ><a name="5482" href="2016-03-20-one-lambda-calculus-many-times.html#2694" class="InductiveConstructor Operator"
+      >&#8658;</a
+      ><a name="5483"
+      > </a
+      ><a name="5484" href="2016-03-20-one-lambda-calculus-many-times.html#5451" class="Bound"
+      >B</a
+      ><a name="5485"
+      >
+    </a
+      ><a name="5490" href="2016-03-20-one-lambda-calculus-many-times.html#5490" class="InductiveConstructor"
+      >&#8658;e</a
+      ><a name="5492"
+      > </a
+      ><a name="5493" class="Symbol"
+      >:</a
+      ><a name="5494"
+      > </a
+      ><a name="5495" class="Symbol"
+      >&#8704;</a
+      ><a name="5496"
+      > </a
+      ><a name="5505" class="Symbol"
+      >&#8594;</a
+      ><a name="5506"
+      > </a
+      ><a name="5507" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
+      >ND</a
+      ><a name="5509"
+      > </a
+      ><a name="5510" href="2016-03-20-one-lambda-calculus-many-times.html#5502" class="Bound"
+      >&#915;</a
+      ><a name="5511"
+      > </a
+      ><a name="5512" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="5513"
+      > </a
+      ><a name="5514" href="2016-03-20-one-lambda-calculus-many-times.html#5498" class="Bound"
+      >A</a
+      ><a name="5515"
+      > </a
+      ><a name="5516" href="2016-03-20-one-lambda-calculus-many-times.html#2694" class="InductiveConstructor Operator"
+      >&#8658;</a
+      ><a name="5517"
+      > </a
+      ><a name="5518" href="2016-03-20-one-lambda-calculus-many-times.html#5500" class="Bound"
+      >B</a
+      ><a name="5519"
+      > </a
+      ><a name="5520" class="Symbol"
+      >&#8594;</a
+      ><a name="5521"
+      > </a
+      ><a name="5522" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
+      >ND</a
+      ><a name="5524"
+      > </a
+      ><a name="5525" href="2016-03-20-one-lambda-calculus-many-times.html#5502" class="Bound"
+      >&#915;</a
+      ><a name="5526"
+      > </a
+      ><a name="5527" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="5528"
+      > </a
+      ><a name="5529" href="2016-03-20-one-lambda-calculus-many-times.html#5498" class="Bound"
+      >A</a
+      ><a name="5530"
+      > </a
+      ><a name="5531" class="Symbol"
+      >&#8594;</a
+      ><a name="5532"
+      > </a
+      ><a name="5533" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
+      >ND</a
+      ><a name="5535"
+      > </a
+      ><a name="5536" href="2016-03-20-one-lambda-calculus-many-times.html#5502" class="Bound"
+      >&#915;</a
+      ><a name="5537"
+      > </a
+      ><a name="5538" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="5539"
+      > </a
+      ><a name="5540" href="2016-03-20-one-lambda-calculus-many-times.html#5500" class="Bound"
+      >B</a
+      >
+</pre><!--{% endraw %}-->
 
 Note: for the sake of brevity, I'm using an Agda notation in which
 implicit arguments are hidden. That means that any unbound
@@ -135,9 +787,89 @@ Operator">ND</a> as proofs made up of rules, but if you prefer to
 think of them as programs made up of the constructors of lambda terms,
 just use the following syntax:
 
-<pre class="Agda">  <a name="6010" class="Keyword">pattern</a><a name="6017"> </a><a name="6018" href="/2016/one-lambda-calculus-many-times/#6018" class="InductiveConstructor">var</a><a name="6021">   </a><a name="6024" href="/2016/one-lambda-calculus-many-times/#6033" class="Bound">x</a><a name="6025"> </a><a name="6026" class="Symbol">=</a><a name="6027"> </a><a name="6028" href="/2016/one-lambda-calculus-many-times/#5401" class="InductiveConstructor">ax</a><a name="6030">   </a><a name="6033" href="/2016/one-lambda-calculus-many-times/#6033" class="Bound">x</a><a name="6034">
-  </a><a name="6037" class="Keyword">pattern</a><a name="6044"> </a><a name="6045" href="/2016/one-lambda-calculus-many-times/#6045" class="InductiveConstructor">lam</a><a name="6048">   </a><a name="6051" href="/2016/one-lambda-calculus-many-times/#6060" class="Bound">x</a><a name="6052"> </a><a name="6053" class="Symbol">=</a><a name="6054"> </a><a name="6055" href="/2016/one-lambda-calculus-many-times/#5439" class="InductiveConstructor">⇒i</a><a name="6057">   </a><a name="6060" href="/2016/one-lambda-calculus-many-times/#6060" class="Bound">x</a><a name="6061">
-  </a><a name="6064" class="Keyword">pattern</a><a name="6071"> </a><a name="6072" href="/2016/one-lambda-calculus-many-times/#6072" class="InductiveConstructor Operator">_∙_</a><a name="6075"> </a><a name="6076" href="/2016/one-lambda-calculus-many-times/#6085" class="Bound">f</a><a name="6077"> </a><a name="6078" href="/2016/one-lambda-calculus-many-times/#6087" class="Bound">x</a><a name="6079"> </a><a name="6080" class="Symbol">=</a><a name="6081"> </a><a name="6082" href="/2016/one-lambda-calculus-many-times/#5488" class="InductiveConstructor">⇒e</a><a name="6084"> </a><a name="6085" href="/2016/one-lambda-calculus-many-times/#6085" class="Bound">f</a><a name="6086"> </a><a name="6087" href="/2016/one-lambda-calculus-many-times/#6087" class="Bound">x</a></pre>
+<!--{% raw %}--><pre class="Agda">
+  <a name="6012" class="Keyword"
+      >pattern</a
+      ><a name="6019"
+      > </a
+      ><a name="6020" href="2016-03-20-one-lambda-calculus-many-times.html#6020" class="InductiveConstructor"
+      >var</a
+      ><a name="6023"
+      >   </a
+      ><a name="6026" href="2016-03-20-one-lambda-calculus-many-times.html#6035" class="Bound"
+      >x</a
+      ><a name="6027"
+      > </a
+      ><a name="6028" class="Symbol"
+      >=</a
+      ><a name="6029"
+      > </a
+      ><a name="6030" href="2016-03-20-one-lambda-calculus-many-times.html#5403" class="InductiveConstructor"
+      >ax</a
+      ><a name="6032"
+      >   </a
+      ><a name="6035" href="2016-03-20-one-lambda-calculus-many-times.html#6035" class="Bound"
+      >x</a
+      ><a name="6036"
+      >
+  </a
+      ><a name="6039" class="Keyword"
+      >pattern</a
+      ><a name="6046"
+      > </a
+      ><a name="6047" href="2016-03-20-one-lambda-calculus-many-times.html#6047" class="InductiveConstructor"
+      >lam</a
+      ><a name="6050"
+      >   </a
+      ><a name="6053" href="2016-03-20-one-lambda-calculus-many-times.html#6062" class="Bound"
+      >x</a
+      ><a name="6054"
+      > </a
+      ><a name="6055" class="Symbol"
+      >=</a
+      ><a name="6056"
+      > </a
+      ><a name="6057" href="2016-03-20-one-lambda-calculus-many-times.html#5441" class="InductiveConstructor"
+      >&#8658;i</a
+      ><a name="6059"
+      >   </a
+      ><a name="6062" href="2016-03-20-one-lambda-calculus-many-times.html#6062" class="Bound"
+      >x</a
+      ><a name="6063"
+      >
+  </a
+      ><a name="6066" class="Keyword"
+      >pattern</a
+      ><a name="6073"
+      > </a
+      ><a name="6074" href="2016-03-20-one-lambda-calculus-many-times.html#6074" class="InductiveConstructor Operator"
+      >_&#8729;_</a
+      ><a name="6077"
+      > </a
+      ><a name="6078" href="2016-03-20-one-lambda-calculus-many-times.html#6087" class="Bound"
+      >f</a
+      ><a name="6079"
+      > </a
+      ><a name="6080" href="2016-03-20-one-lambda-calculus-many-times.html#6089" class="Bound"
+      >x</a
+      ><a name="6081"
+      > </a
+      ><a name="6082" class="Symbol"
+      >=</a
+      ><a name="6083"
+      > </a
+      ><a name="6084" href="2016-03-20-one-lambda-calculus-many-times.html#5490" class="InductiveConstructor"
+      >&#8658;e</a
+      ><a name="6086"
+      > </a
+      ><a name="6087" href="2016-03-20-one-lambda-calculus-many-times.html#6087" class="Bound"
+      >f</a
+      ><a name="6088"
+      > </a
+      ><a name="6089" href="2016-03-20-one-lambda-calculus-many-times.html#6089" class="Bound"
+      >x</a
+      >
+</pre><!--{% endraw %}-->
 
 Earlier, we made the conscious choice to use *lists* to represent the
 antecedent. However, this introduced a minor problem: while two
@@ -163,16 +895,376 @@ natural deduction proofs. Note that we represent the subset relation
 as a *function*, that is to say $$\Gamma \subseteq \Gamma\prime$$ is
 the *function* $$A\in\Gamma\to A\in\Gamma\prime$$:
 
-<pre class="Agda">  <a name="7305" href="/2016/one-lambda-calculus-many-times/#7305" class="Function">struct</a><a name="7311"> </a><a name="7312" class="Symbol">:</a><a name="7313"> </a><a name="7327" href="/2016/one-lambda-calculus-many-times/#7319" class="Bound">Γ</a><a name="7328"> </a><a name="7329" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#3056" class="Function Operator" target="_blank">⊆</a><a name="7330"> </a><a name="7331" href="/2016/one-lambda-calculus-many-times/#7321" class="Bound">Γ′</a><a name="7333"> </a><a name="7334" class="Symbol">→</a><a name="7335"> </a><a name="7336" href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a name="7338"> </a><a name="7339" href="/2016/one-lambda-calculus-many-times/#7319" class="Bound">Γ</a><a name="7340"> </a><a name="7341" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="7342"> </a><a name="7343" href="/2016/one-lambda-calculus-many-times/#7317" class="Bound">A</a><a name="7344"> </a><a name="7345" class="Symbol">→</a><a name="7346"> </a><a name="7347" href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a name="7349"> </a><a name="7350" href="/2016/one-lambda-calculus-many-times/#7321" class="Bound">Γ′</a><a name="7352"> </a><a name="7353" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="7354"> </a><a name="7355" href="/2016/one-lambda-calculus-many-times/#7317" class="Bound">A</a><a name="7356">
-  </a><a name="7359" href="/2016/one-lambda-calculus-many-times/#7305" class="Function">struct</a><a name="7365"> </a><a name="7366" href="/2016/one-lambda-calculus-many-times/#7366" class="Bound">Γ⊆Γ′</a><a name="7370"> </a><a name="7371" class="Symbol">(</a><a name="7372" href="/2016/one-lambda-calculus-many-times/#5401" class="InductiveConstructor">ax</a><a name="7374"> </a><a name="7375" href="/2016/one-lambda-calculus-many-times/#7375" class="Bound">x</a><a name="7376" class="Symbol">)</a><a name="7377">   </a><a name="7380" class="Symbol">=</a><a name="7381"> </a><a name="7382" href="/2016/one-lambda-calculus-many-times/#5401" class="InductiveConstructor">ax</a><a name="7384"> </a><a name="7385" class="Symbol">(</a><a name="7386" href="/2016/one-lambda-calculus-many-times/#7366" class="Bound">Γ⊆Γ′</a><a name="7390"> </a><a name="7391" href="/2016/one-lambda-calculus-many-times/#7375" class="Bound">x</a><a name="7392" class="Symbol">)</a><a name="7393">
-  </a><a name="7396" href="/2016/one-lambda-calculus-many-times/#7305" class="Function">struct</a><a name="7402"> </a><a name="7403" href="/2016/one-lambda-calculus-many-times/#7403" class="Bound">Γ⊆Γ′</a><a name="7407"> </a><a name="7408" class="Symbol">(</a><a name="7409" href="/2016/one-lambda-calculus-many-times/#5439" class="InductiveConstructor">⇒i</a><a name="7411"> </a><a name="7412" href="/2016/one-lambda-calculus-many-times/#7412" class="Bound">f</a><a name="7413" class="Symbol">)</a><a name="7414">   </a><a name="7417" class="Symbol">=</a><a name="7418"> </a><a name="7419" href="/2016/one-lambda-calculus-many-times/#5439" class="InductiveConstructor">⇒i</a><a name="7421"> </a><a name="7422" class="Symbol">(</a><a name="7423" href="/2016/one-lambda-calculus-many-times/#7305" class="Function">struct</a><a name="7429"> </a><a name="7430" class="Symbol">(</a><a name="7431" href="/2016/one-lambda-calculus-many-times/#7466" class="Function">∷-resp-⊆</a><a name="7439"> </a><a name="7440" href="/2016/one-lambda-calculus-many-times/#7403" class="Bound">Γ⊆Γ′</a><a name="7444" class="Symbol">)</a><a name="7445"> </a><a name="7446" href="/2016/one-lambda-calculus-many-times/#7412" class="Bound">f</a><a name="7447" class="Symbol">)</a><a name="7448">
-    </a><a name="7453" class="Keyword">where</a><a name="7458">
+<!--{% raw %}--><pre class="Agda">
+  <a name="7307" href="2016-03-20-one-lambda-calculus-many-times.html#7307" class="Function"
+      >struct</a
+      ><a name="7313"
+      > </a
+      ><a name="7314" class="Symbol"
+      >:</a
+      ><a name="7315"
+      > </a
+      ><a name="7316" class="Symbol"
+      >&#8704;</a
+      ><a name="7317"
+      > </a
+      ><a name="7327" class="Symbol"
+      >&#8594;</a
+      ><a name="7328"
+      > </a
+      ><a name="7329" href="2016-03-20-one-lambda-calculus-many-times.html#7321" class="Bound"
+      >&#915;</a
+      ><a name="7330"
+      > </a
+      ><a name="7331" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#3056" class="Function Operator"
+      >&#8838;</a
+      ><a name="7332"
+      > </a
+      ><a name="7333" href="2016-03-20-one-lambda-calculus-many-times.html#7323" class="Bound"
+      >&#915;&#8242;</a
+      ><a name="7335"
+      > </a
+      ><a name="7336" class="Symbol"
+      >&#8594;</a
+      ><a name="7337"
+      > </a
+      ><a name="7338" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
+      >ND</a
+      ><a name="7340"
+      > </a
+      ><a name="7341" href="2016-03-20-one-lambda-calculus-many-times.html#7321" class="Bound"
+      >&#915;</a
+      ><a name="7342"
+      > </a
+      ><a name="7343" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="7344"
+      > </a
+      ><a name="7345" href="2016-03-20-one-lambda-calculus-many-times.html#7319" class="Bound"
+      >A</a
+      ><a name="7346"
+      > </a
+      ><a name="7347" class="Symbol"
+      >&#8594;</a
+      ><a name="7348"
+      > </a
+      ><a name="7349" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
+      >ND</a
+      ><a name="7351"
+      > </a
+      ><a name="7352" href="2016-03-20-one-lambda-calculus-many-times.html#7323" class="Bound"
+      >&#915;&#8242;</a
+      ><a name="7354"
+      > </a
+      ><a name="7355" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="7356"
+      > </a
+      ><a name="7357" href="2016-03-20-one-lambda-calculus-many-times.html#7319" class="Bound"
+      >A</a
+      ><a name="7358"
+      >
+  </a
+      ><a name="7361" href="2016-03-20-one-lambda-calculus-many-times.html#7307" class="Function"
+      >struct</a
+      ><a name="7367"
+      > </a
+      ><a name="7368" href="2016-03-20-one-lambda-calculus-many-times.html#7368" class="Bound"
+      >&#915;&#8838;&#915;&#8242;</a
+      ><a name="7372"
+      > </a
+      ><a name="7373" class="Symbol"
+      >(</a
+      ><a name="7374" href="2016-03-20-one-lambda-calculus-many-times.html#5403" class="InductiveConstructor"
+      >ax</a
+      ><a name="7376"
+      > </a
+      ><a name="7377" href="2016-03-20-one-lambda-calculus-many-times.html#7377" class="Bound"
+      >x</a
+      ><a name="7378" class="Symbol"
+      >)</a
+      ><a name="7379"
+      >   </a
+      ><a name="7382" class="Symbol"
+      >=</a
+      ><a name="7383"
+      > </a
+      ><a name="7384" href="2016-03-20-one-lambda-calculus-many-times.html#5403" class="InductiveConstructor"
+      >ax</a
+      ><a name="7386"
+      > </a
+      ><a name="7387" class="Symbol"
+      >(</a
+      ><a name="7388" href="2016-03-20-one-lambda-calculus-many-times.html#7368" class="Bound"
+      >&#915;&#8838;&#915;&#8242;</a
+      ><a name="7392"
+      > </a
+      ><a name="7393" href="2016-03-20-one-lambda-calculus-many-times.html#7377" class="Bound"
+      >x</a
+      ><a name="7394" class="Symbol"
+      >)</a
+      ><a name="7395"
+      >
+  </a
+      ><a name="7398" href="2016-03-20-one-lambda-calculus-many-times.html#7307" class="Function"
+      >struct</a
+      ><a name="7404"
+      > </a
+      ><a name="7405" href="2016-03-20-one-lambda-calculus-many-times.html#7405" class="Bound"
+      >&#915;&#8838;&#915;&#8242;</a
+      ><a name="7409"
+      > </a
+      ><a name="7410" class="Symbol"
+      >(</a
+      ><a name="7411" href="2016-03-20-one-lambda-calculus-many-times.html#5441" class="InductiveConstructor"
+      >&#8658;i</a
+      ><a name="7413"
+      > </a
+      ><a name="7414" href="2016-03-20-one-lambda-calculus-many-times.html#7414" class="Bound"
+      >f</a
+      ><a name="7415" class="Symbol"
+      >)</a
+      ><a name="7416"
+      >   </a
+      ><a name="7419" class="Symbol"
+      >=</a
+      ><a name="7420"
+      > </a
+      ><a name="7421" href="2016-03-20-one-lambda-calculus-many-times.html#5441" class="InductiveConstructor"
+      >&#8658;i</a
+      ><a name="7423"
+      > </a
+      ><a name="7424" class="Symbol"
+      >(</a
+      ><a name="7425" href="2016-03-20-one-lambda-calculus-many-times.html#7307" class="Function"
+      >struct</a
+      ><a name="7431"
+      > </a
+      ><a name="7432" class="Symbol"
+      >(</a
+      ><a name="7433" href="2016-03-20-one-lambda-calculus-many-times.html#7468" class="Function"
+      >&#8759;-resp-&#8838;</a
+      ><a name="7441"
+      > </a
+      ><a name="7442" href="2016-03-20-one-lambda-calculus-many-times.html#7405" class="Bound"
+      >&#915;&#8838;&#915;&#8242;</a
+      ><a name="7446" class="Symbol"
+      >)</a
+      ><a name="7447"
+      > </a
+      ><a name="7448" href="2016-03-20-one-lambda-calculus-many-times.html#7414" class="Bound"
+      >f</a
+      ><a name="7449" class="Symbol"
+      >)</a
+      ><a name="7450"
+      >
+    </a
+      ><a name="7455" class="Keyword"
+      >where</a
+      ><a name="7460"
+      >
 
-      </a><a name="7466" href="/2016/one-lambda-calculus-many-times/#7466" class="Function">∷-resp-⊆</a><a name="7474"> </a><a name="7475" class="Symbol">:</a><a name="7476"> </a><a name="7490" href="/2016/one-lambda-calculus-many-times/#7482" class="Bound">Γ</a><a name="7491"> </a><a name="7492" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#3056" class="Function Operator" target="_blank">⊆</a><a name="7493"> </a><a name="7494" href="/2016/one-lambda-calculus-many-times/#7484" class="Bound">Γ′</a><a name="7496"> </a><a name="7497" class="Symbol">→</a><a name="7498"> </a><a name="7499" href="/2016/one-lambda-calculus-many-times/#7480" class="Bound">A</a><a name="7500"> </a><a name="7501" href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a name="7502"> </a><a name="7503" href="/2016/one-lambda-calculus-many-times/#7482" class="Bound">Γ</a><a name="7504"> </a><a name="7505" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#3056" class="Function Operator" target="_blank">⊆</a><a name="7506"> </a><a name="7507" href="/2016/one-lambda-calculus-many-times/#7480" class="Bound">A</a><a name="7508"> </a><a name="7509" href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a name="7510"> </a><a name="7511" href="/2016/one-lambda-calculus-many-times/#7484" class="Bound">Γ′</a><a name="7513">
-      </a><a name="7520" href="/2016/one-lambda-calculus-many-times/#7466" class="Function">∷-resp-⊆</a><a name="7528"> </a><a name="7529" href="/2016/one-lambda-calculus-many-times/#7529" class="Bound">Γ⊆Γ′</a><a name="7533"> </a><a name="7534" class="Symbol">(</a><a name="7535" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174" class="InductiveConstructor" target="_blank">here</a><a name="7539">  </a><a name="7541" href="/2016/one-lambda-calculus-many-times/#7541" class="Bound">x</a><a name="7542" class="Symbol">)</a><a name="7543"> </a><a name="7544" class="Symbol">=</a><a name="7545"> </a><a name="7546" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174" class="InductiveConstructor" target="_blank">here</a><a name="7550"> </a><a name="7551" href="/2016/one-lambda-calculus-many-times/#7541" class="Bound">x</a><a name="7552">
-      </a><a name="7559" href="/2016/one-lambda-calculus-many-times/#7466" class="Function">∷-resp-⊆</a><a name="7567"> </a><a name="7568" href="/2016/one-lambda-calculus-many-times/#7568" class="Bound">Γ⊆Γ′</a><a name="7572"> </a><a name="7573" class="Symbol">(</a><a name="7574" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor" target="_blank">there</a><a name="7579"> </a><a name="7580" href="/2016/one-lambda-calculus-many-times/#7580" class="Bound">x</a><a name="7581" class="Symbol">)</a><a name="7582"> </a><a name="7583" class="Symbol">=</a><a name="7584"> </a><a name="7585" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor" target="_blank">there</a><a name="7590"> </a><a name="7591" class="Symbol">(</a><a name="7592" href="/2016/one-lambda-calculus-many-times/#7568" class="Bound">Γ⊆Γ′</a><a name="7596"> </a><a name="7597" href="/2016/one-lambda-calculus-many-times/#7580" class="Bound">x</a><a name="7598" class="Symbol">)</a><a name="7599">
+      </a
+      ><a name="7468" href="2016-03-20-one-lambda-calculus-many-times.html#7468" class="Function"
+      >&#8759;-resp-&#8838;</a
+      ><a name="7476"
+      > </a
+      ><a name="7477" class="Symbol"
+      >:</a
+      ><a name="7478"
+      > </a
+      ><a name="7479" class="Symbol"
+      >&#8704;</a
+      ><a name="7480"
+      > </a
+      ><a name="7490" class="Symbol"
+      >&#8594;</a
+      ><a name="7491"
+      > </a
+      ><a name="7492" href="2016-03-20-one-lambda-calculus-many-times.html#7484" class="Bound"
+      >&#915;</a
+      ><a name="7493"
+      > </a
+      ><a name="7494" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#3056" class="Function Operator"
+      >&#8838;</a
+      ><a name="7495"
+      > </a
+      ><a name="7496" href="2016-03-20-one-lambda-calculus-many-times.html#7486" class="Bound"
+      >&#915;&#8242;</a
+      ><a name="7498"
+      > </a
+      ><a name="7499" class="Symbol"
+      >&#8594;</a
+      ><a name="7500"
+      > </a
+      ><a name="7501" href="2016-03-20-one-lambda-calculus-many-times.html#7482" class="Bound"
+      >A</a
+      ><a name="7502"
+      > </a
+      ><a name="7503" href="Agda.Builtin.List.html#104" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="7504"
+      > </a
+      ><a name="7505" href="2016-03-20-one-lambda-calculus-many-times.html#7484" class="Bound"
+      >&#915;</a
+      ><a name="7506"
+      > </a
+      ><a name="7507" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#3056" class="Function Operator"
+      >&#8838;</a
+      ><a name="7508"
+      > </a
+      ><a name="7509" href="2016-03-20-one-lambda-calculus-many-times.html#7482" class="Bound"
+      >A</a
+      ><a name="7510"
+      > </a
+      ><a name="7511" href="Agda.Builtin.List.html#104" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="7512"
+      > </a
+      ><a name="7513" href="2016-03-20-one-lambda-calculus-many-times.html#7486" class="Bound"
+      >&#915;&#8242;</a
+      ><a name="7515"
+      >
+      </a
+      ><a name="7522" href="2016-03-20-one-lambda-calculus-many-times.html#7468" class="Function"
+      >&#8759;-resp-&#8838;</a
+      ><a name="7530"
+      > </a
+      ><a name="7531" href="2016-03-20-one-lambda-calculus-many-times.html#7531" class="Bound"
+      >&#915;&#8838;&#915;&#8242;</a
+      ><a name="7535"
+      > </a
+      ><a name="7536" class="Symbol"
+      >(</a
+      ><a name="7537" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174" class="InductiveConstructor"
+      >here</a
+      ><a name="7541"
+      >  </a
+      ><a name="7543" href="2016-03-20-one-lambda-calculus-many-times.html#7543" class="Bound"
+      >x</a
+      ><a name="7544" class="Symbol"
+      >)</a
+      ><a name="7545"
+      > </a
+      ><a name="7546" class="Symbol"
+      >=</a
+      ><a name="7547"
+      > </a
+      ><a name="7548" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174" class="InductiveConstructor"
+      >here</a
+      ><a name="7552"
+      > </a
+      ><a name="7553" href="2016-03-20-one-lambda-calculus-many-times.html#7543" class="Bound"
+      >x</a
+      ><a name="7554"
+      >
+      </a
+      ><a name="7561" href="2016-03-20-one-lambda-calculus-many-times.html#7468" class="Function"
+      >&#8759;-resp-&#8838;</a
+      ><a name="7569"
+      > </a
+      ><a name="7570" href="2016-03-20-one-lambda-calculus-many-times.html#7570" class="Bound"
+      >&#915;&#8838;&#915;&#8242;</a
+      ><a name="7574"
+      > </a
+      ><a name="7575" class="Symbol"
+      >(</a
+      ><a name="7576" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor"
+      >there</a
+      ><a name="7581"
+      > </a
+      ><a name="7582" href="2016-03-20-one-lambda-calculus-many-times.html#7582" class="Bound"
+      >x</a
+      ><a name="7583" class="Symbol"
+      >)</a
+      ><a name="7584"
+      > </a
+      ><a name="7585" class="Symbol"
+      >=</a
+      ><a name="7586"
+      > </a
+      ><a name="7587" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor"
+      >there</a
+      ><a name="7592"
+      > </a
+      ><a name="7593" class="Symbol"
+      >(</a
+      ><a name="7594" href="2016-03-20-one-lambda-calculus-many-times.html#7570" class="Bound"
+      >&#915;&#8838;&#915;&#8242;</a
+      ><a name="7598"
+      > </a
+      ><a name="7599" href="2016-03-20-one-lambda-calculus-many-times.html#7582" class="Bound"
+      >x</a
+      ><a name="7600" class="Symbol"
+      >)</a
+      ><a name="7601"
+      >
 
-  </a><a name="7603" href="/2016/one-lambda-calculus-many-times/#7305" class="Function">struct</a><a name="7609"> </a><a name="7610" href="/2016/one-lambda-calculus-many-times/#7610" class="Bound">Γ⊆Γ′</a><a name="7614"> </a><a name="7615" class="Symbol">(</a><a name="7616" href="/2016/one-lambda-calculus-many-times/#5488" class="InductiveConstructor">⇒e</a><a name="7618"> </a><a name="7619" href="/2016/one-lambda-calculus-many-times/#7619" class="Bound">f</a><a name="7620"> </a><a name="7621" href="/2016/one-lambda-calculus-many-times/#7621" class="Bound">g</a><a name="7622" class="Symbol">)</a><a name="7623"> </a><a name="7624" class="Symbol">=</a><a name="7625"> </a><a name="7626" href="/2016/one-lambda-calculus-many-times/#5488" class="InductiveConstructor">⇒e</a><a name="7628"> </a><a name="7629" class="Symbol">(</a><a name="7630" href="/2016/one-lambda-calculus-many-times/#7305" class="Function">struct</a><a name="7636"> </a><a name="7637" href="/2016/one-lambda-calculus-many-times/#7610" class="Bound">Γ⊆Γ′</a><a name="7641"> </a><a name="7642" href="/2016/one-lambda-calculus-many-times/#7619" class="Bound">f</a><a name="7643" class="Symbol">)</a><a name="7644"> </a><a name="7645" class="Symbol">(</a><a name="7646" href="/2016/one-lambda-calculus-many-times/#7305" class="Function">struct</a><a name="7652"> </a><a name="7653" href="/2016/one-lambda-calculus-many-times/#7610" class="Bound">Γ⊆Γ′</a><a name="7657"> </a><a name="7658" href="/2016/one-lambda-calculus-many-times/#7621" class="Bound">g</a><a name="7659" class="Symbol">)</a></pre>
+  </a
+      ><a name="7605" href="2016-03-20-one-lambda-calculus-many-times.html#7307" class="Function"
+      >struct</a
+      ><a name="7611"
+      > </a
+      ><a name="7612" href="2016-03-20-one-lambda-calculus-many-times.html#7612" class="Bound"
+      >&#915;&#8838;&#915;&#8242;</a
+      ><a name="7616"
+      > </a
+      ><a name="7617" class="Symbol"
+      >(</a
+      ><a name="7618" href="2016-03-20-one-lambda-calculus-many-times.html#5490" class="InductiveConstructor"
+      >&#8658;e</a
+      ><a name="7620"
+      > </a
+      ><a name="7621" href="2016-03-20-one-lambda-calculus-many-times.html#7621" class="Bound"
+      >f</a
+      ><a name="7622"
+      > </a
+      ><a name="7623" href="2016-03-20-one-lambda-calculus-many-times.html#7623" class="Bound"
+      >g</a
+      ><a name="7624" class="Symbol"
+      >)</a
+      ><a name="7625"
+      > </a
+      ><a name="7626" class="Symbol"
+      >=</a
+      ><a name="7627"
+      > </a
+      ><a name="7628" href="2016-03-20-one-lambda-calculus-many-times.html#5490" class="InductiveConstructor"
+      >&#8658;e</a
+      ><a name="7630"
+      > </a
+      ><a name="7631" class="Symbol"
+      >(</a
+      ><a name="7632" href="2016-03-20-one-lambda-calculus-many-times.html#7307" class="Function"
+      >struct</a
+      ><a name="7638"
+      > </a
+      ><a name="7639" href="2016-03-20-one-lambda-calculus-many-times.html#7612" class="Bound"
+      >&#915;&#8838;&#915;&#8242;</a
+      ><a name="7643"
+      > </a
+      ><a name="7644" href="2016-03-20-one-lambda-calculus-many-times.html#7621" class="Bound"
+      >f</a
+      ><a name="7645" class="Symbol"
+      >)</a
+      ><a name="7646"
+      > </a
+      ><a name="7647" class="Symbol"
+      >(</a
+      ><a name="7648" href="2016-03-20-one-lambda-calculus-many-times.html#7307" class="Function"
+      >struct</a
+      ><a name="7654"
+      > </a
+      ><a name="7655" href="2016-03-20-one-lambda-calculus-many-times.html#7612" class="Bound"
+      >&#915;&#8838;&#915;&#8242;</a
+      ><a name="7659"
+      > </a
+      ><a name="7660" href="2016-03-20-one-lambda-calculus-many-times.html#7623" class="Bound"
+      >g</a
+      ><a name="7661" class="Symbol"
+      >)</a
+      >
+</pre><!--{% endraw %}-->
 
 Note that values of type $$A\in\Gamma$$ are constructed using <a
 class="Agda InductiveConstructor" target="_blank"
@@ -192,8 +1284,84 @@ environment, then you should *certainly* be able to run that program
 in that enviroment with some irrelevant stuff added to it. Formally,
 we write it as:
 
-<pre class="Agda">  <a name="8603" href="/2016/one-lambda-calculus-many-times/#8603" class="Function">w′</a><a name="8605"> </a><a name="8606" class="Symbol">:</a><a name="8607"> </a><a name="8620" href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a name="8622"> </a><a name="8623" href="/2016/one-lambda-calculus-many-times/#8615" class="Bound">Γ</a><a name="8624"> </a><a name="8625" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="8626"> </a><a name="8627" href="/2016/one-lambda-calculus-many-times/#8613" class="Bound">B</a><a name="8628"> </a><a name="8629" class="Symbol">→</a><a name="8630"> </a><a name="8631" href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a name="8633"> </a><a name="8634" href="/2016/one-lambda-calculus-many-times/#8611" class="Bound">A</a><a name="8635"> </a><a name="8636" href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a name="8637"> </a><a name="8638" href="/2016/one-lambda-calculus-many-times/#8615" class="Bound">Γ</a><a name="8639"> </a><a name="8640" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="8641"> </a><a name="8642" href="/2016/one-lambda-calculus-many-times/#8613" class="Bound">B</a><a name="8643">
-  </a><a name="8646" href="/2016/one-lambda-calculus-many-times/#8603" class="Function">w′</a><a name="8648"> </a><a name="8649" class="Symbol">=</a><a name="8650"> </a><a name="8651" href="/2016/one-lambda-calculus-many-times/#7305" class="Function">struct</a><a name="8657"> </a><a name="8658" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor" target="_blank">there</a></pre>
+<!--{% raw %}--><pre class="Agda">
+  <a name="8605" href="2016-03-20-one-lambda-calculus-many-times.html#8605" class="Function"
+      >w&#8242;</a
+      ><a name="8607"
+      > </a
+      ><a name="8608" class="Symbol"
+      >:</a
+      ><a name="8609"
+      > </a
+      ><a name="8610" class="Symbol"
+      >&#8704;</a
+      ><a name="8611"
+      > </a
+      ><a name="8620" class="Symbol"
+      >&#8594;</a
+      ><a name="8621"
+      > </a
+      ><a name="8622" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
+      >ND</a
+      ><a name="8624"
+      > </a
+      ><a name="8625" href="2016-03-20-one-lambda-calculus-many-times.html#8617" class="Bound"
+      >&#915;</a
+      ><a name="8626"
+      > </a
+      ><a name="8627" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="8628"
+      > </a
+      ><a name="8629" href="2016-03-20-one-lambda-calculus-many-times.html#8615" class="Bound"
+      >B</a
+      ><a name="8630"
+      > </a
+      ><a name="8631" class="Symbol"
+      >&#8594;</a
+      ><a name="8632"
+      > </a
+      ><a name="8633" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
+      >ND</a
+      ><a name="8635"
+      > </a
+      ><a name="8636" href="2016-03-20-one-lambda-calculus-many-times.html#8613" class="Bound"
+      >A</a
+      ><a name="8637"
+      > </a
+      ><a name="8638" href="Agda.Builtin.List.html#104" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="8639"
+      > </a
+      ><a name="8640" href="2016-03-20-one-lambda-calculus-many-times.html#8617" class="Bound"
+      >&#915;</a
+      ><a name="8641"
+      > </a
+      ><a name="8642" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="8643"
+      > </a
+      ><a name="8644" href="2016-03-20-one-lambda-calculus-many-times.html#8615" class="Bound"
+      >B</a
+      ><a name="8645"
+      >
+  </a
+      ><a name="8648" href="2016-03-20-one-lambda-calculus-many-times.html#8605" class="Function"
+      >w&#8242;</a
+      ><a name="8650"
+      > </a
+      ><a name="8651" class="Symbol"
+      >=</a
+      ><a name="8652"
+      > </a
+      ><a name="8653" href="2016-03-20-one-lambda-calculus-many-times.html#7307" class="Function"
+      >struct</a
+      ><a name="8659"
+      > </a
+      ><a name="8660" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor"
+      >there</a
+      >
+</pre><!--{% endraw %}-->
 
 Passing <a class="Agda InductiveConstructor" target="_blank"
 href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227">there</a>
@@ -222,38 +1390,882 @@ $$
 
 We can encode these rules in Agda as follows:
 
-<pre class="Agda">  <a name="9765" class="Keyword">infix</a><a name="9770"> </a><a name="9771" class="Number">3</a><a name="9772"> SC_
+<!--{% raw %}--><pre class="Agda">
+  <a name="9767" class="Keyword"
+      >infix</a
+      ><a name="9772"
+      > </a
+      ><a name="9773" class="Number"
+      >3</a
+      ><a name="9774"
+      > SC_
 
-  </a><a name="9780" class="Keyword">data</a><a name="9784"> </a><a name="9785" href="/2016/one-lambda-calculus-many-times/#9785" class="Datatype Operator">SC_</a><a name="9788"> </a><a name="9789" class="Symbol">:</a><a name="9790"> </a><a name="9791" href="/2016/one-lambda-calculus-many-times/#3955" class="Datatype">Sequent</a><a name="9798"> </a><a name="9799" class="Symbol">→</a><a name="9800"> </a><a name="9801" class="PrimitiveType">Set</a><a name="9804"> </a><a name="9805" class="Keyword">where</a><a name="9810">
-    </a><a name="9815" href="/2016/one-lambda-calculus-many-times/#9815" class="InductiveConstructor">ax</a><a name="9817">  </a><a name="9819" class="Symbol">:</a><a name="9820"> </a><a name="9835" href="/2016/one-lambda-calculus-many-times/#9824" class="Bound">A</a><a name="9836"> </a><a name="9837" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#2920" class="Function Operator" target="_blank">∈</a><a name="9838"> </a><a name="9839" href="/2016/one-lambda-calculus-many-times/#9830" class="Bound">Γ</a><a name="9840"> </a><a name="9841" class="Symbol">→</a><a name="9842"> </a><a name="9843" href="/2016/one-lambda-calculus-many-times/#9785" class="Datatype Operator">SC</a><a name="9845"> </a><a name="9846" href="/2016/one-lambda-calculus-many-times/#9830" class="Bound">Γ</a><a name="9847"> </a><a name="9848" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="9849"> </a><a name="9850" href="/2016/one-lambda-calculus-many-times/#9824" class="Bound">A</a><a name="9851">
-    </a><a name="9856" href="/2016/one-lambda-calculus-many-times/#9856" class="InductiveConstructor">cut</a><a name="9859"> </a><a name="9860" class="Symbol">:</a><a name="9861"> </a><a name="9876" href="/2016/one-lambda-calculus-many-times/#9785" class="Datatype Operator">SC</a><a name="9878"> </a><a name="9879" href="/2016/one-lambda-calculus-many-times/#9871" class="Bound">Γ</a><a name="9880"> </a><a name="9881" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="9882"> </a><a name="9883" href="/2016/one-lambda-calculus-many-times/#9865" class="Bound">A</a><a name="9884"> </a><a name="9885" class="Symbol">→</a><a name="9886"> </a><a name="9887" href="/2016/one-lambda-calculus-many-times/#9785" class="Datatype Operator">SC</a><a name="9889"> </a><a name="9890" href="/2016/one-lambda-calculus-many-times/#9865" class="Bound">A</a><a name="9891"> </a><a name="9892" href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a name="9893"> </a><a name="9894" href="/2016/one-lambda-calculus-many-times/#9871" class="Bound">Γ</a><a name="9895"> </a><a name="9896" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="9897"> </a><a name="9898" href="/2016/one-lambda-calculus-many-times/#9867" class="Bound">B</a><a name="9899"> </a><a name="9900" class="Symbol">→</a><a name="9901"> </a><a name="9902" href="/2016/one-lambda-calculus-many-times/#9785" class="Datatype Operator">SC</a><a name="9904"> </a><a name="9905" href="/2016/one-lambda-calculus-many-times/#9871" class="Bound">Γ</a><a name="9906"> </a><a name="9907" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="9908"> </a><a name="9909" href="/2016/one-lambda-calculus-many-times/#9867" class="Bound">B</a><a name="9910">
-    </a><a name="9915" href="/2016/one-lambda-calculus-many-times/#9915" class="InductiveConstructor">⇒l</a><a name="9917">  </a><a name="9919" class="Symbol">:</a><a name="9920"> </a><a name="9935" href="/2016/one-lambda-calculus-many-times/#9785" class="Datatype Operator">SC</a><a name="9937"> </a><a name="9938" href="/2016/one-lambda-calculus-many-times/#9930" class="Bound">Γ</a><a name="9939"> </a><a name="9940" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="9941"> </a><a name="9942" href="/2016/one-lambda-calculus-many-times/#9924" class="Bound">A</a><a name="9943"> </a><a name="9944" class="Symbol">→</a><a name="9945"> </a><a name="9946" href="/2016/one-lambda-calculus-many-times/#9785" class="Datatype Operator">SC</a><a name="9948"> </a><a name="9949" href="/2016/one-lambda-calculus-many-times/#9926" class="Bound">B</a><a name="9950"> </a><a name="9951" href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a name="9952"> </a><a name="9953" href="/2016/one-lambda-calculus-many-times/#9930" class="Bound">Γ</a><a name="9954"> </a><a name="9955" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="9956"> </a><a name="9957" href="/2016/one-lambda-calculus-many-times/#9928" class="Bound">C</a><a name="9958"> </a><a name="9959" class="Symbol">→</a><a name="9960"> </a><a name="9961" href="/2016/one-lambda-calculus-many-times/#9785" class="Datatype Operator">SC</a><a name="9963"> </a><a name="9964" href="/2016/one-lambda-calculus-many-times/#9924" class="Bound">A</a><a name="9965"> </a><a name="9966" href="/2016/one-lambda-calculus-many-times/#2692" class="InductiveConstructor Operator">⇒</a><a name="9967"> </a><a name="9968" href="/2016/one-lambda-calculus-many-times/#9926" class="Bound">B</a><a name="9969"> </a><a name="9970" href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a name="9971"> </a><a name="9972" href="/2016/one-lambda-calculus-many-times/#9930" class="Bound">Γ</a><a name="9973"> </a><a name="9974" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="9975"> </a><a name="9976" href="/2016/one-lambda-calculus-many-times/#9928" class="Bound">C</a><a name="9977">
-    </a><a name="9982" href="/2016/one-lambda-calculus-many-times/#9982" class="InductiveConstructor">⇒r</a><a name="9984">  </a><a name="9986" class="Symbol">:</a><a name="9987"> </a><a name="10002" href="/2016/one-lambda-calculus-many-times/#9785" class="Datatype Operator">SC</a><a name="10004"> </a><a name="10005" href="/2016/one-lambda-calculus-many-times/#9991" class="Bound">A</a><a name="10006"> </a><a name="10007" href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a name="10008"> </a><a name="10009" href="/2016/one-lambda-calculus-many-times/#9997" class="Bound">Γ</a><a name="10010"> </a><a name="10011" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="10012"> </a><a name="10013" href="/2016/one-lambda-calculus-many-times/#9993" class="Bound">B</a><a name="10014"> </a><a name="10015" class="Symbol">→</a><a name="10016"> </a><a name="10017" href="/2016/one-lambda-calculus-many-times/#9785" class="Datatype Operator">SC</a><a name="10019"> </a><a name="10020" href="/2016/one-lambda-calculus-many-times/#9997" class="Bound">Γ</a><a name="10021"> </a><a name="10022" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="10023"> </a><a name="10024" href="/2016/one-lambda-calculus-many-times/#9991" class="Bound">A</a><a name="10025"> </a><a name="10026" href="/2016/one-lambda-calculus-many-times/#2692" class="InductiveConstructor Operator">⇒</a><a name="10027"> </a><a name="10028" href="/2016/one-lambda-calculus-many-times/#9993" class="Bound">B</a></pre>
+  </a
+      ><a name="9782" class="Keyword"
+      >data</a
+      ><a name="9786"
+      > </a
+      ><a name="9787" href="2016-03-20-one-lambda-calculus-many-times.html#9787" class="Datatype Operator"
+      >SC_</a
+      ><a name="9790"
+      > </a
+      ><a name="9791" class="Symbol"
+      >:</a
+      ><a name="9792"
+      > </a
+      ><a name="9793" href="2016-03-20-one-lambda-calculus-many-times.html#3957" class="Datatype"
+      >Sequent</a
+      ><a name="9800"
+      > </a
+      ><a name="9801" class="Symbol"
+      >&#8594;</a
+      ><a name="9802"
+      > </a
+      ><a name="9803" class="PrimitiveType"
+      >Set</a
+      ><a name="9806"
+      > </a
+      ><a name="9807" class="Keyword"
+      >where</a
+      ><a name="9812"
+      >
+    </a
+      ><a name="9817" href="2016-03-20-one-lambda-calculus-many-times.html#9817" class="InductiveConstructor"
+      >ax</a
+      ><a name="9819"
+      >  </a
+      ><a name="9821" class="Symbol"
+      >:</a
+      ><a name="9822"
+      > </a
+      ><a name="9823" class="Symbol"
+      >&#8704;</a
+      ><a name="9824"
+      > </a
+      ><a name="9835" class="Symbol"
+      >&#8594;</a
+      ><a name="9836"
+      > </a
+      ><a name="9837" href="2016-03-20-one-lambda-calculus-many-times.html#9826" class="Bound"
+      >A</a
+      ><a name="9838"
+      > </a
+      ><a name="9839" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#2920" class="Function Operator"
+      >&#8712;</a
+      ><a name="9840"
+      > </a
+      ><a name="9841" href="2016-03-20-one-lambda-calculus-many-times.html#9832" class="Bound"
+      >&#915;</a
+      ><a name="9842"
+      > </a
+      ><a name="9843" class="Symbol"
+      >&#8594;</a
+      ><a name="9844"
+      > </a
+      ><a name="9845" href="2016-03-20-one-lambda-calculus-many-times.html#9787" class="Datatype Operator"
+      >SC</a
+      ><a name="9847"
+      > </a
+      ><a name="9848" href="2016-03-20-one-lambda-calculus-many-times.html#9832" class="Bound"
+      >&#915;</a
+      ><a name="9849"
+      > </a
+      ><a name="9850" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="9851"
+      > </a
+      ><a name="9852" href="2016-03-20-one-lambda-calculus-many-times.html#9826" class="Bound"
+      >A</a
+      ><a name="9853"
+      >
+    </a
+      ><a name="9858" href="2016-03-20-one-lambda-calculus-many-times.html#9858" class="InductiveConstructor"
+      >cut</a
+      ><a name="9861"
+      > </a
+      ><a name="9862" class="Symbol"
+      >:</a
+      ><a name="9863"
+      > </a
+      ><a name="9864" class="Symbol"
+      >&#8704;</a
+      ><a name="9865"
+      > </a
+      ><a name="9876" class="Symbol"
+      >&#8594;</a
+      ><a name="9877"
+      > </a
+      ><a name="9878" href="2016-03-20-one-lambda-calculus-many-times.html#9787" class="Datatype Operator"
+      >SC</a
+      ><a name="9880"
+      > </a
+      ><a name="9881" href="2016-03-20-one-lambda-calculus-many-times.html#9873" class="Bound"
+      >&#915;</a
+      ><a name="9882"
+      > </a
+      ><a name="9883" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="9884"
+      > </a
+      ><a name="9885" href="2016-03-20-one-lambda-calculus-many-times.html#9867" class="Bound"
+      >A</a
+      ><a name="9886"
+      > </a
+      ><a name="9887" class="Symbol"
+      >&#8594;</a
+      ><a name="9888"
+      > </a
+      ><a name="9889" href="2016-03-20-one-lambda-calculus-many-times.html#9787" class="Datatype Operator"
+      >SC</a
+      ><a name="9891"
+      > </a
+      ><a name="9892" href="2016-03-20-one-lambda-calculus-many-times.html#9867" class="Bound"
+      >A</a
+      ><a name="9893"
+      > </a
+      ><a name="9894" href="Agda.Builtin.List.html#104" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="9895"
+      > </a
+      ><a name="9896" href="2016-03-20-one-lambda-calculus-many-times.html#9873" class="Bound"
+      >&#915;</a
+      ><a name="9897"
+      > </a
+      ><a name="9898" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="9899"
+      > </a
+      ><a name="9900" href="2016-03-20-one-lambda-calculus-many-times.html#9869" class="Bound"
+      >B</a
+      ><a name="9901"
+      > </a
+      ><a name="9902" class="Symbol"
+      >&#8594;</a
+      ><a name="9903"
+      > </a
+      ><a name="9904" href="2016-03-20-one-lambda-calculus-many-times.html#9787" class="Datatype Operator"
+      >SC</a
+      ><a name="9906"
+      > </a
+      ><a name="9907" href="2016-03-20-one-lambda-calculus-many-times.html#9873" class="Bound"
+      >&#915;</a
+      ><a name="9908"
+      > </a
+      ><a name="9909" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="9910"
+      > </a
+      ><a name="9911" href="2016-03-20-one-lambda-calculus-many-times.html#9869" class="Bound"
+      >B</a
+      ><a name="9912"
+      >
+    </a
+      ><a name="9917" href="2016-03-20-one-lambda-calculus-many-times.html#9917" class="InductiveConstructor"
+      >&#8658;l</a
+      ><a name="9919"
+      >  </a
+      ><a name="9921" class="Symbol"
+      >:</a
+      ><a name="9922"
+      > </a
+      ><a name="9923" class="Symbol"
+      >&#8704;</a
+      ><a name="9924"
+      > </a
+      ><a name="9935" class="Symbol"
+      >&#8594;</a
+      ><a name="9936"
+      > </a
+      ><a name="9937" href="2016-03-20-one-lambda-calculus-many-times.html#9787" class="Datatype Operator"
+      >SC</a
+      ><a name="9939"
+      > </a
+      ><a name="9940" href="2016-03-20-one-lambda-calculus-many-times.html#9932" class="Bound"
+      >&#915;</a
+      ><a name="9941"
+      > </a
+      ><a name="9942" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="9943"
+      > </a
+      ><a name="9944" href="2016-03-20-one-lambda-calculus-many-times.html#9926" class="Bound"
+      >A</a
+      ><a name="9945"
+      > </a
+      ><a name="9946" class="Symbol"
+      >&#8594;</a
+      ><a name="9947"
+      > </a
+      ><a name="9948" href="2016-03-20-one-lambda-calculus-many-times.html#9787" class="Datatype Operator"
+      >SC</a
+      ><a name="9950"
+      > </a
+      ><a name="9951" href="2016-03-20-one-lambda-calculus-many-times.html#9928" class="Bound"
+      >B</a
+      ><a name="9952"
+      > </a
+      ><a name="9953" href="Agda.Builtin.List.html#104" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="9954"
+      > </a
+      ><a name="9955" href="2016-03-20-one-lambda-calculus-many-times.html#9932" class="Bound"
+      >&#915;</a
+      ><a name="9956"
+      > </a
+      ><a name="9957" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="9958"
+      > </a
+      ><a name="9959" href="2016-03-20-one-lambda-calculus-many-times.html#9930" class="Bound"
+      >C</a
+      ><a name="9960"
+      > </a
+      ><a name="9961" class="Symbol"
+      >&#8594;</a
+      ><a name="9962"
+      > </a
+      ><a name="9963" href="2016-03-20-one-lambda-calculus-many-times.html#9787" class="Datatype Operator"
+      >SC</a
+      ><a name="9965"
+      > </a
+      ><a name="9966" href="2016-03-20-one-lambda-calculus-many-times.html#9926" class="Bound"
+      >A</a
+      ><a name="9967"
+      > </a
+      ><a name="9968" href="2016-03-20-one-lambda-calculus-many-times.html#2694" class="InductiveConstructor Operator"
+      >&#8658;</a
+      ><a name="9969"
+      > </a
+      ><a name="9970" href="2016-03-20-one-lambda-calculus-many-times.html#9928" class="Bound"
+      >B</a
+      ><a name="9971"
+      > </a
+      ><a name="9972" href="Agda.Builtin.List.html#104" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="9973"
+      > </a
+      ><a name="9974" href="2016-03-20-one-lambda-calculus-many-times.html#9932" class="Bound"
+      >&#915;</a
+      ><a name="9975"
+      > </a
+      ><a name="9976" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="9977"
+      > </a
+      ><a name="9978" href="2016-03-20-one-lambda-calculus-many-times.html#9930" class="Bound"
+      >C</a
+      ><a name="9979"
+      >
+    </a
+      ><a name="9984" href="2016-03-20-one-lambda-calculus-many-times.html#9984" class="InductiveConstructor"
+      >&#8658;r</a
+      ><a name="9986"
+      >  </a
+      ><a name="9988" class="Symbol"
+      >:</a
+      ><a name="9989"
+      > </a
+      ><a name="9990" class="Symbol"
+      >&#8704;</a
+      ><a name="9991"
+      > </a
+      ><a name="10002" class="Symbol"
+      >&#8594;</a
+      ><a name="10003"
+      > </a
+      ><a name="10004" href="2016-03-20-one-lambda-calculus-many-times.html#9787" class="Datatype Operator"
+      >SC</a
+      ><a name="10006"
+      > </a
+      ><a name="10007" href="2016-03-20-one-lambda-calculus-many-times.html#9993" class="Bound"
+      >A</a
+      ><a name="10008"
+      > </a
+      ><a name="10009" href="Agda.Builtin.List.html#104" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="10010"
+      > </a
+      ><a name="10011" href="2016-03-20-one-lambda-calculus-many-times.html#9999" class="Bound"
+      >&#915;</a
+      ><a name="10012"
+      > </a
+      ><a name="10013" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="10014"
+      > </a
+      ><a name="10015" href="2016-03-20-one-lambda-calculus-many-times.html#9995" class="Bound"
+      >B</a
+      ><a name="10016"
+      > </a
+      ><a name="10017" class="Symbol"
+      >&#8594;</a
+      ><a name="10018"
+      > </a
+      ><a name="10019" href="2016-03-20-one-lambda-calculus-many-times.html#9787" class="Datatype Operator"
+      >SC</a
+      ><a name="10021"
+      > </a
+      ><a name="10022" href="2016-03-20-one-lambda-calculus-many-times.html#9999" class="Bound"
+      >&#915;</a
+      ><a name="10023"
+      > </a
+      ><a name="10024" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="10025"
+      > </a
+      ><a name="10026" href="2016-03-20-one-lambda-calculus-many-times.html#9993" class="Bound"
+      >A</a
+      ><a name="10027"
+      > </a
+      ><a name="10028" href="2016-03-20-one-lambda-calculus-many-times.html#2694" class="InductiveConstructor Operator"
+      >&#8658;</a
+      ><a name="10029"
+      > </a
+      ><a name="10030" href="2016-03-20-one-lambda-calculus-many-times.html#9995" class="Bound"
+      >B</a
+      >
+</pre><!--{% endraw %}-->
 
 We will define a few patterns that we'd otherwise have to write out,
 over and over again. Namely, names for the first, second, and third
 variable in a context:
 
-<pre class="Agda">  <a name="10218" class="Keyword">pattern</a><a name="10225"> </a><a name="10226" href="/2016/one-lambda-calculus-many-times/#10226" class="InductiveConstructor">ax₀</a><a name="10229"> </a><a name="10230" class="Symbol">=</a><a name="10231"> </a><a name="10232" class="InductiveConstructor">ax</a><a name="10234"> </a><a name="10235" class="Symbol">(</a><a name="10236" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174" class="InductiveConstructor" target="_blank">here</a><a name="10240"> </a><a name="10241" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Equality.html#112" class="InductiveConstructor" target="_blank">refl</a><a name="10245" class="Symbol">)</a><a name="10246">
-  </a><a name="10249" class="Keyword">pattern</a><a name="10256"> </a><a name="10257" href="/2016/one-lambda-calculus-many-times/#10257" class="InductiveConstructor">ax₁</a><a name="10260"> </a><a name="10261" class="Symbol">=</a><a name="10262"> </a><a name="10263" class="InductiveConstructor">ax</a><a name="10265"> </a><a name="10266" class="Symbol">(</a><a name="10267" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor" target="_blank">there</a><a name="10272"> </a><a name="10273" class="Symbol">(</a><a name="10274" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174" class="InductiveConstructor" target="_blank">here</a><a name="10278"> </a><a name="10279" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Equality.html#112" class="InductiveConstructor" target="_blank">refl</a><a name="10283" class="Symbol">))</a><a name="10285">
-  </a><a name="10288" class="Keyword">pattern</a><a name="10295"> </a><a name="10296" href="/2016/one-lambda-calculus-many-times/#10296" class="InductiveConstructor">ax₂</a><a name="10299"> </a><a name="10300" class="Symbol">=</a><a name="10301"> </a><a name="10302" class="InductiveConstructor">ax</a><a name="10304"> </a><a name="10305" class="Symbol">(</a><a name="10306" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor" target="_blank">there</a><a name="10311"> </a><a name="10312" class="Symbol">(</a><a name="10313" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor" target="_blank">there</a><a name="10318"> </a><a name="10319" class="Symbol">(</a><a name="10320" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174" class="InductiveConstructor" target="_blank">here</a><a name="10324"> </a><a name="10325" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Equality.html#112" class="InductiveConstructor" target="_blank">refl</a><a name="10329" class="Symbol">)))</a></pre>
+<!--{% raw %}--><pre class="Agda">
+  <a name="10220" class="Keyword"
+      >pattern</a
+      ><a name="10227"
+      > </a
+      ><a name="10228" href="2016-03-20-one-lambda-calculus-many-times.html#10228" class="InductiveConstructor"
+      >ax&#8320;</a
+      ><a name="10231"
+      > </a
+      ><a name="10232" class="Symbol"
+      >=</a
+      ><a name="10233"
+      > </a
+      ><a name="10234" class="InductiveConstructor"
+      >ax</a
+      ><a name="10236"
+      > </a
+      ><a name="10237" class="Symbol"
+      >(</a
+      ><a name="10238" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174" class="InductiveConstructor"
+      >here</a
+      ><a name="10242"
+      > </a
+      ><a name="10243" href="Agda.Builtin.Equality.html#112" class="InductiveConstructor"
+      >refl</a
+      ><a name="10247" class="Symbol"
+      >)</a
+      ><a name="10248"
+      >
+  </a
+      ><a name="10251" class="Keyword"
+      >pattern</a
+      ><a name="10258"
+      > </a
+      ><a name="10259" href="2016-03-20-one-lambda-calculus-many-times.html#10259" class="InductiveConstructor"
+      >ax&#8321;</a
+      ><a name="10262"
+      > </a
+      ><a name="10263" class="Symbol"
+      >=</a
+      ><a name="10264"
+      > </a
+      ><a name="10265" class="InductiveConstructor"
+      >ax</a
+      ><a name="10267"
+      > </a
+      ><a name="10268" class="Symbol"
+      >(</a
+      ><a name="10269" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor"
+      >there</a
+      ><a name="10274"
+      > </a
+      ><a name="10275" class="Symbol"
+      >(</a
+      ><a name="10276" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174" class="InductiveConstructor"
+      >here</a
+      ><a name="10280"
+      > </a
+      ><a name="10281" href="Agda.Builtin.Equality.html#112" class="InductiveConstructor"
+      >refl</a
+      ><a name="10285" class="Symbol"
+      >))</a
+      ><a name="10287"
+      >
+  </a
+      ><a name="10290" class="Keyword"
+      >pattern</a
+      ><a name="10297"
+      > </a
+      ><a name="10298" href="2016-03-20-one-lambda-calculus-many-times.html#10298" class="InductiveConstructor"
+      >ax&#8322;</a
+      ><a name="10301"
+      > </a
+      ><a name="10302" class="Symbol"
+      >=</a
+      ><a name="10303"
+      > </a
+      ><a name="10304" class="InductiveConstructor"
+      >ax</a
+      ><a name="10306"
+      > </a
+      ><a name="10307" class="Symbol"
+      >(</a
+      ><a name="10308" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor"
+      >there</a
+      ><a name="10313"
+      > </a
+      ><a name="10314" class="Symbol"
+      >(</a
+      ><a name="10315" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor"
+      >there</a
+      ><a name="10320"
+      > </a
+      ><a name="10321" class="Symbol"
+      >(</a
+      ><a name="10322" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174" class="InductiveConstructor"
+      >here</a
+      ><a name="10326"
+      > </a
+      ><a name="10327" href="Agda.Builtin.Equality.html#112" class="InductiveConstructor"
+      >refl</a
+      ><a name="10331" class="Symbol"
+      >)))</a
+      >
+</pre><!--{% endraw %}-->
 
 It's a little bit of a puzzle, but given <a href="#8254" class="Agda
 Function">w′</a> it becomes quite easy to show that the two logics
 are in fact equivalent---that they derive the *same sequents*:
 
-<pre class="Agda">  <a name="10560" class="Keyword">module</a><a name="10566"> </a><a name="10567" href="/2016/one-lambda-calculus-many-times/#10567" class="Module">ND⇔SC</a><a name="10572"> </a><a name="10573" class="Keyword">where</a><a name="10578">
+<!--{% raw %}--><pre class="Agda">
+  <a name="10562" class="Keyword"
+      >module</a
+      ><a name="10568"
+      > </a
+      ><a name="10569" href="2016-03-20-one-lambda-calculus-many-times.html#10569" class="Module"
+      >ND&#8660;SC</a
+      ><a name="10574"
+      > </a
+      ><a name="10575" class="Keyword"
+      >where</a
+      ><a name="10580"
+      >
 
-    </a><a name="10584" href="/2016/one-lambda-calculus-many-times/#10584" class="Function">⟹</a><a name="10585"> </a><a name="10586" class="Symbol">:</a><a name="10587"> </a><a name="10596" href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a name="10598"> </a><a name="10599" href="/2016/one-lambda-calculus-many-times/#10591" class="Bound">S</a><a name="10600"> </a><a name="10601" class="Symbol">→</a><a name="10602"> </a><a name="10603" href="/2016/one-lambda-calculus-many-times/#9785" class="Datatype Operator">SC</a><a name="10605"> </a><a name="10606" href="/2016/one-lambda-calculus-many-times/#10591" class="Bound">S</a><a name="10607">
-    </a><a name="10612" href="/2016/one-lambda-calculus-many-times/#10584" class="Function">⟹</a><a name="10613"> </a><a name="10614" class="Symbol">(</a><a name="10615" href="/2016/one-lambda-calculus-many-times/#5401" class="InductiveConstructor">ax</a><a name="10617">  </a><a name="10619" href="/2016/one-lambda-calculus-many-times/#10619" class="Bound">x</a><a name="10620" class="Symbol">)</a><a name="10621">   </a><a name="10624" class="Symbol">=</a><a name="10625"> </a><a name="10626" href="/2016/one-lambda-calculus-many-times/#9815" class="InductiveConstructor">ax</a><a name="10628"> </a><a name="10629" href="/2016/one-lambda-calculus-many-times/#10619" class="Bound">x</a><a name="10630">
-    </a><a name="10635" href="/2016/one-lambda-calculus-many-times/#10584" class="Function">⟹</a><a name="10636"> </a><a name="10637" class="Symbol">(</a><a name="10638" href="/2016/one-lambda-calculus-many-times/#5439" class="InductiveConstructor">⇒i</a><a name="10640">  </a><a name="10642" href="/2016/one-lambda-calculus-many-times/#10642" class="Bound">f</a><a name="10643" class="Symbol">)</a><a name="10644">   </a><a name="10647" class="Symbol">=</a><a name="10648"> </a><a name="10649" href="/2016/one-lambda-calculus-many-times/#9982" class="InductiveConstructor">⇒r</a><a name="10651">  </a><a name="10653" class="Symbol">(</a><a name="10654" href="/2016/one-lambda-calculus-many-times/#10584" class="Function">⟹</a><a name="10655"> </a><a name="10656" href="/2016/one-lambda-calculus-many-times/#10642" class="Bound">f</a><a name="10657" class="Symbol">)</a><a name="10658">
-    </a><a name="10663" href="/2016/one-lambda-calculus-many-times/#10584" class="Function">⟹</a><a name="10664"> </a><a name="10665" class="Symbol">(</a><a name="10666" href="/2016/one-lambda-calculus-many-times/#5488" class="InductiveConstructor">⇒e</a><a name="10668">  </a><a name="10670" href="/2016/one-lambda-calculus-many-times/#10670" class="Bound">f</a><a name="10671"> </a><a name="10672" href="/2016/one-lambda-calculus-many-times/#10672" class="Bound">g</a><a name="10673" class="Symbol">)</a><a name="10674"> </a><a name="10675" class="Symbol">=</a><a name="10676"> </a><a name="10677" href="/2016/one-lambda-calculus-many-times/#9856" class="InductiveConstructor">cut</a><a name="10680"> </a><a name="10681" class="Symbol">(</a><a name="10682" href="/2016/one-lambda-calculus-many-times/#10584" class="Function">⟹</a><a name="10683"> </a><a name="10684" href="/2016/one-lambda-calculus-many-times/#10670" class="Bound">f</a><a name="10685" class="Symbol">)</a><a name="10686"> </a><a name="10687" class="Symbol">(</a><a name="10688" href="/2016/one-lambda-calculus-many-times/#9915" class="InductiveConstructor">⇒l</a><a name="10690"> </a><a name="10691" class="Symbol">(</a><a name="10692" href="/2016/one-lambda-calculus-many-times/#10584" class="Function">⟹</a><a name="10693"> </a><a name="10694" href="/2016/one-lambda-calculus-many-times/#10672" class="Bound">g</a><a name="10695" class="Symbol">)</a><a name="10696"> </a><a name="10697" href="/2016/one-lambda-calculus-many-times/#10226" class="InductiveConstructor">ax₀</a><a name="10700" class="Symbol">)</a><a name="10701">
+    </a
+      ><a name="10586" href="2016-03-20-one-lambda-calculus-many-times.html#10586" class="Function"
+      >&#10233;</a
+      ><a name="10587"
+      > </a
+      ><a name="10588" class="Symbol"
+      >:</a
+      ><a name="10589"
+      > </a
+      ><a name="10590" class="Symbol"
+      >&#8704;</a
+      ><a name="10591"
+      > </a
+      ><a name="10596" class="Symbol"
+      >&#8594;</a
+      ><a name="10597"
+      > </a
+      ><a name="10598" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
+      >ND</a
+      ><a name="10600"
+      > </a
+      ><a name="10601" href="2016-03-20-one-lambda-calculus-many-times.html#10593" class="Bound"
+      >S</a
+      ><a name="10602"
+      > </a
+      ><a name="10603" class="Symbol"
+      >&#8594;</a
+      ><a name="10604"
+      > </a
+      ><a name="10605" href="2016-03-20-one-lambda-calculus-many-times.html#9787" class="Datatype Operator"
+      >SC</a
+      ><a name="10607"
+      > </a
+      ><a name="10608" href="2016-03-20-one-lambda-calculus-many-times.html#10593" class="Bound"
+      >S</a
+      ><a name="10609"
+      >
+    </a
+      ><a name="10614" href="2016-03-20-one-lambda-calculus-many-times.html#10586" class="Function"
+      >&#10233;</a
+      ><a name="10615"
+      > </a
+      ><a name="10616" class="Symbol"
+      >(</a
+      ><a name="10617" href="2016-03-20-one-lambda-calculus-many-times.html#5403" class="InductiveConstructor"
+      >ax</a
+      ><a name="10619"
+      >  </a
+      ><a name="10621" href="2016-03-20-one-lambda-calculus-many-times.html#10621" class="Bound"
+      >x</a
+      ><a name="10622" class="Symbol"
+      >)</a
+      ><a name="10623"
+      >   </a
+      ><a name="10626" class="Symbol"
+      >=</a
+      ><a name="10627"
+      > </a
+      ><a name="10628" href="2016-03-20-one-lambda-calculus-many-times.html#9817" class="InductiveConstructor"
+      >ax</a
+      ><a name="10630"
+      > </a
+      ><a name="10631" href="2016-03-20-one-lambda-calculus-many-times.html#10621" class="Bound"
+      >x</a
+      ><a name="10632"
+      >
+    </a
+      ><a name="10637" href="2016-03-20-one-lambda-calculus-many-times.html#10586" class="Function"
+      >&#10233;</a
+      ><a name="10638"
+      > </a
+      ><a name="10639" class="Symbol"
+      >(</a
+      ><a name="10640" href="2016-03-20-one-lambda-calculus-many-times.html#5441" class="InductiveConstructor"
+      >&#8658;i</a
+      ><a name="10642"
+      >  </a
+      ><a name="10644" href="2016-03-20-one-lambda-calculus-many-times.html#10644" class="Bound"
+      >f</a
+      ><a name="10645" class="Symbol"
+      >)</a
+      ><a name="10646"
+      >   </a
+      ><a name="10649" class="Symbol"
+      >=</a
+      ><a name="10650"
+      > </a
+      ><a name="10651" href="2016-03-20-one-lambda-calculus-many-times.html#9984" class="InductiveConstructor"
+      >&#8658;r</a
+      ><a name="10653"
+      >  </a
+      ><a name="10655" class="Symbol"
+      >(</a
+      ><a name="10656" href="2016-03-20-one-lambda-calculus-many-times.html#10586" class="Function"
+      >&#10233;</a
+      ><a name="10657"
+      > </a
+      ><a name="10658" href="2016-03-20-one-lambda-calculus-many-times.html#10644" class="Bound"
+      >f</a
+      ><a name="10659" class="Symbol"
+      >)</a
+      ><a name="10660"
+      >
+    </a
+      ><a name="10665" href="2016-03-20-one-lambda-calculus-many-times.html#10586" class="Function"
+      >&#10233;</a
+      ><a name="10666"
+      > </a
+      ><a name="10667" class="Symbol"
+      >(</a
+      ><a name="10668" href="2016-03-20-one-lambda-calculus-many-times.html#5490" class="InductiveConstructor"
+      >&#8658;e</a
+      ><a name="10670"
+      >  </a
+      ><a name="10672" href="2016-03-20-one-lambda-calculus-many-times.html#10672" class="Bound"
+      >f</a
+      ><a name="10673"
+      > </a
+      ><a name="10674" href="2016-03-20-one-lambda-calculus-many-times.html#10674" class="Bound"
+      >g</a
+      ><a name="10675" class="Symbol"
+      >)</a
+      ><a name="10676"
+      > </a
+      ><a name="10677" class="Symbol"
+      >=</a
+      ><a name="10678"
+      > </a
+      ><a name="10679" href="2016-03-20-one-lambda-calculus-many-times.html#9858" class="InductiveConstructor"
+      >cut</a
+      ><a name="10682"
+      > </a
+      ><a name="10683" class="Symbol"
+      >(</a
+      ><a name="10684" href="2016-03-20-one-lambda-calculus-many-times.html#10586" class="Function"
+      >&#10233;</a
+      ><a name="10685"
+      > </a
+      ><a name="10686" href="2016-03-20-one-lambda-calculus-many-times.html#10672" class="Bound"
+      >f</a
+      ><a name="10687" class="Symbol"
+      >)</a
+      ><a name="10688"
+      > </a
+      ><a name="10689" class="Symbol"
+      >(</a
+      ><a name="10690" href="2016-03-20-one-lambda-calculus-many-times.html#9917" class="InductiveConstructor"
+      >&#8658;l</a
+      ><a name="10692"
+      > </a
+      ><a name="10693" class="Symbol"
+      >(</a
+      ><a name="10694" href="2016-03-20-one-lambda-calculus-many-times.html#10586" class="Function"
+      >&#10233;</a
+      ><a name="10695"
+      > </a
+      ><a name="10696" href="2016-03-20-one-lambda-calculus-many-times.html#10674" class="Bound"
+      >g</a
+      ><a name="10697" class="Symbol"
+      >)</a
+      ><a name="10698"
+      > </a
+      ><a name="10699" href="2016-03-20-one-lambda-calculus-many-times.html#10228" class="InductiveConstructor"
+      >ax&#8320;</a
+      ><a name="10702" class="Symbol"
+      >)</a
+      ><a name="10703"
+      >
 
-    </a><a name="10707" href="/2016/one-lambda-calculus-many-times/#10707" class="Function">⟸</a><a name="10708"> </a><a name="10709" class="Symbol">:</a><a name="10710"> </a><a name="10719" href="/2016/one-lambda-calculus-many-times/#9785" class="Datatype Operator">SC</a><a name="10721"> </a><a name="10722" href="/2016/one-lambda-calculus-many-times/#10714" class="Bound">S</a><a name="10723"> </a><a name="10724" class="Symbol">→</a><a name="10725"> </a><a name="10726" href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a name="10728"> </a><a name="10729" href="/2016/one-lambda-calculus-many-times/#10714" class="Bound">S</a><a name="10730">
-    </a><a name="10735" href="/2016/one-lambda-calculus-many-times/#10707" class="Function">⟸</a><a name="10736"> </a><a name="10737" class="Symbol">(</a><a name="10738" href="/2016/one-lambda-calculus-many-times/#9815" class="InductiveConstructor">ax</a><a name="10740">  </a><a name="10742" href="/2016/one-lambda-calculus-many-times/#10742" class="Bound">p</a><a name="10743" class="Symbol">)</a><a name="10744">   </a><a name="10747" class="Symbol">=</a><a name="10748"> </a><a name="10749" href="/2016/one-lambda-calculus-many-times/#5401" class="InductiveConstructor">ax</a><a name="10751"> </a><a name="10752" href="/2016/one-lambda-calculus-many-times/#10742" class="Bound">p</a><a name="10753">
-    </a><a name="10758" href="/2016/one-lambda-calculus-many-times/#10707" class="Function">⟸</a><a name="10759"> </a><a name="10760" class="Symbol">(</a><a name="10761" href="/2016/one-lambda-calculus-many-times/#9856" class="InductiveConstructor">cut</a><a name="10764"> </a><a name="10765" href="/2016/one-lambda-calculus-many-times/#10765" class="Bound">f</a><a name="10766"> </a><a name="10767" href="/2016/one-lambda-calculus-many-times/#10767" class="Bound">g</a><a name="10768" class="Symbol">)</a><a name="10769"> </a><a name="10770" class="Symbol">=</a><a name="10771"> </a><a name="10772" href="/2016/one-lambda-calculus-many-times/#5488" class="InductiveConstructor">⇒e</a><a name="10774"> </a><a name="10775" class="Symbol">(</a><a name="10776" href="/2016/one-lambda-calculus-many-times/#5439" class="InductiveConstructor">⇒i</a><a name="10778"> </a><a name="10779" class="Symbol">(</a><a name="10780" href="/2016/one-lambda-calculus-many-times/#10707" class="Function">⟸</a><a name="10781"> </a><a name="10782" href="/2016/one-lambda-calculus-many-times/#10767" class="Bound">g</a><a name="10783" class="Symbol">))</a><a name="10785"> </a><a name="10786" class="Symbol">(</a><a name="10787" href="/2016/one-lambda-calculus-many-times/#10707" class="Function">⟸</a><a name="10788"> </a><a name="10789" href="/2016/one-lambda-calculus-many-times/#10765" class="Bound">f</a><a name="10790" class="Symbol">)</a><a name="10791">
-    </a><a name="10796" href="/2016/one-lambda-calculus-many-times/#10707" class="Function">⟸</a><a name="10797"> </a><a name="10798" class="Symbol">(</a><a name="10799" href="/2016/one-lambda-calculus-many-times/#9915" class="InductiveConstructor">⇒l</a><a name="10801">  </a><a name="10803" href="/2016/one-lambda-calculus-many-times/#10803" class="Bound">f</a><a name="10804"> </a><a name="10805" href="/2016/one-lambda-calculus-many-times/#10805" class="Bound">g</a><a name="10806" class="Symbol">)</a><a name="10807"> </a><a name="10808" class="Symbol">=</a><a name="10809"> </a><a name="10810" href="/2016/one-lambda-calculus-many-times/#5488" class="InductiveConstructor">⇒e</a><a name="10812"> </a><a name="10813" class="Symbol">(</a><a name="10814" href="/2016/one-lambda-calculus-many-times/#8603" class="Function">w′</a><a name="10816"> </a><a name="10817" class="Symbol">(</a><a name="10818" href="/2016/one-lambda-calculus-many-times/#5439" class="InductiveConstructor">⇒i</a><a name="10820"> </a><a name="10821" class="Symbol">(</a><a name="10822" href="/2016/one-lambda-calculus-many-times/#10707" class="Function">⟸</a><a name="10823"> </a><a name="10824" href="/2016/one-lambda-calculus-many-times/#10805" class="Bound">g</a><a name="10825" class="Symbol">)))</a><a name="10828"> </a><a name="10829" class="Symbol">(</a><a name="10830" href="/2016/one-lambda-calculus-many-times/#5488" class="InductiveConstructor">⇒e</a><a name="10832"> </a><a name="10833" href="/2016/one-lambda-calculus-many-times/#10226" class="InductiveConstructor">ax₀</a><a name="10836"> </a><a name="10837" class="Symbol">(</a><a name="10838" href="/2016/one-lambda-calculus-many-times/#8603" class="Function">w′</a><a name="10840"> </a><a name="10841" class="Symbol">(</a><a name="10842" href="/2016/one-lambda-calculus-many-times/#10707" class="Function">⟸</a><a name="10843"> </a><a name="10844" href="/2016/one-lambda-calculus-many-times/#10803" class="Bound">f</a><a name="10845" class="Symbol">)))</a><a name="10848">
-    </a><a name="10853" href="/2016/one-lambda-calculus-many-times/#10707" class="Function">⟸</a><a name="10854"> </a><a name="10855" class="Symbol">(</a><a name="10856" href="/2016/one-lambda-calculus-many-times/#9982" class="InductiveConstructor">⇒r</a><a name="10858">  </a><a name="10860" href="/2016/one-lambda-calculus-many-times/#10860" class="Bound">f</a><a name="10861" class="Symbol">)</a><a name="10862">   </a><a name="10865" class="Symbol">=</a><a name="10866"> </a><a name="10867" href="/2016/one-lambda-calculus-many-times/#5439" class="InductiveConstructor">⇒i</a><a name="10869"> </a><a name="10870" class="Symbol">(</a><a name="10871" href="/2016/one-lambda-calculus-many-times/#10707" class="Function">⟸</a><a name="10872"> </a><a name="10873" href="/2016/one-lambda-calculus-many-times/#10860" class="Bound">f</a><a name="10874" class="Symbol">)</a></pre>
+    </a
+      ><a name="10709" href="2016-03-20-one-lambda-calculus-many-times.html#10709" class="Function"
+      >&#10232;</a
+      ><a name="10710"
+      > </a
+      ><a name="10711" class="Symbol"
+      >:</a
+      ><a name="10712"
+      > </a
+      ><a name="10713" class="Symbol"
+      >&#8704;</a
+      ><a name="10714"
+      > </a
+      ><a name="10719" class="Symbol"
+      >&#8594;</a
+      ><a name="10720"
+      > </a
+      ><a name="10721" href="2016-03-20-one-lambda-calculus-many-times.html#9787" class="Datatype Operator"
+      >SC</a
+      ><a name="10723"
+      > </a
+      ><a name="10724" href="2016-03-20-one-lambda-calculus-many-times.html#10716" class="Bound"
+      >S</a
+      ><a name="10725"
+      > </a
+      ><a name="10726" class="Symbol"
+      >&#8594;</a
+      ><a name="10727"
+      > </a
+      ><a name="10728" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
+      >ND</a
+      ><a name="10730"
+      > </a
+      ><a name="10731" href="2016-03-20-one-lambda-calculus-many-times.html#10716" class="Bound"
+      >S</a
+      ><a name="10732"
+      >
+    </a
+      ><a name="10737" href="2016-03-20-one-lambda-calculus-many-times.html#10709" class="Function"
+      >&#10232;</a
+      ><a name="10738"
+      > </a
+      ><a name="10739" class="Symbol"
+      >(</a
+      ><a name="10740" href="2016-03-20-one-lambda-calculus-many-times.html#9817" class="InductiveConstructor"
+      >ax</a
+      ><a name="10742"
+      >  </a
+      ><a name="10744" href="2016-03-20-one-lambda-calculus-many-times.html#10744" class="Bound"
+      >p</a
+      ><a name="10745" class="Symbol"
+      >)</a
+      ><a name="10746"
+      >   </a
+      ><a name="10749" class="Symbol"
+      >=</a
+      ><a name="10750"
+      > </a
+      ><a name="10751" href="2016-03-20-one-lambda-calculus-many-times.html#5403" class="InductiveConstructor"
+      >ax</a
+      ><a name="10753"
+      > </a
+      ><a name="10754" href="2016-03-20-one-lambda-calculus-many-times.html#10744" class="Bound"
+      >p</a
+      ><a name="10755"
+      >
+    </a
+      ><a name="10760" href="2016-03-20-one-lambda-calculus-many-times.html#10709" class="Function"
+      >&#10232;</a
+      ><a name="10761"
+      > </a
+      ><a name="10762" class="Symbol"
+      >(</a
+      ><a name="10763" href="2016-03-20-one-lambda-calculus-many-times.html#9858" class="InductiveConstructor"
+      >cut</a
+      ><a name="10766"
+      > </a
+      ><a name="10767" href="2016-03-20-one-lambda-calculus-many-times.html#10767" class="Bound"
+      >f</a
+      ><a name="10768"
+      > </a
+      ><a name="10769" href="2016-03-20-one-lambda-calculus-many-times.html#10769" class="Bound"
+      >g</a
+      ><a name="10770" class="Symbol"
+      >)</a
+      ><a name="10771"
+      > </a
+      ><a name="10772" class="Symbol"
+      >=</a
+      ><a name="10773"
+      > </a
+      ><a name="10774" href="2016-03-20-one-lambda-calculus-many-times.html#5490" class="InductiveConstructor"
+      >&#8658;e</a
+      ><a name="10776"
+      > </a
+      ><a name="10777" class="Symbol"
+      >(</a
+      ><a name="10778" href="2016-03-20-one-lambda-calculus-many-times.html#5441" class="InductiveConstructor"
+      >&#8658;i</a
+      ><a name="10780"
+      > </a
+      ><a name="10781" class="Symbol"
+      >(</a
+      ><a name="10782" href="2016-03-20-one-lambda-calculus-many-times.html#10709" class="Function"
+      >&#10232;</a
+      ><a name="10783"
+      > </a
+      ><a name="10784" href="2016-03-20-one-lambda-calculus-many-times.html#10769" class="Bound"
+      >g</a
+      ><a name="10785" class="Symbol"
+      >))</a
+      ><a name="10787"
+      > </a
+      ><a name="10788" class="Symbol"
+      >(</a
+      ><a name="10789" href="2016-03-20-one-lambda-calculus-many-times.html#10709" class="Function"
+      >&#10232;</a
+      ><a name="10790"
+      > </a
+      ><a name="10791" href="2016-03-20-one-lambda-calculus-many-times.html#10767" class="Bound"
+      >f</a
+      ><a name="10792" class="Symbol"
+      >)</a
+      ><a name="10793"
+      >
+    </a
+      ><a name="10798" href="2016-03-20-one-lambda-calculus-many-times.html#10709" class="Function"
+      >&#10232;</a
+      ><a name="10799"
+      > </a
+      ><a name="10800" class="Symbol"
+      >(</a
+      ><a name="10801" href="2016-03-20-one-lambda-calculus-many-times.html#9917" class="InductiveConstructor"
+      >&#8658;l</a
+      ><a name="10803"
+      >  </a
+      ><a name="10805" href="2016-03-20-one-lambda-calculus-many-times.html#10805" class="Bound"
+      >f</a
+      ><a name="10806"
+      > </a
+      ><a name="10807" href="2016-03-20-one-lambda-calculus-many-times.html#10807" class="Bound"
+      >g</a
+      ><a name="10808" class="Symbol"
+      >)</a
+      ><a name="10809"
+      > </a
+      ><a name="10810" class="Symbol"
+      >=</a
+      ><a name="10811"
+      > </a
+      ><a name="10812" href="2016-03-20-one-lambda-calculus-many-times.html#5490" class="InductiveConstructor"
+      >&#8658;e</a
+      ><a name="10814"
+      > </a
+      ><a name="10815" class="Symbol"
+      >(</a
+      ><a name="10816" href="2016-03-20-one-lambda-calculus-many-times.html#8605" class="Function"
+      >w&#8242;</a
+      ><a name="10818"
+      > </a
+      ><a name="10819" class="Symbol"
+      >(</a
+      ><a name="10820" href="2016-03-20-one-lambda-calculus-many-times.html#5441" class="InductiveConstructor"
+      >&#8658;i</a
+      ><a name="10822"
+      > </a
+      ><a name="10823" class="Symbol"
+      >(</a
+      ><a name="10824" href="2016-03-20-one-lambda-calculus-many-times.html#10709" class="Function"
+      >&#10232;</a
+      ><a name="10825"
+      > </a
+      ><a name="10826" href="2016-03-20-one-lambda-calculus-many-times.html#10807" class="Bound"
+      >g</a
+      ><a name="10827" class="Symbol"
+      >)))</a
+      ><a name="10830"
+      > </a
+      ><a name="10831" class="Symbol"
+      >(</a
+      ><a name="10832" href="2016-03-20-one-lambda-calculus-many-times.html#5490" class="InductiveConstructor"
+      >&#8658;e</a
+      ><a name="10834"
+      > </a
+      ><a name="10835" href="2016-03-20-one-lambda-calculus-many-times.html#10228" class="InductiveConstructor"
+      >ax&#8320;</a
+      ><a name="10838"
+      > </a
+      ><a name="10839" class="Symbol"
+      >(</a
+      ><a name="10840" href="2016-03-20-one-lambda-calculus-many-times.html#8605" class="Function"
+      >w&#8242;</a
+      ><a name="10842"
+      > </a
+      ><a name="10843" class="Symbol"
+      >(</a
+      ><a name="10844" href="2016-03-20-one-lambda-calculus-many-times.html#10709" class="Function"
+      >&#10232;</a
+      ><a name="10845"
+      > </a
+      ><a name="10846" href="2016-03-20-one-lambda-calculus-many-times.html#10805" class="Bound"
+      >f</a
+      ><a name="10847" class="Symbol"
+      >)))</a
+      ><a name="10850"
+      >
+    </a
+      ><a name="10855" href="2016-03-20-one-lambda-calculus-many-times.html#10709" class="Function"
+      >&#10232;</a
+      ><a name="10856"
+      > </a
+      ><a name="10857" class="Symbol"
+      >(</a
+      ><a name="10858" href="2016-03-20-one-lambda-calculus-many-times.html#9984" class="InductiveConstructor"
+      >&#8658;r</a
+      ><a name="10860"
+      >  </a
+      ><a name="10862" href="2016-03-20-one-lambda-calculus-many-times.html#10862" class="Bound"
+      >f</a
+      ><a name="10863" class="Symbol"
+      >)</a
+      ><a name="10864"
+      >   </a
+      ><a name="10867" class="Symbol"
+      >=</a
+      ><a name="10868"
+      > </a
+      ><a name="10869" href="2016-03-20-one-lambda-calculus-many-times.html#5441" class="InductiveConstructor"
+      >&#8658;i</a
+      ><a name="10871"
+      > </a
+      ><a name="10872" class="Symbol"
+      >(</a
+      ><a name="10873" href="2016-03-20-one-lambda-calculus-many-times.html#10709" class="Function"
+      >&#10232;</a
+      ><a name="10874"
+      > </a
+      ><a name="10875" href="2016-03-20-one-lambda-calculus-many-times.html#10862" class="Bound"
+      >f</a
+      ><a name="10876" class="Symbol"
+      >)</a
+      >
+</pre><!--{% endraw %}-->
 
 The rules for sequent calculus obviously no longer correspond *directly*
 to the λ-calculus. However, we've just shown that there is in fact
@@ -288,68 +2300,1080 @@ class="Agda Field Operator">⟦_⟧</a> the least restrictive type
 possible:
 
 <div class="hidden">
-<pre class="Agda"><a name="12394" class="Keyword">open</a><a name="12398"> </a><a name="12399" class="Keyword">import</a><a name="12405"> </a><a name="12406" href="https://agda.github.io/agda-stdlib/Level.html#1" class="Module" target="_blank">Level</a><a name="12411"> </a><a name="12412" class="Keyword">using</a><a name="12417"> </a><a name="12418" class="Symbol">(</a><a name="12419" href="https://agda.github.io/agda-stdlib/Agda.Primitive.html#626" class="Primitive Operator" target="_blank">_⊔_</a><a name="12422" class="Symbol">)</a></pre>
+<!--{% raw %}--><pre class="Agda">
+<a name="12396" class="Keyword"
+      >open</a
+      ><a name="12400"
+      > </a
+      ><a name="12401" class="Keyword"
+      >import</a
+      ><a name="12407"
+      > </a
+      ><a name="12408" href="https://agda.github.io/agda-stdlib/Level.html#1" class="Module"
+      >Level</a
+      ><a name="12413"
+      > </a
+      ><a name="12414" class="Keyword"
+      >using</a
+      ><a name="12419"
+      > </a
+      ><a name="12420" class="Symbol"
+      >(</a
+      ><a name="12421" href="Agda.Primitive.html#626" class="Primitive Operator"
+      >_&#8852;_</a
+      ><a name="12424" class="Symbol"
+      >)</a
+      >
+</pre><!--{% endraw %}-->
 </div>
-<pre class="Agda"><a name="12455" class="Keyword">record</a><a name="12461"> </a><a name="12462" href="/2016/one-lambda-calculus-many-times/#12462" class="Record">Interpret</a><a name="12471"> </a><a name="12480" class="Symbol">(</a><a name="12481" href="/2016/one-lambda-calculus-many-times/#12481" class="Bound">A</a><a name="12482"> </a><a name="12483" class="Symbol">:</a><a name="12484"> </a><a name="12485" class="PrimitiveType">Set</a><a name="12488"> </a><a name="12489" href="/2016/one-lambda-calculus-many-times/#12473" class="Bound">a</a><a name="12490" class="Symbol">)</a><a name="12491"> </a><a name="12492" class="Symbol">(</a><a name="12493" href="/2016/one-lambda-calculus-many-times/#12493" class="Bound">B</a><a name="12494"> </a><a name="12495" class="Symbol">:</a><a name="12496"> </a><a name="12497" class="PrimitiveType">Set</a><a name="12500"> </a><a name="12501" href="/2016/one-lambda-calculus-many-times/#12477" class="Bound">b</a><a name="12502" class="Symbol">)</a><a name="12503"> </a><a name="12504" class="Symbol">:</a><a name="12505"> </a><a name="12506" class="PrimitiveType">Set</a><a name="12509"> </a><a name="12510" class="Symbol">(</a><a name="12511" href="/2016/one-lambda-calculus-many-times/#12473" class="Bound">a</a><a name="12512"> </a><a name="12513" href="https://agda.github.io/agda-stdlib/Agda.Primitive.html#626" class="Primitive Operator" target="_blank">⊔</a><a name="12514"> </a><a name="12515" href="/2016/one-lambda-calculus-many-times/#12477" class="Bound">b</a><a name="12516" class="Symbol">)</a><a name="12517"> </a><a name="12518" class="Keyword">where</a><a name="12523">
-  </a><a name="12526" class="Keyword">field</a><a name="12531">
-    </a><a name="12536" href="/2016/one-lambda-calculus-many-times/#12536" class="Field Operator">⟦_⟧</a><a name="12539"> </a><a name="12540" class="Symbol">:</a><a name="12541"> </a><a name="12542" href="/2016/one-lambda-calculus-many-times/#12481" class="Bound">A</a><a name="12543"> </a><a name="12544" class="Symbol">→</a><a name="12545"> </a><a name="12546" href="/2016/one-lambda-calculus-many-times/#12493" class="Bound">B</a><a name="12547">
-</a><a name="12548" class="Keyword">open</a><a name="12552"> </a><a name="12553" href="/2016/one-lambda-calculus-many-times/#12462" class="Module">Interpret</a><a name="12562"> </a><a name="12563" class="Symbol">&#123;&#123;...&#125;&#125;</a></pre>
+<!--{% raw %}--><pre class="Agda">
+<a name="12457" class="Keyword"
+      >record</a
+      ><a name="12463"
+      > </a
+      ><a name="12464" href="2016-03-20-one-lambda-calculus-many-times.html#12464" class="Record"
+      >Interpret</a
+      ><a name="12473"
+      > </a
+      ><a name="12482" class="Symbol"
+      >(</a
+      ><a name="12483" href="2016-03-20-one-lambda-calculus-many-times.html#12483" class="Bound"
+      >A</a
+      ><a name="12484"
+      > </a
+      ><a name="12485" class="Symbol"
+      >:</a
+      ><a name="12486"
+      > </a
+      ><a name="12487" class="PrimitiveType"
+      >Set</a
+      ><a name="12490"
+      > </a
+      ><a name="12491" href="2016-03-20-one-lambda-calculus-many-times.html#12475" class="Bound"
+      >a</a
+      ><a name="12492" class="Symbol"
+      >)</a
+      ><a name="12493"
+      > </a
+      ><a name="12494" class="Symbol"
+      >(</a
+      ><a name="12495" href="2016-03-20-one-lambda-calculus-many-times.html#12495" class="Bound"
+      >B</a
+      ><a name="12496"
+      > </a
+      ><a name="12497" class="Symbol"
+      >:</a
+      ><a name="12498"
+      > </a
+      ><a name="12499" class="PrimitiveType"
+      >Set</a
+      ><a name="12502"
+      > </a
+      ><a name="12503" href="2016-03-20-one-lambda-calculus-many-times.html#12479" class="Bound"
+      >b</a
+      ><a name="12504" class="Symbol"
+      >)</a
+      ><a name="12505"
+      > </a
+      ><a name="12506" class="Symbol"
+      >:</a
+      ><a name="12507"
+      > </a
+      ><a name="12508" class="PrimitiveType"
+      >Set</a
+      ><a name="12511"
+      > </a
+      ><a name="12512" class="Symbol"
+      >(</a
+      ><a name="12513" href="2016-03-20-one-lambda-calculus-many-times.html#12475" class="Bound"
+      >a</a
+      ><a name="12514"
+      > </a
+      ><a name="12515" href="Agda.Primitive.html#626" class="Primitive Operator"
+      >&#8852;</a
+      ><a name="12516"
+      > </a
+      ><a name="12517" href="2016-03-20-one-lambda-calculus-many-times.html#12479" class="Bound"
+      >b</a
+      ><a name="12518" class="Symbol"
+      >)</a
+      ><a name="12519"
+      > </a
+      ><a name="12520" class="Keyword"
+      >where</a
+      ><a name="12525"
+      >
+  </a
+      ><a name="12528" class="Keyword"
+      >field</a
+      ><a name="12533"
+      >
+    </a
+      ><a name="12538" href="2016-03-20-one-lambda-calculus-many-times.html#12538" class="Field Operator"
+      >&#10214;_&#10215;</a
+      ><a name="12541"
+      > </a
+      ><a name="12542" class="Symbol"
+      >:</a
+      ><a name="12543"
+      > </a
+      ><a name="12544" href="2016-03-20-one-lambda-calculus-many-times.html#12483" class="Bound"
+      >A</a
+      ><a name="12545"
+      > </a
+      ><a name="12546" class="Symbol"
+      >&#8594;</a
+      ><a name="12547"
+      > </a
+      ><a name="12548" href="2016-03-20-one-lambda-calculus-many-times.html#12495" class="Bound"
+      >B</a
+      ><a name="12549"
+      >
+</a
+      ><a name="12550" class="Keyword"
+      >open</a
+      ><a name="12554"
+      > </a
+      ><a name="12555" href="2016-03-20-one-lambda-calculus-many-times.html#12464" class="Module"
+      >Interpret</a
+      ><a name="12564"
+      > </a
+      ><a name="12565" class="Symbol"
+      >{{...}}</a
+      >
+</pre><!--{% endraw %}-->
 
 Now, in order to interpret natural deduction proofs in Agda, we'll
 need an interpretation for the atomic types. Below we say as much:
 
-<pre class="Agda"><a name="12731" class="Keyword">module</a><a name="12737"> </a><a name="12738" href="/2016/one-lambda-calculus-many-times/#12738" class="Module">Semantics</a><a name="12747"> </a><a name="12748" class="Symbol">(</a><a name="12749" href="/2016/one-lambda-calculus-many-times/#12749" class="Bound">Atom</a><a name="12753"> </a><a name="12754" class="Symbol">:</a><a name="12755"> </a><a name="12756" class="PrimitiveType">Set</a><a name="12759" class="Symbol">)</a><a name="12760"> </a><a name="12761" class="Symbol">&#123;&#123;</a><a name="12763" href="/2016/one-lambda-calculus-many-times/#12763" class="Bound">InterpretAtom</a><a name="12776"> </a><a name="12777" class="Symbol">:</a><a name="12778"> </a><a name="12779" href="/2016/one-lambda-calculus-many-times/#12462" class="Record">Interpret</a><a name="12788"> </a><a name="12789" href="/2016/one-lambda-calculus-many-times/#12749" class="Bound">Atom</a><a name="12793"> </a><a name="12794" class="PrimitiveType">Set</a><a name="12797" class="Symbol">&#125;&#125;</a><a name="12799"> </a><a name="12800" class="Keyword">where</a></pre>
+<!--{% raw %}--><pre class="Agda">
+<a name="12733" class="Keyword"
+      >module</a
+      ><a name="12739"
+      > </a
+      ><a name="12740" href="2016-03-20-one-lambda-calculus-many-times.html#12740" class="Module"
+      >Semantics</a
+      ><a name="12749"
+      > </a
+      ><a name="12750" class="Symbol"
+      >(</a
+      ><a name="12751" href="2016-03-20-one-lambda-calculus-many-times.html#12751" class="Bound"
+      >Atom</a
+      ><a name="12755"
+      > </a
+      ><a name="12756" class="Symbol"
+      >:</a
+      ><a name="12757"
+      > </a
+      ><a name="12758" class="PrimitiveType"
+      >Set</a
+      ><a name="12761" class="Symbol"
+      >)</a
+      ><a name="12762"
+      > </a
+      ><a name="12763" class="Symbol"
+      >{{</a
+      ><a name="12765" href="2016-03-20-one-lambda-calculus-many-times.html#12765" class="Bound"
+      >InterpretAtom</a
+      ><a name="12778"
+      > </a
+      ><a name="12779" class="Symbol"
+      >:</a
+      ><a name="12780"
+      > </a
+      ><a name="12781" href="2016-03-20-one-lambda-calculus-many-times.html#12464" class="Record"
+      >Interpret</a
+      ><a name="12790"
+      > </a
+      ><a name="12791" href="2016-03-20-one-lambda-calculus-many-times.html#12751" class="Bound"
+      >Atom</a
+      ><a name="12795"
+      > </a
+      ><a name="12796" class="PrimitiveType"
+      >Set</a
+      ><a name="12799" class="Symbol"
+      >}}</a
+      ><a name="12801"
+      > </a
+      ><a name="12802" class="Keyword"
+      >where</a
+      >
+</pre><!--{% endraw %}-->
 
 <div class="hidden">
-<pre class="Agda">  <a name="12854" class="Keyword">open</a><a name="12858"> </a><a name="12859" href="/2016/one-lambda-calculus-many-times/#1566" class="Module">Syntax</a><a name="12865"> </a><a name="12866" href="/2016/one-lambda-calculus-many-times/#12749" class="Bound">Atom</a><a name="12870">
-  </a><a name="12873" class="Keyword">open</a><a name="12877"> </a><a name="12878" class="Keyword">import</a><a name="12884"> </a><a name="12885" href="https://agda.github.io/agda-stdlib/Data.Empty.html#1" class="Module" target="_blank">Data.Empty</a><a name="12895">           </a><a name="12906" class="Keyword">using</a><a name="12911"> </a><a name="12912" class="Symbol">(</a><a name="12913" href="https://agda.github.io/agda-stdlib/Data.Empty.html#348" class="Function" target="_blank">⊥-elim</a><a name="12919" class="Symbol">)</a><a name="12920">
-  </a><a name="12923" class="Keyword">open</a><a name="12927"> </a><a name="12928" class="Keyword">import</a><a name="12934"> </a><a name="12935" href="https://agda.github.io/agda-stdlib/Data.List.html#1" class="Module" target="_blank">Data.List</a><a name="12944">            </a><a name="12956" class="Keyword">using</a><a name="12961"> </a><a name="12962" class="Symbol">(</a><a name="12963" href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#52" class="Datatype" target="_blank">List</a><a name="12967" class="Symbol">;</a><a name="12968"> </a><a name="12969" href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">_∷_</a><a name="12972" class="Symbol">;</a><a name="12973"> </a><a name="12974" href="https://agda.github.io/agda-stdlib/Data.List.Base.html#5519" class="InductiveConstructor" target="_blank">[]</a><a name="12976" class="Symbol">;</a><a name="12977"> </a><a name="12978" href="https://agda.github.io/agda-stdlib/Data.List.Base.html#1207" class="Function" target="_blank">map</a><a name="12981" class="Symbol">)</a><a name="12982">
-  </a><a name="12985" class="Keyword">open</a><a name="12989"> </a><a name="12990" class="Keyword">import</a><a name="12996"> </a><a name="12997" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1" class="Module" target="_blank">Data.List.Any</a><a name="13010">        </a><a name="13018" class="Keyword">using</a><a name="13023"> </a><a name="13024" class="Symbol">(</a><a name="13025" class="Keyword">module</a><a name="13031"> </a><a name="13032" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#250" class="Module" target="_blank">Membership</a><a name="13042" class="Symbol">;</a><a name="13043"> </a><a name="13044" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174" class="InductiveConstructor" target="_blank">here</a><a name="13048" class="Symbol">;</a><a name="13049"> </a><a name="13050" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor" target="_blank">there</a><a name="13055" class="Symbol">)</a><a name="13056">
-  </a><a name="13059" class="Keyword">open</a><a name="13063"> </a><a name="13064" class="Keyword">import</a><a name="13070"> </a><a name="13071" href="https://agda.github.io/agda-stdlib/Function.html#1" class="Module" target="_blank">Function</a><a name="13079">             </a><a name="13092" class="Keyword">using</a><a name="13097"> </a><a name="13098" class="Symbol">(</a><a name="13099" href="https://agda.github.io/agda-stdlib/Function.html#713" class="Function Operator" target="_blank">_∘_</a><a name="13102" class="Symbol">)</a><a name="13103">
-  </a><a name="13106" class="Keyword">open</a><a name="13110"> </a><a name="13111" class="Keyword">import</a><a name="13117"> </a><a name="13118" href="https://agda.github.io/agda-stdlib/Function.Equality.html#1" class="Module" target="_blank">Function.Equality</a><a name="13135">    </a><a name="13139" class="Keyword">using</a><a name="13144"> </a><a name="13145" class="Symbol">(</a><a name="13146" href="https://agda.github.io/agda-stdlib/Function.Equality.html#681" class="Field Operator" target="_blank">_⟨$⟩_</a><a name="13151" class="Symbol">)</a><a name="13152">
-  </a><a name="13155" class="Keyword">open</a><a name="13159"> </a><a name="13160" class="Keyword">import</a><a name="13166"> </a><a name="13167" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#1" class="Module" target="_blank">Function.Equivalence</a><a name="13187"> </a><a name="13188" class="Keyword">using</a><a name="13193"> </a><a name="13194" class="Symbol">(</a><a name="13195" class="Keyword">module</a><a name="13201"> </a><a name="13202" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#218" class="Module" target="_blank">Equivalence</a><a name="13213" class="Symbol">)</a><a name="13214">
-  </a><a name="13217" class="Keyword">open</a><a name="13221"> </a><a name="13222" class="Keyword">import</a><a name="13228"> </a><a name="13229" href="https://agda.github.io/agda-stdlib/Relation.Binary.PropositionalEquality.html#1" class="Module" target="_blank">Relation.Binary.PropositionalEquality</a><a name="13266">
-  </a><a name="13269" class="Keyword">open</a><a name="13273"> </a><a name="13274" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#2298" class="Module" target="_blank">Membership</a><a name="13284"> </a><a name="13285" class="Symbol">(</a><a name="13286" href="https://agda.github.io/agda-stdlib/Relation.Binary.PropositionalEquality.html#1526" class="Function" target="_blank">setoid</a><a name="13292"> </a><a name="13293" href="/2016/one-lambda-calculus-many-times/#2649" class="Datatype">Type</a><a name="13297" class="Symbol">)</a><a name="13298">    </a><a name="13302" class="Keyword">using</a><a name="13307"> </a><a name="13308" class="Symbol">(</a><a name="13309">_∈_</a><a name="13312" class="Symbol">;</a><a name="13313"> _⊆_</a><a name="13317" class="Symbol">)</a><a name="13318">
-  </a><a name="13321" class="Keyword">open</a><a name="13325"> </a><a name="13326" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#488" class="Module" target="_blank">Equivalence</a><a name="13337">                 </a><a name="13354" class="Keyword">using</a><a name="13359"> </a><a name="13360" class="Symbol">(</a><a name="13361" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#638" class="Field" target="_blank">to</a><a name="13363" class="Symbol">;</a><a name="13364"> </a><a name="13365" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#659" class="Field" target="_blank">from</a><a name="13369" class="Symbol">)</a></pre>
+<!--{% raw %}--><pre class="Agda">
+  <a name="12856" class="Keyword"
+      >open</a
+      ><a name="12860"
+      > </a
+      ><a name="12861" href="2016-03-20-one-lambda-calculus-many-times.html#1568" class="Module"
+      >Syntax</a
+      ><a name="12867"
+      > </a
+      ><a name="12868" href="2016-03-20-one-lambda-calculus-many-times.html#12751" class="Bound"
+      >Atom</a
+      ><a name="12872"
+      >
+  </a
+      ><a name="12875" class="Keyword"
+      >open</a
+      ><a name="12879"
+      > </a
+      ><a name="12880" class="Keyword"
+      >import</a
+      ><a name="12886"
+      > </a
+      ><a name="12887" href="https://agda.github.io/agda-stdlib/Data.Empty.html#1" class="Module"
+      >Data.Empty</a
+      ><a name="12897"
+      >           </a
+      ><a name="12908" class="Keyword"
+      >using</a
+      ><a name="12913"
+      > </a
+      ><a name="12914" class="Symbol"
+      >(</a
+      ><a name="12915" href="https://agda.github.io/agda-stdlib/Data.Empty.html#348" class="Function"
+      >&#8869;-elim</a
+      ><a name="12921" class="Symbol"
+      >)</a
+      ><a name="12922"
+      >
+  </a
+      ><a name="12925" class="Keyword"
+      >open</a
+      ><a name="12929"
+      > </a
+      ><a name="12930" class="Keyword"
+      >import</a
+      ><a name="12936"
+      > </a
+      ><a name="12937" href="https://agda.github.io/agda-stdlib/Data.List.html#1" class="Module"
+      >Data.List</a
+      ><a name="12946"
+      >            </a
+      ><a name="12958" class="Keyword"
+      >using</a
+      ><a name="12963"
+      > </a
+      ><a name="12964" class="Symbol"
+      >(</a
+      ><a name="12965" href="Agda.Builtin.List.html#52" class="Datatype"
+      >List</a
+      ><a name="12969" class="Symbol"
+      >;</a
+      ><a name="12970"
+      > </a
+      ><a name="12971" href="Agda.Builtin.List.html#104" class="InductiveConstructor Operator"
+      >_&#8759;_</a
+      ><a name="12974" class="Symbol"
+      >;</a
+      ><a name="12975"
+      > </a
+      ><a name="12976" href="https://agda.github.io/agda-stdlib/Data.List.Base.html#5519" class="InductiveConstructor"
+      >[]</a
+      ><a name="12978" class="Symbol"
+      >;</a
+      ><a name="12979"
+      > </a
+      ><a name="12980" href="https://agda.github.io/agda-stdlib/Data.List.Base.html#1207" class="Function"
+      >map</a
+      ><a name="12983" class="Symbol"
+      >)</a
+      ><a name="12984"
+      >
+  </a
+      ><a name="12987" class="Keyword"
+      >open</a
+      ><a name="12991"
+      > </a
+      ><a name="12992" class="Keyword"
+      >import</a
+      ><a name="12998"
+      > </a
+      ><a name="12999" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1" class="Module"
+      >Data.List.Any</a
+      ><a name="13012"
+      >        </a
+      ><a name="13020" class="Keyword"
+      >using</a
+      ><a name="13025"
+      > </a
+      ><a name="13026" class="Symbol"
+      >(</a
+      ><a name="13027" class="Keyword"
+      >module</a
+      ><a name="13033"
+      > </a
+      ><a name="13034" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#250" class="Module"
+      >Membership</a
+      ><a name="13044" class="Symbol"
+      >;</a
+      ><a name="13045"
+      > </a
+      ><a name="13046" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174" class="InductiveConstructor"
+      >here</a
+      ><a name="13050" class="Symbol"
+      >;</a
+      ><a name="13051"
+      > </a
+      ><a name="13052" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor"
+      >there</a
+      ><a name="13057" class="Symbol"
+      >)</a
+      ><a name="13058"
+      >
+  </a
+      ><a name="13061" class="Keyword"
+      >open</a
+      ><a name="13065"
+      > </a
+      ><a name="13066" class="Keyword"
+      >import</a
+      ><a name="13072"
+      > </a
+      ><a name="13073" href="https://agda.github.io/agda-stdlib/Function.html#1" class="Module"
+      >Function</a
+      ><a name="13081"
+      >             </a
+      ><a name="13094" class="Keyword"
+      >using</a
+      ><a name="13099"
+      > </a
+      ><a name="13100" class="Symbol"
+      >(</a
+      ><a name="13101" href="https://agda.github.io/agda-stdlib/Function.html#713" class="Function Operator"
+      >_&#8728;_</a
+      ><a name="13104" class="Symbol"
+      >)</a
+      ><a name="13105"
+      >
+  </a
+      ><a name="13108" class="Keyword"
+      >open</a
+      ><a name="13112"
+      > </a
+      ><a name="13113" class="Keyword"
+      >import</a
+      ><a name="13119"
+      > </a
+      ><a name="13120" href="https://agda.github.io/agda-stdlib/Function.Equality.html#1" class="Module"
+      >Function.Equality</a
+      ><a name="13137"
+      >    </a
+      ><a name="13141" class="Keyword"
+      >using</a
+      ><a name="13146"
+      > </a
+      ><a name="13147" class="Symbol"
+      >(</a
+      ><a name="13148" href="https://agda.github.io/agda-stdlib/Function.Equality.html#681" class="Field Operator"
+      >_&#10216;$&#10217;_</a
+      ><a name="13153" class="Symbol"
+      >)</a
+      ><a name="13154"
+      >
+  </a
+      ><a name="13157" class="Keyword"
+      >open</a
+      ><a name="13161"
+      > </a
+      ><a name="13162" class="Keyword"
+      >import</a
+      ><a name="13168"
+      > </a
+      ><a name="13169" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#1" class="Module"
+      >Function.Equivalence</a
+      ><a name="13189"
+      > </a
+      ><a name="13190" class="Keyword"
+      >using</a
+      ><a name="13195"
+      > </a
+      ><a name="13196" class="Symbol"
+      >(</a
+      ><a name="13197" class="Keyword"
+      >module</a
+      ><a name="13203"
+      > </a
+      ><a name="13204" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#218" class="Module"
+      >Equivalence</a
+      ><a name="13215" class="Symbol"
+      >)</a
+      ><a name="13216"
+      >
+  </a
+      ><a name="13219" class="Keyword"
+      >open</a
+      ><a name="13223"
+      > </a
+      ><a name="13224" class="Keyword"
+      >import</a
+      ><a name="13230"
+      > </a
+      ><a name="13231" href="https://agda.github.io/agda-stdlib/Relation.Binary.PropositionalEquality.html#1" class="Module"
+      >Relation.Binary.PropositionalEquality</a
+      ><a name="13268"
+      >
+  </a
+      ><a name="13271" class="Keyword"
+      >open</a
+      ><a name="13275"
+      > </a
+      ><a name="13276" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#2298" class="Module"
+      >Membership</a
+      ><a name="13286"
+      > </a
+      ><a name="13287" class="Symbol"
+      >(</a
+      ><a name="13288" href="https://agda.github.io/agda-stdlib/Relation.Binary.PropositionalEquality.html#1526" class="Function"
+      >setoid</a
+      ><a name="13294"
+      > </a
+      ><a name="13295" href="2016-03-20-one-lambda-calculus-many-times.html#2651" class="Datatype"
+      >Type</a
+      ><a name="13299" class="Symbol"
+      >)</a
+      ><a name="13300"
+      >    </a
+      ><a name="13304" class="Keyword"
+      >using</a
+      ><a name="13309"
+      > </a
+      ><a name="13310" class="Symbol"
+      >(</a
+      ><a name="13311"
+      >_&#8712;_</a
+      ><a name="13314" class="Symbol"
+      >;</a
+      ><a name="13315"
+      > _&#8838;_</a
+      ><a name="13319" class="Symbol"
+      >)</a
+      ><a name="13320"
+      >
+  </a
+      ><a name="13323" class="Keyword"
+      >open</a
+      ><a name="13327"
+      > </a
+      ><a name="13328" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#488" class="Module"
+      >Equivalence</a
+      ><a name="13339"
+      >                 </a
+      ><a name="13356" class="Keyword"
+      >using</a
+      ><a name="13361"
+      > </a
+      ><a name="13362" class="Symbol"
+      >(</a
+      ><a name="13363" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#638" class="Field"
+      >to</a
+      ><a name="13365" class="Symbol"
+      >;</a
+      ><a name="13366"
+      > </a
+      ><a name="13367" href="https://agda.github.io/agda-stdlib/Function.Equivalence.html#659" class="Field"
+      >from</a
+      ><a name="13371" class="Symbol"
+      >)</a
+      >
+</pre><!--{% endraw %}-->
 </div>
 
 Unsurprisingly, we interpret the implication as Agda's function type:
 
-<pre class="Agda">  <a name="13476" class="Keyword">instance</a><a name="13484">
-    </a><a name="13489" href="/2016/one-lambda-calculus-many-times/#13489" class="Function">InterpretType</a><a name="13502"> </a><a name="13503" class="Symbol">:</a><a name="13504"> </a><a name="13505" href="/2016/one-lambda-calculus-many-times/#12462" class="Record">Interpret</a><a name="13514"> </a><a name="13515" href="/2016/one-lambda-calculus-many-times/#2649" class="Datatype">Type</a><a name="13519"> </a><a name="13520" class="PrimitiveType">Set</a><a name="13523">
-    </a><a name="13528" href="/2016/one-lambda-calculus-many-times/#13489" class="Function">InterpretType</a><a name="13541"> </a><a name="13542" class="Symbol">=</a><a name="13543"> </a><a name="13544" class="Keyword">record</a><a name="13550"> </a><a name="13551" class="Symbol">&#123;</a><a name="13552"> </a><a name="13553" class="Field Operator">⟦_⟧</a><a name="13556"> </a><a name="13557" class="Symbol">=</a><a name="13558"> </a><a name="13559" href="/2016/one-lambda-calculus-many-times/#13586" class="Function Operator">⟦_⟧′</a><a name="13563"> </a><a name="13564" class="Symbol">&#125;</a><a name="13565">
-      </a><a name="13572" class="Keyword">where</a><a name="13577">
-        </a><a name="13586" href="/2016/one-lambda-calculus-many-times/#13586" class="Function Operator">⟦_⟧′</a><a name="13590">  </a><a name="13592" class="Symbol">:</a><a name="13593"> </a><a name="13594" href="/2016/one-lambda-calculus-many-times/#2649" class="Datatype">Type</a><a name="13598"> </a><a name="13599" class="Symbol">→</a><a name="13600"> </a><a name="13601" class="PrimitiveType">Set</a><a name="13604">
-        </a><a name="13613" href="/2016/one-lambda-calculus-many-times/#13586" class="Function Operator">⟦</a><a name="13614"> </a><a name="13615" href="/2016/one-lambda-calculus-many-times/#2670" class="InductiveConstructor">El</a><a name="13617">  </a><a name="13619" href="/2016/one-lambda-calculus-many-times/#13619" class="Bound">A</a><a name="13620"> </a><a name="13621" href="/2016/one-lambda-calculus-many-times/#13586" class="Function Operator">⟧′</a><a name="13623"> </a><a name="13624" class="Symbol">=</a><a name="13625"> </a><a name="13626" href="/2016/one-lambda-calculus-many-times/#12536" class="Field Operator">⟦</a><a name="13627"> </a><a name="13628" href="/2016/one-lambda-calculus-many-times/#13619" class="Bound">A</a><a name="13629"> </a><a name="13630" href="/2016/one-lambda-calculus-many-times/#12536" class="Field Operator">⟧</a><a name="13631">
-        </a><a name="13640" href="/2016/one-lambda-calculus-many-times/#13586" class="Function Operator">⟦</a><a name="13641"> </a><a name="13642" href="/2016/one-lambda-calculus-many-times/#13642" class="Bound">A</a><a name="13643"> </a><a name="13644" href="/2016/one-lambda-calculus-many-times/#2692" class="InductiveConstructor Operator">⇒</a><a name="13645"> </a><a name="13646" href="/2016/one-lambda-calculus-many-times/#13646" class="Bound">B</a><a name="13647"> </a><a name="13648" href="/2016/one-lambda-calculus-many-times/#13586" class="Function Operator">⟧′</a><a name="13650"> </a><a name="13651" class="Symbol">=</a><a name="13652"> </a><a name="13653" href="/2016/one-lambda-calculus-many-times/#13586" class="Function Operator">⟦</a><a name="13654"> </a><a name="13655" href="/2016/one-lambda-calculus-many-times/#13642" class="Bound">A</a><a name="13656"> </a><a name="13657" href="/2016/one-lambda-calculus-many-times/#13586" class="Function Operator">⟧′</a><a name="13659"> </a><a name="13660" class="Symbol">→</a><a name="13661"> </a><a name="13662" href="/2016/one-lambda-calculus-many-times/#13586" class="Function Operator">⟦</a><a name="13663"> </a><a name="13664" href="/2016/one-lambda-calculus-many-times/#13646" class="Bound">B</a><a name="13665"> </a><a name="13666" href="/2016/one-lambda-calculus-many-times/#13586" class="Function Operator">⟧′</a></pre>
+<!--{% raw %}--><pre class="Agda">
+  <a name="13478" class="Keyword"
+      >instance</a
+      ><a name="13486"
+      >
+    </a
+      ><a name="13491" href="2016-03-20-one-lambda-calculus-many-times.html#13491" class="Function"
+      >InterpretType</a
+      ><a name="13504"
+      > </a
+      ><a name="13505" class="Symbol"
+      >:</a
+      ><a name="13506"
+      > </a
+      ><a name="13507" href="2016-03-20-one-lambda-calculus-many-times.html#12464" class="Record"
+      >Interpret</a
+      ><a name="13516"
+      > </a
+      ><a name="13517" href="2016-03-20-one-lambda-calculus-many-times.html#2651" class="Datatype"
+      >Type</a
+      ><a name="13521"
+      > </a
+      ><a name="13522" class="PrimitiveType"
+      >Set</a
+      ><a name="13525"
+      >
+    </a
+      ><a name="13530" href="2016-03-20-one-lambda-calculus-many-times.html#13491" class="Function"
+      >InterpretType</a
+      ><a name="13543"
+      > </a
+      ><a name="13544" class="Symbol"
+      >=</a
+      ><a name="13545"
+      > </a
+      ><a name="13546" class="Keyword"
+      >record</a
+      ><a name="13552"
+      > </a
+      ><a name="13553" class="Symbol"
+      >{</a
+      ><a name="13554"
+      > </a
+      ><a name="13555" class="Field Operator"
+      >&#10214;_&#10215;</a
+      ><a name="13558"
+      > </a
+      ><a name="13559" class="Symbol"
+      >=</a
+      ><a name="13560"
+      > </a
+      ><a name="13561" href="2016-03-20-one-lambda-calculus-many-times.html#13588" class="Function Operator"
+      >&#10214;_&#10215;&#8242;</a
+      ><a name="13565"
+      > </a
+      ><a name="13566" class="Symbol"
+      >}</a
+      ><a name="13567"
+      >
+      </a
+      ><a name="13574" class="Keyword"
+      >where</a
+      ><a name="13579"
+      >
+        </a
+      ><a name="13588" href="2016-03-20-one-lambda-calculus-many-times.html#13588" class="Function Operator"
+      >&#10214;_&#10215;&#8242;</a
+      ><a name="13592"
+      >  </a
+      ><a name="13594" class="Symbol"
+      >:</a
+      ><a name="13595"
+      > </a
+      ><a name="13596" href="2016-03-20-one-lambda-calculus-many-times.html#2651" class="Datatype"
+      >Type</a
+      ><a name="13600"
+      > </a
+      ><a name="13601" class="Symbol"
+      >&#8594;</a
+      ><a name="13602"
+      > </a
+      ><a name="13603" class="PrimitiveType"
+      >Set</a
+      ><a name="13606"
+      >
+        </a
+      ><a name="13615" href="2016-03-20-one-lambda-calculus-many-times.html#13588" class="Function Operator"
+      >&#10214;</a
+      ><a name="13616"
+      > </a
+      ><a name="13617" href="2016-03-20-one-lambda-calculus-many-times.html#2672" class="InductiveConstructor"
+      >El</a
+      ><a name="13619"
+      >  </a
+      ><a name="13621" href="2016-03-20-one-lambda-calculus-many-times.html#13621" class="Bound"
+      >A</a
+      ><a name="13622"
+      > </a
+      ><a name="13623" href="2016-03-20-one-lambda-calculus-many-times.html#13588" class="Function Operator"
+      >&#10215;&#8242;</a
+      ><a name="13625"
+      > </a
+      ><a name="13626" class="Symbol"
+      >=</a
+      ><a name="13627"
+      > </a
+      ><a name="13628" href="2016-03-20-one-lambda-calculus-many-times.html#12538" class="Field Operator"
+      >&#10214;</a
+      ><a name="13629"
+      > </a
+      ><a name="13630" href="2016-03-20-one-lambda-calculus-many-times.html#13621" class="Bound"
+      >A</a
+      ><a name="13631"
+      > </a
+      ><a name="13632" href="2016-03-20-one-lambda-calculus-many-times.html#12538" class="Field Operator"
+      >&#10215;</a
+      ><a name="13633"
+      >
+        </a
+      ><a name="13642" href="2016-03-20-one-lambda-calculus-many-times.html#13588" class="Function Operator"
+      >&#10214;</a
+      ><a name="13643"
+      > </a
+      ><a name="13644" href="2016-03-20-one-lambda-calculus-many-times.html#13644" class="Bound"
+      >A</a
+      ><a name="13645"
+      > </a
+      ><a name="13646" href="2016-03-20-one-lambda-calculus-many-times.html#2694" class="InductiveConstructor Operator"
+      >&#8658;</a
+      ><a name="13647"
+      > </a
+      ><a name="13648" href="2016-03-20-one-lambda-calculus-many-times.html#13648" class="Bound"
+      >B</a
+      ><a name="13649"
+      > </a
+      ><a name="13650" href="2016-03-20-one-lambda-calculus-many-times.html#13588" class="Function Operator"
+      >&#10215;&#8242;</a
+      ><a name="13652"
+      > </a
+      ><a name="13653" class="Symbol"
+      >=</a
+      ><a name="13654"
+      > </a
+      ><a name="13655" href="2016-03-20-one-lambda-calculus-many-times.html#13588" class="Function Operator"
+      >&#10214;</a
+      ><a name="13656"
+      > </a
+      ><a name="13657" href="2016-03-20-one-lambda-calculus-many-times.html#13644" class="Bound"
+      >A</a
+      ><a name="13658"
+      > </a
+      ><a name="13659" href="2016-03-20-one-lambda-calculus-many-times.html#13588" class="Function Operator"
+      >&#10215;&#8242;</a
+      ><a name="13661"
+      > </a
+      ><a name="13662" class="Symbol"
+      >&#8594;</a
+      ><a name="13663"
+      > </a
+      ><a name="13664" href="2016-03-20-one-lambda-calculus-many-times.html#13588" class="Function Operator"
+      >&#10214;</a
+      ><a name="13665"
+      > </a
+      ><a name="13666" href="2016-03-20-one-lambda-calculus-many-times.html#13648" class="Bound"
+      >B</a
+      ><a name="13667"
+      > </a
+      ><a name="13668" href="2016-03-20-one-lambda-calculus-many-times.html#13588" class="Function Operator"
+      >&#10215;&#8242;</a
+      >
+</pre><!--{% endraw %}-->
 
 In order to interpret sequents, we'll need an interpretation for the
 antecedent. For this we'll create a type for *environments*, <a
 class="Agda Datatype">Env</a>, which is indexed by a list of types, and
 which stores values of the *interpretations* of those types:
 
-<pre class="Agda">  <a name="13963" class="Keyword">infixr</a><a name="13969"> </a><a name="13970" class="Number">5</a><a name="13971"> _∷_
+<!--{% raw %}--><pre class="Agda">
+  <a name="13965" class="Keyword"
+      >infixr</a
+      ><a name="13971"
+      > </a
+      ><a name="13972" class="Number"
+      >5</a
+      ><a name="13973"
+      > _&#8759;_
 
-  </a><a name="13979" class="Keyword">data</a><a name="13983"> </a><a name="13984" href="/2016/one-lambda-calculus-many-times/#13984" class="Datatype">Env</a><a name="13987"> </a><a name="13988" class="Symbol">:</a><a name="13989"> </a><a name="13990" href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#52" class="Datatype" target="_blank">List</a><a name="13994"> </a><a name="13995" href="/2016/one-lambda-calculus-many-times/#2649" class="Datatype">Type</a><a name="13999"> </a><a name="14000" class="Symbol">→</a><a name="14001"> </a><a name="14002" class="PrimitiveType">Set</a><a name="14005"> </a><a name="14006" class="Keyword">where</a><a name="14011">
-    </a><a name="14016" href="/2016/one-lambda-calculus-many-times/#14016" class="InductiveConstructor">[]</a><a name="14018">  </a><a name="14020" class="Symbol">:</a><a name="14021"> </a><a name="14022" href="/2016/one-lambda-calculus-many-times/#13984" class="Datatype">Env</a><a name="14025"> </a><a name="14026" href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#89" class="InductiveConstructor" target="_blank">[]</a><a name="14028">
-    </a><a name="14033" href="/2016/one-lambda-calculus-many-times/#14033" class="InductiveConstructor Operator">_∷_</a><a name="14036"> </a><a name="14037" class="Symbol">:</a><a name="14038"> </a><a name="14068" href="/2016/one-lambda-calculus-many-times/#12536" class="Field Operator">⟦</a><a name="14069"> </a><a name="14070" href="/2016/one-lambda-calculus-many-times/#14040" class="Bound">A</a><a name="14071"> </a><a name="14072" href="/2016/one-lambda-calculus-many-times/#12536" class="Field Operator">⟧</a><a name="14073"> </a><a name="14074" class="Symbol">→</a><a name="14075"> </a><a name="14076" href="/2016/one-lambda-calculus-many-times/#13984" class="Datatype">Env</a><a name="14079"> </a><a name="14080" href="/2016/one-lambda-calculus-many-times/#14051" class="Bound">Γ</a><a name="14081"> </a><a name="14082" class="Symbol">→</a><a name="14083"> </a><a name="14084" href="/2016/one-lambda-calculus-many-times/#13984" class="Datatype">Env</a><a name="14087"> </a><a name="14088" class="Symbol">(</a><a name="14089" href="/2016/one-lambda-calculus-many-times/#14040" class="Bound">A</a><a name="14090"> </a><a name="14091" href="https://agda.github.io/agda-stdlib/Agda.Builtin.List.html#104" class="InductiveConstructor Operator" target="_blank">∷</a><a name="14092"> </a><a name="14093" href="/2016/one-lambda-calculus-many-times/#14051" class="Bound">Γ</a><a name="14094" class="Symbol">)</a></pre>
+  </a
+      ><a name="13981" class="Keyword"
+      >data</a
+      ><a name="13985"
+      > </a
+      ><a name="13986" href="2016-03-20-one-lambda-calculus-many-times.html#13986" class="Datatype"
+      >Env</a
+      ><a name="13989"
+      > </a
+      ><a name="13990" class="Symbol"
+      >:</a
+      ><a name="13991"
+      > </a
+      ><a name="13992" href="Agda.Builtin.List.html#52" class="Datatype"
+      >List</a
+      ><a name="13996"
+      > </a
+      ><a name="13997" href="2016-03-20-one-lambda-calculus-many-times.html#2651" class="Datatype"
+      >Type</a
+      ><a name="14001"
+      > </a
+      ><a name="14002" class="Symbol"
+      >&#8594;</a
+      ><a name="14003"
+      > </a
+      ><a name="14004" class="PrimitiveType"
+      >Set</a
+      ><a name="14007"
+      > </a
+      ><a name="14008" class="Keyword"
+      >where</a
+      ><a name="14013"
+      >
+    </a
+      ><a name="14018" href="2016-03-20-one-lambda-calculus-many-times.html#14018" class="InductiveConstructor"
+      >[]</a
+      ><a name="14020"
+      >  </a
+      ><a name="14022" class="Symbol"
+      >:</a
+      ><a name="14023"
+      > </a
+      ><a name="14024" href="2016-03-20-one-lambda-calculus-many-times.html#13986" class="Datatype"
+      >Env</a
+      ><a name="14027"
+      > </a
+      ><a name="14028" href="Agda.Builtin.List.html#89" class="InductiveConstructor"
+      >[]</a
+      ><a name="14030"
+      >
+    </a
+      ><a name="14035" href="2016-03-20-one-lambda-calculus-many-times.html#14035" class="InductiveConstructor Operator"
+      >_&#8759;_</a
+      ><a name="14038"
+      > </a
+      ><a name="14039" class="Symbol"
+      >:</a
+      ><a name="14040"
+      > </a
+      ><a name="14068" class="Symbol"
+      >&#8594;</a
+      ><a name="14069"
+      > </a
+      ><a name="14070" href="2016-03-20-one-lambda-calculus-many-times.html#12538" class="Field Operator"
+      >&#10214;</a
+      ><a name="14071"
+      > </a
+      ><a name="14072" href="2016-03-20-one-lambda-calculus-many-times.html#14042" class="Bound"
+      >A</a
+      ><a name="14073"
+      > </a
+      ><a name="14074" href="2016-03-20-one-lambda-calculus-many-times.html#12538" class="Field Operator"
+      >&#10215;</a
+      ><a name="14075"
+      > </a
+      ><a name="14076" class="Symbol"
+      >&#8594;</a
+      ><a name="14077"
+      > </a
+      ><a name="14078" href="2016-03-20-one-lambda-calculus-many-times.html#13986" class="Datatype"
+      >Env</a
+      ><a name="14081"
+      > </a
+      ><a name="14082" href="2016-03-20-one-lambda-calculus-many-times.html#14053" class="Bound"
+      >&#915;</a
+      ><a name="14083"
+      > </a
+      ><a name="14084" class="Symbol"
+      >&#8594;</a
+      ><a name="14085"
+      > </a
+      ><a name="14086" href="2016-03-20-one-lambda-calculus-many-times.html#13986" class="Datatype"
+      >Env</a
+      ><a name="14089"
+      > </a
+      ><a name="14090" class="Symbol"
+      >(</a
+      ><a name="14091" href="2016-03-20-one-lambda-calculus-many-times.html#14042" class="Bound"
+      >A</a
+      ><a name="14092"
+      > </a
+      ><a name="14093" href="Agda.Builtin.List.html#104" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="14094"
+      > </a
+      ><a name="14095" href="2016-03-20-one-lambda-calculus-many-times.html#14053" class="Bound"
+      >&#915;</a
+      ><a name="14096" class="Symbol"
+      >)</a
+      >
+</pre><!--{% endraw %}-->
 
 Using this, we can interpret sequents as functions from environments
 to values:
 
-<pre class="Agda">  <a name="14204" class="Keyword">instance</a><a name="14212">
-    </a><a name="14217" href="/2016/one-lambda-calculus-many-times/#14217" class="Function">InterpretSequent</a><a name="14233"> </a><a name="14234" class="Symbol">:</a><a name="14235"> </a><a name="14236" href="/2016/one-lambda-calculus-many-times/#12462" class="Record">Interpret</a><a name="14245"> </a><a name="14246" href="/2016/one-lambda-calculus-many-times/#3955" class="Datatype">Sequent</a><a name="14253"> </a><a name="14254" class="PrimitiveType">Set</a><a name="14257">
-    </a><a name="14262" href="/2016/one-lambda-calculus-many-times/#14217" class="Function">InterpretSequent</a><a name="14278"> </a><a name="14279" class="Symbol">=</a><a name="14280"> </a><a name="14281" class="Keyword">record</a><a name="14287"> </a><a name="14288" class="Symbol">&#123;</a><a name="14289"> </a><a name="14290" class="Field Operator">⟦_⟧</a><a name="14293"> </a><a name="14294" class="Symbol">=</a><a name="14295"> </a><a name="14296" href="/2016/one-lambda-calculus-many-times/#14323" class="Function Operator">⟦_⟧′</a><a name="14300"> </a><a name="14301" class="Symbol">&#125;</a><a name="14302">
-      </a><a name="14309" class="Keyword">where</a><a name="14314">
-        </a><a name="14323" href="/2016/one-lambda-calculus-many-times/#14323" class="Function Operator">⟦_⟧′</a><a name="14327"> </a><a name="14328" class="Symbol">:</a><a name="14329"> </a><a name="14330" href="/2016/one-lambda-calculus-many-times/#3955" class="Datatype">Sequent</a><a name="14337"> </a><a name="14338" class="Symbol">→</a><a name="14339"> </a><a name="14340" class="PrimitiveType">Set</a><a name="14343">
-        </a><a name="14352" href="/2016/one-lambda-calculus-many-times/#14323" class="Function Operator">⟦</a><a name="14353"> </a><a name="14354" href="/2016/one-lambda-calculus-many-times/#14354" class="Bound">Γ</a><a name="14355"> </a><a name="14356" href="/2016/one-lambda-calculus-many-times/#3979" class="InductiveConstructor Operator">⊢</a><a name="14357"> </a><a name="14358" href="/2016/one-lambda-calculus-many-times/#14358" class="Bound">A</a><a name="14359"> </a><a name="14360" href="/2016/one-lambda-calculus-many-times/#14323" class="Function Operator">⟧′</a><a name="14362"> </a><a name="14363" class="Symbol">=</a><a name="14364"> </a><a name="14365" href="/2016/one-lambda-calculus-many-times/#13984" class="Datatype">Env</a><a name="14368"> </a><a name="14369" href="/2016/one-lambda-calculus-many-times/#14354" class="Bound">Γ</a><a name="14370"> </a><a name="14371" class="Symbol">→</a><a name="14372"> </a><a name="14373" href="/2016/one-lambda-calculus-many-times/#12536" class="Field Operator">⟦</a><a name="14374"> </a><a name="14375" href="/2016/one-lambda-calculus-many-times/#14358" class="Bound">A</a><a name="14376"> </a><a name="14377" href="/2016/one-lambda-calculus-many-times/#12536" class="Field Operator">⟧</a></pre>
+<!--{% raw %}--><pre class="Agda">
+  <a name="14206" class="Keyword"
+      >instance</a
+      ><a name="14214"
+      >
+    </a
+      ><a name="14219" href="2016-03-20-one-lambda-calculus-many-times.html#14219" class="Function"
+      >InterpretSequent</a
+      ><a name="14235"
+      > </a
+      ><a name="14236" class="Symbol"
+      >:</a
+      ><a name="14237"
+      > </a
+      ><a name="14238" href="2016-03-20-one-lambda-calculus-many-times.html#12464" class="Record"
+      >Interpret</a
+      ><a name="14247"
+      > </a
+      ><a name="14248" href="2016-03-20-one-lambda-calculus-many-times.html#3957" class="Datatype"
+      >Sequent</a
+      ><a name="14255"
+      > </a
+      ><a name="14256" class="PrimitiveType"
+      >Set</a
+      ><a name="14259"
+      >
+    </a
+      ><a name="14264" href="2016-03-20-one-lambda-calculus-many-times.html#14219" class="Function"
+      >InterpretSequent</a
+      ><a name="14280"
+      > </a
+      ><a name="14281" class="Symbol"
+      >=</a
+      ><a name="14282"
+      > </a
+      ><a name="14283" class="Keyword"
+      >record</a
+      ><a name="14289"
+      > </a
+      ><a name="14290" class="Symbol"
+      >{</a
+      ><a name="14291"
+      > </a
+      ><a name="14292" class="Field Operator"
+      >&#10214;_&#10215;</a
+      ><a name="14295"
+      > </a
+      ><a name="14296" class="Symbol"
+      >=</a
+      ><a name="14297"
+      > </a
+      ><a name="14298" href="2016-03-20-one-lambda-calculus-many-times.html#14325" class="Function Operator"
+      >&#10214;_&#10215;&#8242;</a
+      ><a name="14302"
+      > </a
+      ><a name="14303" class="Symbol"
+      >}</a
+      ><a name="14304"
+      >
+      </a
+      ><a name="14311" class="Keyword"
+      >where</a
+      ><a name="14316"
+      >
+        </a
+      ><a name="14325" href="2016-03-20-one-lambda-calculus-many-times.html#14325" class="Function Operator"
+      >&#10214;_&#10215;&#8242;</a
+      ><a name="14329"
+      > </a
+      ><a name="14330" class="Symbol"
+      >:</a
+      ><a name="14331"
+      > </a
+      ><a name="14332" href="2016-03-20-one-lambda-calculus-many-times.html#3957" class="Datatype"
+      >Sequent</a
+      ><a name="14339"
+      > </a
+      ><a name="14340" class="Symbol"
+      >&#8594;</a
+      ><a name="14341"
+      > </a
+      ><a name="14342" class="PrimitiveType"
+      >Set</a
+      ><a name="14345"
+      >
+        </a
+      ><a name="14354" href="2016-03-20-one-lambda-calculus-many-times.html#14325" class="Function Operator"
+      >&#10214;</a
+      ><a name="14355"
+      > </a
+      ><a name="14356" href="2016-03-20-one-lambda-calculus-many-times.html#14356" class="Bound"
+      >&#915;</a
+      ><a name="14357"
+      > </a
+      ><a name="14358" href="2016-03-20-one-lambda-calculus-many-times.html#3981" class="InductiveConstructor Operator"
+      >&#8866;</a
+      ><a name="14359"
+      > </a
+      ><a name="14360" href="2016-03-20-one-lambda-calculus-many-times.html#14360" class="Bound"
+      >A</a
+      ><a name="14361"
+      > </a
+      ><a name="14362" href="2016-03-20-one-lambda-calculus-many-times.html#14325" class="Function Operator"
+      >&#10215;&#8242;</a
+      ><a name="14364"
+      > </a
+      ><a name="14365" class="Symbol"
+      >=</a
+      ><a name="14366"
+      > </a
+      ><a name="14367" href="2016-03-20-one-lambda-calculus-many-times.html#13986" class="Datatype"
+      >Env</a
+      ><a name="14370"
+      > </a
+      ><a name="14371" href="2016-03-20-one-lambda-calculus-many-times.html#14356" class="Bound"
+      >&#915;</a
+      ><a name="14372"
+      > </a
+      ><a name="14373" class="Symbol"
+      >&#8594;</a
+      ><a name="14374"
+      > </a
+      ><a name="14375" href="2016-03-20-one-lambda-calculus-many-times.html#12538" class="Field Operator"
+      >&#10214;</a
+      ><a name="14376"
+      > </a
+      ><a name="14377" href="2016-03-20-one-lambda-calculus-many-times.html#14360" class="Bound"
+      >A</a
+      ><a name="14378"
+      > </a
+      ><a name="14379" href="2016-03-20-one-lambda-calculus-many-times.html#12538" class="Field Operator"
+      >&#10215;</a
+      >
+</pre><!--{% endraw %}-->
 
 Let's get to interpreting terms! First off, variables. We can
 interpret variables simply by looking them up in the environment:
 
-<pre class="Agda">  <a name="14535" href="/2016/one-lambda-calculus-many-times/#14535" class="Function">lookup</a><a name="14541"> </a><a name="14542" class="Symbol">:</a><a name="14543"> </a><a name="14554" href="/2016/one-lambda-calculus-many-times/#14547" class="Bound">A</a><a name="14555"> </a><a name="14556" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#2920" class="Function Operator" target="_blank">∈</a><a name="14557"> </a><a name="14558" href="/2016/one-lambda-calculus-many-times/#14549" class="Bound">Γ</a><a name="14559"> </a><a name="14560" class="Symbol">→</a><a name="14561"> </a><a name="14562" href="/2016/one-lambda-calculus-many-times/#13984" class="Datatype">Env</a><a name="14565"> </a><a name="14566" href="/2016/one-lambda-calculus-many-times/#14549" class="Bound">Γ</a><a name="14567"> </a><a name="14568" class="Symbol">→</a><a name="14569"> </a><a name="14570" href="/2016/one-lambda-calculus-many-times/#12536" class="Field Operator">⟦</a><a name="14571"> </a><a name="14572" href="/2016/one-lambda-calculus-many-times/#14547" class="Bound">A</a><a name="14573"> </a><a name="14574" href="/2016/one-lambda-calculus-many-times/#12536" class="Field Operator">⟧</a><a name="14575">
-  </a><a name="14578" href="/2016/one-lambda-calculus-many-times/#14535" class="Function">lookup</a><a name="14584"> </a><a name="14585" class="Symbol">(</a><a name="14586" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174" class="InductiveConstructor" target="_blank">here</a><a name="14590">  </a><a name="14592" href="/2016/one-lambda-calculus-many-times/#14592" class="Bound">p</a><a name="14593" class="Symbol">)</a><a name="14594"> </a><a name="14595" class="Symbol">(</a><a name="14596" href="/2016/one-lambda-calculus-many-times/#14596" class="Bound">x</a><a name="14597"> </a><a name="14598" href="/2016/one-lambda-calculus-many-times/#14033" class="InductiveConstructor Operator">∷</a><a name="14599"> </a><a name="14600" class="Symbol">_)</a><a name="14602"> </a><a name="14603" class="Keyword">rewrite</a><a name="14610"> </a><a name="14611" href="/2016/one-lambda-calculus-many-times/#14592" class="Bound">p</a><a name="14612"> </a><a name="14613" class="Symbol">=</a><a name="14614"> </a><a name="14615" href="/2016/one-lambda-calculus-many-times/#14596" class="Bound">x</a><a name="14616">
-  </a><a name="14619" href="/2016/one-lambda-calculus-many-times/#14535" class="Function">lookup</a><a name="14625"> </a><a name="14626" class="Symbol">(</a><a name="14627" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor" target="_blank">there</a><a name="14632"> </a><a name="14633" href="/2016/one-lambda-calculus-many-times/#14633" class="Bound">p</a><a name="14634" class="Symbol">)</a><a name="14635"> </a><a name="14636" class="Symbol">(_</a><a name="14638"> </a><a name="14639" href="/2016/one-lambda-calculus-many-times/#14033" class="InductiveConstructor Operator">∷</a><a name="14640"> </a><a name="14641" href="/2016/one-lambda-calculus-many-times/#14641" class="Bound">e</a><a name="14642" class="Symbol">)</a><a name="14643"> </a><a name="14644" class="Symbol">=</a><a name="14645"> </a><a name="14646" href="/2016/one-lambda-calculus-many-times/#14535" class="Function">lookup</a><a name="14652"> </a><a name="14653" href="/2016/one-lambda-calculus-many-times/#14633" class="Bound">p</a><a name="14654"> </a><a name="14655" href="/2016/one-lambda-calculus-many-times/#14641" class="Bound">e</a></pre>
+<!--{% raw %}--><pre class="Agda">
+  <a name="14537" href="2016-03-20-one-lambda-calculus-many-times.html#14537" class="Function"
+      >lookup</a
+      ><a name="14543"
+      > </a
+      ><a name="14544" class="Symbol"
+      >:</a
+      ><a name="14545"
+      > </a
+      ><a name="14546" class="Symbol"
+      >&#8704;</a
+      ><a name="14547"
+      > </a
+      ><a name="14554" class="Symbol"
+      >&#8594;</a
+      ><a name="14555"
+      > </a
+      ><a name="14556" href="2016-03-20-one-lambda-calculus-many-times.html#14549" class="Bound"
+      >A</a
+      ><a name="14557"
+      > </a
+      ><a name="14558" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#2920" class="Function Operator"
+      >&#8712;</a
+      ><a name="14559"
+      > </a
+      ><a name="14560" href="2016-03-20-one-lambda-calculus-many-times.html#14551" class="Bound"
+      >&#915;</a
+      ><a name="14561"
+      > </a
+      ><a name="14562" class="Symbol"
+      >&#8594;</a
+      ><a name="14563"
+      > </a
+      ><a name="14564" href="2016-03-20-one-lambda-calculus-many-times.html#13986" class="Datatype"
+      >Env</a
+      ><a name="14567"
+      > </a
+      ><a name="14568" href="2016-03-20-one-lambda-calculus-many-times.html#14551" class="Bound"
+      >&#915;</a
+      ><a name="14569"
+      > </a
+      ><a name="14570" class="Symbol"
+      >&#8594;</a
+      ><a name="14571"
+      > </a
+      ><a name="14572" href="2016-03-20-one-lambda-calculus-many-times.html#12538" class="Field Operator"
+      >&#10214;</a
+      ><a name="14573"
+      > </a
+      ><a name="14574" href="2016-03-20-one-lambda-calculus-many-times.html#14549" class="Bound"
+      >A</a
+      ><a name="14575"
+      > </a
+      ><a name="14576" href="2016-03-20-one-lambda-calculus-many-times.html#12538" class="Field Operator"
+      >&#10215;</a
+      ><a name="14577"
+      >
+  </a
+      ><a name="14580" href="2016-03-20-one-lambda-calculus-many-times.html#14537" class="Function"
+      >lookup</a
+      ><a name="14586"
+      > </a
+      ><a name="14587" class="Symbol"
+      >(</a
+      ><a name="14588" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1174" class="InductiveConstructor"
+      >here</a
+      ><a name="14592"
+      >  </a
+      ><a name="14594" href="2016-03-20-one-lambda-calculus-many-times.html#14594" class="Bound"
+      >p</a
+      ><a name="14595" class="Symbol"
+      >)</a
+      ><a name="14596"
+      > </a
+      ><a name="14597" class="Symbol"
+      >(</a
+      ><a name="14598" href="2016-03-20-one-lambda-calculus-many-times.html#14598" class="Bound"
+      >x</a
+      ><a name="14599"
+      > </a
+      ><a name="14600" href="2016-03-20-one-lambda-calculus-many-times.html#14035" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="14601"
+      > </a
+      ><a name="14602" class="Symbol"
+      >_)</a
+      ><a name="14604"
+      > </a
+      ><a name="14605" class="Keyword"
+      >rewrite</a
+      ><a name="14612"
+      > </a
+      ><a name="14613" href="2016-03-20-one-lambda-calculus-many-times.html#14594" class="Bound"
+      >p</a
+      ><a name="14614"
+      > </a
+      ><a name="14615" class="Symbol"
+      >=</a
+      ><a name="14616"
+      > </a
+      ><a name="14617" href="2016-03-20-one-lambda-calculus-many-times.html#14598" class="Bound"
+      >x</a
+      ><a name="14618"
+      >
+  </a
+      ><a name="14621" href="2016-03-20-one-lambda-calculus-many-times.html#14537" class="Function"
+      >lookup</a
+      ><a name="14627"
+      > </a
+      ><a name="14628" class="Symbol"
+      >(</a
+      ><a name="14629" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor"
+      >there</a
+      ><a name="14634"
+      > </a
+      ><a name="14635" href="2016-03-20-one-lambda-calculus-many-times.html#14635" class="Bound"
+      >p</a
+      ><a name="14636" class="Symbol"
+      >)</a
+      ><a name="14637"
+      > </a
+      ><a name="14638" class="Symbol"
+      >(_</a
+      ><a name="14640"
+      > </a
+      ><a name="14641" href="2016-03-20-one-lambda-calculus-many-times.html#14035" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="14642"
+      > </a
+      ><a name="14643" href="2016-03-20-one-lambda-calculus-many-times.html#14643" class="Bound"
+      >e</a
+      ><a name="14644" class="Symbol"
+      >)</a
+      ><a name="14645"
+      > </a
+      ><a name="14646" class="Symbol"
+      >=</a
+      ><a name="14647"
+      > </a
+      ><a name="14648" href="2016-03-20-one-lambda-calculus-many-times.html#14537" class="Function"
+      >lookup</a
+      ><a name="14654"
+      > </a
+      ><a name="14655" href="2016-03-20-one-lambda-calculus-many-times.html#14635" class="Bound"
+      >p</a
+      ><a name="14656"
+      > </a
+      ><a name="14657" href="2016-03-20-one-lambda-calculus-many-times.html#14643" class="Bound"
+      >e</a
+      >
+</pre><!--{% endraw %}-->
 
 
 (If you're wondering what we're rewriting by: the <a class="Agda
@@ -362,21 +3386,401 @@ The translation for natural deduction proofs is, of course, completely
 routine---we translate variables withs lookups, introductions by
 abstractions and eliminations by applications:
 
-<pre class="Agda">  <a name="15169" class="Keyword">instance</a><a name="15177">
-    </a><a name="15182" href="/2016/one-lambda-calculus-many-times/#15182" class="Function">InterpretND</a><a name="15193"> </a><a name="15194" class="Symbol">:</a><a name="15195"> </a><a name="15204" href="/2016/one-lambda-calculus-many-times/#12462" class="Record">Interpret</a><a name="15213"> </a><a name="15214" class="Symbol">(</a><a name="15215" href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a name="15217"> </a><a name="15218" href="/2016/one-lambda-calculus-many-times/#15199" class="Bound">S</a><a name="15219" class="Symbol">)</a><a name="15220"> </a><a name="15221" href="/2016/one-lambda-calculus-many-times/#12536" class="Field Operator">⟦</a><a name="15222"> </a><a name="15223" href="/2016/one-lambda-calculus-many-times/#15199" class="Bound">S</a><a name="15224"> </a><a name="15225" href="/2016/one-lambda-calculus-many-times/#12536" class="Field Operator">⟧</a><a name="15226">
-    </a><a name="15231" href="/2016/one-lambda-calculus-many-times/#15182" class="Function">InterpretND</a><a name="15242"> </a><a name="15243" class="Symbol">=</a><a name="15244"> </a><a name="15245" class="Keyword">record</a><a name="15251"> </a><a name="15252" class="Symbol">&#123;</a><a name="15253"> </a><a name="15254" class="Field Operator">⟦_⟧</a><a name="15257"> </a><a name="15258" class="Symbol">=</a><a name="15259"> </a><a name="15260" href="/2016/one-lambda-calculus-many-times/#15287" class="Function Operator">⟦_⟧′</a><a name="15264"> </a><a name="15265" class="Symbol">&#125;</a><a name="15266">
-      </a><a name="15273" class="Keyword">where</a><a name="15278">
-        </a><a name="15287" href="/2016/one-lambda-calculus-many-times/#15287" class="Function Operator">⟦_⟧′</a><a name="15291"> </a><a name="15292" class="Symbol">:</a><a name="15293"> </a><a name="15302" href="/2016/one-lambda-calculus-many-times/#5371" class="Datatype Operator">ND</a><a name="15304"> </a><a name="15305" href="/2016/one-lambda-calculus-many-times/#15297" class="Bound">S</a><a name="15306"> </a><a name="15307" class="Symbol">→</a><a name="15308"> </a><a name="15309" href="/2016/one-lambda-calculus-many-times/#12536" class="Field Operator">⟦</a><a name="15310"> </a><a name="15311" href="/2016/one-lambda-calculus-many-times/#15297" class="Bound">S</a><a name="15312"> </a><a name="15313" href="/2016/one-lambda-calculus-many-times/#12536" class="Field Operator">⟧</a><a name="15314">
-        </a><a name="15323" href="/2016/one-lambda-calculus-many-times/#15287" class="Function Operator">⟦</a><a name="15324"> </a><a name="15325" href="/2016/one-lambda-calculus-many-times/#5401" class="InductiveConstructor">ax</a><a name="15327"> </a><a name="15328" href="/2016/one-lambda-calculus-many-times/#15328" class="Bound">p</a><a name="15329">   </a><a name="15332" href="/2016/one-lambda-calculus-many-times/#15287" class="Function Operator">⟧′</a><a name="15334"> </a><a name="15335" href="/2016/one-lambda-calculus-many-times/#15335" class="Bound">e</a><a name="15336"> </a><a name="15337" class="Symbol">=</a><a name="15338"> </a><a name="15339" href="/2016/one-lambda-calculus-many-times/#14535" class="Function">lookup</a><a name="15345"> </a><a name="15346" href="/2016/one-lambda-calculus-many-times/#15328" class="Bound">p</a><a name="15347"> </a><a name="15348" href="/2016/one-lambda-calculus-many-times/#15335" class="Bound">e</a><a name="15349">
-        </a><a name="15358" href="/2016/one-lambda-calculus-many-times/#15287" class="Function Operator">⟦</a><a name="15359"> </a><a name="15360" href="/2016/one-lambda-calculus-many-times/#5439" class="InductiveConstructor">⇒i</a><a name="15362"> </a><a name="15363" href="/2016/one-lambda-calculus-many-times/#15363" class="Bound">f</a><a name="15364">   </a><a name="15367" href="/2016/one-lambda-calculus-many-times/#15287" class="Function Operator">⟧′</a><a name="15369"> </a><a name="15370" href="/2016/one-lambda-calculus-many-times/#15370" class="Bound">e</a><a name="15371"> </a><a name="15372" class="Symbol">=</a><a name="15373"> </a><a name="15374" class="Symbol">λ</a><a name="15375"> </a><a name="15376" href="/2016/one-lambda-calculus-many-times/#15376" class="Bound">x</a><a name="15377"> </a><a name="15378" class="Symbol">→</a><a name="15379"> </a><a name="15380" href="/2016/one-lambda-calculus-many-times/#15287" class="Function Operator">⟦</a><a name="15381"> </a><a name="15382" href="/2016/one-lambda-calculus-many-times/#15363" class="Bound">f</a><a name="15383"> </a><a name="15384" href="/2016/one-lambda-calculus-many-times/#15287" class="Function Operator">⟧′</a><a name="15386"> </a><a name="15387" class="Symbol">(</a><a name="15388" href="/2016/one-lambda-calculus-many-times/#15376" class="Bound">x</a><a name="15389"> </a><a name="15390" href="/2016/one-lambda-calculus-many-times/#14033" class="InductiveConstructor Operator">∷</a><a name="15391"> </a><a name="15392" href="/2016/one-lambda-calculus-many-times/#15370" class="Bound">e</a><a name="15393" class="Symbol">)</a><a name="15394">
-        </a><a name="15403" href="/2016/one-lambda-calculus-many-times/#15287" class="Function Operator">⟦</a><a name="15404"> </a><a name="15405" href="/2016/one-lambda-calculus-many-times/#5488" class="InductiveConstructor">⇒e</a><a name="15407"> </a><a name="15408" href="/2016/one-lambda-calculus-many-times/#15408" class="Bound">f</a><a name="15409"> </a><a name="15410" href="/2016/one-lambda-calculus-many-times/#15410" class="Bound">g</a><a name="15411"> </a><a name="15412" href="/2016/one-lambda-calculus-many-times/#15287" class="Function Operator">⟧′</a><a name="15414"> </a><a name="15415" href="/2016/one-lambda-calculus-many-times/#15415" class="Bound">e</a><a name="15416"> </a><a name="15417" class="Symbol">=</a><a name="15418"> </a><a name="15419" class="Symbol">(</a><a name="15420" href="/2016/one-lambda-calculus-many-times/#15287" class="Function Operator">⟦</a><a name="15421"> </a><a name="15422" href="/2016/one-lambda-calculus-many-times/#15408" class="Bound">f</a><a name="15423"> </a><a name="15424" href="/2016/one-lambda-calculus-many-times/#15287" class="Function Operator">⟧′</a><a name="15426"> </a><a name="15427" href="/2016/one-lambda-calculus-many-times/#15415" class="Bound">e</a><a name="15428" class="Symbol">)</a><a name="15429"> </a><a name="15430" class="Symbol">(</a><a name="15431" href="/2016/one-lambda-calculus-many-times/#15287" class="Function Operator">⟦</a><a name="15432"> </a><a name="15433" href="/2016/one-lambda-calculus-many-times/#15410" class="Bound">g</a><a name="15434"> </a><a name="15435" href="/2016/one-lambda-calculus-many-times/#15287" class="Function Operator">⟧′</a><a name="15437"> </a><a name="15438" href="/2016/one-lambda-calculus-many-times/#15415" class="Bound">e</a><a name="15439" class="Symbol">)</a></pre>
+<!--{% raw %}--><pre class="Agda">
+  <a name="15171" class="Keyword"
+      >instance</a
+      ><a name="15179"
+      >
+    </a
+      ><a name="15184" href="2016-03-20-one-lambda-calculus-many-times.html#15184" class="Function"
+      >InterpretND</a
+      ><a name="15195"
+      > </a
+      ><a name="15196" class="Symbol"
+      >:</a
+      ><a name="15197"
+      > </a
+      ><a name="15198" class="Symbol"
+      >&#8704;</a
+      ><a name="15199"
+      > </a
+      ><a name="15204" class="Symbol"
+      >&#8594;</a
+      ><a name="15205"
+      > </a
+      ><a name="15206" href="2016-03-20-one-lambda-calculus-many-times.html#12464" class="Record"
+      >Interpret</a
+      ><a name="15215"
+      > </a
+      ><a name="15216" class="Symbol"
+      >(</a
+      ><a name="15217" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
+      >ND</a
+      ><a name="15219"
+      > </a
+      ><a name="15220" href="2016-03-20-one-lambda-calculus-many-times.html#15201" class="Bound"
+      >S</a
+      ><a name="15221" class="Symbol"
+      >)</a
+      ><a name="15222"
+      > </a
+      ><a name="15223" href="2016-03-20-one-lambda-calculus-many-times.html#12538" class="Field Operator"
+      >&#10214;</a
+      ><a name="15224"
+      > </a
+      ><a name="15225" href="2016-03-20-one-lambda-calculus-many-times.html#15201" class="Bound"
+      >S</a
+      ><a name="15226"
+      > </a
+      ><a name="15227" href="2016-03-20-one-lambda-calculus-many-times.html#12538" class="Field Operator"
+      >&#10215;</a
+      ><a name="15228"
+      >
+    </a
+      ><a name="15233" href="2016-03-20-one-lambda-calculus-many-times.html#15184" class="Function"
+      >InterpretND</a
+      ><a name="15244"
+      > </a
+      ><a name="15245" class="Symbol"
+      >=</a
+      ><a name="15246"
+      > </a
+      ><a name="15247" class="Keyword"
+      >record</a
+      ><a name="15253"
+      > </a
+      ><a name="15254" class="Symbol"
+      >{</a
+      ><a name="15255"
+      > </a
+      ><a name="15256" class="Field Operator"
+      >&#10214;_&#10215;</a
+      ><a name="15259"
+      > </a
+      ><a name="15260" class="Symbol"
+      >=</a
+      ><a name="15261"
+      > </a
+      ><a name="15262" href="2016-03-20-one-lambda-calculus-many-times.html#15289" class="Function Operator"
+      >&#10214;_&#10215;&#8242;</a
+      ><a name="15266"
+      > </a
+      ><a name="15267" class="Symbol"
+      >}</a
+      ><a name="15268"
+      >
+      </a
+      ><a name="15275" class="Keyword"
+      >where</a
+      ><a name="15280"
+      >
+        </a
+      ><a name="15289" href="2016-03-20-one-lambda-calculus-many-times.html#15289" class="Function Operator"
+      >&#10214;_&#10215;&#8242;</a
+      ><a name="15293"
+      > </a
+      ><a name="15294" class="Symbol"
+      >:</a
+      ><a name="15295"
+      > </a
+      ><a name="15296" class="Symbol"
+      >&#8704;</a
+      ><a name="15297"
+      > </a
+      ><a name="15302" class="Symbol"
+      >&#8594;</a
+      ><a name="15303"
+      > </a
+      ><a name="15304" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
+      >ND</a
+      ><a name="15306"
+      > </a
+      ><a name="15307" href="2016-03-20-one-lambda-calculus-many-times.html#15299" class="Bound"
+      >S</a
+      ><a name="15308"
+      > </a
+      ><a name="15309" class="Symbol"
+      >&#8594;</a
+      ><a name="15310"
+      > </a
+      ><a name="15311" href="2016-03-20-one-lambda-calculus-many-times.html#12538" class="Field Operator"
+      >&#10214;</a
+      ><a name="15312"
+      > </a
+      ><a name="15313" href="2016-03-20-one-lambda-calculus-many-times.html#15299" class="Bound"
+      >S</a
+      ><a name="15314"
+      > </a
+      ><a name="15315" href="2016-03-20-one-lambda-calculus-many-times.html#12538" class="Field Operator"
+      >&#10215;</a
+      ><a name="15316"
+      >
+        </a
+      ><a name="15325" href="2016-03-20-one-lambda-calculus-many-times.html#15289" class="Function Operator"
+      >&#10214;</a
+      ><a name="15326"
+      > </a
+      ><a name="15327" href="2016-03-20-one-lambda-calculus-many-times.html#5403" class="InductiveConstructor"
+      >ax</a
+      ><a name="15329"
+      > </a
+      ><a name="15330" href="2016-03-20-one-lambda-calculus-many-times.html#15330" class="Bound"
+      >p</a
+      ><a name="15331"
+      >   </a
+      ><a name="15334" href="2016-03-20-one-lambda-calculus-many-times.html#15289" class="Function Operator"
+      >&#10215;&#8242;</a
+      ><a name="15336"
+      > </a
+      ><a name="15337" href="2016-03-20-one-lambda-calculus-many-times.html#15337" class="Bound"
+      >e</a
+      ><a name="15338"
+      > </a
+      ><a name="15339" class="Symbol"
+      >=</a
+      ><a name="15340"
+      > </a
+      ><a name="15341" href="2016-03-20-one-lambda-calculus-many-times.html#14537" class="Function"
+      >lookup</a
+      ><a name="15347"
+      > </a
+      ><a name="15348" href="2016-03-20-one-lambda-calculus-many-times.html#15330" class="Bound"
+      >p</a
+      ><a name="15349"
+      > </a
+      ><a name="15350" href="2016-03-20-one-lambda-calculus-many-times.html#15337" class="Bound"
+      >e</a
+      ><a name="15351"
+      >
+        </a
+      ><a name="15360" href="2016-03-20-one-lambda-calculus-many-times.html#15289" class="Function Operator"
+      >&#10214;</a
+      ><a name="15361"
+      > </a
+      ><a name="15362" href="2016-03-20-one-lambda-calculus-many-times.html#5441" class="InductiveConstructor"
+      >&#8658;i</a
+      ><a name="15364"
+      > </a
+      ><a name="15365" href="2016-03-20-one-lambda-calculus-many-times.html#15365" class="Bound"
+      >f</a
+      ><a name="15366"
+      >   </a
+      ><a name="15369" href="2016-03-20-one-lambda-calculus-many-times.html#15289" class="Function Operator"
+      >&#10215;&#8242;</a
+      ><a name="15371"
+      > </a
+      ><a name="15372" href="2016-03-20-one-lambda-calculus-many-times.html#15372" class="Bound"
+      >e</a
+      ><a name="15373"
+      > </a
+      ><a name="15374" class="Symbol"
+      >=</a
+      ><a name="15375"
+      > </a
+      ><a name="15376" class="Symbol"
+      >&#955;</a
+      ><a name="15377"
+      > </a
+      ><a name="15378" href="2016-03-20-one-lambda-calculus-many-times.html#15378" class="Bound"
+      >x</a
+      ><a name="15379"
+      > </a
+      ><a name="15380" class="Symbol"
+      >&#8594;</a
+      ><a name="15381"
+      > </a
+      ><a name="15382" href="2016-03-20-one-lambda-calculus-many-times.html#15289" class="Function Operator"
+      >&#10214;</a
+      ><a name="15383"
+      > </a
+      ><a name="15384" href="2016-03-20-one-lambda-calculus-many-times.html#15365" class="Bound"
+      >f</a
+      ><a name="15385"
+      > </a
+      ><a name="15386" href="2016-03-20-one-lambda-calculus-many-times.html#15289" class="Function Operator"
+      >&#10215;&#8242;</a
+      ><a name="15388"
+      > </a
+      ><a name="15389" class="Symbol"
+      >(</a
+      ><a name="15390" href="2016-03-20-one-lambda-calculus-many-times.html#15378" class="Bound"
+      >x</a
+      ><a name="15391"
+      > </a
+      ><a name="15392" href="2016-03-20-one-lambda-calculus-many-times.html#14035" class="InductiveConstructor Operator"
+      >&#8759;</a
+      ><a name="15393"
+      > </a
+      ><a name="15394" href="2016-03-20-one-lambda-calculus-many-times.html#15372" class="Bound"
+      >e</a
+      ><a name="15395" class="Symbol"
+      >)</a
+      ><a name="15396"
+      >
+        </a
+      ><a name="15405" href="2016-03-20-one-lambda-calculus-many-times.html#15289" class="Function Operator"
+      >&#10214;</a
+      ><a name="15406"
+      > </a
+      ><a name="15407" href="2016-03-20-one-lambda-calculus-many-times.html#5490" class="InductiveConstructor"
+      >&#8658;e</a
+      ><a name="15409"
+      > </a
+      ><a name="15410" href="2016-03-20-one-lambda-calculus-many-times.html#15410" class="Bound"
+      >f</a
+      ><a name="15411"
+      > </a
+      ><a name="15412" href="2016-03-20-one-lambda-calculus-many-times.html#15412" class="Bound"
+      >g</a
+      ><a name="15413"
+      > </a
+      ><a name="15414" href="2016-03-20-one-lambda-calculus-many-times.html#15289" class="Function Operator"
+      >&#10215;&#8242;</a
+      ><a name="15416"
+      > </a
+      ><a name="15417" href="2016-03-20-one-lambda-calculus-many-times.html#15417" class="Bound"
+      >e</a
+      ><a name="15418"
+      > </a
+      ><a name="15419" class="Symbol"
+      >=</a
+      ><a name="15420"
+      > </a
+      ><a name="15421" class="Symbol"
+      >(</a
+      ><a name="15422" href="2016-03-20-one-lambda-calculus-many-times.html#15289" class="Function Operator"
+      >&#10214;</a
+      ><a name="15423"
+      > </a
+      ><a name="15424" href="2016-03-20-one-lambda-calculus-many-times.html#15410" class="Bound"
+      >f</a
+      ><a name="15425"
+      > </a
+      ><a name="15426" href="2016-03-20-one-lambda-calculus-many-times.html#15289" class="Function Operator"
+      >&#10215;&#8242;</a
+      ><a name="15428"
+      > </a
+      ><a name="15429" href="2016-03-20-one-lambda-calculus-many-times.html#15417" class="Bound"
+      >e</a
+      ><a name="15430" class="Symbol"
+      >)</a
+      ><a name="15431"
+      > </a
+      ><a name="15432" class="Symbol"
+      >(</a
+      ><a name="15433" href="2016-03-20-one-lambda-calculus-many-times.html#15289" class="Function Operator"
+      >&#10214;</a
+      ><a name="15434"
+      > </a
+      ><a name="15435" href="2016-03-20-one-lambda-calculus-many-times.html#15412" class="Bound"
+      >g</a
+      ><a name="15436"
+      > </a
+      ><a name="15437" href="2016-03-20-one-lambda-calculus-many-times.html#15289" class="Function Operator"
+      >&#10215;&#8242;</a
+      ><a name="15439"
+      > </a
+      ><a name="15440" href="2016-03-20-one-lambda-calculus-many-times.html#15417" class="Bound"
+      >e</a
+      ><a name="15441" class="Symbol"
+      >)</a
+      >
+</pre><!--{% endraw %}-->
 
 Hooray! And even better,  as a corollary, we immediately obtain a
 translation from sequent calculus into Agda:
 
-<pre class="Agda">  <a name="15580" class="Keyword">instance</a><a name="15588">
-    </a><a name="15593" href="/2016/one-lambda-calculus-many-times/#15593" class="Function">InterpretSC</a><a name="15604"> </a><a name="15605" class="Symbol">:</a><a name="15606"> </a><a name="15615" href="/2016/one-lambda-calculus-many-times/#12462" class="Record">Interpret</a><a name="15624"> </a><a name="15625" class="Symbol">(</a><a name="15626" href="/2016/one-lambda-calculus-many-times/#9785" class="Datatype Operator">SC</a><a name="15628"> </a><a name="15629" href="/2016/one-lambda-calculus-many-times/#15610" class="Bound">S</a><a name="15630" class="Symbol">)</a><a name="15631"> </a><a name="15632" href="/2016/one-lambda-calculus-many-times/#12536" class="Field Operator">⟦</a><a name="15633"> </a><a name="15634" href="/2016/one-lambda-calculus-many-times/#15610" class="Bound">S</a><a name="15635"> </a><a name="15636" href="/2016/one-lambda-calculus-many-times/#12536" class="Field Operator">⟧</a><a name="15637">
-    </a><a name="15642" href="/2016/one-lambda-calculus-many-times/#15593" class="Function">InterpretSC</a><a name="15653"> </a><a name="15654" class="Symbol">=</a><a name="15655"> </a><a name="15656" class="Keyword">record</a><a name="15662"> </a><a name="15663" class="Symbol">&#123;</a><a name="15664"> </a><a name="15665" class="Field Operator">⟦_⟧</a><a name="15668"> </a><a name="15669" class="Symbol">=</a><a name="15670"> </a><a name="15671" href="/2016/one-lambda-calculus-many-times/#12536" class="Field Operator">⟦_⟧</a><a name="15674"> </a><a name="15675" href="https://agda.github.io/agda-stdlib/Function.html#713" class="Function Operator" target="_blank">∘</a><a name="15676"> </a><a name="15677" href="/2016/one-lambda-calculus-many-times/#10707" class="Function">ND⇔SC.⟸</a><a name="15684"> </a><a name="15685" class="Symbol">&#125;</a></pre>
+<!--{% raw %}--><pre class="Agda">
+  <a name="15582" class="Keyword"
+      >instance</a
+      ><a name="15590"
+      >
+    </a
+      ><a name="15595" href="2016-03-20-one-lambda-calculus-many-times.html#15595" class="Function"
+      >InterpretSC</a
+      ><a name="15606"
+      > </a
+      ><a name="15607" class="Symbol"
+      >:</a
+      ><a name="15608"
+      > </a
+      ><a name="15609" class="Symbol"
+      >&#8704;</a
+      ><a name="15610"
+      > </a
+      ><a name="15615" class="Symbol"
+      >&#8594;</a
+      ><a name="15616"
+      > </a
+      ><a name="15617" href="2016-03-20-one-lambda-calculus-many-times.html#12464" class="Record"
+      >Interpret</a
+      ><a name="15626"
+      > </a
+      ><a name="15627" class="Symbol"
+      >(</a
+      ><a name="15628" href="2016-03-20-one-lambda-calculus-many-times.html#9787" class="Datatype Operator"
+      >SC</a
+      ><a name="15630"
+      > </a
+      ><a name="15631" href="2016-03-20-one-lambda-calculus-many-times.html#15612" class="Bound"
+      >S</a
+      ><a name="15632" class="Symbol"
+      >)</a
+      ><a name="15633"
+      > </a
+      ><a name="15634" href="2016-03-20-one-lambda-calculus-many-times.html#12538" class="Field Operator"
+      >&#10214;</a
+      ><a name="15635"
+      > </a
+      ><a name="15636" href="2016-03-20-one-lambda-calculus-many-times.html#15612" class="Bound"
+      >S</a
+      ><a name="15637"
+      > </a
+      ><a name="15638" href="2016-03-20-one-lambda-calculus-many-times.html#12538" class="Field Operator"
+      >&#10215;</a
+      ><a name="15639"
+      >
+    </a
+      ><a name="15644" href="2016-03-20-one-lambda-calculus-many-times.html#15595" class="Function"
+      >InterpretSC</a
+      ><a name="15655"
+      > </a
+      ><a name="15656" class="Symbol"
+      >=</a
+      ><a name="15657"
+      > </a
+      ><a name="15658" class="Keyword"
+      >record</a
+      ><a name="15664"
+      > </a
+      ><a name="15665" class="Symbol"
+      >{</a
+      ><a name="15666"
+      > </a
+      ><a name="15667" class="Field Operator"
+      >&#10214;_&#10215;</a
+      ><a name="15670"
+      > </a
+      ><a name="15671" class="Symbol"
+      >=</a
+      ><a name="15672"
+      > </a
+      ><a name="15673" href="2016-03-20-one-lambda-calculus-many-times.html#12538" class="Field Operator"
+      >&#10214;_&#10215;</a
+      ><a name="15676"
+      > </a
+      ><a name="15677" href="https://agda.github.io/agda-stdlib/Function.html#713" class="Function Operator"
+      >&#8728;</a
+      ><a name="15678"
+      > </a
+      ><a name="15679" href="2016-03-20-one-lambda-calculus-many-times.html#10709" class="Function"
+      >ND&#8660;SC.&#10232;</a
+      ><a name="15686"
+      > </a
+      ><a name="15687" class="Symbol"
+      >}</a
+      >
+</pre><!--{% endraw %}-->
 
 Which means that we've now implemented the following functions:
 
@@ -412,5 +3816,3 @@ antecedent.
     the HTML source. However, it may be much easier to click the
     symbol that confuses you---that should take you directly to its
     definition in the standard library.
-
-<!-- Compiled with Agda version 2.5.1. -->

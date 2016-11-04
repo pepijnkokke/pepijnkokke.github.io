@@ -2,8 +2,8 @@
 title         : "Maps: Total and Partial Maps"
 layout        : default
 hide-implicit : false
-extra-script  : agda-extra-script.html
-extra-style   : agda-extra-style.html
+extra-script : [agda-extra-script.html]
+extra-style  : [agda-extra-style.html]
 permalink     : "sf/Maps.html"
 ---
 

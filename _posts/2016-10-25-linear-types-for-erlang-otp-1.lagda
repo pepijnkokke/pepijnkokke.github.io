@@ -3,8 +3,8 @@ title        : "Linear Types for Erlang/OTP (1)"
 date         : 2016-10-25 12:00:00
 categories   : []
 tags         : [draft, agda, erlang, process calculus]
-extra-script : agda-extra-script.html
-extra-style  : agda-extra-style.html
+extra-script : [agda-extra-script.html]
+extra-style  : [agda-extra-style.html]
 ---
 
 *This is the first post in a series in which I will investigate linear

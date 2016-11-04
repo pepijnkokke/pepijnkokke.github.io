@@ -3,7 +3,7 @@
   <meta name="viewport" content="width=device-width initial-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <title>{% if page.title %}{{ page.title | markdownify | strip_html }}{% else %}{{ site.title | markdownify | strip_html }}{% endif %}</title>
   <meta name="description" content="{{ site.description | strip_html }}">
   <meta name="author" content="{{ site.author.name }}">
   <meta name="HandheldFriendly" content="True">
@@ -42,9 +42,9 @@
 
   <link rel="stylesheet" href="{{ "/css/main.css"      | prepend: site.baseurl }}">
   <link rel="stylesheet" href="{{ "/css/katex.min.css" | prepend: site.baseurl }}">
-  {% if page.extra-style %}
-  {% include {{page.extra-style}} %}
-  {% endif %}
+  {% for style in page.extra-style %}
+  {% include {{style}} %}
+  {% endfor %}
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.baseurl }}/feed.xml">
 </head>

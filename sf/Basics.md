@@ -2,56 +2,56 @@
 title         : "Basics: Functional Programming in Agda"
 layout        : default
 hide-implicit : false
-extra-script  : agda-extra-script.html
-extra-style   : agda-extra-style.html
+extra-script : [agda-extra-script.html]
+extra-style  : [agda-extra-style.html]
 ---
 
 <div class="hidden">
-<pre class="Agda">{% raw %}
-<a name="224" class="Keyword"
+<!--{% raw %}--><pre class="Agda">
+<a name="226" class="Keyword"
       >module</a
-      ><a name="230"
+      ><a name="232"
       > </a
-      ><a name="231" href="Basics.html#1" class="Module"
+      ><a name="233" href="Basics.html#1" class="Module"
       >Basics</a
-      ><a name="237"
+      ><a name="239"
       > </a
-      ><a name="238" class="Keyword"
+      ><a name="240" class="Keyword"
       >where</a
-      ><a name="243"
+      ><a name="245"
       >
 
   </a
-      ><a name="247" class="Keyword"
+      ><a name="249" class="Keyword"
       >open</a
-      ><a name="251"
+      ><a name="253"
       > </a
-      ><a name="252" class="Keyword"
+      ><a name="254" class="Keyword"
       >import</a
-      ><a name="258"
+      ><a name="260"
       > </a
-      ><a name="259" href="https://agda.github.io/agda-stdlib/Relation.Binary.PropositionalEquality.html#1" class="Module"
+      ><a name="261" href="https://agda.github.io/agda-stdlib/Relation.Binary.PropositionalEquality.html#1" class="Module"
       >Relation.Binary.PropositionalEquality</a
-      ><a name="296"
+      ><a name="298"
       > </a
-      ><a name="297" class="Keyword"
+      ><a name="299" class="Keyword"
       >using</a
-      ><a name="302"
+      ><a name="304"
       > </a
-      ><a name="303" class="Symbol"
+      ><a name="305" class="Symbol"
       >(</a
-      ><a name="304" href="Agda.Builtin.Equality.html#55" class="Datatype Operator"
+      ><a name="306" href="Agda.Builtin.Equality.html#55" class="Datatype Operator"
       >_&#8801;_</a
-      ><a name="307" class="Symbol"
+      ><a name="309" class="Symbol"
       >;</a
-      ><a name="308"
+      ><a name="310"
       > </a
-      ><a name="309" href="Agda.Builtin.Equality.html#112" class="InductiveConstructor"
+      ><a name="311" href="Agda.Builtin.Equality.html#112" class="InductiveConstructor"
       >refl</a
-      ><a name="313" class="Symbol"
+      ><a name="315" class="Symbol"
       >)</a
       >
-{% endraw %}</pre>
+</pre><!--{% endraw %}-->
 </div>
 
 # Basics: Functional Programming in Agda
@@ -107,118 +107,118 @@ very simple example.
 The following declaration tells Agda that we are defining
 a new set of data values -- a *type*.
 
-<pre class="Agda">{% raw %}
-  <a name="2654" class="Keyword"
+<!--{% raw %}--><pre class="Agda">
+  <a name="2656" class="Keyword"
       >data</a
-      ><a name="2658"
+      ><a name="2660"
       > </a
-      ><a name="2659" href="Basics.html#2659" class="Datatype"
+      ><a name="2661" href="Basics.html#2661" class="Datatype"
       >Day</a
-      ><a name="2662"
-      > </a
-      ><a name="2663" class="Symbol"
-      >:</a
       ><a name="2664"
       > </a
-      ><a name="2665" class="PrimitiveType"
+      ><a name="2665" class="Symbol"
+      >:</a
+      ><a name="2666"
+      > </a
+      ><a name="2667" class="PrimitiveType"
       >Set</a
-      ><a name="2668"
+      ><a name="2670"
       > </a
-      ><a name="2669" class="Keyword"
+      ><a name="2671" class="Keyword"
       >where</a
-      ><a name="2674"
+      ><a name="2676"
       >
     </a
-      ><a name="2679" href="Basics.html#2679" class="InductiveConstructor"
+      ><a name="2681" href="Basics.html#2681" class="InductiveConstructor"
       >monday</a
-      ><a name="2685"
+      ><a name="2687"
       >    </a
-      ><a name="2689" class="Symbol"
+      ><a name="2691" class="Symbol"
       >:</a
-      ><a name="2690"
+      ><a name="2692"
       > </a
-      ><a name="2691" href="Basics.html#2659" class="Datatype"
+      ><a name="2693" href="Basics.html#2661" class="Datatype"
       >Day</a
-      ><a name="2694"
+      ><a name="2696"
       >
     </a
-      ><a name="2699" href="Basics.html#2699" class="InductiveConstructor"
+      ><a name="2701" href="Basics.html#2701" class="InductiveConstructor"
       >tuesday</a
-      ><a name="2706"
+      ><a name="2708"
       >   </a
-      ><a name="2709" class="Symbol"
+      ><a name="2711" class="Symbol"
       >:</a
-      ><a name="2710"
+      ><a name="2712"
       > </a
-      ><a name="2711" href="Basics.html#2659" class="Datatype"
+      ><a name="2713" href="Basics.html#2661" class="Datatype"
       >Day</a
-      ><a name="2714"
+      ><a name="2716"
       >
     </a
-      ><a name="2719" href="Basics.html#2719" class="InductiveConstructor"
+      ><a name="2721" href="Basics.html#2721" class="InductiveConstructor"
       >wednesday</a
-      ><a name="2728"
-      > </a
-      ><a name="2729" class="Symbol"
-      >:</a
       ><a name="2730"
       > </a
-      ><a name="2731" href="Basics.html#2659" class="Datatype"
+      ><a name="2731" class="Symbol"
+      >:</a
+      ><a name="2732"
+      > </a
+      ><a name="2733" href="Basics.html#2661" class="Datatype"
       >Day</a
-      ><a name="2734"
+      ><a name="2736"
       >
     </a
-      ><a name="2739" href="Basics.html#2739" class="InductiveConstructor"
+      ><a name="2741" href="Basics.html#2741" class="InductiveConstructor"
       >thursday</a
-      ><a name="2747"
+      ><a name="2749"
       >  </a
-      ><a name="2749" class="Symbol"
+      ><a name="2751" class="Symbol"
       >:</a
-      ><a name="2750"
+      ><a name="2752"
       > </a
-      ><a name="2751" href="Basics.html#2659" class="Datatype"
+      ><a name="2753" href="Basics.html#2661" class="Datatype"
       >Day</a
-      ><a name="2754"
+      ><a name="2756"
       >
     </a
-      ><a name="2759" href="Basics.html#2759" class="InductiveConstructor"
+      ><a name="2761" href="Basics.html#2761" class="InductiveConstructor"
       >friday</a
-      ><a name="2765"
+      ><a name="2767"
       >    </a
-      ><a name="2769" class="Symbol"
+      ><a name="2771" class="Symbol"
       >:</a
-      ><a name="2770"
+      ><a name="2772"
       > </a
-      ><a name="2771" href="Basics.html#2659" class="Datatype"
+      ><a name="2773" href="Basics.html#2661" class="Datatype"
       >Day</a
-      ><a name="2774"
+      ><a name="2776"
       >
     </a
-      ><a name="2779" href="Basics.html#2779" class="InductiveConstructor"
+      ><a name="2781" href="Basics.html#2781" class="InductiveConstructor"
       >saturday</a
-      ><a name="2787"
+      ><a name="2789"
       >  </a
-      ><a name="2789" class="Symbol"
+      ><a name="2791" class="Symbol"
       >:</a
-      ><a name="2790"
+      ><a name="2792"
       > </a
-      ><a name="2791" href="Basics.html#2659" class="Datatype"
+      ><a name="2793" href="Basics.html#2661" class="Datatype"
       >Day</a
-      ><a name="2794"
+      ><a name="2796"
       >
     </a
-      ><a name="2799" href="Basics.html#2799" class="InductiveConstructor"
+      ><a name="2801" href="Basics.html#2801" class="InductiveConstructor"
       >sunday</a
-      ><a name="2805"
+      ><a name="2807"
       >    </a
-      ><a name="2809" class="Symbol"
+      ><a name="2811" class="Symbol"
       >:</a
-      ><a name="2810"
+      ><a name="2812"
       > </a
-      ><a name="2811" href="Basics.html#2659" class="Datatype"
+      ><a name="2813" href="Basics.html#2661" class="Datatype"
       >Day</a
       >
-{% endraw %}</pre>
+</pre><!--{% endraw %}-->
 
 The type is called `day`, and its members are `monday`,
 `tuesday`, etc.  The second and following lines of the definition
@@ -227,146 +227,146 @@ can be read "`monday` is a `day`, `tuesday` is a `day`, etc."
 Having defined `day`, we can write functions that operate on
 days.
 
-<pre class="Agda">{% raw %}
-  <a name="3095" href="Basics.html#3095" class="Function"
+<!--{% raw %}--><pre class="Agda">
+  <a name="3097" href="Basics.html#3097" class="Function"
       >nextWeekday</a
-      ><a name="3106"
-      > </a
-      ><a name="3107" class="Symbol"
-      >:</a
       ><a name="3108"
       > </a
-      ><a name="3109" href="Basics.html#2659" class="Datatype"
-      >Day</a
-      ><a name="3112"
+      ><a name="3109" class="Symbol"
+      >:</a
+      ><a name="3110"
       > </a
-      ><a name="3113" class="Symbol"
+      ><a name="3111" href="Basics.html#2661" class="Datatype"
+      >Day</a
+      ><a name="3114"
+      > </a
+      ><a name="3115" class="Symbol"
       >-&gt;</a
-      ><a name="3115"
+      ><a name="3117"
       > </a
-      ><a name="3116" href="Basics.html#2659" class="Datatype"
+      ><a name="3118" href="Basics.html#2661" class="Datatype"
       >Day</a
-      ><a name="3119"
+      ><a name="3121"
       >
   </a
-      ><a name="3122" href="Basics.html#3095" class="Function"
+      ><a name="3124" href="Basics.html#3097" class="Function"
       >nextWeekday</a
-      ><a name="3133"
+      ><a name="3135"
       > </a
-      ><a name="3134" href="Basics.html#2679" class="InductiveConstructor"
+      ><a name="3136" href="Basics.html#2681" class="InductiveConstructor"
       >monday</a
-      ><a name="3140"
+      ><a name="3142"
       >    </a
-      ><a name="3144" class="Symbol"
+      ><a name="3146" class="Symbol"
       >=</a
-      ><a name="3145"
+      ><a name="3147"
       > </a
-      ><a name="3146" href="Basics.html#2699" class="InductiveConstructor"
+      ><a name="3148" href="Basics.html#2701" class="InductiveConstructor"
       >tuesday</a
-      ><a name="3153"
+      ><a name="3155"
       >
   </a
-      ><a name="3156" href="Basics.html#3095" class="Function"
+      ><a name="3158" href="Basics.html#3097" class="Function"
       >nextWeekday</a
-      ><a name="3167"
+      ><a name="3169"
       > </a
-      ><a name="3168" href="Basics.html#2699" class="InductiveConstructor"
+      ><a name="3170" href="Basics.html#2701" class="InductiveConstructor"
       >tuesday</a
-      ><a name="3175"
+      ><a name="3177"
       >   </a
-      ><a name="3178" class="Symbol"
+      ><a name="3180" class="Symbol"
       >=</a
-      ><a name="3179"
+      ><a name="3181"
       > </a
-      ><a name="3180" href="Basics.html#2719" class="InductiveConstructor"
+      ><a name="3182" href="Basics.html#2721" class="InductiveConstructor"
       >wednesday</a
-      ><a name="3189"
+      ><a name="3191"
       >
   </a
-      ><a name="3192" href="Basics.html#3095" class="Function"
+      ><a name="3194" href="Basics.html#3097" class="Function"
       >nextWeekday</a
-      ><a name="3203"
+      ><a name="3205"
       > </a
-      ><a name="3204" href="Basics.html#2719" class="InductiveConstructor"
+      ><a name="3206" href="Basics.html#2721" class="InductiveConstructor"
       >wednesday</a
-      ><a name="3213"
-      > </a
-      ><a name="3214" class="Symbol"
-      >=</a
       ><a name="3215"
       > </a
-      ><a name="3216" href="Basics.html#2739" class="InductiveConstructor"
+      ><a name="3216" class="Symbol"
+      >=</a
+      ><a name="3217"
+      > </a
+      ><a name="3218" href="Basics.html#2741" class="InductiveConstructor"
       >thursday</a
-      ><a name="3224"
+      ><a name="3226"
       >
   </a
-      ><a name="3227" href="Basics.html#3095" class="Function"
+      ><a name="3229" href="Basics.html#3097" class="Function"
       >nextWeekday</a
-      ><a name="3238"
+      ><a name="3240"
       > </a
-      ><a name="3239" href="Basics.html#2739" class="InductiveConstructor"
+      ><a name="3241" href="Basics.html#2741" class="InductiveConstructor"
       >thursday</a
-      ><a name="3247"
+      ><a name="3249"
       >  </a
-      ><a name="3249" class="Symbol"
+      ><a name="3251" class="Symbol"
       >=</a
-      ><a name="3250"
+      ><a name="3252"
       > </a
-      ><a name="3251" href="Basics.html#2759" class="InductiveConstructor"
+      ><a name="3253" href="Basics.html#2761" class="InductiveConstructor"
       >friday</a
-      ><a name="3257"
+      ><a name="3259"
       >
   </a
-      ><a name="3260" href="Basics.html#3095" class="Function"
+      ><a name="3262" href="Basics.html#3097" class="Function"
       >nextWeekday</a
-      ><a name="3271"
+      ><a name="3273"
       > </a
-      ><a name="3272" href="Basics.html#2759" class="InductiveConstructor"
+      ><a name="3274" href="Basics.html#2761" class="InductiveConstructor"
       >friday</a
-      ><a name="3278"
+      ><a name="3280"
       >    </a
-      ><a name="3282" class="Symbol"
+      ><a name="3284" class="Symbol"
       >=</a
-      ><a name="3283"
+      ><a name="3285"
       > </a
-      ><a name="3284" href="Basics.html#2679" class="InductiveConstructor"
+      ><a name="3286" href="Basics.html#2681" class="InductiveConstructor"
       >monday</a
-      ><a name="3290"
+      ><a name="3292"
       >
   </a
-      ><a name="3293" href="Basics.html#3095" class="Function"
+      ><a name="3295" href="Basics.html#3097" class="Function"
       >nextWeekday</a
-      ><a name="3304"
+      ><a name="3306"
       > </a
-      ><a name="3305" href="Basics.html#2779" class="InductiveConstructor"
+      ><a name="3307" href="Basics.html#2781" class="InductiveConstructor"
       >saturday</a
-      ><a name="3313"
+      ><a name="3315"
       >  </a
-      ><a name="3315" class="Symbol"
+      ><a name="3317" class="Symbol"
       >=</a
-      ><a name="3316"
+      ><a name="3318"
       > </a
-      ><a name="3317" href="Basics.html#2679" class="InductiveConstructor"
+      ><a name="3319" href="Basics.html#2681" class="InductiveConstructor"
       >monday</a
-      ><a name="3323"
+      ><a name="3325"
       >
   </a
-      ><a name="3326" href="Basics.html#3095" class="Function"
+      ><a name="3328" href="Basics.html#3097" class="Function"
       >nextWeekday</a
-      ><a name="3337"
+      ><a name="3339"
       > </a
-      ><a name="3338" href="Basics.html#2799" class="InductiveConstructor"
+      ><a name="3340" href="Basics.html#2801" class="InductiveConstructor"
       >sunday</a
-      ><a name="3344"
+      ><a name="3346"
       >    </a
-      ><a name="3348" class="Symbol"
+      ><a name="3350" class="Symbol"
       >=</a
-      ><a name="3349"
+      ><a name="3351"
       > </a
-      ><a name="3350" href="Basics.html#2679" class="InductiveConstructor"
+      ><a name="3352" href="Basics.html#2681" class="InductiveConstructor"
       >monday</a
       >
-{% endraw %}</pre>
+</pre><!--{% endraw %}-->
 
 One thing to note is that the argument and return types of
 this function are explicitly declared.  Like most functional
@@ -389,39 +389,39 @@ above example to Agda, and observe the result.
 Second, we can record what we *expect* the result to be in the
 form of an Agda type:
 
-<pre class="Agda">{% raw %}
-  <a name="4314" href="Basics.html#4314" class="Function Operator"
+<!--{% raw %}--><pre class="Agda">
+  <a name="4316" href="Basics.html#4316" class="Function Operator"
       >test_nextWeekday</a
-      ><a name="4330"
-      > </a
-      ><a name="4331" class="Symbol"
-      >:</a
       ><a name="4332"
       > </a
-      ><a name="4333" href="Basics.html#3095" class="Function"
-      >nextWeekday</a
-      ><a name="4344"
+      ><a name="4333" class="Symbol"
+      >:</a
+      ><a name="4334"
       > </a
-      ><a name="4345" class="Symbol"
+      ><a name="4335" href="Basics.html#3097" class="Function"
+      >nextWeekday</a
+      ><a name="4346"
+      > </a
+      ><a name="4347" class="Symbol"
       >(</a
-      ><a name="4346" href="Basics.html#3095" class="Function"
+      ><a name="4348" href="Basics.html#3097" class="Function"
       >nextWeekday</a
-      ><a name="4357"
+      ><a name="4359"
       > </a
-      ><a name="4358" href="Basics.html#2779" class="InductiveConstructor"
+      ><a name="4360" href="Basics.html#2781" class="InductiveConstructor"
       >saturday</a
-      ><a name="4366" class="Symbol"
+      ><a name="4368" class="Symbol"
       >)</a
-      ><a name="4367"
-      > </a
-      ><a name="4368" href="Agda.Builtin.Equality.html#55" class="Datatype Operator"
-      >&#8801;</a
       ><a name="4369"
       > </a
-      ><a name="4370" href="Basics.html#2699" class="InductiveConstructor"
+      ><a name="4370" href="Agda.Builtin.Equality.html#55" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="4371"
+      > </a
+      ><a name="4372" href="Basics.html#2701" class="InductiveConstructor"
       >tuesday</a
       >
-{% endraw %}</pre>
+</pre><!--{% endraw %}-->
 
 This declaration does two things: it makes an assertion (that the second
 weekday after `saturday` is `tuesday`), and it gives the assertion a name
@@ -430,19 +430,19 @@ that can be used to refer to it later.
 Having made the assertion, we must also verify it. We do this by giving
 a term of the above type:
 
-<pre class="Agda">{% raw %}
-  <a name="4691" href="Basics.html#4314" class="Function Operator"
+<!--{% raw %}--><pre class="Agda">
+  <a name="4693" href="Basics.html#4316" class="Function Operator"
       >test_nextWeekday</a
-      ><a name="4707"
-      > </a
-      ><a name="4708" class="Symbol"
-      >=</a
       ><a name="4709"
       > </a
-      ><a name="4710" href="Agda.Builtin.Equality.html#112" class="InductiveConstructor"
+      ><a name="4710" class="Symbol"
+      >=</a
+      ><a name="4711"
+      > </a
+      ><a name="4712" href="Agda.Builtin.Equality.html#112" class="InductiveConstructor"
       >refl</a
       >
-{% endraw %}</pre>
+</pre><!--{% endraw %}-->
 
 There is no essential difference between the definition for
 `test_nextWeekday` here and the definition for `nextWeekday` above,
