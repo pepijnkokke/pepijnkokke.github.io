@@ -4,13 +4,8 @@ layout        : default
 hide-implicit : false
 extra-script  : agda-extra-script.html
 extra-style   : agda-extra-style.html
+permalink     : "sf/Stlc.html"
 ---
-
-<div class="hidden">
-\begin{code}
-{-# OPTIONS --allow-unsolved-metas #-}
-\end{code}
-</div>
 
 \begin{code}
 module Stlc where
@@ -18,6 +13,7 @@ module Stlc where
 
 <div class="hidden">
 \begin{code}
+open import Maps using (Id; id; _≟_; PartialMap; module PartialMap)
 open import Data.Empty using (⊥; ⊥-elim)
 open import Data.Maybe using (Maybe; just; nothing)
 open import Data.Nat using (ℕ; suc; zero; _+_)
@@ -178,23 +174,6 @@ infixr 5 _⇒_
 
 
 ### Terms
-
-\begin{code}
-data Id : Set where
-  id : ℕ → Id
-\end{code}
-
-<div class="hidden">
-\begin{code}
-_≟_ : (x y : Id) → Dec (x ≡ y)
-id x ≟ id y with x Data.Nat.≟ y
-id x ≟ id y | yes x=y rewrite x=y = yes refl
-id x ≟ id y | no  x≠y = no (x≠y ∘ id-inj)
-  where
-    id-inj : ∀ {x y} → id x ≡ id y → x ≡ y
-    id-inj refl = refl
-\end{code}
-</div>
 
 \begin{code}
 data Term : Set where
@@ -626,15 +605,13 @@ $$\Gamma$$ to also map $$x$$ to $$A$$."  Formally, we use the function `_,_∶_`
 
 \begin{code}
 Ctxt : Set
-Ctxt = Id → Maybe Type
+Ctxt = PartialMap Type
 
 ∅ : Ctxt
-∅ = λ _ → nothing
+∅ = PartialMap.empty
 
 _,_∶_ : Ctxt -> Id -> Type -> Ctxt
-(Γ , x ∶ A) y with x ≟ y
-... | yes x=y = just A
-... | no  x≠y = Γ y
+_,_∶_ = PartialMap.update
 \end{code}
 
 <div class="hidden">
@@ -708,8 +685,8 @@ typing-example2 : ∅ ⊢
   (abs x bool
     (abs y (bool ⇒ bool)
       (app (var y)
-        (app (var y) (var x))))) ∶
-  (bool ⇒ (bool ⇒ bool) ⇒ bool)
+        (app (var y) (var x)))))
+  ∶ (bool ⇒ (bool ⇒ bool) ⇒ bool)
 typing-example2 =
   (abs
     (abs

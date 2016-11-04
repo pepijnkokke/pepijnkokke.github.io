@@ -4,6 +4,7 @@ layout        : default
 hide-implicit : false
 extra-script  : agda-extra-script.html
 extra-style   : agda-extra-style.html
+permalink     : "sf/StlcProp.html"
 ---
 
 \begin{code}
@@ -19,6 +20,7 @@ open import Data.Product using (∃; ∃₂; _,_; ,_)
 open import Data.Sum using (_⊎_; inj₁; inj₂)
 open import Relation.Nullary using (¬_; Dec; yes; no)
 open import Relation.Binary.PropositionalEquality using (_≡_; _≢_; refl)
+open import Maps
 open import Stlc
 \end{code}
 </div>
