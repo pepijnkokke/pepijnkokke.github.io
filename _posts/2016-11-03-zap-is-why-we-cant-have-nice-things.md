@@ -327,33 +327,168 @@ includes not sending an $$A$$ again because you think it might've not
 been received while the protocol states that you should be sending a
 $$B$$.
 
+# how to do stuff exactly three times
+
 Fault tolerance interacts unpleasantly with linearity. Linearity
 requires that we use every value *exactly once* whereas fault
 tolerance requires that we do every computation *at least three
-times*.
+times*. I've sketched out such a triplicated communication pattern
+below---note that the communication is rolled out over time, so
+arbiter $$A_1$$ continues as $$A_2$$, worker $$C_1$$ continues as
+$$C_4$$, etc...
+
+![Triplication Network with Arbiter](/images/network-1.png)
+{:style="text-align:center;"}
+
+This can be overcome, though, as linearity can be extended to
+arbitrary versions of reference counting: not just "extactly once" but
+also "exactly three times".
+The simpelest option, however, would probably be to to implement the
+$$vote$$ function as a primitive of type $$(A \otimes A \otimes A)
+\multimap (A \otimes A \otimes A)$$ and have the implementation of
+vote take care of killing and restarting processes, guaranteeing
+linearity. This is easier said than done. If a computation in one of
+the workers $$C_i$$s gets stuck---be it through a $$\text{crash}$$ or
+through a $$\text{soft fault}$$---we can no longer guarantee the
+linearity of any process which had *any* open channel to the crashed
+process. We would therefore have to kill worker $$C_i$$, and any
+process that has open communication channels to it. If the
+communications are structured as above, this should be *none*, but it
+is obvious that this will be a bigger problem if we introduce features
+such as access points, or if we are more permissive in network
+structure---allowing workers $$C_i$$ to be communicating subgraphs.
+
+A *huge* problem with the above approach is that the arbiter
+process $$A$$ has become a *single point of failure*. If any bad stuff
+happens in $$A$$, the whole system comes down. Instead, it may be
+better set up a network with triplication of the arbiters as well as
+the workers.
+
+![Triplication Network](/images/network-2.png)
+{:style="text-align:center;"}
+
+However, in this network the responsibility for restarting faulty
+arbiters lies with the worker nodes---and therefore in the business
+logic of the program. If we were okay with the presence of such logic
+in worker nodes, we could've done away with the arbiters altogether.
+
+A better solution would be to stack another layer of arbiters $$A'_i$$
+on top of the arbiters $$A_i$$, which check consistency amongst them.
+If we take $$vote$$ to merely result in a vector of booleans,
+indicating which (if any) process is faulty, the second layer of
+arbiters becomes is much cheaper. Whereas arbiters in the
+first layer have compute whether there is agreement amongst the
+processes $$C_i$$, the second layer would merely have to check whether
+there is agreement amongst three triples of booleans.
 
 $$
-\begin{array}{ccccccccc}
-    & \rightarrow & C_1 & \rightarrow &   & \rightarrow & C_1 & \rightarrow &
-\\A & \rightarrow & C_2 & \rightarrow & A & \rightarrow & C_2 & \rightarrow & A
-\\  & \rightarrow & C_3 & \rightarrow &   & \rightarrow & C_3 & \rightarrow &
+\begin{array}{rl}
+    A  \equiv& \text{receive }P_i\text{ from each }c_i
+    \\       & \text{let }(ok_1,ok_2,ok_3) := vote(P_1,P_2,P_3)
+    \\       & \text{let }P := \text{any }P_i\text{ where }ok_i = \text{true}
+    \\       & \text{for each }i:
+    \\       & \quad
+               \text{if }ok_i
+               \text{ then }c_i\langle ack \rangle
+               \text{ else }\text{restart}(c_i,P)
+    \\
+    \\
+    A' \equiv& \text{receive }\vec{b}_j\text{ from each }A_j
+    \\       & \text{let }(ok_1,ok_2,ok_3) := vote(\vec{ok}_1,\vec{ok}_2,\vec{ok}_3)
+    \\       & \text{for each }j:
+    \\       & \quad
+               \text{if }ok_j
+               \text{ then }a_j\langle ack \rangle
+               \text{ else }\text{restart}(a_j,A)
 \end{array}
 $$
 
-Fault tolerance defeats strict linearity---we have to do each
-computation three times, and check the result of these computations in
-three separate processes. However, we can still be sure that in a
-well-typed, well-behaved program, we will end up using each value
-*exactly* three times.
+Of course, we cannot stack arbiter upon arbiter infinitely. This has
+to end *somewhere*.
 
-The downside of this, however, is that we cannot implement this
-behaviour in the linear-typed π-calculus. We will have to move to a
-calculus which supports a richer structure of linearity---i.e. allows
-arbitrary reference counting constraints.
+  - Either we tie a knot, and have some set of arbiters in charge of
+    checking themselves or some of the arbiters above them; or
+  - we taper off the arbiter hierarchy, and end up with a root arbiter.
 
-Other problems which soft faults, is that they may result in
-computations which are not well-typed and therefore may get stuck.
+The second design may be practical enough in most cases. It will be
+able to recover from faults in worker code, and an arbitrary number of
+arbiter layers. Once we taper the arbiter layers down to *two*
+arbiters, we will at least be able to *detect* soft fault, and we will
+still be able to recover from crashes. The final arbiter node will be
+our single point of failure---but at that point we already guarantee
+the fault-tolerance of a huge chunk of infrastructure.
 
+However, the first system is nicer, more pleasing. In it, we might
+reasonably be able to recover from faults occuring *anywhere* in the
+system. This comes at the cost of making the design fairly
+complex. The possibility of such a system hinges on a single puzzle.
+
+# can three judges judge themselves?
+
+Or---more confusingly---can three aribiters... euh... arbit arbit
+arbit... whatever. Let's assume we have *three* arbiters,
+$$A_1$$, $$A_2$$ and $$A_3$$. They've just settled the disputes
+between their subgraphs, and have made lists of who was well-behaved
+and who was a bad apple. We'll call these lists $$\vec{ok}_1$$,
+$$\vec{ok}_2$$ and $$\vec{ok}_3$$. Before they can actually commit to
+their verdicts, they have to settle any disputes between
+themselves. Normally, they'd just forward their verdicts up to the
+next layer of arbiters, but today they happen to be *root* arbiters.
+
+Under our assumption that bad things happens one at a time, we can be
+sure that at least *two* of our root arbiters are in working order.
+They do the following:
+
+ -  each root arbiter $$A_i$$ sends their verdict $$\vec{ok}_i$$ to
+    the other two root arbiters;
+  - each root arbiter $$A_i$$ can now privately compare the verdicts,
+    and decide which, if any, of the root arbiters has a fault---and
+    if there's no fault, it's $$ack$$s all around!
+  - otherwise, each root arbiter shares its conclusion with the other
+    *non-faulty* root arbiter;
+  - the two non-faulty root arbiters now _know_ which arbiter is
+    faulty---they elect a leader, and the leader kills and restarts
+    the faulty root arbiter.
+
+If our assumption is permissive enough to keep this entire plan free
+of further faults, then the entire program should be free of faults.
+So yes: three arbiters can arbit arbit arbit, and three judges can
+judge themselves.
+
+# more touching reality
+
+To recap, we need to execute every reduction step three times, and
+check its result with a nigh infinite tree of arbiters. If we do that,
+we're safe... under the assumption that bad stuff only happens once
+per reduction cycle. So yeah, this is totally realistic, no more
+thinking needs to happen. Let's get to work.
+
+Ok. It might be better to work on our assumption. See how safe we are
+if we assume, instead, that only one thing goes wrong per, I dunno,
+several reduction steps? Maybe assumpt that only $$k$$ things go super
+wrong per minute, run everything in $$k$$-plo (which is a word), and
+use the arbiters to sync the $$k$$-duplicated processes once per
+minute? The good news is that once we have the theoretical framework
+to deal with running programs safely in triplo, assumping one fault per
+reduction step (so yeah, the thing we've been trying to do) we can
+trivially extend it to $$(k + 2)$$-plo with $$k$$ faults per reduction
+step. And changing "per reduction step" into "per 100 reduction steps"
+is just easing off the safety throttle.
+
+And what about this whole "running processes in $$k$$-plo business"?
+I'd personally rather not have everything computed twice, let alone
+some huge number of times. The good news is, we can do some of our
+$$k$$ computations lazily! If we want to protect ourselves against
+soft faults, then the absolute minimum is running everything in
+duplo. If we detect a disagreement, we can simply fork off a third
+computation and use that as a reference to determine who was right.
+If we decide that we don't really care about soft faults---maybe you
+think they're super rare, and the world, with its checksums and
+stuff, should deal with packet loss and errors---then we only have to
+run everything once! Like in the golden days! If we detect a crash,
+then we simply kill and restart. This last option is pretty much what
+Erlang has implemented as
+its [supervisor trees library][SupervisorTrees].
 
 ---
 
@@ -381,6 +516,7 @@ computations which are not well-typed and therefore may get stuck.
     But that thought may also be a fundamental lack of understanding
     of self-interpretation on my part.
 
-[HaskellIO]:     https://www.fpcomplete.com/blog/2015/02/primitive-haskell
-[FaultyLambda]:  http://www.cs.princeton.edu/~dpw/papers/lambdazap-icfp06.pdf
+[HaskellIO]: https://www.fpcomplete.com/blog/2015/02/primitive-haskell
+[FaultyLambda]: http://www.cs.princeton.edu/~dpw/papers/lambdazap-icfp06.pdf
 [SelfInterpret]: http://compilers.cs.ucla.edu/popl16/popl16-full.pdf
+[SupervisorTrees]: http://learnyousomeerlang.com/supervisors
