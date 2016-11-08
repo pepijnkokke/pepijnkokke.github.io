@@ -3,6 +3,8 @@ title        : "*zap* is why we can't have nice things..."
 date         : 2016-10-25 12:00:00
 categories   : []
 tags         : [draft, process calculus]
+extra-script : [eqn-extra-script.html]
+extra-style  : [eqn-extra-style.html]
 ---
 
 There is always a point where nice theoretical work must touch the
@@ -14,18 +16,18 @@ which you can write any function you would conceivable want to
 write![^computable]
 
 $$
-\begin{array}{rll}
-    \text{Terms}\;s,t,u
-    ::=  & x             & \text{variable} \\
-    \mid & \lambda x . t & \text{abstraction} \\
-    \mid & s\;t          & \text{application} \\
-\end{array}
-$$
-
-$$
-\begin{array}{ll}
-    (\lambda x . s)\;t \longrightarrow s\{t/x\}
-    & \beta\text{-reduction} \\
+\begin{array}{c}
+    \begin{array}{rll}
+        \text{Terms}\;s,t,u
+        ::=  & x             & \text{variable} \\
+        \mid & \lambda x . t & \text{abstraction} \\
+        \mid & s\;t          & \text{application} \\
+    \end{array}
+    \\
+    \begin{array}{ll}
+        (\lambda x . s)\;t \longrightarrow s\{t/x\}
+        & \beta\text{-reduction} \\
+    \end{array}
 \end{array}
 $$
 
@@ -49,7 +51,9 @@ $$
     {\cdot+\cdot} &\equiv \lambda m. \lambda n. \lambda f.
     \lambda x. m\;f\;(n\;f\;x)
 \end{array}
-\quad
+$$
+
+$$
 \begin{array}{rl}
     2 + 1 \longrightarrow
         &(\lambda n.\lambda f.\lambda x.2\;f\;(n\;f\;x))\;1
@@ -127,7 +131,9 @@ $$
     \\
     \\
 \end{array}
-\quad
+$$
+
+$$
 \begin{array}{rl}
     2 + 1 \longrightarrow
         &(\lambda n.\lambda f.\lambda x.2\;f\;(n\;f\;x))\;1
@@ -391,8 +397,11 @@ $$
                \text{if }ok_i
                \text{ then }c_i\langle ack \rangle
                \text{ else }\text{restart}(c_i,P)
-    \\
-    \\
+\end{array}
+$$
+
+$$
+\begin{array}{rl}
     A' \equiv& \text{receive }\vec{b}_j\text{ from each }A_j
     \\       & \text{let }(ok_1,ok_2,ok_3) := vote(\vec{ok}_1,\vec{ok}_2,\vec{ok}_3)
     \\       & \text{for each }j:

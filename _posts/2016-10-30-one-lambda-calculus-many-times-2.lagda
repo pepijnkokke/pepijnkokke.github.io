@@ -27,19 +27,29 @@ We can reuse our notions of types and sequents from the previous post:
 
 <div class="hidden">
 \begin{code}
+  import Algebra
+  import Relation.Binary as RB
+  import Relation.Binary.List.Pointwise as RBLP
+
   open Part1.Syntax Atom hiding (w′)
-  open import Algebra                 using (module Monoid)
   open import Data.Nat                using (ℕ; suc; zero)
   open import Data.Fin                using (Fin; suc; zero)
   open import Data.List               using (List; _∷_; []; _++_)
-  open import Data.List.Any           using (module Membership; here; there)
+  open import Data.List.Any           using (here; there)
   open import Data.Product            using (proj₁; proj₂)
   open import Function                using (_$_)
   open import Function.Equivalence    using (_⇔_; id; map; equivalence)
   open import Relation.Binary.PropositionalEquality
-  open Membership (setoid Type)       using (_∈_; _⊆_)
-  open Monoid (Data.List.monoid Type) using () renaming (identity to ++-identity; assoc to ++-assoc)
-  ++-identityʳ = proj₂ ++-identity
+  open Data.List.Any.Membership (setoid Type) using (_∈_; _⊆_; module ⊆-Reasoning)
+  private
+    open ⊆-Reasoning hiding (_≈⟨_⟩_)
+    module M = Algebra.Monoid (Data.List.monoid Type)
+    ++-identityʳ = proj₂ M.identity
+    ++-assoc     = M.assoc
+
+    infixr 2 _≡⟨_⟩_
+    _≡⟨_⟩_ : ∀ x {y z} → x ≡ y → y IsRelatedTo z → x IsRelatedTo z
+    _ ≡⟨ refl ⟩ y~z = y~z
 \end{code}
 </div>
 <pre class="Agda Spec">  <a name="2644" class="Keyword">data</a><a name="2648"> </a><a name="2649" href="/2016/one-lambda-calculus-many-times/#2649" class="Datatype">Type</a><a name="2653"> </a><a name="2654" class="Symbol">:</a><a name="2655"> </a><a name="2656" class="PrimitiveType">Set</a><a name="2659"> </a><a name="2660" class="Keyword">where</a><a name="2665">
@@ -234,24 +244,26 @@ The first case is trivial, and simply requires rewriting by proofs of right iden
 
 \begin{code}
     permute : ∀ Γ Σ Π → ∀ {Δ} → (Γ ++ Σ) ++ (Π ++ Δ) ⊆ (Γ ++ Π) ++ (Σ ++ Δ)
-    permute Γ Σ [] {Δ} i
-           -- x ∈ (Γ ++ Π) ++ [] ++ Δ
-      rewrite ++-identityʳ Γ
-           -- x ∈ (Γ ++ Π) ++ Δ
-            | ++-assoc Γ Σ Δ
-           -- x ∈ Γ ++ Π ++ Δ
-            = i
-
-    permute Γ Π (A ∷ Σ) {Δ} i
-           -- x ∈ (Γ ++ A ∷ Σ) ++ Π ++ Δ
-      rewrite sym (++-assoc Γ (A ∷ []) Σ)
-           -- x ∈ ((Γ ++ A ∷ []) ++ Σ) ++ Π ++ Δ
-            = permute (Γ ++ A ∷ []) Π Σ j
-        where
-          j : _ ∈ ((Γ ++ A ∷ []) ++ Π) ++ Σ ++ Δ
-          j rewrite ++-assoc Γ (A ∷ []) Π
-                 -- x ∈ (Γ ++ A ∷ Π) ++ Σ ++ Δ
-                  = forward Γ Π i
+    permute Γ Σ [] {Δ} =
+      begin
+        (Γ ++ Σ) ++ Δ
+          ≡⟨ ++-assoc Γ Σ Δ ⟩
+        Γ ++ (Σ ++ Δ)
+          ≡⟨ cong (_++ (Σ ++ Δ)) (sym (++-identityʳ Γ)) ⟩
+        (Γ ++ []) ++ (Σ ++ Δ)
+      ∎
+    permute Γ Π (A ∷ Σ) {Δ} =
+      begin
+        (Γ ++ Π) ++ (A ∷ Σ ++ Δ)
+          ⊆⟨ forward Γ Π ⟩
+        (Γ ++ A ∷ Π) ++ (Σ ++ Δ)
+          ≡⟨ cong (_++ (Σ ++ Δ)) (sym (++-assoc Γ (A ∷ []) Π)) ⟩
+        ((Γ ++ (A ∷ [])) ++ Π) ++ (Σ ++ Δ)
+          ⊆⟨ permute (Γ ++ A ∷ []) Π Σ ⟩
+        ((Γ ++ (A ∷ [])) ++ Σ) ++ (Π ++ Δ)
+          ≡⟨ cong (_++ (Π ++ Δ)) (++-assoc Γ (A ∷ []) Σ) ⟩
+        (Γ ++ A ∷ Σ) ++ (Π ++ Δ)
+      ∎
 \end{code}
 
 In our previous version of contraction, all we had to do was merge any references to the first two formulas in our context.

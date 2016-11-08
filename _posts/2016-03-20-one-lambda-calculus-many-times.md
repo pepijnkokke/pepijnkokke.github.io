@@ -28,7 +28,8 @@ implementing the simply-typed λ-calculus. Today, natural deduction and
 the sequent calculus.
 
 <div class="hidden">
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
 <a name="1214" class="Keyword"
       >module</a
       ><a name="1220"
@@ -40,7 +41,8 @@ the sequent calculus.
       ><a name="1263" class="Keyword"
       >where</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 </div>
 
 ### Natural Deduction and the λ-Calculus
@@ -50,7 +52,8 @@ are defined inductively over some set of atomic types. We don't really
 care what these atomic types will be, so we might as well abstract
 over them:
 
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
 <a name="1561" class="Keyword"
       >module</a
       ><a name="1567"
@@ -78,7 +81,8 @@ over them:
       ><a name="1588" class="Keyword"
       >where</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 
 But, if it makes you feel better, we can pretend that they'll be some
 like this:
@@ -89,7 +93,8 @@ Next, we defined our types. Since we're talking about minimal
 propositional logic, a type is either atomic (marked by <a class="Agda
 InductiveConstructor">El</a>) or an implication:
 
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
   <a name="2630" class="Keyword"
       >infixr</a
       ><a name="2636"
@@ -169,7 +174,8 @@ InductiveConstructor">El</a>) or an implication:
       ><a name="2714" href="2016-03-20-one-lambda-calculus-many-times.html#2651" class="Datatype"
       >Type</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 
 Now we'll define sequents. Even though this is just a tiny piece of
 syntax, we should put some thought behind it...
@@ -185,7 +191,8 @@ done, but implementation-wise a bag is actually a rather complex
 beast. For this reason, we'll use a *list*:[^imports]
 
 <div class="hidden">
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
   <a name="3482" class="Keyword"
       >open</a
       ><a name="3486"
@@ -435,9 +442,11 @@ beast. For this reason, we'll use a *list*:[^imports]
       ><a name="3902" class="Symbol"
       >)</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 </div>
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
   <a name="3937" class="Keyword"
       >infix</a
       ><a name="3942"
@@ -500,7 +509,8 @@ beast. For this reason, we'll use a *list*:[^imports]
       ><a name="4006" href="2016-03-20-one-lambda-calculus-many-times.html#3957" class="Datatype"
       >Sequent</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 
 So what does a *proof* of a sequent look like? The logical system that
 is most familiar to a computer scientist is probably *natural
@@ -538,7 +548,8 @@ interest of keeping things simple I will use that.
 We encode the natural deduction system as a datatype, with each rule
 corresponding to a *constructor*, and each proof a *value*:
 
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
   <a name="5353" class="Keyword"
       >infix</a
       ><a name="5358"
@@ -586,14 +597,6 @@ corresponding to a *constructor*, and each proof a *value*:
       >:</a
       ><a name="5407"
       > </a
-      ><a name="5408" class="Symbol"
-      >&#8704;</a
-      ><a name="5409"
-      > </a
-      ><a name="5418" class="Symbol"
-      >&#8594;</a
-      ><a name="5419"
-      > </a
       ><a name="5420" href="2016-03-20-one-lambda-calculus-many-times.html#5411" class="Bound"
       >A</a
       ><a name="5421"
@@ -634,14 +637,6 @@ corresponding to a *constructor*, and each proof a *value*:
       ><a name="5444" class="Symbol"
       >:</a
       ><a name="5445"
-      > </a
-      ><a name="5446" class="Symbol"
-      >&#8704;</a
-      ><a name="5447"
-      > </a
-      ><a name="5456" class="Symbol"
-      >&#8594;</a
-      ><a name="5457"
       > </a
       ><a name="5458" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
       >ND</a
@@ -703,14 +698,6 @@ corresponding to a *constructor*, and each proof a *value*:
       ><a name="5493" class="Symbol"
       >:</a
       ><a name="5494"
-      > </a
-      ><a name="5495" class="Symbol"
-      >&#8704;</a
-      ><a name="5496"
-      > </a
-      ><a name="5505" class="Symbol"
-      >&#8594;</a
-      ><a name="5506"
       > </a
       ><a name="5507" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
       >ND</a
@@ -775,7 +762,8 @@ corresponding to a *constructor*, and each proof a *value*:
       ><a name="5540" href="2016-03-20-one-lambda-calculus-many-times.html#5500" class="Bound"
       >B</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 
 Note: for the sake of brevity, I'm using an Agda notation in which
 implicit arguments are hidden. That means that any unbound
@@ -787,7 +775,8 @@ Operator">ND</a> as proofs made up of rules, but if you prefer to
 think of them as programs made up of the constructors of lambda terms,
 just use the following syntax:
 
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
   <a name="6012" class="Keyword"
       >pattern</a
       ><a name="6019"
@@ -869,7 +858,8 @@ just use the following syntax:
       ><a name="6089" href="2016-03-20-one-lambda-calculus-many-times.html#6089" class="Bound"
       >x</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 
 Earlier, we made the conscious choice to use *lists* to represent the
 antecedent. However, this introduced a minor problem: while two
@@ -895,7 +885,8 @@ natural deduction proofs. Note that we represent the subset relation
 as a *function*, that is to say $$\Gamma \subseteq \Gamma\prime$$ is
 the *function* $$A\in\Gamma\to A\in\Gamma\prime$$:
 
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
   <a name="7307" href="2016-03-20-one-lambda-calculus-many-times.html#7307" class="Function"
       >struct</a
       ><a name="7313"
@@ -903,14 +894,6 @@ the *function* $$A\in\Gamma\to A\in\Gamma\prime$$:
       ><a name="7314" class="Symbol"
       >:</a
       ><a name="7315"
-      > </a
-      ><a name="7316" class="Symbol"
-      >&#8704;</a
-      ><a name="7317"
-      > </a
-      ><a name="7327" class="Symbol"
-      >&#8594;</a
-      ><a name="7328"
       > </a
       ><a name="7329" href="2016-03-20-one-lambda-calculus-many-times.html#7321" class="Bound"
       >&#915;</a
@@ -1072,14 +1055,6 @@ the *function* $$A\in\Gamma\to A\in\Gamma\prime$$:
       ><a name="7477" class="Symbol"
       >:</a
       ><a name="7478"
-      > </a
-      ><a name="7479" class="Symbol"
-      >&#8704;</a
-      ><a name="7480"
-      > </a
-      ><a name="7490" class="Symbol"
-      >&#8594;</a
-      ><a name="7491"
       > </a
       ><a name="7492" href="2016-03-20-one-lambda-calculus-many-times.html#7484" class="Bound"
       >&#915;</a
@@ -1264,7 +1239,8 @@ the *function* $$A\in\Gamma\to A\in\Gamma\prime$$:
       ><a name="7661" class="Symbol"
       >)</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 
 Note that values of type $$A\in\Gamma$$ are constructed using <a
 class="Agda InductiveConstructor" target="_blank"
@@ -1284,7 +1260,8 @@ environment, then you should *certainly* be able to run that program
 in that enviroment with some irrelevant stuff added to it. Formally,
 we write it as:
 
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
   <a name="8605" href="2016-03-20-one-lambda-calculus-many-times.html#8605" class="Function"
       >w&#8242;</a
       ><a name="8607"
@@ -1292,14 +1269,6 @@ we write it as:
       ><a name="8608" class="Symbol"
       >:</a
       ><a name="8609"
-      > </a
-      ><a name="8610" class="Symbol"
-      >&#8704;</a
-      ><a name="8611"
-      > </a
-      ><a name="8620" class="Symbol"
-      >&#8594;</a
-      ><a name="8621"
       > </a
       ><a name="8622" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
       >ND</a
@@ -1361,7 +1330,8 @@ we write it as:
       ><a name="8660" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227" class="InductiveConstructor"
       >there</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 
 Passing <a class="Agda InductiveConstructor" target="_blank"
 href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227">there</a>
@@ -1390,7 +1360,8 @@ $$
 
 We can encode these rules in Agda as follows:
 
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
   <a name="9767" class="Keyword"
       >infix</a
       ><a name="9772"
@@ -1438,14 +1409,6 @@ We can encode these rules in Agda as follows:
       >:</a
       ><a name="9822"
       > </a
-      ><a name="9823" class="Symbol"
-      >&#8704;</a
-      ><a name="9824"
-      > </a
-      ><a name="9835" class="Symbol"
-      >&#8594;</a
-      ><a name="9836"
-      > </a
       ><a name="9837" href="2016-03-20-one-lambda-calculus-many-times.html#9826" class="Bound"
       >A</a
       ><a name="9838"
@@ -1486,14 +1449,6 @@ We can encode these rules in Agda as follows:
       ><a name="9862" class="Symbol"
       >:</a
       ><a name="9863"
-      > </a
-      ><a name="9864" class="Symbol"
-      >&#8704;</a
-      ><a name="9865"
-      > </a
-      ><a name="9876" class="Symbol"
-      >&#8594;</a
-      ><a name="9877"
       > </a
       ><a name="9878" href="2016-03-20-one-lambda-calculus-many-times.html#9787" class="Datatype Operator"
       >SC</a
@@ -1567,14 +1522,6 @@ We can encode these rules in Agda as follows:
       ><a name="9921" class="Symbol"
       >:</a
       ><a name="9922"
-      > </a
-      ><a name="9923" class="Symbol"
-      >&#8704;</a
-      ><a name="9924"
-      > </a
-      ><a name="9935" class="Symbol"
-      >&#8594;</a
-      ><a name="9936"
       > </a
       ><a name="9937" href="2016-03-20-one-lambda-calculus-many-times.html#9787" class="Datatype Operator"
       >SC</a
@@ -1665,14 +1612,6 @@ We can encode these rules in Agda as follows:
       >:</a
       ><a name="9989"
       > </a
-      ><a name="9990" class="Symbol"
-      >&#8704;</a
-      ><a name="9991"
-      > </a
-      ><a name="10002" class="Symbol"
-      >&#8594;</a
-      ><a name="10003"
-      > </a
       ><a name="10004" href="2016-03-20-one-lambda-calculus-many-times.html#9787" class="Datatype Operator"
       >SC</a
       ><a name="10006"
@@ -1724,13 +1663,15 @@ We can encode these rules in Agda as follows:
       ><a name="10030" href="2016-03-20-one-lambda-calculus-many-times.html#9995" class="Bound"
       >B</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 
 We will define a few patterns that we'd otherwise have to write out,
 over and over again. Namely, names for the first, second, and third
 variable in a context:
 
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
   <a name="10220" class="Keyword"
       >pattern</a
       ><a name="10227"
@@ -1834,13 +1775,15 @@ variable in a context:
       ><a name="10331" class="Symbol"
       >)))</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 
 It's a little bit of a puzzle, but given <a href="#8254" class="Agda
 Function">w′</a> it becomes quite easy to show that the two logics
 are in fact equivalent---that they derive the *same sequents*:
 
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
   <a name="10562" class="Keyword"
       >module</a
       ><a name="10568"
@@ -1862,14 +1805,6 @@ are in fact equivalent---that they derive the *same sequents*:
       ><a name="10588" class="Symbol"
       >:</a
       ><a name="10589"
-      > </a
-      ><a name="10590" class="Symbol"
-      >&#8704;</a
-      ><a name="10591"
-      > </a
-      ><a name="10596" class="Symbol"
-      >&#8594;</a
-      ><a name="10597"
       > </a
       ><a name="10598" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
       >ND</a
@@ -2031,14 +1966,6 @@ are in fact equivalent---that they derive the *same sequents*:
       ><a name="10711" class="Symbol"
       >:</a
       ><a name="10712"
-      > </a
-      ><a name="10713" class="Symbol"
-      >&#8704;</a
-      ><a name="10714"
-      > </a
-      ><a name="10719" class="Symbol"
-      >&#8594;</a
-      ><a name="10720"
       > </a
       ><a name="10721" href="2016-03-20-one-lambda-calculus-many-times.html#9787" class="Datatype Operator"
       >SC</a
@@ -2265,7 +2192,8 @@ are in fact equivalent---that they derive the *same sequents*:
       ><a name="10876" class="Symbol"
       >)</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 
 The rules for sequent calculus obviously no longer correspond *directly*
 to the λ-calculus. However, we've just shown that there is in fact
@@ -2300,7 +2228,8 @@ class="Agda Field Operator">⟦_⟧</a> the least restrictive type
 possible:
 
 <div class="hidden">
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
 <a name="12396" class="Keyword"
       >open</a
       ><a name="12400"
@@ -2324,9 +2253,11 @@ possible:
       ><a name="12424" class="Symbol"
       >)</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 </div>
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
 <a name="12457" class="Keyword"
       >record</a
       ><a name="12463"
@@ -2441,12 +2372,14 @@ possible:
       ><a name="12565" class="Symbol"
       >{{...}}</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 
 Now, in order to interpret natural deduction proofs in Agda, we'll
 need an interpretation for the atomic types. Below we say as much:
 
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
 <a name="12733" class="Keyword"
       >module</a
       ><a name="12739"
@@ -2498,10 +2431,12 @@ need an interpretation for the atomic types. Below we say as much:
       ><a name="12802" class="Keyword"
       >where</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 
 <div class="hidden">
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
   <a name="12856" class="Keyword"
       >open</a
       ><a name="12860"
@@ -2778,12 +2713,14 @@ need an interpretation for the atomic types. Below we say as much:
       ><a name="13371" class="Symbol"
       >)</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 </div>
 
 Unsurprisingly, we interpret the implication as Agda's function type:
 
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
   <a name="13478" class="Keyword"
       >instance</a
       ><a name="13486"
@@ -2953,14 +2890,16 @@ Unsurprisingly, we interpret the implication as Agda's function type:
       ><a name="13668" href="2016-03-20-one-lambda-calculus-many-times.html#13588" class="Function Operator"
       >&#10215;&#8242;</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 
 In order to interpret sequents, we'll need an interpretation for the
 antecedent. For this we'll create a type for *environments*, <a
 class="Agda Datatype">Env</a>, which is indexed by a list of types, and
 which stores values of the *interpretations* of those types:
 
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
   <a name="13965" class="Keyword"
       >infixr</a
       ><a name="13971"
@@ -3029,10 +2968,6 @@ which stores values of the *interpretations* of those types:
       >:</a
       ><a name="14040"
       > </a
-      ><a name="14068" class="Symbol"
-      >&#8594;</a
-      ><a name="14069"
-      > </a
       ><a name="14070" href="2016-03-20-one-lambda-calculus-many-times.html#12538" class="Field Operator"
       >&#10214;</a
       ><a name="14071"
@@ -3080,12 +3015,14 @@ which stores values of the *interpretations* of those types:
       ><a name="14096" class="Symbol"
       >)</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 
 Using this, we can interpret sequents as functions from environments
 to values:
 
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
   <a name="14206" class="Keyword"
       >instance</a
       ><a name="14214"
@@ -3218,12 +3155,14 @@ to values:
       ><a name="14379" href="2016-03-20-one-lambda-calculus-many-times.html#12538" class="Field Operator"
       >&#10215;</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 
 Let's get to interpreting terms! First off, variables. We can
 interpret variables simply by looking them up in the environment:
 
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
   <a name="14537" href="2016-03-20-one-lambda-calculus-many-times.html#14537" class="Function"
       >lookup</a
       ><a name="14543"
@@ -3231,14 +3170,6 @@ interpret variables simply by looking them up in the environment:
       ><a name="14544" class="Symbol"
       >:</a
       ><a name="14545"
-      > </a
-      ><a name="14546" class="Symbol"
-      >&#8704;</a
-      ><a name="14547"
-      > </a
-      ><a name="14554" class="Symbol"
-      >&#8594;</a
-      ><a name="14555"
       > </a
       ><a name="14556" href="2016-03-20-one-lambda-calculus-many-times.html#14549" class="Bound"
       >A</a
@@ -3373,7 +3304,8 @@ interpret variables simply by looking them up in the environment:
       ><a name="14657" href="2016-03-20-one-lambda-calculus-many-times.html#14643" class="Bound"
       >e</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 
 
 (If you're wondering what we're rewriting by: the <a class="Agda
@@ -3386,7 +3318,8 @@ The translation for natural deduction proofs is, of course, completely
 routine---we translate variables withs lookups, introductions by
 abstractions and eliminations by applications:
 
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
   <a name="15171" class="Keyword"
       >instance</a
       ><a name="15179"
@@ -3399,14 +3332,6 @@ abstractions and eliminations by applications:
       ><a name="15196" class="Symbol"
       >:</a
       ><a name="15197"
-      > </a
-      ><a name="15198" class="Symbol"
-      >&#8704;</a
-      ><a name="15199"
-      > </a
-      ><a name="15204" class="Symbol"
-      >&#8594;</a
-      ><a name="15205"
       > </a
       ><a name="15206" href="2016-03-20-one-lambda-calculus-many-times.html#12464" class="Record"
       >Interpret</a
@@ -3482,14 +3407,6 @@ abstractions and eliminations by applications:
       ><a name="15294" class="Symbol"
       >:</a
       ><a name="15295"
-      > </a
-      ><a name="15296" class="Symbol"
-      >&#8704;</a
-      ><a name="15297"
-      > </a
-      ><a name="15302" class="Symbol"
-      >&#8594;</a
-      ><a name="15303"
       > </a
       ><a name="15304" href="2016-03-20-one-lambda-calculus-many-times.html#5373" class="Datatype Operator"
       >ND</a
@@ -3685,12 +3602,14 @@ abstractions and eliminations by applications:
       ><a name="15441" class="Symbol"
       >)</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 
 Hooray! And even better,  as a corollary, we immediately obtain a
 translation from sequent calculus into Agda:
 
-<!--{% raw %}--><pre class="Agda">
+<!--{% raw %}-->
+<pre class="Agda">
   <a name="15582" class="Keyword"
       >instance</a
       ><a name="15590"
@@ -3703,14 +3622,6 @@ translation from sequent calculus into Agda:
       ><a name="15607" class="Symbol"
       >:</a
       ><a name="15608"
-      > </a
-      ><a name="15609" class="Symbol"
-      >&#8704;</a
-      ><a name="15610"
-      > </a
-      ><a name="15615" class="Symbol"
-      >&#8594;</a
-      ><a name="15616"
       > </a
       ><a name="15617" href="2016-03-20-one-lambda-calculus-many-times.html#12464" class="Record"
       >Interpret</a
@@ -3780,7 +3691,8 @@ translation from sequent calculus into Agda:
       ><a name="15687" class="Symbol"
       >}</a
       >
-</pre><!--{% endraw %}-->
+</pre>
+<!--{% endraw %}-->
 
 Which means that we've now implemented the following functions:
 

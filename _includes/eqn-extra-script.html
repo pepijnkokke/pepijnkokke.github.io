@@ -1,0 +1,15 @@
+<script type="text/javascript">
+$('div.equation').each(function(_, eqn) {
+    if (!$(eqn).prev().is('div.equation')) {
+        if($(eqn).next().is('div.equation')) {
+            $(eqn).wrap('<div class="equation-container"></div>');
+        }
+    }
+});
+$('div.equation').each(function(_,eqn) {
+    var prev = $(eqn).prev();
+    if ($(prev).is('div.equation-container')) {
+        $(eqn).detach().prependTo(prev);
+    }
+});
+</script>

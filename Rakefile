@@ -18,17 +18,16 @@ end
 
 rule '.md' => '.lagda' do |t|
   front_matter = YAML.load_file(t.source)
-  cmd = ["agda2html"]
-  cmd << "-f #{t.source}"
-  cmd << "-t #{t.name}"
-  cmd << "-i _posts"
-  cmd << "-i _drafts"
-  cmd << "-i sf"
-  cmd << "--verbose"
-  cmd << "--strip-implicit-args"\
+  cmd = ['agda2html']
+  cmd << '-i _posts'
+  cmd << '-i sf'
+  cmd << '--verbose'
+  cmd << '--strip-implicit-args'\
     if front_matter['hide-implicit']
-  cmd << "--link-to-agda-stdlib"
-  cmd << "--link-local"
+  cmd << '--link-to-agda-stdlib'
+  cmd << '--link-local'
+  cmd << t.source
+  cmd << t.name
   sh(cmd.join ' ')
 
 end
