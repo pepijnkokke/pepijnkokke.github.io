@@ -2,6 +2,7 @@
 
 require 'rubygems'
 require 'bundler/setup'
+require 'nokogiri'
 require 'tmpdir'
 require 'yaml'
 

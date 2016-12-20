@@ -1,11 +1,11 @@
-serve:
-	ruby -S bundle exec jekyll server --incremental
+serve: clean
+	@ruby -S bundle exec jekyll server
 
 guard:
-	ruby -S bundle exec guard
+	@ruby -S bundle exec guard
 
 rake:
-	ruby -S bundle exec rake
+	@ruby -S bundle exec rake
 
 clean:
-	ruby -S bundle exec jekyll clean
+	@ruby -S bundle exec jekyll clean

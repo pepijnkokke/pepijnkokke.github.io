@@ -11,13 +11,29 @@ permalink : /pubs/
 
 <tr valign="top">
 <td align="right" class="bibtexnumber">
+[<a name="kokke2016lacl">7</a>]
+</td>
+<td class="bibtexitem">
+Pepijn Kokke.
+ Strong and weak quantifiers in focused NL<sub>CL</sub>.
+ In <em>Logical Aspects of Computational Linguistics. Celebrating 20
+  Years of LACL (1996--2016)</em>, pages 134--148. Springer Nature, December
+  2016.
+[ <a href="http://dx.doi.org/10.1007/978-3-662-53826-5_9">http</a> ]
+
+</td>
+</tr>
+
+
+<tr valign="top">
+<td align="right" class="bibtexnumber">
 [<a name="kokke2016nlq">6</a>]
 </td>
 <td class="bibtexitem">
 Pepijn Kokke.
  NLQ: a modular type-logical grammar for quantifier movement, scope
   islands, and more.
- Master's thesis, Utrecht Universiy, 2 2016.
+ Master's thesis, Utrecht Universiy, February 2016.
 [ <a href="http://dspace.library.uu.nl/handle/1874/328401">http</a> ]
 
 </td>
