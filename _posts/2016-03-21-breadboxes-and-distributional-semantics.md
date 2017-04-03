@@ -138,6 +138,7 @@ Breadbox:
     <div id="breadbox-input"></div>
   </div>
 </div>
+([Click here](https://breadbox-pepijnkokke.rhcloud.com) if the above version is not working.)
 
 So how does it work? The core hypothesis of distributional semantics is
 
