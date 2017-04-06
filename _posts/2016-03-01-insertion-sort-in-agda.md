@@ -35,7 +35,8 @@ post, or in the Agda standard library!
 
 Obligatory "this is literate code, here are my imports."
 
-<!--{% raw %}--><pre class="Agda">
+<pre class="Agda">
+{% raw %}
 <a name="1719" class="Keyword"
       >open</a
       ><a name="1723"
@@ -54,7 +55,7 @@ Obligatory "this is literate code, here are my imports."
       > </a
       ><a name="1754" class="Symbol"
       >(</a
-      ><a name="1755" href="Agda.Primitive.html#626" class="Primitive Operator"
+      ><a name="1755" href="Agda.Primitive.html#657" class="Primitive Operator"
       >_&#8852;_</a
       ><a name="1758" class="Symbol"
       >)</a
@@ -79,19 +80,19 @@ Obligatory "this is literate code, here are my imports."
       > </a
       ><a name="1795" class="Symbol"
       >(</a
-      ><a name="1796" href="https://agda.github.io/agda-stdlib/Data.Vec.html#609" class="Datatype"
+      ><a name="1796" href="https://agda.github.io/agda-stdlib/Data.Vec.html#638" class="Datatype"
       >Vec</a
       ><a name="1799" class="Symbol"
       >;</a
       ><a name="1800"
       > </a
-      ><a name="1801" href="https://agda.github.io/agda-stdlib/Data.Vec.html#649" class="InductiveConstructor"
+      ><a name="1801" href="https://agda.github.io/agda-stdlib/Data.Vec.html#678" class="InductiveConstructor"
       >[]</a
       ><a name="1803" class="Symbol"
       >;</a
       ><a name="1804"
       > </a
-      ><a name="1805" href="https://agda.github.io/agda-stdlib/Data.Vec.html#668" class="InductiveConstructor Operator"
+      ><a name="1805" href="https://agda.github.io/agda-stdlib/Data.Vec.html#697" class="InductiveConstructor Operator"
       >_&#8759;_</a
       ><a name="1808" class="Symbol"
       >)</a
@@ -116,19 +117,19 @@ Obligatory "this is literate code, here are my imports."
       > </a
       ><a name="1845" class="Symbol"
       >(</a
-      ><a name="1846" href="Agda.Builtin.Nat.html#69" class="Datatype"
+      ><a name="1846" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#97" class="Datatype"
       >&#8469;</a
       ><a name="1847" class="Symbol"
       >;</a
       ><a name="1848"
       > </a
-      ><a name="1849" href="Agda.Builtin.Nat.html#87" class="InductiveConstructor"
+      ><a name="1849" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#115" class="InductiveConstructor"
       >zero</a
       ><a name="1853" class="Symbol"
       >;</a
       ><a name="1854"
       > </a
-      ><a name="1855" href="Agda.Builtin.Nat.html#100" class="InductiveConstructor"
+      ><a name="1855" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#128" class="InductiveConstructor"
       >suc</a
       ><a name="1858" class="Symbol"
       >)</a
@@ -233,7 +234,7 @@ Obligatory "this is literate code, here are my imports."
       > </a
       ><a name="2006" class="Symbol"
       >(</a
-      ><a name="2007" href="https://agda.github.io/agda-stdlib/Data.Empty.html#348" class="Function"
+      ><a name="2007" href="https://agda.github.io/agda-stdlib/Data.Empty.html#360" class="Function"
       >&#8869;-elim</a
       ><a name="2013" class="Symbol"
       >)</a
@@ -307,7 +308,8 @@ Obligatory "this is literate code, here are my imports."
       ><a name="2109" href="https://agda.github.io/agda-stdlib/Relation.Binary.PropositionalEquality.html#1" class="Module"
       >Relation.Binary.PropositionalEquality</a
       >
-</pre><!--{% endraw %}-->
+{% endraw %}
+</pre>
 
 So the first question is "What do we want to sort?" The boring answer
 would be "lists of integers", but let's be a little bit more
@@ -326,49 +328,36 @@ y` will tell you whether or not `x ≤ y`, whereas `total` will tell you
 whether it is `x ≤ y` or `y ≤ x`.
 
 <div style="display:none;">
-<!--{% raw %}--><pre class="Agda">
+<pre class="Agda">
+{% raw %}
 <a name="2955" class="Keyword"
       >module</a
       ><a name="2961"
       > </a
-      ><a name="2962" href="2016-03-01-insertion-sort-in-agda.html#1" class="Module"
+      ><a name="2962" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#1" class="Module"
       >2016-03-01-insertion-sort-in-agda</a
       ><a name="2995"
       > </a
       ><a name="2996" class="Keyword"
       >where</a
       >
-</pre><!--{% endraw %}-->
+{% endraw %}
+</pre>
 </div>
 
-<!--{% raw %}--><pre class="Agda">
+<pre class="Agda">
+{% raw %}
 <a name="3034" class="Keyword"
       >module</a
       ><a name="3040"
       > </a
-      ><a name="3041" href="2016-03-01-insertion-sort-in-agda.html#3041" class="Module"
+      ><a name="3041" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3041" class="Module"
       >InsertionSort</a
       ><a name="3054"
       > </a
-      ><a name="3055" class="Symbol"
-      >{</a
-      ><a name="3056" href="2016-03-01-insertion-sort-in-agda.html#3056" class="Bound"
-      >c</a
-      ><a name="3057"
-      > </a
-      ><a name="3058" href="2016-03-01-insertion-sort-in-agda.html#3058" class="Bound"
-      >&#8467;&#8321;</a
-      ><a name="3060"
-      > </a
-      ><a name="3061" href="2016-03-01-insertion-sort-in-agda.html#3061" class="Bound"
-      >&#8467;&#8322;</a
-      ><a name="3063" class="Symbol"
-      >}</a
-      ><a name="3064"
-      > </a
       ><a name="3065" class="Symbol"
       >{{</a
-      ><a name="3067" href="2016-03-01-insertion-sort-in-agda.html#3067" class="Bound"
+      ><a name="3067" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3067" class="Bound"
       >Ord</a
       ><a name="3070"
       > </a
@@ -380,15 +369,15 @@ whether it is `x ≤ y` or `y ≤ x`.
       >DecTotalOrder</a
       ><a name="3086"
       > </a
-      ><a name="3087" href="2016-03-01-insertion-sort-in-agda.html#3056" class="Bound"
+      ><a name="3087" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3056" class="Bound"
       >c</a
       ><a name="3088"
       > </a
-      ><a name="3089" href="2016-03-01-insertion-sort-in-agda.html#3058" class="Bound"
+      ><a name="3089" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3058" class="Bound"
       >&#8467;&#8321;</a
       ><a name="3091"
       > </a
-      ><a name="3092" href="2016-03-01-insertion-sort-in-agda.html#3061" class="Bound"
+      ><a name="3092" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3061" class="Bound"
       >&#8467;&#8322;</a
       ><a name="3094" class="Symbol"
       >}}</a
@@ -449,7 +438,7 @@ whether it is `x ≤ y` or `y ≤ x`.
       ><a name="3185"
       >
   </a
-      ><a name="3188" href="2016-03-01-insertion-sort-in-agda.html#3188" class="Function"
+      ><a name="3188" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3188" class="Function"
       >A</a
       ><a name="3189"
       > </a
@@ -461,10 +450,11 @@ whether it is `x ≤ y` or `y ≤ x`.
       >DecTotalOrder.Carrier</a
       ><a name="3213"
       > </a
-      ><a name="3214" href="2016-03-01-insertion-sort-in-agda.html#3067" class="Bound"
+      ><a name="3214" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3067" class="Bound"
       >Ord</a
       >
-</pre><!--{% endraw %}-->
+{% endraw %}
+</pre>
 
 The type A is already ordered, but it would be incredibly convenient
 if it were also *bounded*---meaning that it has a value which is
@@ -472,12 +462,13 @@ smaller than everything else, and a value which is bigger than
 everything else. Below, we define a wrapper for A which is bounded at
 the top by ⊤ and at the bottom by ⊥:
 
-<!--{% raw %}--><pre class="Agda">
+<pre class="Agda">
+{% raw %}
   <a name="3550" class="Keyword"
       >data</a
       ><a name="3554"
       > </a
-      ><a name="3555" href="2016-03-01-insertion-sort-in-agda.html#3555" class="Datatype"
+      ><a name="3555" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3555" class="Datatype"
       >A&#770;</a
       ><a name="3557"
       > </a
@@ -489,7 +480,7 @@ the top by ⊤ and at the bottom by ⊥:
       >Set</a
       ><a name="3563"
       > </a
-      ><a name="3564" href="2016-03-01-insertion-sort-in-agda.html#3056" class="Bound"
+      ><a name="3564" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3056" class="Bound"
       >c</a
       ><a name="3565"
       > </a
@@ -498,7 +489,7 @@ the top by ⊤ and at the bottom by ⊥:
       ><a name="3571"
       >
     </a
-      ><a name="3576" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      ><a name="3576" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3576" class="InductiveConstructor"
       >&#8868;</a
       ><a name="3577"
       > </a
@@ -506,12 +497,12 @@ the top by ⊤ and at the bottom by ⊥:
       >:</a
       ><a name="3579"
       > </a
-      ><a name="3580" href="2016-03-01-insertion-sort-in-agda.html#3555" class="Datatype"
+      ><a name="3580" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3555" class="Datatype"
       >A&#770;</a
       ><a name="3582"
       >
     </a
-      ><a name="3587" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      ><a name="3587" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3587" class="InductiveConstructor"
       >&#8869;</a
       ><a name="3588"
       > </a
@@ -519,12 +510,12 @@ the top by ⊤ and at the bottom by ⊥:
       >:</a
       ><a name="3590"
       > </a
-      ><a name="3591" href="2016-03-01-insertion-sort-in-agda.html#3555" class="Datatype"
+      ><a name="3591" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3555" class="Datatype"
       >A&#770;</a
       ><a name="3593"
       >
     </a
-      ><a name="3598" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="3598" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10214;_&#10215;</a
       ><a name="3601"
       > </a
@@ -532,7 +523,7 @@ the top by ⊤ and at the bottom by ⊥:
       >:</a
       ><a name="3603"
       > </a
-      ><a name="3604" href="2016-03-01-insertion-sort-in-agda.html#3188" class="Function"
+      ><a name="3604" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3188" class="Function"
       >A</a
       ><a name="3605"
       > </a
@@ -540,16 +531,18 @@ the top by ⊤ and at the bottom by ⊥:
       >&#8594;</a
       ><a name="3607"
       > </a
-      ><a name="3608" href="2016-03-01-insertion-sort-in-agda.html#3555" class="Datatype"
+      ><a name="3608" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3555" class="Datatype"
       >A&#770;</a
       >
-</pre><!--{% endraw %}-->
+{% endraw %}
+</pre>
 
 We still need to encode the fact that ⊥ and ⊤ are in fact smaller and
 bigger than all other values. Below, we defined the order ≲ on bounded
 Â... where we simply state these facts as ⊥≲ and ≲⊤:
 
-<!--{% raw %}--><pre class="Agda">
+<pre class="Agda">
+{% raw %}
   <a name="3834" class="Keyword"
       >infix</a
       ><a name="3839"
@@ -557,14 +550,18 @@ Â... where we simply state these facts as ⊥≲ and ≲⊤:
       ><a name="3840" class="Number"
       >4</a
       ><a name="3841"
-      > _&#8818;_
+      > </a
+      ><a name="3842" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3854" class="Datatype Operator"
+      >_&#8818;_</a
+      ><a name="3845"
+      >
 
   </a
       ><a name="3849" class="Keyword"
       >data</a
       ><a name="3853"
       > </a
-      ><a name="3854" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      ><a name="3854" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3854" class="Datatype Operator"
       >_&#8818;_</a
       ><a name="3857"
       > </a
@@ -576,21 +573,21 @@ Â... where we simply state these facts as ⊥≲ and ≲⊤:
       >Rel</a
       ><a name="3863"
       > </a
-      ><a name="3864" href="2016-03-01-insertion-sort-in-agda.html#3555" class="Datatype"
+      ><a name="3864" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3555" class="Datatype"
       >A&#770;</a
       ><a name="3866"
       > </a
       ><a name="3867" class="Symbol"
       >(</a
-      ><a name="3868" href="2016-03-01-insertion-sort-in-agda.html#3056" class="Bound"
+      ><a name="3868" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3056" class="Bound"
       >c</a
       ><a name="3869"
       > </a
-      ><a name="3870" href="Agda.Primitive.html#626" class="Primitive Operator"
+      ><a name="3870" href="Agda.Primitive.html#657" class="Primitive Operator"
       >&#8852;</a
       ><a name="3871"
       > </a
-      ><a name="3872" href="2016-03-01-insertion-sort-in-agda.html#3061" class="Bound"
+      ><a name="3872" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3061" class="Bound"
       >&#8467;&#8322;</a
       ><a name="3874" class="Symbol"
       >)</a
@@ -601,7 +598,7 @@ Â... where we simply state these facts as ⊥≲ and ≲⊤:
       ><a name="3881"
       >
     </a
-      ><a name="3886" href="2016-03-01-insertion-sort-in-agda.html#3886" class="InductiveConstructor"
+      ><a name="3886" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3886" class="InductiveConstructor"
       >&#8869;&#8818;</a
       ><a name="3888"
       > </a
@@ -609,36 +606,20 @@ Â... where we simply state these facts as ⊥≲ and ≲⊤:
       >:</a
       ><a name="3890"
       > </a
-      ><a name="3891" class="Symbol"
-      >&#8704;</a
-      ><a name="3892"
-      > </a
-      ><a name="3893" class="Symbol"
-      >{</a
-      ><a name="3894" href="2016-03-01-insertion-sort-in-agda.html#3894" class="Bound"
-      >x</a
-      ><a name="3895" class="Symbol"
-      >}</a
-      ><a name="3896"
-      > </a
-      ><a name="3897" class="Symbol"
-      >&#8594;</a
-      ><a name="3898"
-      > </a
-      ><a name="3899" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      ><a name="3899" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3587" class="InductiveConstructor"
       >&#8869;</a
       ><a name="3900"
       > </a
-      ><a name="3901" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      ><a name="3901" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3854" class="Datatype Operator"
       >&#8818;</a
       ><a name="3902"
       > </a
-      ><a name="3903" href="2016-03-01-insertion-sort-in-agda.html#3894" class="Bound"
+      ><a name="3903" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3894" class="Bound"
       >x</a
       ><a name="3904"
       >
     </a
-      ><a name="3909" href="2016-03-01-insertion-sort-in-agda.html#3909" class="InductiveConstructor"
+      ><a name="3909" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3909" class="InductiveConstructor"
       >&#8818;&#8868;</a
       ><a name="3911"
       > </a
@@ -646,36 +627,20 @@ Â... where we simply state these facts as ⊥≲ and ≲⊤:
       >:</a
       ><a name="3913"
       > </a
-      ><a name="3914" class="Symbol"
-      >&#8704;</a
-      ><a name="3915"
-      > </a
-      ><a name="3916" class="Symbol"
-      >{</a
-      ><a name="3917" href="2016-03-01-insertion-sort-in-agda.html#3917" class="Bound"
-      >x</a
-      ><a name="3918" class="Symbol"
-      >}</a
-      ><a name="3919"
-      > </a
-      ><a name="3920" class="Symbol"
-      >&#8594;</a
-      ><a name="3921"
-      > </a
-      ><a name="3922" href="2016-03-01-insertion-sort-in-agda.html#3917" class="Bound"
+      ><a name="3922" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3917" class="Bound"
       >x</a
       ><a name="3923"
       > </a
-      ><a name="3924" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      ><a name="3924" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3854" class="Datatype Operator"
       >&#8818;</a
       ><a name="3925"
       > </a
-      ><a name="3926" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      ><a name="3926" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3576" class="InductiveConstructor"
       >&#8868;</a
       ><a name="3927"
       >
     </a
-      ><a name="3932" href="2016-03-01-insertion-sort-in-agda.html#3932" class="InductiveConstructor"
+      ><a name="3932" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3932" class="InductiveConstructor"
       >&#8804;-lift</a
       ><a name="3938"
       > </a
@@ -683,27 +648,7 @@ Â... where we simply state these facts as ⊥≲ and ≲⊤:
       >:</a
       ><a name="3940"
       > </a
-      ><a name="3941" class="Symbol"
-      >&#8704;</a
-      ><a name="3942"
-      > </a
-      ><a name="3943" class="Symbol"
-      >{</a
-      ><a name="3944" href="2016-03-01-insertion-sort-in-agda.html#3944" class="Bound"
-      >x</a
-      ><a name="3945"
-      > </a
-      ><a name="3946" href="2016-03-01-insertion-sort-in-agda.html#3946" class="Bound"
-      >y</a
-      ><a name="3947" class="Symbol"
-      >}</a
-      ><a name="3948"
-      > </a
-      ><a name="3949" class="Symbol"
-      >&#8594;</a
-      ><a name="3950"
-      > </a
-      ><a name="3951" href="2016-03-01-insertion-sort-in-agda.html#3944" class="Bound"
+      ><a name="3951" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3944" class="Bound"
       >x</a
       ><a name="3952"
       > </a
@@ -711,7 +656,7 @@ Â... where we simply state these facts as ⊥≲ and ≲⊤:
       >&#8804;</a
       ><a name="3954"
       > </a
-      ><a name="3955" href="2016-03-01-insertion-sort-in-agda.html#3946" class="Bound"
+      ><a name="3955" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3946" class="Bound"
       >y</a
       ><a name="3956"
       > </a
@@ -719,42 +664,44 @@ Â... where we simply state these facts as ⊥≲ and ≲⊤:
       >&#8594;</a
       ><a name="3958"
       > </a
-      ><a name="3959" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="3959" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10214;</a
       ><a name="3960"
       > </a
-      ><a name="3961" href="2016-03-01-insertion-sort-in-agda.html#3944" class="Bound"
+      ><a name="3961" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3944" class="Bound"
       >x</a
       ><a name="3962"
       > </a
-      ><a name="3963" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="3963" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10215;</a
       ><a name="3964"
       > </a
-      ><a name="3965" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      ><a name="3965" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3854" class="Datatype Operator"
       >&#8818;</a
       ><a name="3966"
       > </a
-      ><a name="3967" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="3967" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10214;</a
       ><a name="3968"
       > </a
-      ><a name="3969" href="2016-03-01-insertion-sort-in-agda.html#3946" class="Bound"
+      ><a name="3969" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3946" class="Bound"
       >y</a
       ><a name="3970"
       > </a
-      ><a name="3971" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="3971" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10215;</a
       >
-</pre><!--{% endraw %}-->
+{% endraw %}
+</pre>
 
 Note that with the last constructor, we can lift the order of any two
 values in A into ≲. However, if we only have a proof of ≰, then the
 lifting is slightly more involved. Therefore, we define a function
 which does this for us:
 
-<!--{% raw %}--><pre class="Agda">
-  <a name="4230" href="2016-03-01-insertion-sort-in-agda.html#4230" class="Function"
+<pre class="Agda">
+{% raw %}
+  <a name="4230" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4230" class="Function"
       >&#8816;-lift</a
       ><a name="4236"
       > </a
@@ -762,33 +709,13 @@ which does this for us:
       >:</a
       ><a name="4238"
       > </a
-      ><a name="4239" class="Symbol"
-      >&#8704;</a
-      ><a name="4240"
-      > </a
-      ><a name="4241" class="Symbol"
-      >{</a
-      ><a name="4242" href="2016-03-01-insertion-sort-in-agda.html#4242" class="Bound"
-      >x</a
-      ><a name="4243"
-      > </a
-      ><a name="4244" href="2016-03-01-insertion-sort-in-agda.html#4244" class="Bound"
-      >y</a
-      ><a name="4245" class="Symbol"
-      >}</a
-      ><a name="4246"
-      > </a
-      ><a name="4247" class="Symbol"
-      >&#8594;</a
-      ><a name="4248"
-      > </a
       ><a name="4249" href="https://agda.github.io/agda-stdlib/Relation.Nullary.html#414" class="Function Operator"
       >&#172;</a
       ><a name="4250"
       > </a
       ><a name="4251" class="Symbol"
       >(</a
-      ><a name="4252" href="2016-03-01-insertion-sort-in-agda.html#4244" class="Bound"
+      ><a name="4252" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4244" class="Bound"
       >y</a
       ><a name="4253"
       > </a
@@ -796,7 +723,7 @@ which does this for us:
       >&#8804;</a
       ><a name="4255"
       > </a
-      ><a name="4256" href="2016-03-01-insertion-sort-in-agda.html#4242" class="Bound"
+      ><a name="4256" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4242" class="Bound"
       >x</a
       ><a name="4257" class="Symbol"
       >)</a
@@ -806,56 +733,40 @@ which does this for us:
       >&#8594;</a
       ><a name="4260"
       > </a
-      ><a name="4261" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4261" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10214;</a
       ><a name="4262"
       > </a
-      ><a name="4263" href="2016-03-01-insertion-sort-in-agda.html#4242" class="Bound"
+      ><a name="4263" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4242" class="Bound"
       >x</a
       ><a name="4264"
       > </a
-      ><a name="4265" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4265" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10215;</a
       ><a name="4266"
       > </a
-      ><a name="4267" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      ><a name="4267" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3854" class="Datatype Operator"
       >&#8818;</a
       ><a name="4268"
       > </a
-      ><a name="4269" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4269" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10214;</a
       ><a name="4270"
       > </a
-      ><a name="4271" href="2016-03-01-insertion-sort-in-agda.html#4244" class="Bound"
+      ><a name="4271" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4244" class="Bound"
       >y</a
       ><a name="4272"
       > </a
-      ><a name="4273" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4273" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10215;</a
       ><a name="4274"
       >
   </a
-      ><a name="4277" href="2016-03-01-insertion-sort-in-agda.html#4230" class="Function"
+      ><a name="4277" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4230" class="Function"
       >&#8816;-lift</a
       ><a name="4283"
       > </a
-      ><a name="4284" class="Symbol"
-      >{</a
-      ><a name="4285" href="2016-03-01-insertion-sort-in-agda.html#4285" class="Bound"
-      >x</a
-      ><a name="4286" class="Symbol"
-      >}</a
-      ><a name="4287"
-      > </a
-      ><a name="4288" class="Symbol"
-      >{</a
-      ><a name="4289" href="2016-03-01-insertion-sort-in-agda.html#4289" class="Bound"
-      >y</a
-      ><a name="4290" class="Symbol"
-      >}</a
-      ><a name="4291"
-      > </a
-      ><a name="4292" href="2016-03-01-insertion-sort-in-agda.html#4292" class="Bound"
+      ><a name="4292" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4292" class="Bound"
       >y&#8816;x</a
       ><a name="4295"
       > </a
@@ -867,20 +778,20 @@ which does this for us:
       >total</a
       ><a name="4306"
       > </a
-      ><a name="4307" href="2016-03-01-insertion-sort-in-agda.html#4285" class="Bound"
+      ><a name="4307" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4285" class="Bound"
       >x</a
       ><a name="4308"
       > </a
-      ><a name="4309" href="2016-03-01-insertion-sort-in-agda.html#4289" class="Bound"
+      ><a name="4309" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4289" class="Bound"
       >y</a
       ><a name="4310"
       >
   </a
-      ><a name="4313" href="2016-03-01-insertion-sort-in-agda.html#4230" class="Function"
+      ><a name="4313" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4230" class="Function"
       >&#8816;-lift</a
       ><a name="4319"
       > </a
-      ><a name="4320" href="2016-03-01-insertion-sort-in-agda.html#4320" class="Bound"
+      ><a name="4320" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4320" class="Bound"
       >y&#8816;x</a
       ><a name="4323"
       > </a
@@ -892,7 +803,7 @@ which does this for us:
       >inj&#8321;</a
       ><a name="4330"
       > </a
-      ><a name="4331" href="2016-03-01-insertion-sort-in-agda.html#4331" class="Bound"
+      ><a name="4331" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4331" class="Bound"
       >x&#8804;y</a
       ><a name="4334"
       > </a
@@ -900,20 +811,20 @@ which does this for us:
       >=</a
       ><a name="4336"
       > </a
-      ><a name="4337" href="2016-03-01-insertion-sort-in-agda.html#3932" class="InductiveConstructor"
+      ><a name="4337" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3932" class="InductiveConstructor"
       >&#8804;-lift</a
       ><a name="4343"
       > </a
-      ><a name="4344" href="2016-03-01-insertion-sort-in-agda.html#4331" class="Bound"
+      ><a name="4344" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4331" class="Bound"
       >x&#8804;y</a
       ><a name="4347"
       >
   </a
-      ><a name="4350" href="2016-03-01-insertion-sort-in-agda.html#4230" class="Function"
+      ><a name="4350" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4230" class="Function"
       >&#8816;-lift</a
       ><a name="4356"
       > </a
-      ><a name="4357" href="2016-03-01-insertion-sort-in-agda.html#4357" class="Bound"
+      ><a name="4357" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4357" class="Bound"
       >y&#8816;x</a
       ><a name="4360"
       > </a
@@ -925,7 +836,7 @@ which does this for us:
       >inj&#8322;</a
       ><a name="4367"
       > </a
-      ><a name="4368" href="2016-03-01-insertion-sort-in-agda.html#4368" class="Bound"
+      ><a name="4368" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4368" class="Bound"
       >y&#8804;x</a
       ><a name="4371"
       > </a
@@ -933,29 +844,31 @@ which does this for us:
       >=</a
       ><a name="4373"
       > </a
-      ><a name="4374" href="https://agda.github.io/agda-stdlib/Data.Empty.html#348" class="Function"
+      ><a name="4374" href="https://agda.github.io/agda-stdlib/Data.Empty.html#360" class="Function"
       >&#8869;-elim</a
       ><a name="4380"
       > </a
       ><a name="4381" class="Symbol"
       >(</a
-      ><a name="4382" href="2016-03-01-insertion-sort-in-agda.html#4357" class="Bound"
+      ><a name="4382" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4357" class="Bound"
       >y&#8816;x</a
       ><a name="4385"
       > </a
-      ><a name="4386" href="2016-03-01-insertion-sort-in-agda.html#4368" class="Bound"
+      ><a name="4386" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4368" class="Bound"
       >y&#8804;x</a
       ><a name="4389" class="Symbol"
       >)</a
       >
-</pre><!--{% endraw %}-->
+{% endraw %}
+</pre>
 
 Another thing we can do with two values of type Â is compute their
 *minimum*. This is one example where we deviate from *correctness by
 construction*: we define minimum function ⊓, and only then prove its
 correctness:
 
-<!--{% raw %}--><pre class="Agda">
+<pre class="Agda">
+{% raw %}
   <a name="4638" class="Keyword"
       >infix</a
       ><a name="4643"
@@ -963,10 +876,14 @@ correctness:
       ><a name="4644" class="Number"
       >5</a
       ><a name="4645"
-      > _&#8851;_
+      > </a
+      ><a name="4646" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4653" class="Function Operator"
+      >_&#8851;_</a
+      ><a name="4649"
+      >
 
   </a
-      ><a name="4653" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      ><a name="4653" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4653" class="Function Operator"
       >_&#8851;_</a
       ><a name="4656"
       > </a
@@ -974,7 +891,7 @@ correctness:
       >:</a
       ><a name="4658"
       > </a
-      ><a name="4659" href="2016-03-01-insertion-sort-in-agda.html#3555" class="Datatype"
+      ><a name="4659" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3555" class="Datatype"
       >A&#770;</a
       ><a name="4661"
       > </a
@@ -982,7 +899,7 @@ correctness:
       >&#8594;</a
       ><a name="4663"
       > </a
-      ><a name="4664" href="2016-03-01-insertion-sort-in-agda.html#3555" class="Datatype"
+      ><a name="4664" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3555" class="Datatype"
       >A&#770;</a
       ><a name="4666"
       > </a
@@ -990,20 +907,20 @@ correctness:
       >&#8594;</a
       ><a name="4668"
       > </a
-      ><a name="4669" href="2016-03-01-insertion-sort-in-agda.html#3555" class="Datatype"
+      ><a name="4669" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3555" class="Datatype"
       >A&#770;</a
       ><a name="4671"
       >
   </a
-      ><a name="4674" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      ><a name="4674" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3576" class="InductiveConstructor"
       >&#8868;</a
       ><a name="4675"
       > </a
-      ><a name="4676" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      ><a name="4676" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4653" class="Function Operator"
       >&#8851;</a
       ><a name="4677"
       > </a
-      ><a name="4678" href="2016-03-01-insertion-sort-in-agda.html#4678" class="Bound"
+      ><a name="4678" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4678" class="Bound"
       >y</a
       ><a name="4679"
       > </a
@@ -1011,16 +928,16 @@ correctness:
       >=</a
       ><a name="4681"
       > </a
-      ><a name="4682" href="2016-03-01-insertion-sort-in-agda.html#4678" class="Bound"
+      ><a name="4682" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4678" class="Bound"
       >y</a
       ><a name="4683"
       >
   </a
-      ><a name="4686" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      ><a name="4686" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3587" class="InductiveConstructor"
       >&#8869;</a
       ><a name="4687"
       > </a
-      ><a name="4688" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      ><a name="4688" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4653" class="Function Operator"
       >&#8851;</a
       ><a name="4689"
       > </a
@@ -1032,20 +949,20 @@ correctness:
       >=</a
       ><a name="4693"
       > </a
-      ><a name="4694" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      ><a name="4694" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3587" class="InductiveConstructor"
       >&#8869;</a
       ><a name="4695"
       >
   </a
-      ><a name="4698" href="2016-03-01-insertion-sort-in-agda.html#4698" class="Bound"
+      ><a name="4698" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4698" class="Bound"
       >x</a
       ><a name="4699"
       > </a
-      ><a name="4700" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      ><a name="4700" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4653" class="Function Operator"
       >&#8851;</a
       ><a name="4701"
       > </a
-      ><a name="4702" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      ><a name="4702" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3576" class="InductiveConstructor"
       >&#8868;</a
       ><a name="4703"
       > </a
@@ -1053,7 +970,7 @@ correctness:
       >=</a
       ><a name="4705"
       > </a
-      ><a name="4706" href="2016-03-01-insertion-sort-in-agda.html#4698" class="Bound"
+      ><a name="4706" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4698" class="Bound"
       >x</a
       ><a name="4707"
       >
@@ -1062,11 +979,11 @@ correctness:
       >_</a
       ><a name="4711"
       > </a
-      ><a name="4712" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      ><a name="4712" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4653" class="Function Operator"
       >&#8851;</a
       ><a name="4713"
       > </a
-      ><a name="4714" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      ><a name="4714" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3587" class="InductiveConstructor"
       >&#8869;</a
       ><a name="4715"
       > </a
@@ -1074,36 +991,36 @@ correctness:
       >=</a
       ><a name="4717"
       > </a
-      ><a name="4718" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      ><a name="4718" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3587" class="InductiveConstructor"
       >&#8869;</a
       ><a name="4719"
       >
   </a
-      ><a name="4722" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4722" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10214;</a
       ><a name="4723"
       > </a
-      ><a name="4724" href="2016-03-01-insertion-sort-in-agda.html#4724" class="Bound"
+      ><a name="4724" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4724" class="Bound"
       >x</a
       ><a name="4725"
       > </a
-      ><a name="4726" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4726" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10215;</a
       ><a name="4727"
       > </a
-      ><a name="4728" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      ><a name="4728" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4653" class="Function Operator"
       >&#8851;</a
       ><a name="4729"
       > </a
-      ><a name="4730" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4730" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10214;</a
       ><a name="4731"
       > </a
-      ><a name="4732" href="2016-03-01-insertion-sort-in-agda.html#4732" class="Bound"
+      ><a name="4732" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4732" class="Bound"
       >y</a
       ><a name="4733"
       > </a
-      ><a name="4734" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4734" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10215;</a
       ><a name="4735"
       > </a
@@ -1111,7 +1028,7 @@ correctness:
       >with</a
       ><a name="4740"
       > </a
-      ><a name="4741" href="2016-03-01-insertion-sort-in-agda.html#4724" class="Bound"
+      ><a name="4741" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4724" class="Bound"
       >x</a
       ><a name="4742"
       > </a
@@ -1119,36 +1036,36 @@ correctness:
       >&#8804;?</a
       ><a name="4745"
       > </a
-      ><a name="4746" href="2016-03-01-insertion-sort-in-agda.html#4732" class="Bound"
+      ><a name="4746" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4732" class="Bound"
       >y</a
       ><a name="4747"
       >
   </a
-      ><a name="4750" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4750" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10214;</a
       ><a name="4751"
       > </a
-      ><a name="4752" href="2016-03-01-insertion-sort-in-agda.html#4752" class="Bound"
+      ><a name="4752" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4752" class="Bound"
       >x</a
       ><a name="4753"
       > </a
-      ><a name="4754" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4754" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10215;</a
       ><a name="4755"
       > </a
-      ><a name="4756" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      ><a name="4756" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4653" class="Function Operator"
       >&#8851;</a
       ><a name="4757"
       > </a
-      ><a name="4758" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4758" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10214;</a
       ><a name="4759"
       > </a
-      ><a name="4760" href="2016-03-01-insertion-sort-in-agda.html#4760" class="Bound"
+      ><a name="4760" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4760" class="Bound"
       >y</a
       ><a name="4761"
       > </a
-      ><a name="4762" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4762" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10215;</a
       ><a name="4763"
       > </a
@@ -1160,7 +1077,7 @@ correctness:
       >yes</a
       ><a name="4769"
       > </a
-      ><a name="4770" href="2016-03-01-insertion-sort-in-agda.html#4770" class="Bound"
+      ><a name="4770" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4770" class="Bound"
       >x&#8804;y</a
       ><a name="4773"
       > </a
@@ -1168,44 +1085,44 @@ correctness:
       >=</a
       ><a name="4775"
       > </a
-      ><a name="4776" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4776" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10214;</a
       ><a name="4777"
       > </a
-      ><a name="4778" href="2016-03-01-insertion-sort-in-agda.html#4752" class="Bound"
+      ><a name="4778" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4752" class="Bound"
       >x</a
       ><a name="4779"
       > </a
-      ><a name="4780" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4780" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10215;</a
       ><a name="4781"
       >
   </a
-      ><a name="4784" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4784" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10214;</a
       ><a name="4785"
       > </a
-      ><a name="4786" href="2016-03-01-insertion-sort-in-agda.html#4786" class="Bound"
+      ><a name="4786" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4786" class="Bound"
       >x</a
       ><a name="4787"
       > </a
-      ><a name="4788" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4788" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10215;</a
       ><a name="4789"
       > </a
-      ><a name="4790" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      ><a name="4790" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4653" class="Function Operator"
       >&#8851;</a
       ><a name="4791"
       > </a
-      ><a name="4792" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4792" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10214;</a
       ><a name="4793"
       > </a
-      ><a name="4794" href="2016-03-01-insertion-sort-in-agda.html#4794" class="Bound"
+      ><a name="4794" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4794" class="Bound"
       >y</a
       ><a name="4795"
       > </a
-      ><a name="4796" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4796" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10215;</a
       ><a name="4797"
       > </a
@@ -1217,7 +1134,7 @@ correctness:
       >no</a
       ><a name="4802"
       >  </a
-      ><a name="4804" href="2016-03-01-insertion-sort-in-agda.html#4804" class="Bound"
+      ><a name="4804" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4804" class="Bound"
       >x&gt;y</a
       ><a name="4807"
       > </a
@@ -1225,21 +1142,21 @@ correctness:
       >=</a
       ><a name="4809"
       > </a
-      ><a name="4810" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4810" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10214;</a
       ><a name="4811"
       > </a
-      ><a name="4812" href="2016-03-01-insertion-sort-in-agda.html#4794" class="Bound"
+      ><a name="4812" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4794" class="Bound"
       >y</a
       ><a name="4813"
       > </a
-      ><a name="4814" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="4814" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10215;</a
       ><a name="4815"
       >
 
   </a
-      ><a name="4819" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      ><a name="4819" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4819" class="Function"
       >&#8851;-conserves-&#8818;</a
       ><a name="4832"
       > </a
@@ -1247,39 +1164,15 @@ correctness:
       >:</a
       ><a name="4834"
       > </a
-      ><a name="4835" class="Symbol"
-      >&#8704;</a
-      ><a name="4836"
-      > </a
-      ><a name="4837" class="Symbol"
-      >{</a
-      ><a name="4838" href="2016-03-01-insertion-sort-in-agda.html#4838" class="Bound"
-      >x</a
-      ><a name="4839"
-      > </a
-      ><a name="4840" href="2016-03-01-insertion-sort-in-agda.html#4840" class="Bound"
-      >y</a
-      ><a name="4841"
-      > </a
-      ><a name="4842" href="2016-03-01-insertion-sort-in-agda.html#4842" class="Bound"
-      >z</a
-      ><a name="4843" class="Symbol"
-      >}</a
-      ><a name="4844"
-      > </a
-      ><a name="4845" class="Symbol"
-      >&#8594;</a
-      ><a name="4846"
-      > </a
-      ><a name="4847" href="2016-03-01-insertion-sort-in-agda.html#4838" class="Bound"
+      ><a name="4847" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4838" class="Bound"
       >x</a
       ><a name="4848"
       > </a
-      ><a name="4849" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      ><a name="4849" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3854" class="Datatype Operator"
       >&#8818;</a
       ><a name="4850"
       > </a
-      ><a name="4851" href="2016-03-01-insertion-sort-in-agda.html#4840" class="Bound"
+      ><a name="4851" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4840" class="Bound"
       >y</a
       ><a name="4852"
       > </a
@@ -1287,15 +1180,15 @@ correctness:
       >&#8594;</a
       ><a name="4854"
       > </a
-      ><a name="4855" href="2016-03-01-insertion-sort-in-agda.html#4838" class="Bound"
+      ><a name="4855" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4838" class="Bound"
       >x</a
       ><a name="4856"
       > </a
-      ><a name="4857" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      ><a name="4857" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3854" class="Datatype Operator"
       >&#8818;</a
       ><a name="4858"
       > </a
-      ><a name="4859" href="2016-03-01-insertion-sort-in-agda.html#4842" class="Bound"
+      ><a name="4859" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4842" class="Bound"
       >z</a
       ><a name="4860"
       > </a
@@ -1303,46 +1196,30 @@ correctness:
       >&#8594;</a
       ><a name="4862"
       > </a
-      ><a name="4863" href="2016-03-01-insertion-sort-in-agda.html#4838" class="Bound"
+      ><a name="4863" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4838" class="Bound"
       >x</a
       ><a name="4864"
       > </a
-      ><a name="4865" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      ><a name="4865" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3854" class="Datatype Operator"
       >&#8818;</a
       ><a name="4866"
       > </a
-      ><a name="4867" href="2016-03-01-insertion-sort-in-agda.html#4840" class="Bound"
+      ><a name="4867" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4840" class="Bound"
       >y</a
       ><a name="4868"
       > </a
-      ><a name="4869" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      ><a name="4869" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4653" class="Function Operator"
       >&#8851;</a
       ><a name="4870"
       > </a
-      ><a name="4871" href="2016-03-01-insertion-sort-in-agda.html#4842" class="Bound"
+      ><a name="4871" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4842" class="Bound"
       >z</a
       ><a name="4872"
       >
   </a
-      ><a name="4875" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      ><a name="4875" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4819" class="Function"
       >&#8851;-conserves-&#8818;</a
       ><a name="4888"
-      > </a
-      ><a name="4889" class="Symbol"
-      >{</a
-      ><a name="4890" href="2016-03-01-insertion-sort-in-agda.html#4890" class="Bound"
-      >x</a
-      ><a name="4891" class="Symbol"
-      >}</a
-      ><a name="4892"
-      > </a
-      ><a name="4893" class="Symbol"
-      >{</a
-      ><a name="4894" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
-      >&#8868;</a
-      ><a name="4895" class="Symbol"
-      >}</a
-      ><a name="4896"
       > </a
       ><a name="4897" class="Symbol"
       >{_}</a
@@ -1352,7 +1229,7 @@ correctness:
       >_</a
       ><a name="4902"
       > </a
-      ><a name="4903" href="2016-03-01-insertion-sort-in-agda.html#4903" class="Bound"
+      ><a name="4903" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4903" class="Bound"
       >q</a
       ><a name="4904"
       > </a
@@ -1360,36 +1237,20 @@ correctness:
       >=</a
       ><a name="4906"
       > </a
-      ><a name="4907" href="2016-03-01-insertion-sort-in-agda.html#4903" class="Bound"
+      ><a name="4907" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4903" class="Bound"
       >q</a
       ><a name="4908"
       >
   </a
-      ><a name="4911" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      ><a name="4911" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4819" class="Function"
       >&#8851;-conserves-&#8818;</a
       ><a name="4924"
-      > </a
-      ><a name="4925" class="Symbol"
-      >{</a
-      ><a name="4926" href="2016-03-01-insertion-sort-in-agda.html#4926" class="Bound"
-      >x</a
-      ><a name="4927" class="Symbol"
-      >}</a
-      ><a name="4928"
-      > </a
-      ><a name="4929" class="Symbol"
-      >{</a
-      ><a name="4930" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
-      >&#8869;</a
-      ><a name="4931" class="Symbol"
-      >}</a
-      ><a name="4932"
       > </a
       ><a name="4933" class="Symbol"
       >{_}</a
       ><a name="4936"
       > </a
-      ><a name="4937" href="2016-03-01-insertion-sort-in-agda.html#4937" class="Bound"
+      ><a name="4937" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4937" class="Bound"
       >p</a
       ><a name="4938"
       > </a
@@ -1401,48 +1262,16 @@ correctness:
       >=</a
       ><a name="4942"
       > </a
-      ><a name="4943" href="2016-03-01-insertion-sort-in-agda.html#4937" class="Bound"
+      ><a name="4943" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4937" class="Bound"
       >p</a
       ><a name="4944"
       >
   </a
-      ><a name="4947" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      ><a name="4947" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4819" class="Function"
       >&#8851;-conserves-&#8818;</a
       ><a name="4960"
       > </a
-      ><a name="4961" class="Symbol"
-      >{</a
-      ><a name="4962" href="2016-03-01-insertion-sort-in-agda.html#4962" class="Bound"
-      >x</a
-      ><a name="4963" class="Symbol"
-      >}</a
-      ><a name="4964"
-      > </a
-      ><a name="4965" class="Symbol"
-      >{</a
-      ><a name="4966" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
-      >&#10214;</a
-      ><a name="4967"
-      > </a
-      ><a name="4968" class="Symbol"
-      >_</a
-      ><a name="4969"
-      > </a
-      ><a name="4970" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
-      >&#10215;</a
-      ><a name="4971" class="Symbol"
-      >}</a
-      ><a name="4972"
-      > </a
-      ><a name="4973" class="Symbol"
-      >{</a
-      ><a name="4974" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
-      >&#8868;</a
-      ><a name="4975" class="Symbol"
-      >}</a
-      ><a name="4976"
-      > </a
-      ><a name="4977" href="2016-03-01-insertion-sort-in-agda.html#4977" class="Bound"
+      ><a name="4977" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4977" class="Bound"
       >p</a
       ><a name="4978"
       > </a
@@ -1454,52 +1283,20 @@ correctness:
       >=</a
       ><a name="4982"
       > </a
-      ><a name="4983" href="2016-03-01-insertion-sort-in-agda.html#4977" class="Bound"
+      ><a name="4983" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4977" class="Bound"
       >p</a
       ><a name="4984"
       >
   </a
-      ><a name="4987" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      ><a name="4987" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4819" class="Function"
       >&#8851;-conserves-&#8818;</a
       ><a name="5000"
-      > </a
-      ><a name="5001" class="Symbol"
-      >{</a
-      ><a name="5002" href="2016-03-01-insertion-sort-in-agda.html#5002" class="Bound"
-      >x</a
-      ><a name="5003" class="Symbol"
-      >}</a
-      ><a name="5004"
-      > </a
-      ><a name="5005" class="Symbol"
-      >{</a
-      ><a name="5006" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
-      >&#10214;</a
-      ><a name="5007"
-      > </a
-      ><a name="5008" class="Symbol"
-      >_</a
-      ><a name="5009"
-      > </a
-      ><a name="5010" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
-      >&#10215;</a
-      ><a name="5011" class="Symbol"
-      >}</a
-      ><a name="5012"
-      > </a
-      ><a name="5013" class="Symbol"
-      >{</a
-      ><a name="5014" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
-      >&#8869;</a
-      ><a name="5015" class="Symbol"
-      >}</a
-      ><a name="5016"
       > </a
       ><a name="5017" class="Symbol"
       >_</a
       ><a name="5018"
       > </a
-      ><a name="5019" href="2016-03-01-insertion-sort-in-agda.html#5019" class="Bound"
+      ><a name="5019" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#5019" class="Bound"
       >q</a
       ><a name="5020"
       > </a
@@ -1507,60 +1304,20 @@ correctness:
       >=</a
       ><a name="5022"
       > </a
-      ><a name="5023" href="2016-03-01-insertion-sort-in-agda.html#5019" class="Bound"
+      ><a name="5023" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#5019" class="Bound"
       >q</a
       ><a name="5024"
       >
   </a
-      ><a name="5027" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      ><a name="5027" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4819" class="Function"
       >&#8851;-conserves-&#8818;</a
       ><a name="5040"
       > </a
-      ><a name="5041" class="Symbol"
-      >{</a
-      ><a name="5042" href="2016-03-01-insertion-sort-in-agda.html#5042" class="Bound"
-      >x</a
-      ><a name="5043" class="Symbol"
-      >}</a
-      ><a name="5044"
-      > </a
-      ><a name="5045" class="Symbol"
-      >{</a
-      ><a name="5046" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
-      >&#10214;</a
-      ><a name="5047"
-      > </a
-      ><a name="5048" href="2016-03-01-insertion-sort-in-agda.html#5048" class="Bound"
-      >y</a
-      ><a name="5049"
-      > </a
-      ><a name="5050" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
-      >&#10215;</a
-      ><a name="5051" class="Symbol"
-      >}</a
-      ><a name="5052"
-      > </a
-      ><a name="5053" class="Symbol"
-      >{</a
-      ><a name="5054" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
-      >&#10214;</a
-      ><a name="5055"
-      > </a
-      ><a name="5056" href="2016-03-01-insertion-sort-in-agda.html#5056" class="Bound"
-      >z</a
-      ><a name="5057"
-      > </a
-      ><a name="5058" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
-      >&#10215;</a
-      ><a name="5059" class="Symbol"
-      >}</a
-      ><a name="5060"
-      > </a
-      ><a name="5061" href="2016-03-01-insertion-sort-in-agda.html#5061" class="Bound"
+      ><a name="5061" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#5061" class="Bound"
       >p</a
       ><a name="5062"
       > </a
-      ><a name="5063" href="2016-03-01-insertion-sort-in-agda.html#5063" class="Bound"
+      ><a name="5063" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#5063" class="Bound"
       >q</a
       ><a name="5064"
       > </a
@@ -1568,7 +1325,7 @@ correctness:
       >with</a
       ><a name="5069"
       > </a
-      ><a name="5070" href="2016-03-01-insertion-sort-in-agda.html#5048" class="Bound"
+      ><a name="5070" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#5048" class="Bound"
       >y</a
       ><a name="5071"
       > </a
@@ -1576,56 +1333,16 @@ correctness:
       >&#8804;?</a
       ><a name="5074"
       > </a
-      ><a name="5075" href="2016-03-01-insertion-sort-in-agda.html#5056" class="Bound"
+      ><a name="5075" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#5056" class="Bound"
       >z</a
       ><a name="5076"
       >
   </a
-      ><a name="5079" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      ><a name="5079" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4819" class="Function"
       >&#8851;-conserves-&#8818;</a
       ><a name="5092"
       > </a
-      ><a name="5093" class="Symbol"
-      >{</a
-      ><a name="5094" href="2016-03-01-insertion-sort-in-agda.html#5094" class="Bound"
-      >x</a
-      ><a name="5095" class="Symbol"
-      >}</a
-      ><a name="5096"
-      > </a
-      ><a name="5097" class="Symbol"
-      >{</a
-      ><a name="5098" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
-      >&#10214;</a
-      ><a name="5099"
-      > </a
-      ><a name="5100" href="2016-03-01-insertion-sort-in-agda.html#5100" class="Bound"
-      >y</a
-      ><a name="5101"
-      > </a
-      ><a name="5102" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
-      >&#10215;</a
-      ><a name="5103" class="Symbol"
-      >}</a
-      ><a name="5104"
-      > </a
-      ><a name="5105" class="Symbol"
-      >{</a
-      ><a name="5106" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
-      >&#10214;</a
-      ><a name="5107"
-      > </a
-      ><a name="5108" href="2016-03-01-insertion-sort-in-agda.html#5108" class="Bound"
-      >z</a
-      ><a name="5109"
-      > </a
-      ><a name="5110" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
-      >&#10215;</a
-      ><a name="5111" class="Symbol"
-      >}</a
-      ><a name="5112"
-      > </a
-      ><a name="5113" href="2016-03-01-insertion-sort-in-agda.html#5113" class="Bound"
+      ><a name="5113" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#5113" class="Bound"
       >p</a
       ><a name="5114"
       > </a
@@ -1641,7 +1358,7 @@ correctness:
       >yes</a
       ><a name="5122"
       > </a
-      ><a name="5123" href="2016-03-01-insertion-sort-in-agda.html#5123" class="Bound"
+      ><a name="5123" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#5123" class="Bound"
       >y&#8804;z</a
       ><a name="5126"
       > </a
@@ -1649,60 +1366,20 @@ correctness:
       >=</a
       ><a name="5128"
       > </a
-      ><a name="5129" href="2016-03-01-insertion-sort-in-agda.html#5113" class="Bound"
+      ><a name="5129" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#5113" class="Bound"
       >p</a
       ><a name="5130"
       >
   </a
-      ><a name="5133" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      ><a name="5133" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4819" class="Function"
       >&#8851;-conserves-&#8818;</a
       ><a name="5146"
-      > </a
-      ><a name="5147" class="Symbol"
-      >{</a
-      ><a name="5148" href="2016-03-01-insertion-sort-in-agda.html#5148" class="Bound"
-      >x</a
-      ><a name="5149" class="Symbol"
-      >}</a
-      ><a name="5150"
-      > </a
-      ><a name="5151" class="Symbol"
-      >{</a
-      ><a name="5152" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
-      >&#10214;</a
-      ><a name="5153"
-      > </a
-      ><a name="5154" href="2016-03-01-insertion-sort-in-agda.html#5154" class="Bound"
-      >y</a
-      ><a name="5155"
-      > </a
-      ><a name="5156" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
-      >&#10215;</a
-      ><a name="5157" class="Symbol"
-      >}</a
-      ><a name="5158"
-      > </a
-      ><a name="5159" class="Symbol"
-      >{</a
-      ><a name="5160" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
-      >&#10214;</a
-      ><a name="5161"
-      > </a
-      ><a name="5162" href="2016-03-01-insertion-sort-in-agda.html#5162" class="Bound"
-      >z</a
-      ><a name="5163"
-      > </a
-      ><a name="5164" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
-      >&#10215;</a
-      ><a name="5165" class="Symbol"
-      >}</a
-      ><a name="5166"
       > </a
       ><a name="5167" class="Symbol"
       >_</a
       ><a name="5168"
       > </a
-      ><a name="5169" href="2016-03-01-insertion-sort-in-agda.html#5169" class="Bound"
+      ><a name="5169" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#5169" class="Bound"
       >q</a
       ><a name="5170"
       > </a
@@ -1714,7 +1391,7 @@ correctness:
       >no</a
       ><a name="5175"
       >  </a
-      ><a name="5177" href="2016-03-01-insertion-sort-in-agda.html#5177" class="Bound"
+      ><a name="5177" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#5177" class="Bound"
       >y&#8816;z</a
       ><a name="5180"
       > </a
@@ -1722,10 +1399,11 @@ correctness:
       >=</a
       ><a name="5182"
       > </a
-      ><a name="5183" href="2016-03-01-insertion-sort-in-agda.html#5169" class="Bound"
+      ><a name="5183" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#5169" class="Bound"
       >q</a
       >
-</pre><!--{% endraw %}-->
+{% endraw %}
+</pre>
 
 Insertion sort has rather complicated invariants. If we were implementing
 mergesort, that we could define ordered lists as lists in which every
@@ -1765,12 +1443,13 @@ There are three ways to construct an `OVec`:
   - and finally, we can forgo all sorting, and just add some unsorted
     elements to the front of the list.
 
-<!--{% raw %}--><pre class="Agda">
+<pre class="Agda">
+{% raw %}
   <a name="7276" class="Keyword"
       >data</a
       ><a name="7280"
       > </a
-      ><a name="7281" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      ><a name="7281" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7281" class="Datatype"
       >OVec</a
       ><a name="7285"
       > </a
@@ -1780,7 +1459,7 @@ There are three ways to construct an `OVec`:
       > </a
       ><a name="7288" class="Symbol"
       >(</a
-      ><a name="7289" href="2016-03-01-insertion-sort-in-agda.html#7289" class="Bound"
+      ><a name="7289" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7289" class="Bound"
       >l</a
       ><a name="7290"
       > </a
@@ -1788,7 +1467,7 @@ There are three ways to construct an `OVec`:
       >:</a
       ><a name="7292"
       > </a
-      ><a name="7293" href="2016-03-01-insertion-sort-in-agda.html#3555" class="Datatype"
+      ><a name="7293" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3555" class="Datatype"
       >A&#770;</a
       ><a name="7295" class="Symbol"
       >)</a
@@ -1796,11 +1475,11 @@ There are three ways to construct an `OVec`:
       > </a
       ><a name="7297" class="Symbol"
       >(</a
-      ><a name="7298" href="2016-03-01-insertion-sort-in-agda.html#7298" class="Bound"
+      ><a name="7298" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7298" class="Bound"
       >n</a
       ><a name="7299"
       > </a
-      ><a name="7300" href="2016-03-01-insertion-sort-in-agda.html#7300" class="Bound"
+      ><a name="7300" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7300" class="Bound"
       >k</a
       ><a name="7301"
       > </a
@@ -1808,7 +1487,7 @@ There are three ways to construct an `OVec`:
       >:</a
       ><a name="7303"
       > </a
-      ><a name="7304" href="Agda.Builtin.Nat.html#69" class="Datatype"
+      ><a name="7304" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#97" class="Datatype"
       >&#8469;</a
       ><a name="7305" class="Symbol"
       >)</a
@@ -1824,15 +1503,15 @@ There are three ways to construct an `OVec`:
       > </a
       ><a name="7313" class="Symbol"
       >(</a
-      ><a name="7314" href="2016-03-01-insertion-sort-in-agda.html#3056" class="Bound"
+      ><a name="7314" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3056" class="Bound"
       >c</a
       ><a name="7315"
       > </a
-      ><a name="7316" href="Agda.Primitive.html#626" class="Primitive Operator"
+      ><a name="7316" href="Agda.Primitive.html#657" class="Primitive Operator"
       >&#8852;</a
       ><a name="7317"
       > </a
-      ><a name="7318" href="2016-03-01-insertion-sort-in-agda.html#3061" class="Bound"
+      ><a name="7318" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3061" class="Bound"
       >&#8467;&#8322;</a
       ><a name="7320" class="Symbol"
       >)</a
@@ -1844,7 +1523,7 @@ There are three ways to construct an `OVec`:
       >
 
     </a
-      ><a name="7333" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      ><a name="7333" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7333" class="InductiveConstructor"
       >[]</a
       ><a name="7335"
       >     </a
@@ -1852,11 +1531,11 @@ There are three ways to construct an `OVec`:
       >:</a
       ><a name="7341"
       > </a
-      ><a name="7342" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      ><a name="7342" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7281" class="Datatype"
       >OVec</a
       ><a name="7346"
       > </a
-      ><a name="7347" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      ><a name="7347" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3576" class="InductiveConstructor"
       >&#8868;</a
       ><a name="7348"
       > </a
@@ -1870,7 +1549,7 @@ There are three ways to construct an `OVec`:
       >
 
     </a
-      ><a name="7358" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="7358" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >_&#8759;_by_</a
       ><a name="7364"
       > </a
@@ -1878,25 +1557,9 @@ There are three ways to construct an `OVec`:
       >:</a
       ><a name="7366"
       > </a
-      ><a name="7367" class="Symbol"
-      >&#8704;</a
-      ><a name="7368"
-      > </a
-      ><a name="7369" class="Symbol"
-      >{</a
-      ><a name="7370" href="2016-03-01-insertion-sort-in-agda.html#7370" class="Bound"
-      >l</a
-      ><a name="7371"
-      > </a
-      ><a name="7372" href="2016-03-01-insertion-sort-in-agda.html#7372" class="Bound"
-      >n</a
-      ><a name="7373" class="Symbol"
-      >}</a
-      ><a name="7374"
-      > </a
       ><a name="7375" class="Symbol"
       >(</a
-      ><a name="7376" href="2016-03-01-insertion-sort-in-agda.html#7376" class="Bound"
+      ><a name="7376" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7376" class="Bound"
       >x</a
       ><a name="7377"
       > </a
@@ -1904,7 +1567,7 @@ There are three ways to construct an `OVec`:
       >:</a
       ><a name="7379"
       > </a
-      ><a name="7380" href="2016-03-01-insertion-sort-in-agda.html#3188" class="Function"
+      ><a name="7380" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3188" class="Function"
       >A</a
       ><a name="7381" class="Symbol"
       >)</a
@@ -1912,7 +1575,7 @@ There are three ways to construct an `OVec`:
       > </a
       ><a name="7383" class="Symbol"
       >(</a
-      ><a name="7384" href="2016-03-01-insertion-sort-in-agda.html#7384" class="Bound"
+      ><a name="7384" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7384" class="Bound"
       >xs</a
       ><a name="7386"
       > </a
@@ -1920,15 +1583,15 @@ There are three ways to construct an `OVec`:
       >:</a
       ><a name="7388"
       > </a
-      ><a name="7389" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      ><a name="7389" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7281" class="Datatype"
       >OVec</a
       ><a name="7393"
       > </a
-      ><a name="7394" href="2016-03-01-insertion-sort-in-agda.html#7370" class="Bound"
+      ><a name="7394" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7370" class="Bound"
       >l</a
       ><a name="7395"
       > </a
-      ><a name="7396" href="2016-03-01-insertion-sort-in-agda.html#7372" class="Bound"
+      ><a name="7396" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7372" class="Bound"
       >n</a
       ><a name="7397"
       > </a
@@ -1943,23 +1606,23 @@ There are three ways to construct an `OVec`:
       >&#8594;</a
       ><a name="7413"
       > </a
-      ><a name="7414" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="7414" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10214;</a
       ><a name="7415"
       > </a
-      ><a name="7416" href="2016-03-01-insertion-sort-in-agda.html#7376" class="Bound"
+      ><a name="7416" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7376" class="Bound"
       >x</a
       ><a name="7417"
       > </a
-      ><a name="7418" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="7418" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10215;</a
       ><a name="7419"
       > </a
-      ><a name="7420" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      ><a name="7420" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3854" class="Datatype Operator"
       >&#8818;</a
       ><a name="7421"
       > </a
-      ><a name="7422" href="2016-03-01-insertion-sort-in-agda.html#7370" class="Bound"
+      ><a name="7422" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7370" class="Bound"
       >l</a
       ><a name="7423"
       > </a
@@ -1967,29 +1630,29 @@ There are three ways to construct an `OVec`:
       >&#8594;</a
       ><a name="7425"
       > </a
-      ><a name="7426" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      ><a name="7426" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7281" class="Datatype"
       >OVec</a
       ><a name="7430"
       > </a
-      ><a name="7431" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="7431" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10214;</a
       ><a name="7432"
       > </a
-      ><a name="7433" href="2016-03-01-insertion-sort-in-agda.html#7376" class="Bound"
+      ><a name="7433" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7376" class="Bound"
       >x</a
       ><a name="7434"
       > </a
-      ><a name="7435" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="7435" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10215;</a
       ><a name="7436"
       > </a
       ><a name="7437" class="Symbol"
       >(</a
-      ><a name="7438" href="Agda.Builtin.Nat.html#100" class="InductiveConstructor"
+      ><a name="7438" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#128" class="InductiveConstructor"
       >suc</a
       ><a name="7441"
       > </a
-      ><a name="7442" href="2016-03-01-insertion-sort-in-agda.html#7372" class="Bound"
+      ><a name="7442" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7372" class="Bound"
       >n</a
       ><a name="7443" class="Symbol"
       >)</a
@@ -2001,7 +1664,7 @@ There are three ways to construct an `OVec`:
       >
 
     </a
-      ><a name="7452" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      ><a name="7452" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7452" class="InductiveConstructor Operator"
       >_&#8759;_</a
       ><a name="7455"
       >    </a
@@ -2009,29 +1672,9 @@ There are three ways to construct an `OVec`:
       >:</a
       ><a name="7460"
       > </a
-      ><a name="7461" class="Symbol"
-      >&#8704;</a
-      ><a name="7462"
-      > </a
-      ><a name="7463" class="Symbol"
-      >{</a
-      ><a name="7464" href="2016-03-01-insertion-sort-in-agda.html#7464" class="Bound"
-      >l</a
-      ><a name="7465"
-      > </a
-      ><a name="7466" href="2016-03-01-insertion-sort-in-agda.html#7466" class="Bound"
-      >n</a
-      ><a name="7467"
-      > </a
-      ><a name="7468" href="2016-03-01-insertion-sort-in-agda.html#7468" class="Bound"
-      >k</a
-      ><a name="7469" class="Symbol"
-      >}</a
-      ><a name="7470"
-      > </a
       ><a name="7471" class="Symbol"
       >(</a
-      ><a name="7472" href="2016-03-01-insertion-sort-in-agda.html#7472" class="Bound"
+      ><a name="7472" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7472" class="Bound"
       >x</a
       ><a name="7473"
       > </a
@@ -2039,7 +1682,7 @@ There are three ways to construct an `OVec`:
       >:</a
       ><a name="7475"
       > </a
-      ><a name="7476" href="2016-03-01-insertion-sort-in-agda.html#3188" class="Function"
+      ><a name="7476" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3188" class="Function"
       >A</a
       ><a name="7477" class="Symbol"
       >)</a
@@ -2047,7 +1690,7 @@ There are three ways to construct an `OVec`:
       > </a
       ><a name="7479" class="Symbol"
       >(</a
-      ><a name="7480" href="2016-03-01-insertion-sort-in-agda.html#7480" class="Bound"
+      ><a name="7480" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7480" class="Bound"
       >xs</a
       ><a name="7482"
       > </a
@@ -2055,19 +1698,19 @@ There are three ways to construct an `OVec`:
       >:</a
       ><a name="7484"
       > </a
-      ><a name="7485" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      ><a name="7485" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7281" class="Datatype"
       >OVec</a
       ><a name="7489"
       > </a
-      ><a name="7490" href="2016-03-01-insertion-sort-in-agda.html#7464" class="Bound"
+      ><a name="7490" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7464" class="Bound"
       >l</a
       ><a name="7491"
       > </a
-      ><a name="7492" href="2016-03-01-insertion-sort-in-agda.html#7466" class="Bound"
+      ><a name="7492" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7466" class="Bound"
       >n</a
       ><a name="7493"
       > </a
-      ><a name="7494" href="2016-03-01-insertion-sort-in-agda.html#7468" class="Bound"
+      ><a name="7494" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7468" class="Bound"
       >k</a
       ><a name="7495" class="Symbol"
       >)</a
@@ -2078,21 +1721,21 @@ There are three ways to construct an `OVec`:
       >&#8594;</a
       ><a name="7509"
       > </a
-      ><a name="7510" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      ><a name="7510" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7281" class="Datatype"
       >OVec</a
       ><a name="7514"
       > </a
-      ><a name="7515" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      ><a name="7515" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3587" class="InductiveConstructor"
       >&#8869;</a
       ><a name="7516"
       > </a
       ><a name="7517" class="Symbol"
       >(</a
-      ><a name="7518" href="Agda.Builtin.Nat.html#100" class="InductiveConstructor"
+      ><a name="7518" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#128" class="InductiveConstructor"
       >suc</a
       ><a name="7521"
       > </a
-      ><a name="7522" href="2016-03-01-insertion-sort-in-agda.html#7466" class="Bound"
+      ><a name="7522" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7466" class="Bound"
       >n</a
       ><a name="7523" class="Symbol"
       >)</a
@@ -2100,16 +1743,17 @@ There are three ways to construct an `OVec`:
       > </a
       ><a name="7525" class="Symbol"
       >(</a
-      ><a name="7526" href="Agda.Builtin.Nat.html#100" class="InductiveConstructor"
+      ><a name="7526" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#128" class="InductiveConstructor"
       >suc</a
       ><a name="7529"
       > </a
-      ><a name="7530" href="2016-03-01-insertion-sort-in-agda.html#7468" class="Bound"
+      ><a name="7530" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7468" class="Bound"
       >k</a
       ><a name="7531" class="Symbol"
       >)</a
       >
-</pre><!--{% endraw %}-->
+{% endraw %}
+</pre>
 
 If we have a regular vector---a list which tracks its length---we can
 turn it into a k-ordered vector together with some lower bound. (This
@@ -2118,8 +1762,9 @@ another existential with the lists length in it.) Our naive process of
 just inserting all elements in the vector as *unsorted* means that the
 lower bound will be either ⊤ or ⊥. And we can show that!
 
-<!--{% raw %}--><pre class="Agda">
-  <a name="7971" href="2016-03-01-insertion-sort-in-agda.html#7971" class="Function"
+<pre class="Agda">
+{% raw %}
+  <a name="7971" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7971" class="Function"
       >fromVec</a
       ><a name="7978"
       > </a
@@ -2127,31 +1772,15 @@ lower bound will be either ⊤ or ⊥. And we can show that!
       >:</a
       ><a name="7980"
       > </a
-      ><a name="7981" class="Symbol"
-      >&#8704;</a
-      ><a name="7982"
-      > </a
-      ><a name="7983" class="Symbol"
-      >{</a
-      ><a name="7984" href="2016-03-01-insertion-sort-in-agda.html#7984" class="Bound"
-      >n</a
-      ><a name="7985" class="Symbol"
-      >}</a
-      ><a name="7986"
-      > </a
-      ><a name="7987" class="Symbol"
-      >&#8594;</a
-      ><a name="7988"
-      > </a
-      ><a name="7989" href="https://agda.github.io/agda-stdlib/Data.Vec.html#609" class="Datatype"
+      ><a name="7989" href="https://agda.github.io/agda-stdlib/Data.Vec.html#638" class="Datatype"
       >Vec</a
       ><a name="7992"
       > </a
-      ><a name="7993" href="2016-03-01-insertion-sort-in-agda.html#3188" class="Function"
+      ><a name="7993" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3188" class="Function"
       >A</a
       ><a name="7994"
       > </a
-      ><a name="7995" href="2016-03-01-insertion-sort-in-agda.html#7984" class="Bound"
+      ><a name="7995" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7984" class="Bound"
       >n</a
       ><a name="7996"
       > </a
@@ -2167,7 +1796,7 @@ lower bound will be either ⊤ or ⊥. And we can show that!
       >(&#955;</a
       ><a name="8003"
       > </a
-      ><a name="8004" href="2016-03-01-insertion-sort-in-agda.html#8004" class="Bound"
+      ><a name="8004" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8004" class="Bound"
       >l</a
       ><a name="8005"
       > </a
@@ -2175,30 +1804,30 @@ lower bound will be either ⊤ or ⊥. And we can show that!
       >&#8594;</a
       ><a name="8007"
       > </a
-      ><a name="8008" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      ><a name="8008" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7281" class="Datatype"
       >OVec</a
       ><a name="8012"
       > </a
-      ><a name="8013" href="2016-03-01-insertion-sort-in-agda.html#8004" class="Bound"
+      ><a name="8013" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8004" class="Bound"
       >l</a
       ><a name="8014"
       > </a
-      ><a name="8015" href="2016-03-01-insertion-sort-in-agda.html#7984" class="Bound"
+      ><a name="8015" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7984" class="Bound"
       >n</a
       ><a name="8016"
       > </a
-      ><a name="8017" href="2016-03-01-insertion-sort-in-agda.html#7984" class="Bound"
+      ><a name="8017" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7984" class="Bound"
       >n</a
       ><a name="8018" class="Symbol"
       >)</a
       ><a name="8019"
       >
   </a
-      ><a name="8022" href="2016-03-01-insertion-sort-in-agda.html#7971" class="Function"
+      ><a name="8022" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7971" class="Function"
       >fromVec</a
       ><a name="8029"
       > </a
-      ><a name="8030" href="https://agda.github.io/agda-stdlib/Data.Vec.html#649" class="InductiveConstructor"
+      ><a name="8030" href="https://agda.github.io/agda-stdlib/Data.Vec.html#678" class="InductiveConstructor"
       >[]</a
       ><a name="8032"
       > </a
@@ -2206,7 +1835,7 @@ lower bound will be either ⊤ or ⊥. And we can show that!
       >=</a
       ><a name="8034"
       > </a
-      ><a name="8035" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      ><a name="8035" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3576" class="InductiveConstructor"
       >&#8868;</a
       ><a name="8036"
       > </a
@@ -2214,26 +1843,26 @@ lower bound will be either ⊤ or ⊥. And we can show that!
       >,</a
       ><a name="8038"
       > </a
-      ><a name="8039" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      ><a name="8039" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7333" class="InductiveConstructor"
       >[]</a
       ><a name="8041"
       >
   </a
-      ><a name="8044" href="2016-03-01-insertion-sort-in-agda.html#7971" class="Function"
+      ><a name="8044" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7971" class="Function"
       >fromVec</a
       ><a name="8051"
       > </a
       ><a name="8052" class="Symbol"
       >(</a
-      ><a name="8053" href="2016-03-01-insertion-sort-in-agda.html#8053" class="Bound"
+      ><a name="8053" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8053" class="Bound"
       >x</a
       ><a name="8054"
       > </a
-      ><a name="8055" href="https://agda.github.io/agda-stdlib/Data.Vec.html#668" class="InductiveConstructor Operator"
+      ><a name="8055" href="https://agda.github.io/agda-stdlib/Data.Vec.html#697" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="8056"
       > </a
-      ><a name="8057" href="2016-03-01-insertion-sort-in-agda.html#8057" class="Bound"
+      ><a name="8057" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8057" class="Bound"
       >xs</a
       ><a name="8059" class="Symbol"
       >)</a
@@ -2243,7 +1872,7 @@ lower bound will be either ⊤ or ⊥. And we can show that!
       >=</a
       ><a name="8062"
       > </a
-      ><a name="8063" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      ><a name="8063" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3587" class="InductiveConstructor"
       >&#8869;</a
       ><a name="8064"
       > </a
@@ -2251,11 +1880,11 @@ lower bound will be either ⊤ or ⊥. And we can show that!
       >,</a
       ><a name="8066"
       > </a
-      ><a name="8067" href="2016-03-01-insertion-sort-in-agda.html#8053" class="Bound"
+      ><a name="8067" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8053" class="Bound"
       >x</a
       ><a name="8068"
       > </a
-      ><a name="8069" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      ><a name="8069" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7452" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="8070"
       > </a
@@ -2265,11 +1894,11 @@ lower bound will be either ⊤ or ⊥. And we can show that!
       > </a
       ><a name="8077" class="Symbol"
       >(</a
-      ><a name="8078" href="2016-03-01-insertion-sort-in-agda.html#7971" class="Function"
+      ><a name="8078" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7971" class="Function"
       >fromVec</a
       ><a name="8085"
       > </a
-      ><a name="8086" href="2016-03-01-insertion-sort-in-agda.html#8057" class="Bound"
+      ><a name="8086" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8057" class="Bound"
       >xs</a
       ><a name="8088" class="Symbol"
       >)</a
@@ -2277,7 +1906,7 @@ lower bound will be either ⊤ or ⊥. And we can show that!
       >
 
   </a
-      ><a name="8093" href="2016-03-01-insertion-sort-in-agda.html#8093" class="Function"
+      ><a name="8093" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8093" class="Function"
       >fromVec-&#8868;or&#8869;</a
       ><a name="8105"
       > </a
@@ -2285,52 +1914,11 @@ lower bound will be either ⊤ or ⊥. And we can show that!
       >:</a
       ><a name="8107"
       > </a
-      ><a name="8108" class="Symbol"
-      >&#8704;</a
-      ><a name="8109"
-      > </a
-      ><a name="8110" class="Symbol"
-      >{</a
-      ><a name="8111" href="2016-03-01-insertion-sort-in-agda.html#8111" class="Bound"
-      >n</a
-      ><a name="8112" class="Symbol"
-      >}</a
-      ><a name="8113"
-      > </a
-      ><a name="8114" class="Symbol"
-      >{</a
-      ><a name="8115" href="2016-03-01-insertion-sort-in-agda.html#8115" class="Bound"
-      >xs</a
-      ><a name="8117"
-      > </a
-      ><a name="8118" class="Symbol"
-      >:</a
-      ><a name="8119"
-      > </a
-      ><a name="8120" href="https://agda.github.io/agda-stdlib/Data.Vec.html#609" class="Datatype"
-      >Vec</a
-      ><a name="8123"
-      > </a
-      ><a name="8124" href="2016-03-01-insertion-sort-in-agda.html#3188" class="Function"
-      >A</a
-      ><a name="8125"
-      > </a
-      ><a name="8126" href="2016-03-01-insertion-sort-in-agda.html#8111" class="Bound"
-      >n</a
-      ><a name="8127" class="Symbol"
-      >}</a
-      ><a name="8128"
-      >
-    </a
-      ><a name="8133" class="Symbol"
-      >&#8594;</a
-      ><a name="8134"
-      > </a
       ><a name="8135" class="Keyword"
       >let</a
       ><a name="8138"
       > </a
-      ><a name="8139" href="2016-03-01-insertion-sort-in-agda.html#8139" class="Bound"
+      ><a name="8139" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8139" class="Bound"
       >l</a
       ><a name="8140"
       > </a
@@ -2344,11 +1932,11 @@ lower bound will be either ⊤ or ⊥. And we can show that!
       > </a
       ><a name="8149" class="Symbol"
       >(</a
-      ><a name="8150" href="2016-03-01-insertion-sort-in-agda.html#7971" class="Function"
+      ><a name="8150" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7971" class="Function"
       >fromVec</a
       ><a name="8157"
       > </a
-      ><a name="8158" href="2016-03-01-insertion-sort-in-agda.html#8115" class="Bound"
+      ><a name="8158" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8115" class="Bound"
       >xs</a
       ><a name="8160" class="Symbol"
       >)</a
@@ -2358,15 +1946,15 @@ lower bound will be either ⊤ or ⊥. And we can show that!
       >in</a
       ><a name="8164"
       > </a
-      ><a name="8165" href="2016-03-01-insertion-sort-in-agda.html#8139" class="Bound"
+      ><a name="8165" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8139" class="Bound"
       >l</a
       ><a name="8166"
       > </a
-      ><a name="8167" href="Agda.Builtin.Equality.html#55" class="Datatype Operator"
+      ><a name="8167" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Equality.html#83" class="Datatype Operator"
       >&#8801;</a
       ><a name="8168"
       > </a
-      ><a name="8169" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      ><a name="8169" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3576" class="InductiveConstructor"
       >&#8868;</a
       ><a name="8170"
       > </a
@@ -2374,41 +1962,23 @@ lower bound will be either ⊤ or ⊥. And we can show that!
       >&#8846;</a
       ><a name="8172"
       > </a
-      ><a name="8173" href="2016-03-01-insertion-sort-in-agda.html#8139" class="Bound"
+      ><a name="8173" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8139" class="Bound"
       >l</a
       ><a name="8174"
       > </a
-      ><a name="8175" href="Agda.Builtin.Equality.html#55" class="Datatype Operator"
+      ><a name="8175" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Equality.html#83" class="Datatype Operator"
       >&#8801;</a
       ><a name="8176"
       > </a
-      ><a name="8177" href="2016-03-01-insertion-sort-in-agda.html#3587" class="InductiveConstructor"
+      ><a name="8177" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3587" class="InductiveConstructor"
       >&#8869;</a
       ><a name="8178"
       >
   </a
-      ><a name="8181" href="2016-03-01-insertion-sort-in-agda.html#8093" class="Function"
+      ><a name="8181" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8093" class="Function"
       >fromVec-&#8868;or&#8869;</a
       ><a name="8193"
       > </a
-      ><a name="8194" class="Symbol"
-      >{</a
-      ><a name="8195" class="DottedPattern Symbol"
-      >.</a
-      ><a name="8196" class="DottedPattern Number"
-      >0</a
-      ><a name="8197" class="Symbol"
-      >}</a
-      ><a name="8198"
-      >       </a
-      ><a name="8205" class="Symbol"
-      >{</a
-      ><a name="8206" href="https://agda.github.io/agda-stdlib/Data.Vec.html#649" class="InductiveConstructor"
-      >[]</a
-      ><a name="8208" class="Symbol"
-      >}</a
-      ><a name="8209"
-      >     </a
       ><a name="8214" class="Symbol"
       >=</a
       ><a name="8215"
@@ -2417,44 +1987,14 @@ lower bound will be either ⊤ or ⊥. And we can show that!
       >inj&#8321;</a
       ><a name="8220"
       > </a
-      ><a name="8221" href="Agda.Builtin.Equality.html#112" class="InductiveConstructor"
+      ><a name="8221" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Equality.html#140" class="InductiveConstructor"
       >refl</a
       ><a name="8225"
       >
   </a
-      ><a name="8228" href="2016-03-01-insertion-sort-in-agda.html#8093" class="Function"
+      ><a name="8228" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8093" class="Function"
       >fromVec-&#8868;or&#8869;</a
       ><a name="8240"
-      > </a
-      ><a name="8241" class="Symbol"
-      >{</a
-      ><a name="8242" class="DottedPattern Symbol"
-      >.(</a
-      ><a name="8244" href="Agda.Builtin.Nat.html#100" class="DottedPattern InductiveConstructor"
-      >suc</a
-      ><a name="8247"
-      > </a
-      ><a name="8248" class="DottedPattern Symbol"
-      >_)</a
-      ><a name="8250" class="Symbol"
-      >}</a
-      ><a name="8251"
-      > </a
-      ><a name="8252" class="Symbol"
-      >{</a
-      ><a name="8253" href="2016-03-01-insertion-sort-in-agda.html#8253" class="Bound"
-      >x</a
-      ><a name="8254"
-      > </a
-      ><a name="8255" href="https://agda.github.io/agda-stdlib/Data.Vec.html#668" class="InductiveConstructor Operator"
-      >&#8759;</a
-      ><a name="8256"
-      > </a
-      ><a name="8257" href="2016-03-01-insertion-sort-in-agda.html#8257" class="Bound"
-      >xs</a
-      ><a name="8259" class="Symbol"
-      >}</a
-      ><a name="8260"
       > </a
       ><a name="8261" class="Symbol"
       >=</a
@@ -2464,16 +2004,18 @@ lower bound will be either ⊤ or ⊥. And we can show that!
       >inj&#8322;</a
       ><a name="8267"
       > </a
-      ><a name="8268" href="Agda.Builtin.Equality.html#112" class="InductiveConstructor"
+      ><a name="8268" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Equality.html#140" class="InductiveConstructor"
       >refl</a
       >
-</pre><!--{% endraw %}-->
+{% endraw %}
+</pre>
 
 And obviously, we can also turn any k-ordered vector into a regular
 vector simply by forgetting about all the order evidence:
 
-<!--{% raw %}--><pre class="Agda">
-  <a name="8427" href="2016-03-01-insertion-sort-in-agda.html#8427" class="Function"
+<pre class="Agda">
+{% raw %}
+  <a name="8427" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8427" class="Function"
       >toVec</a
       ><a name="8432"
       > </a
@@ -2481,43 +2023,19 @@ vector simply by forgetting about all the order evidence:
       >:</a
       ><a name="8434"
       > </a
-      ><a name="8435" class="Symbol"
-      >&#8704;</a
-      ><a name="8436"
-      > </a
-      ><a name="8437" class="Symbol"
-      >{</a
-      ><a name="8438" href="2016-03-01-insertion-sort-in-agda.html#8438" class="Bound"
-      >l</a
-      ><a name="8439"
-      > </a
-      ><a name="8440" href="2016-03-01-insertion-sort-in-agda.html#8440" class="Bound"
-      >n</a
-      ><a name="8441"
-      > </a
-      ><a name="8442" href="2016-03-01-insertion-sort-in-agda.html#8442" class="Bound"
-      >k</a
-      ><a name="8443" class="Symbol"
-      >}</a
-      ><a name="8444"
-      > </a
-      ><a name="8445" class="Symbol"
-      >&#8594;</a
-      ><a name="8446"
-      > </a
-      ><a name="8447" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      ><a name="8447" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7281" class="Datatype"
       >OVec</a
       ><a name="8451"
       > </a
-      ><a name="8452" href="2016-03-01-insertion-sort-in-agda.html#8438" class="Bound"
+      ><a name="8452" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8438" class="Bound"
       >l</a
       ><a name="8453"
       > </a
-      ><a name="8454" href="2016-03-01-insertion-sort-in-agda.html#8440" class="Bound"
+      ><a name="8454" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8440" class="Bound"
       >n</a
       ><a name="8455"
       > </a
-      ><a name="8456" href="2016-03-01-insertion-sort-in-agda.html#8442" class="Bound"
+      ><a name="8456" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8442" class="Bound"
       >k</a
       ><a name="8457"
       > </a
@@ -2525,24 +2043,24 @@ vector simply by forgetting about all the order evidence:
       >&#8594;</a
       ><a name="8459"
       > </a
-      ><a name="8460" href="https://agda.github.io/agda-stdlib/Data.Vec.html#609" class="Datatype"
+      ><a name="8460" href="https://agda.github.io/agda-stdlib/Data.Vec.html#638" class="Datatype"
       >Vec</a
       ><a name="8463"
       > </a
-      ><a name="8464" href="2016-03-01-insertion-sort-in-agda.html#3188" class="Function"
+      ><a name="8464" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3188" class="Function"
       >A</a
       ><a name="8465"
       > </a
-      ><a name="8466" href="2016-03-01-insertion-sort-in-agda.html#8440" class="Bound"
+      ><a name="8466" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8440" class="Bound"
       >n</a
       ><a name="8467"
       >
   </a
-      ><a name="8470" href="2016-03-01-insertion-sort-in-agda.html#8427" class="Function"
+      ><a name="8470" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8427" class="Function"
       >toVec</a
       ><a name="8475"
       > </a
-      ><a name="8476" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      ><a name="8476" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7333" class="InductiveConstructor"
       >[]</a
       ><a name="8478"
       > </a
@@ -2550,26 +2068,26 @@ vector simply by forgetting about all the order evidence:
       >=</a
       ><a name="8480"
       > </a
-      ><a name="8481" href="https://agda.github.io/agda-stdlib/Data.Vec.html#649" class="InductiveConstructor"
+      ><a name="8481" href="https://agda.github.io/agda-stdlib/Data.Vec.html#678" class="InductiveConstructor"
       >[]</a
       ><a name="8483"
       >
   </a
-      ><a name="8486" href="2016-03-01-insertion-sort-in-agda.html#8427" class="Function"
+      ><a name="8486" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8427" class="Function"
       >toVec</a
       ><a name="8491"
       > </a
       ><a name="8492" class="Symbol"
       >(</a
-      ><a name="8493" href="2016-03-01-insertion-sort-in-agda.html#8493" class="Bound"
+      ><a name="8493" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8493" class="Bound"
       >x</a
       ><a name="8494"
       > </a
-      ><a name="8495" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      ><a name="8495" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7452" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="8496"
       > </a
-      ><a name="8497" href="2016-03-01-insertion-sort-in-agda.html#8497" class="Bound"
+      ><a name="8497" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8497" class="Bound"
       >xs</a
       ><a name="8499" class="Symbol"
       >)</a
@@ -2579,42 +2097,42 @@ vector simply by forgetting about all the order evidence:
       >=</a
       ><a name="8502"
       > </a
-      ><a name="8503" href="2016-03-01-insertion-sort-in-agda.html#8493" class="Bound"
+      ><a name="8503" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8493" class="Bound"
       >x</a
       ><a name="8504"
       > </a
-      ><a name="8505" href="https://agda.github.io/agda-stdlib/Data.Vec.html#668" class="InductiveConstructor Operator"
+      ><a name="8505" href="https://agda.github.io/agda-stdlib/Data.Vec.html#697" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="8506"
       > </a
-      ><a name="8507" href="2016-03-01-insertion-sort-in-agda.html#8427" class="Function"
+      ><a name="8507" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8427" class="Function"
       >toVec</a
       ><a name="8512"
       > </a
-      ><a name="8513" href="2016-03-01-insertion-sort-in-agda.html#8497" class="Bound"
+      ><a name="8513" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8497" class="Bound"
       >xs</a
       ><a name="8515"
       >
   </a
-      ><a name="8518" href="2016-03-01-insertion-sort-in-agda.html#8427" class="Function"
+      ><a name="8518" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8427" class="Function"
       >toVec</a
       ><a name="8523"
       > </a
       ><a name="8524" class="Symbol"
       >(</a
-      ><a name="8525" href="2016-03-01-insertion-sort-in-agda.html#8525" class="Bound"
+      ><a name="8525" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8525" class="Bound"
       >x</a
       ><a name="8526"
       > </a
-      ><a name="8527" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="8527" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="8528"
       > </a
-      ><a name="8529" href="2016-03-01-insertion-sort-in-agda.html#8529" class="Bound"
+      ><a name="8529" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8529" class="Bound"
       >xs</a
       ><a name="8531"
       > </a
-      ><a name="8532" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="8532" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >by</a
       ><a name="8534"
       > </a
@@ -2626,28 +2144,30 @@ vector simply by forgetting about all the order evidence:
       >=</a
       ><a name="8539"
       > </a
-      ><a name="8540" href="2016-03-01-insertion-sort-in-agda.html#8525" class="Bound"
+      ><a name="8540" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8525" class="Bound"
       >x</a
       ><a name="8541"
       > </a
-      ><a name="8542" href="https://agda.github.io/agda-stdlib/Data.Vec.html#668" class="InductiveConstructor Operator"
+      ><a name="8542" href="https://agda.github.io/agda-stdlib/Data.Vec.html#697" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="8543"
       > </a
-      ><a name="8544" href="2016-03-01-insertion-sort-in-agda.html#8427" class="Function"
+      ><a name="8544" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8427" class="Function"
       >toVec</a
       ><a name="8549"
       > </a
-      ><a name="8550" href="2016-03-01-insertion-sort-in-agda.html#8529" class="Bound"
+      ><a name="8550" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8529" class="Bound"
       >xs</a
       >
-</pre><!--{% endraw %}-->
+{% endraw %}
+</pre>
 
 Finally! We've developed enough vocabulary to write down what it
 really means to perform an insertion:
 
-<!--{% raw %}--><pre class="Agda">
-  <a name="8684" href="2016-03-01-insertion-sort-in-agda.html#8684" class="Function"
+<pre class="Agda">
+{% raw %}
+  <a name="8684" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8684" class="Function"
       >insert</a
       ><a name="8690"
       > </a
@@ -2655,29 +2175,9 @@ really means to perform an insertion:
       >:</a
       ><a name="8692"
       > </a
-      ><a name="8693" class="Symbol"
-      >&#8704;</a
-      ><a name="8694"
-      > </a
-      ><a name="8695" class="Symbol"
-      >{</a
-      ><a name="8696" href="2016-03-01-insertion-sort-in-agda.html#8696" class="Bound"
-      >l</a
-      ><a name="8697"
-      > </a
-      ><a name="8698" href="2016-03-01-insertion-sort-in-agda.html#8698" class="Bound"
-      >n</a
-      ><a name="8699"
-      > </a
-      ><a name="8700" href="2016-03-01-insertion-sort-in-agda.html#8700" class="Bound"
-      >k</a
-      ><a name="8701" class="Symbol"
-      >}</a
-      ><a name="8702"
-      > </a
       ><a name="8703" class="Symbol"
       >(</a
-      ><a name="8704" href="2016-03-01-insertion-sort-in-agda.html#8704" class="Bound"
+      ><a name="8704" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8704" class="Bound"
       >x</a
       ><a name="8705"
       > </a
@@ -2685,7 +2185,7 @@ really means to perform an insertion:
       >:</a
       ><a name="8707"
       > </a
-      ><a name="8708" href="2016-03-01-insertion-sort-in-agda.html#3188" class="Function"
+      ><a name="8708" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3188" class="Function"
       >A</a
       ><a name="8709" class="Symbol"
       >)</a
@@ -2695,19 +2195,19 @@ really means to perform an insertion:
       >&#8594;</a
       ><a name="8712"
       > </a
-      ><a name="8713" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      ><a name="8713" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7281" class="Datatype"
       >OVec</a
       ><a name="8717"
       > </a
-      ><a name="8718" href="2016-03-01-insertion-sort-in-agda.html#8696" class="Bound"
+      ><a name="8718" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8696" class="Bound"
       >l</a
       ><a name="8719"
       > </a
-      ><a name="8720" href="2016-03-01-insertion-sort-in-agda.html#8698" class="Bound"
+      ><a name="8720" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8698" class="Bound"
       >n</a
       ><a name="8721"
       > </a
-      ><a name="8722" href="2016-03-01-insertion-sort-in-agda.html#8700" class="Bound"
+      ><a name="8722" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8700" class="Bound"
       >k</a
       ><a name="8723"
       > </a
@@ -2715,29 +2215,29 @@ really means to perform an insertion:
       >&#8594;</a
       ><a name="8725"
       > </a
-      ><a name="8726" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      ><a name="8726" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7281" class="Datatype"
       >OVec</a
       ><a name="8730"
       > </a
       ><a name="8731" class="Symbol"
       >(</a
-      ><a name="8732" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="8732" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10214;</a
       ><a name="8733"
       > </a
-      ><a name="8734" href="2016-03-01-insertion-sort-in-agda.html#8704" class="Bound"
+      ><a name="8734" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8704" class="Bound"
       >x</a
       ><a name="8735"
       > </a
-      ><a name="8736" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="8736" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10215;</a
       ><a name="8737"
       > </a
-      ><a name="8738" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      ><a name="8738" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4653" class="Function Operator"
       >&#8851;</a
       ><a name="8739"
       > </a
-      ><a name="8740" href="2016-03-01-insertion-sort-in-agda.html#8696" class="Bound"
+      ><a name="8740" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8696" class="Bound"
       >l</a
       ><a name="8741" class="Symbol"
       >)</a
@@ -2745,30 +2245,30 @@ really means to perform an insertion:
       > </a
       ><a name="8743" class="Symbol"
       >(</a
-      ><a name="8744" href="Agda.Builtin.Nat.html#100" class="InductiveConstructor"
+      ><a name="8744" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#128" class="InductiveConstructor"
       >suc</a
       ><a name="8747"
       > </a
-      ><a name="8748" href="2016-03-01-insertion-sort-in-agda.html#8698" class="Bound"
+      ><a name="8748" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8698" class="Bound"
       >n</a
       ><a name="8749" class="Symbol"
       >)</a
       ><a name="8750"
       > </a
-      ><a name="8751" href="2016-03-01-insertion-sort-in-agda.html#8700" class="Bound"
+      ><a name="8751" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8700" class="Bound"
       >k</a
       ><a name="8752"
       >
   </a
-      ><a name="8755" href="2016-03-01-insertion-sort-in-agda.html#8684" class="Function"
+      ><a name="8755" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8684" class="Function"
       >insert</a
       ><a name="8761"
       > </a
-      ><a name="8762" href="2016-03-01-insertion-sort-in-agda.html#8762" class="Bound"
+      ><a name="8762" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8762" class="Bound"
       >x</a
       ><a name="8763"
       > </a
-      ><a name="8764" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      ><a name="8764" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7333" class="InductiveConstructor"
       >[]</a
       ><a name="8766"
       >       </a
@@ -2776,46 +2276,46 @@ really means to perform an insertion:
       >=</a
       ><a name="8774"
       > </a
-      ><a name="8775" href="2016-03-01-insertion-sort-in-agda.html#8762" class="Bound"
+      ><a name="8775" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8762" class="Bound"
       >x</a
       ><a name="8776"
       > </a
-      ><a name="8777" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="8777" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="8778"
       > </a
-      ><a name="8779" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      ><a name="8779" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7333" class="InductiveConstructor"
       >[]</a
       ><a name="8781"
       > </a
-      ><a name="8782" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="8782" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >by</a
       ><a name="8784"
       > </a
-      ><a name="8785" href="2016-03-01-insertion-sort-in-agda.html#3909" class="InductiveConstructor"
+      ><a name="8785" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3909" class="InductiveConstructor"
       >&#8818;&#8868;</a
       ><a name="8787"
       >
   </a
-      ><a name="8790" href="2016-03-01-insertion-sort-in-agda.html#8684" class="Function"
+      ><a name="8790" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8684" class="Function"
       >insert</a
       ><a name="8796"
       > </a
-      ><a name="8797" href="2016-03-01-insertion-sort-in-agda.html#8797" class="Bound"
+      ><a name="8797" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8797" class="Bound"
       >x</a
       ><a name="8798"
       > </a
       ><a name="8799" class="Symbol"
       >(</a
-      ><a name="8800" href="2016-03-01-insertion-sort-in-agda.html#8800" class="Bound"
+      ><a name="8800" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8800" class="Bound"
       >y</a
       ><a name="8801"
       > </a
-      ><a name="8802" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      ><a name="8802" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7452" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="8803"
       > </a
-      ><a name="8804" href="2016-03-01-insertion-sort-in-agda.html#8804" class="Bound"
+      ><a name="8804" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8804" class="Bound"
       >xs</a
       ><a name="8806" class="Symbol"
       >)</a
@@ -2825,54 +2325,54 @@ really means to perform an insertion:
       >=</a
       ><a name="8809"
       > </a
-      ><a name="8810" href="2016-03-01-insertion-sort-in-agda.html#8800" class="Bound"
+      ><a name="8810" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8800" class="Bound"
       >y</a
       ><a name="8811"
       > </a
-      ><a name="8812" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      ><a name="8812" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7452" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="8813"
       > </a
-      ><a name="8814" href="2016-03-01-insertion-sort-in-agda.html#8684" class="Function"
+      ><a name="8814" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8684" class="Function"
       >insert</a
       ><a name="8820"
       > </a
-      ><a name="8821" href="2016-03-01-insertion-sort-in-agda.html#8797" class="Bound"
+      ><a name="8821" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8797" class="Bound"
       >x</a
       ><a name="8822"
       > </a
-      ><a name="8823" href="2016-03-01-insertion-sort-in-agda.html#8804" class="Bound"
+      ><a name="8823" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8804" class="Bound"
       >xs</a
       ><a name="8825"
       >
   </a
-      ><a name="8828" href="2016-03-01-insertion-sort-in-agda.html#8684" class="Function"
+      ><a name="8828" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8684" class="Function"
       >insert</a
       ><a name="8834"
       > </a
-      ><a name="8835" href="2016-03-01-insertion-sort-in-agda.html#8835" class="Bound"
+      ><a name="8835" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8835" class="Bound"
       >x</a
       ><a name="8836"
       > </a
       ><a name="8837" class="Symbol"
       >(</a
-      ><a name="8838" href="2016-03-01-insertion-sort-in-agda.html#8838" class="Bound"
+      ><a name="8838" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8838" class="Bound"
       >y</a
       ><a name="8839"
       > </a
-      ><a name="8840" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="8840" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="8841"
       > </a
-      ><a name="8842" href="2016-03-01-insertion-sort-in-agda.html#8842" class="Bound"
+      ><a name="8842" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8842" class="Bound"
       >xs</a
       ><a name="8844"
       > </a
-      ><a name="8845" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="8845" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >by</a
       ><a name="8847"
       > </a
-      ><a name="8848" href="2016-03-01-insertion-sort-in-agda.html#8848" class="Bound"
+      ><a name="8848" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8848" class="Bound"
       >p</a
       ><a name="8849" class="Symbol"
       >)</a
@@ -2882,7 +2382,7 @@ really means to perform an insertion:
       >with</a
       ><a name="8855"
       > </a
-      ><a name="8856" href="2016-03-01-insertion-sort-in-agda.html#8835" class="Bound"
+      ><a name="8856" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8835" class="Bound"
       >x</a
       ><a name="8857"
       > </a
@@ -2890,7 +2390,7 @@ really means to perform an insertion:
       >&#8804;?</a
       ><a name="8860"
       > </a
-      ><a name="8861" href="2016-03-01-insertion-sort-in-agda.html#8838" class="Bound"
+      ><a name="8861" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8838" class="Bound"
       >y</a
       ><a name="8862"
       >
@@ -2907,7 +2407,7 @@ really means to perform an insertion:
       >yes</a
       ><a name="8874"
       > </a
-      ><a name="8875" href="2016-03-01-insertion-sort-in-agda.html#8875" class="Bound"
+      ><a name="8875" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8875" class="Bound"
       >x&#8804;y</a
       ><a name="8878"
       > </a
@@ -2915,49 +2415,49 @@ really means to perform an insertion:
       >=</a
       ><a name="8880"
       > </a
-      ><a name="8881" href="2016-03-01-insertion-sort-in-agda.html#8835" class="Bound"
+      ><a name="8881" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8835" class="Bound"
       >x</a
       ><a name="8882"
       > </a
-      ><a name="8883" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="8883" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="8884"
       > </a
       ><a name="8885" class="Symbol"
       >(</a
-      ><a name="8886" href="2016-03-01-insertion-sort-in-agda.html#8838" class="Bound"
+      ><a name="8886" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8838" class="Bound"
       >y</a
       ><a name="8887"
       > </a
-      ><a name="8888" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="8888" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="8889"
       > </a
-      ><a name="8890" href="2016-03-01-insertion-sort-in-agda.html#8842" class="Bound"
+      ><a name="8890" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8842" class="Bound"
       >xs</a
       ><a name="8892"
       > </a
-      ><a name="8893" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="8893" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >by</a
       ><a name="8895"
       > </a
-      ><a name="8896" href="2016-03-01-insertion-sort-in-agda.html#8848" class="Bound"
+      ><a name="8896" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8848" class="Bound"
       >p</a
       ><a name="8897" class="Symbol"
       >)</a
       ><a name="8898"
       > </a
-      ><a name="8899" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="8899" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >by</a
       ><a name="8901"
       > </a
       ><a name="8902" class="Symbol"
       >(</a
-      ><a name="8903" href="2016-03-01-insertion-sort-in-agda.html#3932" class="InductiveConstructor"
+      ><a name="8903" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3932" class="InductiveConstructor"
       >&#8804;-lift</a
       ><a name="8909"
       > </a
-      ><a name="8910" href="2016-03-01-insertion-sort-in-agda.html#8875" class="Bound"
+      ><a name="8910" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8875" class="Bound"
       >x&#8804;y</a
       ><a name="8913" class="Symbol"
       >)</a
@@ -2976,7 +2476,7 @@ really means to perform an insertion:
       >no</a
       ><a name="8925"
       >  </a
-      ><a name="8927" href="2016-03-01-insertion-sort-in-agda.html#8927" class="Bound"
+      ><a name="8927" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8927" class="Bound"
       >x&#8816;y</a
       ><a name="8930"
       > </a
@@ -2984,58 +2484,59 @@ really means to perform an insertion:
       >=</a
       ><a name="8932"
       > </a
-      ><a name="8933" href="2016-03-01-insertion-sort-in-agda.html#8838" class="Bound"
+      ><a name="8933" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8838" class="Bound"
       >y</a
       ><a name="8934"
       > </a
-      ><a name="8935" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="8935" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="8936"
       > </a
       ><a name="8937" class="Symbol"
       >(</a
-      ><a name="8938" href="2016-03-01-insertion-sort-in-agda.html#8684" class="Function"
+      ><a name="8938" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8684" class="Function"
       >insert</a
       ><a name="8944"
       > </a
-      ><a name="8945" href="2016-03-01-insertion-sort-in-agda.html#8835" class="Bound"
+      ><a name="8945" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8835" class="Bound"
       >x</a
       ><a name="8946"
       > </a
-      ><a name="8947" href="2016-03-01-insertion-sort-in-agda.html#8842" class="Bound"
+      ><a name="8947" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8842" class="Bound"
       >xs</a
       ><a name="8949" class="Symbol"
       >)</a
       ><a name="8950"
       > </a
-      ><a name="8951" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="8951" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >by</a
       ><a name="8953"
       > </a
       ><a name="8954" class="Symbol"
       >(</a
-      ><a name="8955" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      ><a name="8955" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4819" class="Function"
       >&#8851;-conserves-&#8818;</a
       ><a name="8968"
       > </a
       ><a name="8969" class="Symbol"
       >(</a
-      ><a name="8970" href="2016-03-01-insertion-sort-in-agda.html#4230" class="Function"
+      ><a name="8970" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4230" class="Function"
       >&#8816;-lift</a
       ><a name="8976"
       > </a
-      ><a name="8977" href="2016-03-01-insertion-sort-in-agda.html#8927" class="Bound"
+      ><a name="8977" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8927" class="Bound"
       >x&#8816;y</a
       ><a name="8980" class="Symbol"
       >)</a
       ><a name="8981"
       > </a
-      ><a name="8982" href="2016-03-01-insertion-sort-in-agda.html#8848" class="Bound"
+      ><a name="8982" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8848" class="Bound"
       >p</a
       ><a name="8983" class="Symbol"
       >)</a
       >
-</pre><!--{% endraw %}-->
+{% endraw %}
+</pre>
 
 Note that insert takes a vector with *k* unsorted elements, and
 returns a vector which has one more element, but still only *k*
@@ -3047,8 +2548,9 @@ element in the sorted portion of the vector, that if we take elements
 from the unsorted portion, insert it, and repeat this *k* times, we'll
 have sorted *k* elements... and therefore the list.
 
-<!--{% raw %}--><pre class="Agda">
-  <a name="9531" href="2016-03-01-insertion-sort-in-agda.html#9531" class="Function"
+<pre class="Agda">
+{% raw %}
+  <a name="9531" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9531" class="Function"
       >insertsort</a
       ><a name="9541"
       > </a
@@ -3056,43 +2558,19 @@ have sorted *k* elements... and therefore the list.
       >:</a
       ><a name="9543"
       > </a
-      ><a name="9544" class="Symbol"
-      >&#8704;</a
-      ><a name="9545"
-      > </a
-      ><a name="9546" class="Symbol"
-      >{</a
-      ><a name="9547" href="2016-03-01-insertion-sort-in-agda.html#9547" class="Bound"
-      >l</a
-      ><a name="9548"
-      > </a
-      ><a name="9549" href="2016-03-01-insertion-sort-in-agda.html#9549" class="Bound"
-      >n</a
-      ><a name="9550"
-      > </a
-      ><a name="9551" href="2016-03-01-insertion-sort-in-agda.html#9551" class="Bound"
-      >k</a
-      ><a name="9552" class="Symbol"
-      >}</a
-      ><a name="9553"
-      > </a
-      ><a name="9554" class="Symbol"
-      >&#8594;</a
-      ><a name="9555"
-      > </a
-      ><a name="9556" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      ><a name="9556" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7281" class="Datatype"
       >OVec</a
       ><a name="9560"
       > </a
-      ><a name="9561" href="2016-03-01-insertion-sort-in-agda.html#9547" class="Bound"
+      ><a name="9561" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9547" class="Bound"
       >l</a
       ><a name="9562"
       > </a
-      ><a name="9563" href="2016-03-01-insertion-sort-in-agda.html#9549" class="Bound"
+      ><a name="9563" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9549" class="Bound"
       >n</a
       ><a name="9564"
       > </a
-      ><a name="9565" href="2016-03-01-insertion-sort-in-agda.html#9551" class="Bound"
+      ><a name="9565" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9551" class="Bound"
       >k</a
       ><a name="9566"
       > </a
@@ -3108,7 +2586,7 @@ have sorted *k* elements... and therefore the list.
       >(&#955;</a
       ><a name="9573"
       > </a
-      ><a name="9574" href="2016-03-01-insertion-sort-in-agda.html#9574" class="Bound"
+      ><a name="9574" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9574" class="Bound"
       >l</a
       ><a name="9575"
       > </a
@@ -3116,15 +2594,15 @@ have sorted *k* elements... and therefore the list.
       >&#8594;</a
       ><a name="9577"
       > </a
-      ><a name="9578" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      ><a name="9578" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7281" class="Datatype"
       >OVec</a
       ><a name="9582"
       > </a
-      ><a name="9583" href="2016-03-01-insertion-sort-in-agda.html#9574" class="Bound"
+      ><a name="9583" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9574" class="Bound"
       >l</a
       ><a name="9584"
       > </a
-      ><a name="9585" href="2016-03-01-insertion-sort-in-agda.html#9549" class="Bound"
+      ><a name="9585" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9549" class="Bound"
       >n</a
       ><a name="9586"
       > </a
@@ -3135,11 +2613,11 @@ have sorted *k* elements... and therefore the list.
       ><a name="9589"
       >
   </a
-      ><a name="9592" href="2016-03-01-insertion-sort-in-agda.html#9531" class="Function"
+      ><a name="9592" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9531" class="Function"
       >insertsort</a
       ><a name="9602"
       > </a
-      ><a name="9603" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      ><a name="9603" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7333" class="InductiveConstructor"
       >[]</a
       ><a name="9605"
       >            </a
@@ -3147,7 +2625,7 @@ have sorted *k* elements... and therefore the list.
       >=</a
       ><a name="9618"
       > </a
-      ><a name="9619" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      ><a name="9619" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3576" class="InductiveConstructor"
       >&#8868;</a
       ><a name="9620"
       > </a
@@ -3155,26 +2633,26 @@ have sorted *k* elements... and therefore the list.
       >,</a
       ><a name="9622"
       > </a
-      ><a name="9623" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      ><a name="9623" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7333" class="InductiveConstructor"
       >[]</a
       ><a name="9625"
       >
   </a
-      ><a name="9628" href="2016-03-01-insertion-sort-in-agda.html#9531" class="Function"
+      ><a name="9628" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9531" class="Function"
       >insertsort</a
       ><a name="9638"
       > </a
       ><a name="9639" class="Symbol"
       >(</a
-      ><a name="9640" href="2016-03-01-insertion-sort-in-agda.html#9640" class="Bound"
+      ><a name="9640" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9640" class="Bound"
       >x</a
       ><a name="9641"
       > </a
-      ><a name="9642" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      ><a name="9642" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7452" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="9643"
       > </a
-      ><a name="9644" href="2016-03-01-insertion-sort-in-agda.html#9644" class="Bound"
+      ><a name="9644" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9644" class="Bound"
       >xs</a
       ><a name="9646" class="Symbol"
       >)</a
@@ -3184,50 +2662,50 @@ have sorted *k* elements... and therefore the list.
       >=</a
       ><a name="9654"
       > </a
-      ><a name="9655" href="2016-03-01-insertion-sort-in-agda.html#9531" class="Function"
+      ><a name="9655" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9531" class="Function"
       >insertsort</a
       ><a name="9665"
       > </a
       ><a name="9666" class="Symbol"
       >(</a
-      ><a name="9667" href="2016-03-01-insertion-sort-in-agda.html#8684" class="Function"
+      ><a name="9667" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#8684" class="Function"
       >insert</a
       ><a name="9673"
       > </a
-      ><a name="9674" href="2016-03-01-insertion-sort-in-agda.html#9640" class="Bound"
+      ><a name="9674" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9640" class="Bound"
       >x</a
       ><a name="9675"
       > </a
-      ><a name="9676" href="2016-03-01-insertion-sort-in-agda.html#9644" class="Bound"
+      ><a name="9676" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9644" class="Bound"
       >xs</a
       ><a name="9678" class="Symbol"
       >)</a
       ><a name="9679"
       >
   </a
-      ><a name="9682" href="2016-03-01-insertion-sort-in-agda.html#9531" class="Function"
+      ><a name="9682" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9531" class="Function"
       >insertsort</a
       ><a name="9692"
       > </a
       ><a name="9693" class="Symbol"
       >(</a
-      ><a name="9694" href="2016-03-01-insertion-sort-in-agda.html#9694" class="Bound"
+      ><a name="9694" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9694" class="Bound"
       >x</a
       ><a name="9695"
       > </a
-      ><a name="9696" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="9696" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="9697"
       > </a
-      ><a name="9698" href="2016-03-01-insertion-sort-in-agda.html#9698" class="Bound"
+      ><a name="9698" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9698" class="Bound"
       >xs</a
       ><a name="9700"
       > </a
-      ><a name="9701" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="9701" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >by</a
       ><a name="9703"
       > </a
-      ><a name="9704" href="2016-03-01-insertion-sort-in-agda.html#9704" class="Bound"
+      ><a name="9704" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9704" class="Bound"
       >p</a
       ><a name="9705" class="Symbol"
       >)</a
@@ -3237,15 +2715,15 @@ have sorted *k* elements... and therefore the list.
       >=</a
       ><a name="9708"
       > </a
-      ><a name="9709" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="9709" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10214;</a
       ><a name="9710"
       > </a
-      ><a name="9711" href="2016-03-01-insertion-sort-in-agda.html#9694" class="Bound"
+      ><a name="9711" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9694" class="Bound"
       >x</a
       ><a name="9712"
       > </a
-      ><a name="9713" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="9713" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10215;</a
       ><a name="9714"
       > </a
@@ -3253,26 +2731,27 @@ have sorted *k* elements... and therefore the list.
       >,</a
       ><a name="9716"
       > </a
-      ><a name="9717" href="2016-03-01-insertion-sort-in-agda.html#9694" class="Bound"
+      ><a name="9717" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9694" class="Bound"
       >x</a
       ><a name="9718"
       > </a
-      ><a name="9719" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="9719" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="9720"
       > </a
-      ><a name="9721" href="2016-03-01-insertion-sort-in-agda.html#9698" class="Bound"
+      ><a name="9721" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9698" class="Bound"
       >xs</a
       ><a name="9723"
       > </a
-      ><a name="9724" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="9724" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >by</a
       ><a name="9726"
       > </a
-      ><a name="9727" href="2016-03-01-insertion-sort-in-agda.html#9704" class="Bound"
+      ><a name="9727" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#9704" class="Bound"
       >p</a
       >
-</pre><!--{% endraw %}-->
+{% endraw %}
+</pre>
 
 There is one thing we haven't verified so far---and I've hinted at this
 possibility above. It is fairly simple to implement an insertion sort
@@ -3297,8 +2776,9 @@ incredibly similar to insert. However, as opposed to inserting the
 first element in the correct position, "bubble" has trouble making up
 its mind and drops whatever it's holding when it sees a bigger element!
 
-<!--{% raw %}--><pre class="Agda">
-  <a name="11111" href="2016-03-01-insertion-sort-in-agda.html#11111" class="Function"
+<pre class="Agda">
+{% raw %}
+  <a name="11111" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11111" class="Function"
       >bubble</a
       ><a name="11117"
       > </a
@@ -3306,29 +2786,9 @@ its mind and drops whatever it's holding when it sees a bigger element!
       >:</a
       ><a name="11119"
       > </a
-      ><a name="11120" class="Symbol"
-      >&#8704;</a
-      ><a name="11121"
-      > </a
-      ><a name="11122" class="Symbol"
-      >{</a
-      ><a name="11123" href="2016-03-01-insertion-sort-in-agda.html#11123" class="Bound"
-      >l</a
-      ><a name="11124"
-      > </a
-      ><a name="11125" href="2016-03-01-insertion-sort-in-agda.html#11125" class="Bound"
-      >n</a
-      ><a name="11126"
-      > </a
-      ><a name="11127" href="2016-03-01-insertion-sort-in-agda.html#11127" class="Bound"
-      >k</a
-      ><a name="11128" class="Symbol"
-      >}</a
-      ><a name="11129"
-      > </a
       ><a name="11130" class="Symbol"
       >(</a
-      ><a name="11131" href="2016-03-01-insertion-sort-in-agda.html#11131" class="Bound"
+      ><a name="11131" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11131" class="Bound"
       >x</a
       ><a name="11132"
       > </a
@@ -3336,7 +2796,7 @@ its mind and drops whatever it's holding when it sees a bigger element!
       >:</a
       ><a name="11134"
       > </a
-      ><a name="11135" href="2016-03-01-insertion-sort-in-agda.html#3188" class="Function"
+      ><a name="11135" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3188" class="Function"
       >A</a
       ><a name="11136" class="Symbol"
       >)</a
@@ -3346,19 +2806,19 @@ its mind and drops whatever it's holding when it sees a bigger element!
       >&#8594;</a
       ><a name="11139"
       > </a
-      ><a name="11140" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      ><a name="11140" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7281" class="Datatype"
       >OVec</a
       ><a name="11144"
       > </a
-      ><a name="11145" href="2016-03-01-insertion-sort-in-agda.html#11123" class="Bound"
+      ><a name="11145" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11123" class="Bound"
       >l</a
       ><a name="11146"
       > </a
-      ><a name="11147" href="2016-03-01-insertion-sort-in-agda.html#11125" class="Bound"
+      ><a name="11147" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11125" class="Bound"
       >n</a
       ><a name="11148"
       > </a
-      ><a name="11149" href="2016-03-01-insertion-sort-in-agda.html#11127" class="Bound"
+      ><a name="11149" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11127" class="Bound"
       >k</a
       ><a name="11150"
       > </a
@@ -3366,29 +2826,29 @@ its mind and drops whatever it's holding when it sees a bigger element!
       >&#8594;</a
       ><a name="11152"
       > </a
-      ><a name="11153" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      ><a name="11153" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7281" class="Datatype"
       >OVec</a
       ><a name="11157"
       > </a
       ><a name="11158" class="Symbol"
       >(</a
-      ><a name="11159" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="11159" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10214;</a
       ><a name="11160"
       > </a
-      ><a name="11161" href="2016-03-01-insertion-sort-in-agda.html#11131" class="Bound"
+      ><a name="11161" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11131" class="Bound"
       >x</a
       ><a name="11162"
       > </a
-      ><a name="11163" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="11163" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10215;</a
       ><a name="11164"
       > </a
-      ><a name="11165" href="2016-03-01-insertion-sort-in-agda.html#4653" class="Function Operator"
+      ><a name="11165" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4653" class="Function Operator"
       >&#8851;</a
       ><a name="11166"
       > </a
-      ><a name="11167" href="2016-03-01-insertion-sort-in-agda.html#11123" class="Bound"
+      ><a name="11167" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11123" class="Bound"
       >l</a
       ><a name="11168" class="Symbol"
       >)</a
@@ -3396,30 +2856,30 @@ its mind and drops whatever it's holding when it sees a bigger element!
       > </a
       ><a name="11170" class="Symbol"
       >(</a
-      ><a name="11171" href="Agda.Builtin.Nat.html#100" class="InductiveConstructor"
+      ><a name="11171" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#128" class="InductiveConstructor"
       >suc</a
       ><a name="11174"
       > </a
-      ><a name="11175" href="2016-03-01-insertion-sort-in-agda.html#11125" class="Bound"
+      ><a name="11175" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11125" class="Bound"
       >n</a
       ><a name="11176" class="Symbol"
       >)</a
       ><a name="11177"
       > </a
-      ><a name="11178" href="2016-03-01-insertion-sort-in-agda.html#11127" class="Bound"
+      ><a name="11178" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11127" class="Bound"
       >k</a
       ><a name="11179"
       >
   </a
-      ><a name="11182" href="2016-03-01-insertion-sort-in-agda.html#11111" class="Function"
+      ><a name="11182" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11111" class="Function"
       >bubble</a
       ><a name="11188"
       > </a
-      ><a name="11189" href="2016-03-01-insertion-sort-in-agda.html#11189" class="Bound"
+      ><a name="11189" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11189" class="Bound"
       >x</a
       ><a name="11190"
       > </a
-      ><a name="11191" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      ><a name="11191" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7333" class="InductiveConstructor"
       >[]</a
       ><a name="11193"
       >            </a
@@ -3427,46 +2887,46 @@ its mind and drops whatever it's holding when it sees a bigger element!
       >=</a
       ><a name="11206"
       > </a
-      ><a name="11207" href="2016-03-01-insertion-sort-in-agda.html#11189" class="Bound"
+      ><a name="11207" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11189" class="Bound"
       >x</a
       ><a name="11208"
       > </a
-      ><a name="11209" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="11209" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="11210"
       > </a
-      ><a name="11211" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      ><a name="11211" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7333" class="InductiveConstructor"
       >[]</a
       ><a name="11213"
       > </a
-      ><a name="11214" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="11214" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >by</a
       ><a name="11216"
       > </a
-      ><a name="11217" href="2016-03-01-insertion-sort-in-agda.html#3909" class="InductiveConstructor"
+      ><a name="11217" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3909" class="InductiveConstructor"
       >&#8818;&#8868;</a
       ><a name="11219"
       >
   </a
-      ><a name="11222" href="2016-03-01-insertion-sort-in-agda.html#11111" class="Function"
+      ><a name="11222" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11111" class="Function"
       >bubble</a
       ><a name="11228"
       > </a
-      ><a name="11229" href="2016-03-01-insertion-sort-in-agda.html#11229" class="Bound"
+      ><a name="11229" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11229" class="Bound"
       >x</a
       ><a name="11230"
       > </a
       ><a name="11231" class="Symbol"
       >(</a
-      ><a name="11232" href="2016-03-01-insertion-sort-in-agda.html#11232" class="Bound"
+      ><a name="11232" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11232" class="Bound"
       >y</a
       ><a name="11233"
       > </a
-      ><a name="11234" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      ><a name="11234" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7452" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="11235"
       > </a
-      ><a name="11236" href="2016-03-01-insertion-sort-in-agda.html#11236" class="Bound"
+      ><a name="11236" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11236" class="Bound"
       >xs</a
       ><a name="11238" class="Symbol"
       >)</a
@@ -3476,7 +2936,7 @@ its mind and drops whatever it's holding when it sees a bigger element!
       >with</a
       ><a name="11249"
       > </a
-      ><a name="11250" href="2016-03-01-insertion-sort-in-agda.html#11229" class="Bound"
+      ><a name="11250" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11229" class="Bound"
       >x</a
       ><a name="11251"
       > </a
@@ -3484,7 +2944,7 @@ its mind and drops whatever it's holding when it sees a bigger element!
       >&#8804;?</a
       ><a name="11254"
       > </a
-      ><a name="11255" href="2016-03-01-insertion-sort-in-agda.html#11232" class="Bound"
+      ><a name="11255" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11232" class="Bound"
       >y</a
       ><a name="11256"
       >
@@ -3501,7 +2961,7 @@ its mind and drops whatever it's holding when it sees a bigger element!
       >no</a
       ><a name="11267"
       >  </a
-      ><a name="11269" href="2016-03-01-insertion-sort-in-agda.html#11269" class="Bound"
+      ><a name="11269" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11269" class="Bound"
       >x&#8816;y</a
       ><a name="11272"
       > </a
@@ -3509,23 +2969,23 @@ its mind and drops whatever it's holding when it sees a bigger element!
       >=</a
       ><a name="11274"
       > </a
-      ><a name="11275" href="2016-03-01-insertion-sort-in-agda.html#11232" class="Bound"
+      ><a name="11275" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11232" class="Bound"
       >y</a
       ><a name="11276"
       > </a
-      ><a name="11277" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      ><a name="11277" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7452" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="11278"
       > </a
-      ><a name="11279" href="2016-03-01-insertion-sort-in-agda.html#11111" class="Function"
+      ><a name="11279" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11111" class="Function"
       >bubble</a
       ><a name="11285"
       > </a
-      ><a name="11286" href="2016-03-01-insertion-sort-in-agda.html#11229" class="Bound"
+      ><a name="11286" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11229" class="Bound"
       >x</a
       ><a name="11287"
       > </a
-      ><a name="11288" href="2016-03-01-insertion-sort-in-agda.html#11236" class="Bound"
+      ><a name="11288" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11236" class="Bound"
       >xs</a
       ><a name="11290"
       >
@@ -3542,7 +3002,7 @@ its mind and drops whatever it's holding when it sees a bigger element!
       >yes</a
       ><a name="11302"
       > </a
-      ><a name="11303" href="2016-03-01-insertion-sort-in-agda.html#11303" class="Bound"
+      ><a name="11303" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11303" class="Bound"
       >x&#8804;y</a
       ><a name="11306"
       > </a
@@ -3550,54 +3010,54 @@ its mind and drops whatever it's holding when it sees a bigger element!
       >=</a
       ><a name="11308"
       > </a
-      ><a name="11309" href="2016-03-01-insertion-sort-in-agda.html#11229" class="Bound"
+      ><a name="11309" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11229" class="Bound"
       >x</a
       ><a name="11310"
       > </a
-      ><a name="11311" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      ><a name="11311" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7452" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="11312"
       > </a
-      ><a name="11313" href="2016-03-01-insertion-sort-in-agda.html#11111" class="Function"
+      ><a name="11313" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11111" class="Function"
       >bubble</a
       ><a name="11319"
       > </a
-      ><a name="11320" href="2016-03-01-insertion-sort-in-agda.html#11232" class="Bound"
+      ><a name="11320" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11232" class="Bound"
       >y</a
       ><a name="11321"
       > </a
-      ><a name="11322" href="2016-03-01-insertion-sort-in-agda.html#11236" class="Bound"
+      ><a name="11322" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11236" class="Bound"
       >xs</a
       ><a name="11324"
       >
   </a
-      ><a name="11327" href="2016-03-01-insertion-sort-in-agda.html#11111" class="Function"
+      ><a name="11327" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11111" class="Function"
       >bubble</a
       ><a name="11333"
       > </a
-      ><a name="11334" href="2016-03-01-insertion-sort-in-agda.html#11334" class="Bound"
+      ><a name="11334" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11334" class="Bound"
       >x</a
       ><a name="11335"
       > </a
       ><a name="11336" class="Symbol"
       >(</a
-      ><a name="11337" href="2016-03-01-insertion-sort-in-agda.html#11337" class="Bound"
+      ><a name="11337" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11337" class="Bound"
       >y</a
       ><a name="11338"
       > </a
-      ><a name="11339" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="11339" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="11340"
       > </a
-      ><a name="11341" href="2016-03-01-insertion-sort-in-agda.html#11341" class="Bound"
+      ><a name="11341" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11341" class="Bound"
       >xs</a
       ><a name="11343"
       > </a
-      ><a name="11344" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="11344" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >by</a
       ><a name="11346"
       > </a
-      ><a name="11347" href="2016-03-01-insertion-sort-in-agda.html#11347" class="Bound"
+      ><a name="11347" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11347" class="Bound"
       >p</a
       ><a name="11348" class="Symbol"
       >)</a
@@ -3607,7 +3067,7 @@ its mind and drops whatever it's holding when it sees a bigger element!
       >with</a
       ><a name="11354"
       > </a
-      ><a name="11355" href="2016-03-01-insertion-sort-in-agda.html#11334" class="Bound"
+      ><a name="11355" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11334" class="Bound"
       >x</a
       ><a name="11356"
       > </a
@@ -3615,7 +3075,7 @@ its mind and drops whatever it's holding when it sees a bigger element!
       >&#8804;?</a
       ><a name="11359"
       > </a
-      ><a name="11360" href="2016-03-01-insertion-sort-in-agda.html#11337" class="Bound"
+      ><a name="11360" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11337" class="Bound"
       >y</a
       ><a name="11361"
       >
@@ -3632,7 +3092,7 @@ its mind and drops whatever it's holding when it sees a bigger element!
       >no</a
       ><a name="11372"
       >  </a
-      ><a name="11374" href="2016-03-01-insertion-sort-in-agda.html#11374" class="Bound"
+      ><a name="11374" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11374" class="Bound"
       >x&#8816;y</a
       ><a name="11377"
       > </a
@@ -3640,47 +3100,47 @@ its mind and drops whatever it's holding when it sees a bigger element!
       >=</a
       ><a name="11379"
       > </a
-      ><a name="11380" href="2016-03-01-insertion-sort-in-agda.html#11337" class="Bound"
+      ><a name="11380" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11337" class="Bound"
       >y</a
       ><a name="11381"
       > </a
-      ><a name="11382" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="11382" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="11383"
       > </a
-      ><a name="11384" href="2016-03-01-insertion-sort-in-agda.html#11111" class="Function"
+      ><a name="11384" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11111" class="Function"
       >bubble</a
       ><a name="11390"
       > </a
-      ><a name="11391" href="2016-03-01-insertion-sort-in-agda.html#11334" class="Bound"
+      ><a name="11391" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11334" class="Bound"
       >x</a
       ><a name="11392"
       > </a
-      ><a name="11393" href="2016-03-01-insertion-sort-in-agda.html#11341" class="Bound"
+      ><a name="11393" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11341" class="Bound"
       >xs</a
       ><a name="11395"
       > </a
-      ><a name="11396" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="11396" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >by</a
       ><a name="11398"
       > </a
-      ><a name="11399" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      ><a name="11399" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4819" class="Function"
       >&#8851;-conserves-&#8818;</a
       ><a name="11412"
       > </a
       ><a name="11413" class="Symbol"
       >(</a
-      ><a name="11414" href="2016-03-01-insertion-sort-in-agda.html#4230" class="Function"
+      ><a name="11414" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4230" class="Function"
       >&#8816;-lift</a
       ><a name="11420"
       > </a
-      ><a name="11421" href="2016-03-01-insertion-sort-in-agda.html#11374" class="Bound"
+      ><a name="11421" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11374" class="Bound"
       >x&#8816;y</a
       ><a name="11424" class="Symbol"
       >)</a
       ><a name="11425"
       > </a
-      ><a name="11426" href="2016-03-01-insertion-sort-in-agda.html#11347" class="Bound"
+      ><a name="11426" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11347" class="Bound"
       >p</a
       ><a name="11427"
       >
@@ -3697,7 +3157,7 @@ its mind and drops whatever it's holding when it sees a bigger element!
       >yes</a
       ><a name="11439"
       > </a
-      ><a name="11440" href="2016-03-01-insertion-sort-in-agda.html#11440" class="Bound"
+      ><a name="11440" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11440" class="Bound"
       >x&#8804;y</a
       ><a name="11443"
       > </a
@@ -3705,49 +3165,49 @@ its mind and drops whatever it's holding when it sees a bigger element!
       >=</a
       ><a name="11445"
       > </a
-      ><a name="11446" href="2016-03-01-insertion-sort-in-agda.html#11334" class="Bound"
+      ><a name="11446" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11334" class="Bound"
       >x</a
       ><a name="11447"
       > </a
-      ><a name="11448" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="11448" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="11449"
       > </a
-      ><a name="11450" href="2016-03-01-insertion-sort-in-agda.html#11111" class="Function"
+      ><a name="11450" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11111" class="Function"
       >bubble</a
       ><a name="11456"
       > </a
-      ><a name="11457" href="2016-03-01-insertion-sort-in-agda.html#11337" class="Bound"
+      ><a name="11457" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11337" class="Bound"
       >y</a
       ><a name="11458"
       > </a
-      ><a name="11459" href="2016-03-01-insertion-sort-in-agda.html#11341" class="Bound"
+      ><a name="11459" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11341" class="Bound"
       >xs</a
       ><a name="11461"
       > </a
-      ><a name="11462" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="11462" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >by</a
       ><a name="11464"
       > </a
-      ><a name="11465" href="2016-03-01-insertion-sort-in-agda.html#4819" class="Function"
+      ><a name="11465" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#4819" class="Function"
       >&#8851;-conserves-&#8818;</a
       ><a name="11478"
       > </a
-      ><a name="11479" href="2016-03-01-insertion-sort-in-agda.html#11515" class="Function"
+      ><a name="11479" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11515" class="Function"
       >x&#8818;y</a
       ><a name="11482"
       > </a
       ><a name="11483" class="Symbol"
       >(</a
-      ><a name="11484" href="2016-03-01-insertion-sort-in-agda.html#11857" class="Function"
+      ><a name="11484" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11857" class="Function"
       >&#8818;-trans</a
       ><a name="11491"
       > </a
-      ><a name="11492" href="2016-03-01-insertion-sort-in-agda.html#11515" class="Function"
+      ><a name="11492" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11515" class="Function"
       >x&#8818;y</a
       ><a name="11495"
       > </a
-      ><a name="11496" href="2016-03-01-insertion-sort-in-agda.html#11347" class="Bound"
+      ><a name="11496" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11347" class="Bound"
       >p</a
       ><a name="11497" class="Symbol"
       >)</a
@@ -3759,7 +3219,7 @@ its mind and drops whatever it's holding when it sees a bigger element!
       ><a name="11508"
       >
       </a
-      ><a name="11515" href="2016-03-01-insertion-sort-in-agda.html#11515" class="Function"
+      ><a name="11515" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11515" class="Function"
       >x&#8818;y</a
       ><a name="11518"
       > </a
@@ -3767,14 +3227,15 @@ its mind and drops whatever it's holding when it sees a bigger element!
       >=</a
       ><a name="11520"
       > </a
-      ><a name="11521" href="2016-03-01-insertion-sort-in-agda.html#3932" class="InductiveConstructor"
+      ><a name="11521" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3932" class="InductiveConstructor"
       >&#8804;-lift</a
       ><a name="11527"
       > </a
-      ><a name="11528" href="2016-03-01-insertion-sort-in-agda.html#11440" class="Bound"
+      ><a name="11528" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11440" class="Bound"
       >x&#8804;y</a
       >
-</pre><!--{% endraw %}-->
+{% endraw %}
+</pre>
 
 All that we need is to show that our home-brewed ≲-relation is
 transitive. This follows immediately from the underlying
@@ -3782,8 +3243,9 @@ order. This kind of stuff---the adding of bounds to total
 order---should really be provided by the standard library. And perhaps
 it is, and I've simply failed to find it...
 
-<!--{% raw %}--><pre class="Agda">
-      <a name="11857" href="2016-03-01-insertion-sort-in-agda.html#11857" class="Function"
+<pre class="Agda">
+{% raw %}
+      <a name="11857" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11857" class="Function"
       >&#8818;-trans</a
       ><a name="11864"
       > </a
@@ -3791,39 +3253,15 @@ it is, and I've simply failed to find it...
       >:</a
       ><a name="11866"
       > </a
-      ><a name="11867" class="Symbol"
-      >&#8704;</a
-      ><a name="11868"
-      > </a
-      ><a name="11869" class="Symbol"
-      >{</a
-      ><a name="11870" href="2016-03-01-insertion-sort-in-agda.html#11870" class="Bound"
-      >x</a
-      ><a name="11871"
-      > </a
-      ><a name="11872" href="2016-03-01-insertion-sort-in-agda.html#11872" class="Bound"
-      >y</a
-      ><a name="11873"
-      > </a
-      ><a name="11874" href="2016-03-01-insertion-sort-in-agda.html#11874" class="Bound"
-      >z</a
-      ><a name="11875" class="Symbol"
-      >}</a
-      ><a name="11876"
-      > </a
-      ><a name="11877" class="Symbol"
-      >&#8594;</a
-      ><a name="11878"
-      > </a
-      ><a name="11879" href="2016-03-01-insertion-sort-in-agda.html#11870" class="Bound"
+      ><a name="11879" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11870" class="Bound"
       >x</a
       ><a name="11880"
       > </a
-      ><a name="11881" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      ><a name="11881" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3854" class="Datatype Operator"
       >&#8818;</a
       ><a name="11882"
       > </a
-      ><a name="11883" href="2016-03-01-insertion-sort-in-agda.html#11872" class="Bound"
+      ><a name="11883" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11872" class="Bound"
       >y</a
       ><a name="11884"
       > </a
@@ -3831,15 +3269,15 @@ it is, and I've simply failed to find it...
       >&#8594;</a
       ><a name="11886"
       > </a
-      ><a name="11887" href="2016-03-01-insertion-sort-in-agda.html#11872" class="Bound"
+      ><a name="11887" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11872" class="Bound"
       >y</a
       ><a name="11888"
       > </a
-      ><a name="11889" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      ><a name="11889" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3854" class="Datatype Operator"
       >&#8818;</a
       ><a name="11890"
       > </a
-      ><a name="11891" href="2016-03-01-insertion-sort-in-agda.html#11874" class="Bound"
+      ><a name="11891" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11874" class="Bound"
       >z</a
       ><a name="11892"
       > </a
@@ -3847,24 +3285,24 @@ it is, and I've simply failed to find it...
       >&#8594;</a
       ><a name="11894"
       > </a
-      ><a name="11895" href="2016-03-01-insertion-sort-in-agda.html#11870" class="Bound"
+      ><a name="11895" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11870" class="Bound"
       >x</a
       ><a name="11896"
       > </a
-      ><a name="11897" href="2016-03-01-insertion-sort-in-agda.html#3854" class="Datatype Operator"
+      ><a name="11897" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3854" class="Datatype Operator"
       >&#8818;</a
       ><a name="11898"
       > </a
-      ><a name="11899" href="2016-03-01-insertion-sort-in-agda.html#11874" class="Bound"
+      ><a name="11899" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11874" class="Bound"
       >z</a
       ><a name="11900"
       >
       </a
-      ><a name="11907" href="2016-03-01-insertion-sort-in-agda.html#11857" class="Function"
+      ><a name="11907" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11857" class="Function"
       >&#8818;-trans</a
       ><a name="11914"
       >  </a
-      ><a name="11916" href="2016-03-01-insertion-sort-in-agda.html#3886" class="InductiveConstructor"
+      ><a name="11916" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3886" class="InductiveConstructor"
       >&#8869;&#8818;</a
       ><a name="11918"
       >         </a
@@ -3876,12 +3314,12 @@ it is, and I've simply failed to find it...
       >=</a
       ><a name="11938"
       > </a
-      ><a name="11939" href="2016-03-01-insertion-sort-in-agda.html#3886" class="InductiveConstructor"
+      ><a name="11939" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3886" class="InductiveConstructor"
       >&#8869;&#8818;</a
       ><a name="11941"
       >
       </a
-      ><a name="11948" href="2016-03-01-insertion-sort-in-agda.html#11857" class="Function"
+      ><a name="11948" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11857" class="Function"
       >&#8818;-trans</a
       ><a name="11955"
       >  </a
@@ -3889,7 +3327,7 @@ it is, and I've simply failed to find it...
       >_</a
       ><a name="11958"
       >          </a
-      ><a name="11968" href="2016-03-01-insertion-sort-in-agda.html#3909" class="InductiveConstructor"
+      ><a name="11968" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3909" class="InductiveConstructor"
       >&#8818;&#8868;</a
       ><a name="11970"
       >        </a
@@ -3897,22 +3335,22 @@ it is, and I've simply failed to find it...
       >=</a
       ><a name="11979"
       > </a
-      ><a name="11980" href="2016-03-01-insertion-sort-in-agda.html#3909" class="InductiveConstructor"
+      ><a name="11980" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3909" class="InductiveConstructor"
       >&#8818;&#8868;</a
       ><a name="11982"
       >
       </a
-      ><a name="11989" href="2016-03-01-insertion-sort-in-agda.html#11857" class="Function"
+      ><a name="11989" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11857" class="Function"
       >&#8818;-trans</a
       ><a name="11996"
       > </a
       ><a name="11997" class="Symbol"
       >(</a
-      ><a name="11998" href="2016-03-01-insertion-sort-in-agda.html#3932" class="InductiveConstructor"
+      ><a name="11998" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3932" class="InductiveConstructor"
       >&#8804;-lift</a
       ><a name="12004"
       > </a
-      ><a name="12005" href="2016-03-01-insertion-sort-in-agda.html#12005" class="Bound"
+      ><a name="12005" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12005" class="Bound"
       >p</a
       ><a name="12006" class="Symbol"
       >)</a
@@ -3920,11 +3358,11 @@ it is, and I've simply failed to find it...
       > </a
       ><a name="12008" class="Symbol"
       >(</a
-      ><a name="12009" href="2016-03-01-insertion-sort-in-agda.html#3932" class="InductiveConstructor"
+      ><a name="12009" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3932" class="InductiveConstructor"
       >&#8804;-lift</a
       ><a name="12015"
       > </a
-      ><a name="12016" href="2016-03-01-insertion-sort-in-agda.html#12016" class="Bound"
+      ><a name="12016" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12016" class="Bound"
       >q</a
       ><a name="12017" class="Symbol"
       >)</a
@@ -3934,7 +3372,7 @@ it is, and I've simply failed to find it...
       >=</a
       ><a name="12020"
       > </a
-      ><a name="12021" href="2016-03-01-insertion-sort-in-agda.html#3932" class="InductiveConstructor"
+      ><a name="12021" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3932" class="InductiveConstructor"
       >&#8804;-lift</a
       ><a name="12027"
       > </a
@@ -3944,23 +3382,25 @@ it is, and I've simply failed to find it...
       >&#8804;-trans</a
       ><a name="12036"
       > </a
-      ><a name="12037" href="2016-03-01-insertion-sort-in-agda.html#12005" class="Bound"
+      ><a name="12037" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12005" class="Bound"
       >p</a
       ><a name="12038"
       > </a
-      ><a name="12039" href="2016-03-01-insertion-sort-in-agda.html#12016" class="Bound"
+      ><a name="12039" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12016" class="Bound"
       >q</a
       ><a name="12040" class="Symbol"
       >)</a
       >
-</pre><!--{% endraw %}-->
+{% endraw %}
+</pre>
 
 At any rate, once we have our "bubble" function, the implementation of
 the sorting algorithm is trivial---and exactly identical to the
 definition of insertion sort!
 
-<!--{% raw %}--><pre class="Agda">
-  <a name="12235" href="2016-03-01-insertion-sort-in-agda.html#12235" class="Function"
+<pre class="Agda">
+{% raw %}
+  <a name="12235" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12235" class="Function"
       >bubblesort</a
       ><a name="12245"
       > </a
@@ -3968,43 +3408,19 @@ definition of insertion sort!
       >:</a
       ><a name="12247"
       > </a
-      ><a name="12248" class="Symbol"
-      >&#8704;</a
-      ><a name="12249"
-      > </a
-      ><a name="12250" class="Symbol"
-      >{</a
-      ><a name="12251" href="2016-03-01-insertion-sort-in-agda.html#12251" class="Bound"
-      >l</a
-      ><a name="12252"
-      > </a
-      ><a name="12253" href="2016-03-01-insertion-sort-in-agda.html#12253" class="Bound"
-      >n</a
-      ><a name="12254"
-      > </a
-      ><a name="12255" href="2016-03-01-insertion-sort-in-agda.html#12255" class="Bound"
-      >k</a
-      ><a name="12256" class="Symbol"
-      >}</a
-      ><a name="12257"
-      > </a
-      ><a name="12258" class="Symbol"
-      >&#8594;</a
-      ><a name="12259"
-      > </a
-      ><a name="12260" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      ><a name="12260" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7281" class="Datatype"
       >OVec</a
       ><a name="12264"
       > </a
-      ><a name="12265" href="2016-03-01-insertion-sort-in-agda.html#12251" class="Bound"
+      ><a name="12265" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12251" class="Bound"
       >l</a
       ><a name="12266"
       > </a
-      ><a name="12267" href="2016-03-01-insertion-sort-in-agda.html#12253" class="Bound"
+      ><a name="12267" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12253" class="Bound"
       >n</a
       ><a name="12268"
       > </a
-      ><a name="12269" href="2016-03-01-insertion-sort-in-agda.html#12255" class="Bound"
+      ><a name="12269" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12255" class="Bound"
       >k</a
       ><a name="12270"
       > </a
@@ -4020,7 +3436,7 @@ definition of insertion sort!
       >(&#955;</a
       ><a name="12277"
       > </a
-      ><a name="12278" href="2016-03-01-insertion-sort-in-agda.html#12278" class="Bound"
+      ><a name="12278" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12278" class="Bound"
       >l</a
       ><a name="12279"
       > </a
@@ -4028,15 +3444,15 @@ definition of insertion sort!
       >&#8594;</a
       ><a name="12281"
       > </a
-      ><a name="12282" href="2016-03-01-insertion-sort-in-agda.html#7281" class="Datatype"
+      ><a name="12282" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7281" class="Datatype"
       >OVec</a
       ><a name="12286"
       > </a
-      ><a name="12287" href="2016-03-01-insertion-sort-in-agda.html#12278" class="Bound"
+      ><a name="12287" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12278" class="Bound"
       >l</a
       ><a name="12288"
       > </a
-      ><a name="12289" href="2016-03-01-insertion-sort-in-agda.html#12253" class="Bound"
+      ><a name="12289" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12253" class="Bound"
       >n</a
       ><a name="12290"
       > </a
@@ -4047,11 +3463,11 @@ definition of insertion sort!
       ><a name="12293"
       >
   </a
-      ><a name="12296" href="2016-03-01-insertion-sort-in-agda.html#12235" class="Function"
+      ><a name="12296" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12235" class="Function"
       >bubblesort</a
       ><a name="12306"
       > </a
-      ><a name="12307" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      ><a name="12307" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7333" class="InductiveConstructor"
       >[]</a
       ><a name="12309"
       >            </a
@@ -4059,7 +3475,7 @@ definition of insertion sort!
       >=</a
       ><a name="12322"
       > </a
-      ><a name="12323" href="2016-03-01-insertion-sort-in-agda.html#3576" class="InductiveConstructor"
+      ><a name="12323" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3576" class="InductiveConstructor"
       >&#8868;</a
       ><a name="12324"
       > </a
@@ -4067,26 +3483,26 @@ definition of insertion sort!
       >,</a
       ><a name="12326"
       > </a
-      ><a name="12327" href="2016-03-01-insertion-sort-in-agda.html#7333" class="InductiveConstructor"
+      ><a name="12327" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7333" class="InductiveConstructor"
       >[]</a
       ><a name="12329"
       >
   </a
-      ><a name="12332" href="2016-03-01-insertion-sort-in-agda.html#12235" class="Function"
+      ><a name="12332" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12235" class="Function"
       >bubblesort</a
       ><a name="12342"
       > </a
       ><a name="12343" class="Symbol"
       >(</a
-      ><a name="12344" href="2016-03-01-insertion-sort-in-agda.html#12344" class="Bound"
+      ><a name="12344" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12344" class="Bound"
       >x</a
       ><a name="12345"
       > </a
-      ><a name="12346" href="2016-03-01-insertion-sort-in-agda.html#7452" class="InductiveConstructor Operator"
+      ><a name="12346" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7452" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="12347"
       > </a
-      ><a name="12348" href="2016-03-01-insertion-sort-in-agda.html#12348" class="Bound"
+      ><a name="12348" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12348" class="Bound"
       >xs</a
       ><a name="12350" class="Symbol"
       >)</a
@@ -4096,50 +3512,50 @@ definition of insertion sort!
       >=</a
       ><a name="12358"
       > </a
-      ><a name="12359" href="2016-03-01-insertion-sort-in-agda.html#12235" class="Function"
+      ><a name="12359" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12235" class="Function"
       >bubblesort</a
       ><a name="12369"
       > </a
       ><a name="12370" class="Symbol"
       >(</a
-      ><a name="12371" href="2016-03-01-insertion-sort-in-agda.html#11111" class="Function"
+      ><a name="12371" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#11111" class="Function"
       >bubble</a
       ><a name="12377"
       > </a
-      ><a name="12378" href="2016-03-01-insertion-sort-in-agda.html#12344" class="Bound"
+      ><a name="12378" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12344" class="Bound"
       >x</a
       ><a name="12379"
       > </a
-      ><a name="12380" href="2016-03-01-insertion-sort-in-agda.html#12348" class="Bound"
+      ><a name="12380" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12348" class="Bound"
       >xs</a
       ><a name="12382" class="Symbol"
       >)</a
       ><a name="12383"
       >
   </a
-      ><a name="12386" href="2016-03-01-insertion-sort-in-agda.html#12235" class="Function"
+      ><a name="12386" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12235" class="Function"
       >bubblesort</a
       ><a name="12396"
       > </a
       ><a name="12397" class="Symbol"
       >(</a
-      ><a name="12398" href="2016-03-01-insertion-sort-in-agda.html#12398" class="Bound"
+      ><a name="12398" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12398" class="Bound"
       >x</a
       ><a name="12399"
       > </a
-      ><a name="12400" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="12400" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="12401"
       > </a
-      ><a name="12402" href="2016-03-01-insertion-sort-in-agda.html#12402" class="Bound"
+      ><a name="12402" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12402" class="Bound"
       >xs</a
       ><a name="12404"
       > </a
-      ><a name="12405" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="12405" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >by</a
       ><a name="12407"
       > </a
-      ><a name="12408" href="2016-03-01-insertion-sort-in-agda.html#12408" class="Bound"
+      ><a name="12408" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12408" class="Bound"
       >p</a
       ><a name="12409" class="Symbol"
       >)</a
@@ -4149,15 +3565,15 @@ definition of insertion sort!
       >=</a
       ><a name="12412"
       > </a
-      ><a name="12413" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="12413" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10214;</a
       ><a name="12414"
       > </a
-      ><a name="12415" href="2016-03-01-insertion-sort-in-agda.html#12398" class="Bound"
+      ><a name="12415" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12398" class="Bound"
       >x</a
       ><a name="12416"
       > </a
-      ><a name="12417" href="2016-03-01-insertion-sort-in-agda.html#3598" class="InductiveConstructor Operator"
+      ><a name="12417" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#3598" class="InductiveConstructor Operator"
       >&#10215;</a
       ><a name="12418"
       > </a
@@ -4165,26 +3581,27 @@ definition of insertion sort!
       >,</a
       ><a name="12420"
       > </a
-      ><a name="12421" href="2016-03-01-insertion-sort-in-agda.html#12398" class="Bound"
+      ><a name="12421" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12398" class="Bound"
       >x</a
       ><a name="12422"
       > </a
-      ><a name="12423" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="12423" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >&#8759;</a
       ><a name="12424"
       > </a
-      ><a name="12425" href="2016-03-01-insertion-sort-in-agda.html#12402" class="Bound"
+      ><a name="12425" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12402" class="Bound"
       >xs</a
       ><a name="12427"
       > </a
-      ><a name="12428" href="2016-03-01-insertion-sort-in-agda.html#7358" class="InductiveConstructor Operator"
+      ><a name="12428" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#7358" class="InductiveConstructor Operator"
       >by</a
       ><a name="12430"
       > </a
-      ><a name="12431" href="2016-03-01-insertion-sort-in-agda.html#12408" class="Bound"
+      ><a name="12431" href="{% endraw %}{% post_url 2016-03-01-insertion-sort-in-agda %}{% raw %}#12408" class="Bound"
       >p</a
       >
-</pre><!--{% endraw %}-->
+{% endraw %}
+</pre>
 
 This does lead to an interesting point: how do you know that what
 you've implemented is actually what you *wanted* to implement?

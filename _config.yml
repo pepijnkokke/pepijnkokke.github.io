@@ -34,7 +34,6 @@ kramdown:
   hard_wrap: false
 
 gems    : ['jekyll-paginate']
-include : ['sf']
 exclude :
   - 'Gemfile'
   - 'Gemfile.lock'
