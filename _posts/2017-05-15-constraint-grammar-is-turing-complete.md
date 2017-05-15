@@ -1,49 +1,62 @@
 ---
-title      : "Constraint Grammar is Turing Complete"
+title      : "VISL CG-3 is the new assembler"
 date       : 2017-05-15 12:00:00
 categories : [compling]
 tags       : [constraint grammar]
 ---
 
-This post is a continuation of *[Constraint Grammar can count!]({% post_url 2016-03-16-constraint-grammar-can-count %})*, in which I talked about the expressiveness of constraint grammar. 
-Now, for most of that post, whenever I said "constraint grammar" I actually meant the fragment which only uses the `REMOVE` rule, with a few concessions here and there. The reason for this is that the full version of VISL CG-3 has commands such as `EXTERNAL`, which allow you to call any other program. This obviously simplifies the question of expressiveness---can we simulate a Turing machine? Yes, by calling a Turing machine. 
-However, I always had the suspicion that I'd be pretty easy to simulate a Turing machine using only the `ADDCOHORT` and `REMCOHORT` commands, treating the list of cohorts as the Turing machine's tape---and I don't think I was the only one to harbour such suspicions. 
-If we had such a program, this would prove that using only the `ADDCOHORT` and `REMCOHORT` commands, VISL CG-3 is Turing complete---given that the VISL CG-3 implementation itself is a pretty decent proof that we can run constraint grammars on a Turing machine. 
-So last week I decided to finally work out the details. Turns out, it is.
+This post is a continuation of *[Constraint Grammar can count!]({% post_url 2016-03-16-constraint-grammar-can-count %})*, in which I talked a bunch about how expressive constraint grammar is. 
+Now, for most of that post, what I actually meant was the fragment of constraint grammar where you only use the `REMOVE` rule[^ext]. 
+However, I always had the suspicion that I'd be pretty easy to simulate a Turing machine using only the `ADDCOHORT` and `REMCOHORT` commands, treating the list of cohorts as the Turing machine's tape---and I don't think I was the only one to feel that way.
 
-For this post, we'll encode the first Turing machine program I could find as a constraint grammar using only `ADDCOHORT` and `REMCOHORT`[^add], and explain the general principle as we go. But first, I should probably briefly go over how a Turing machine works---though I hope you'll forgive me if I'm a little informal. If you don't want to read through a whole bunch about Turing machines, it's probably best to skip right to [the meat](#constraint-grammar-turing-machines).
+Now, this would be wonderful news. It would prove that `ADDCOHORT` and `REMCOHORT` are Turing-complete---given that VISL CG-3 itself is a pretty decent proof that we can run constraint grammars on a universal computer. Not only that, but VISL CG-3 is an extremely optimized piece of software---so the fact that we could compile *any Turing machine* to VISL CG-3 would be great news for the HPC community[^oso].
+
+With all this in mind, I decided to finally work out the details of this compiler I had had tumbling around in my brain for the past months. Turns out, it's kinda nice.
+
+For this post, we'll encode the first Turing machine program I could find, using a quick search, as a constraint grammar, using only `ADDCOHORT` and `REMCOHORT`[^add]
+I'll try to explain the general principle as we go. 
+But first, I should probably briefly go over how a Turing machine works---though I hope you'll forgive me if I'll be a little informal. 
+*Heads-up*: If you don't want to read through a whole bunch about Turing machines, it's probably best to skip right to [the meat](#constraint-grammar-turing-machines).
 
 
 # So what's this Turing machine business?
 
-A Turing machine is a tiny machine, which sits whirring away on top of an infinite roll of tape. It has a reading head, a writing head---both hoovering over the same cell of the tape---and a tiny bit of memory---a single number which tells it what "state" it's in, basically a way to remember what it was doing. It was never supposed to be built, but of course someone did: 
+A Turing machine is a tiny machine, which sits whirring away on top of an infinite roll of tape. It has a head, which hoovers over the tape, and reads and writes whatever cell it happens to hoover over. It also has a state. This is basically saying that it can remember what it was doing, but practically speaking this'll be some number. The number of the thing it was supposed to be doing. It was never supposed to be built, but of course someone did: 
 
 ![An actual Turing machine.](https://upload.wikimedia.org/wikipedia/commons/a/ad/Model_of_a_Turing_machine.jpg)
 
-Many people did, actually. Out of everything from [wood and scrap metal](https://www.newscientist.com/blogs/nstv/2011/03/turing-machine-built-from-wood-and-scrap-metal.html), to [Legos](http://www.legoturingmachine.org/lego-turing-machine/), to [artificial muscle](http://dx.doi.org/10.1063/1.4793648).
+Actually, many people have built one. Out of everything from [wood and scrap metal](https://www.newscientist.com/blogs/nstv/2011/03/turing-machine-built-from-wood-and-scrap-metal.html), to [Legos](http://www.legoturingmachine.org/lego-turing-machine/), to [artificial muscle](http://dx.doi.org/10.1063/1.4793648).
 
-Anyway, every Turing machine has a table, which contains its program. At every step, the Turing machine will use its reading head to read the cell it's hoovering over, and check it's memory to see what state it's in, and look those two things up in its table. The table will then tell it what to write---overwriting whatever it just read---what its next state should be, and whether to move the tape one cell to the left or one cell to the right. It'll do this until it enters its stop state. Then---if ever---it stops.
+Anyway. What makes every Turing machine special, and different from the other Turing machines, is that each has it's own unique table, which contains its program.
+At every step, the Turing machine will use its head to read the cell it's hoovering over, and then sorta feel its state, and it will consult the great big (or sometimes small) table of its program.
+The table will then tell it what to do. What it should write over the thing it just read, what its next state should be, and whether it should whirr the tape to the left or to the right.
+It'll do this until the table says it should enter its stop state.
+Then it stops.
+Some Turing machines have faulty tables, which never let it reach a stopping state.
 
-As an example, the first search result for "Turing machine example program" is a machine which increments binary numbers, and it's table looks like this:
+Now, it just so happens that the first search result for "Turing machine example program" on the day I wrote this post was a machine which increments binary numbers, and its table looks like this:
 
 ![Transition function for a Turing machine which computes the binary successor.]({{ "/images/BitSuccTM.png" | prepend: site.baseurl }})
 (Taken from <https://www.cl.cam.ac.uk/projects/raspberrypi/tutorials/turing-machine/four.html>.)
 
 These programs are a little hard to read, so let's go over what the Turing machine will be doing at each of these states. 
 
-The machine expects the input number---the one we want to increment---to be written on the tape at the beginning of the program. However, we don't promise the head of the Turing machine will be pointing right at the beginning of the number. Therefore, state 0 is there to ensure that if we start with the head somewhere in the middle of the number, we move the head left to the beginning. Once we move past the number into blank space, we go to state 1 and move right once back to the beginning of the number. 
+The machine expects its input---that number we're going to increment---to already be written on the tape. However, it doesn't trust us to place its head directly at the beginning of said number. So, state 0 is there so that wherever in the number we put its head, it will move right to the start. 
+Then it moves to state 1.
 
-If you look at the entries for state 2, you see that this does much the same as state 0. Once we've incremented the number---because we want to be nice and well-behaved---we move the head right back to the beginning of the number before stopping.
+If you look at state 2, it does the same thing, except when the head hits the beginning of the number, it stops.
 
-So that means all the real work is done in state 1. What this state does is move the head progressively to the right, overwriting every 1 with a 0, until it reads either a 0 or a blank space. This last one it changes to a 1. A brief check will tell you this increments the number---keeping in mind that these are written from left-to-right instead of the usual right-to-left. For instance, below is the trace for incrementing 11 to 12, writing an `H` before the cell that the machine is currently reading:
+So all the real work is done in state 1. In state 1, the Turing machine is in the business of progressivly moving its head to the right. It will overwrite any 1 it meets with a 0. But if it reads a 0 or a blank cell, it will write a 1 and move to state 2.
+A brief check will tell you this increments the number---though keep in mind that for the machine's convenience the numbers are written from left-to-right instead of the usual right-to-left. 
+Below is the trace for the machine incrementing 11. I've put a 🤖, right before where the head of the machine is:
 
 ``` python
-H "1"   "1"   "0"   "1" # state 0: move to front, state 1
-H "1"   "1"   "0"   "1" # state 1: read 1, write 0, state 1
-  "0" H "1"   "0"   "1" # state 1: read 1, write 0, state 1
-  "0"   "0" H "0"   "1" # state 1: read 0, write 1, state 2
-  "0"   "0"   "1" H "1" # state 2: move to front, stop
-H "0"   "0"   "1"   "1"
+🤖	1	1	0	1 # state 0: move to front, state 1
+🤖	1	1	0	1 # state 1: read 1, write 0, state 1
+	0 🤖	1	0	1 # state 1: read 1, write 0, state 1
+	0	0 🤖	0	1 # state 1: read 0, write 1, state 2
+	0	0	1 🤖	1 # state 2: move to front, stop
+🤖	0	0	1	1
 ```
 
 Great! So now we've got that out of the way, let's have a look at implementing this machine in VISL CG-3, because why not?
@@ -155,6 +168,11 @@ Turns out, everthing works![^cav] If you want to have a go---maybe implement tha
 
 ---
 
+[^ext]: The reason for this is that the full version of VISL CG-3 has commands such as `EXTERNAL`, which allow you to call any other program. This obviously simplifies the question of expressiveness---can we simulate a Turing machine? Yes, by calling a Turing machine. 
+
+[^oso]: No, it wouldn't.
+
 [^add]: Well, those and the `ADD` command---we can theoretically encode our use of `ADD` with `ADDCOHORT`, but it really doesn't get any prettier if we do so.
 
 [^cav]: For the binary successor machine.
+
