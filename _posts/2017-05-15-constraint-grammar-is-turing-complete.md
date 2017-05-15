@@ -5,8 +5,8 @@ categories : [compling]
 tags       : [constraint grammar]
 ---
 
-This post is a continuation of *[Constraint Grammar can count!]({% post_url 2016-03-16-constraint-grammar-can-count %})*, in which I talked a bunch about how expressive constraint grammar is. 
-Now, for most of that post, what I actually meant was the fragment of constraint grammar where you only use the `REMOVE` rule[^ext]. 
+This post is a continuation of *[Constraint Grammar can count!]({% post_url 2016-03-16-constraint-grammar-can-count %})*, in which I talked a bunch about how expressive constraint grammar is.
+Now, for most of that post, what I actually meant was the fragment of constraint grammar where you only use the `REMOVE` rule.
 However, I always had the suspicion that I'd be pretty easy to simulate a Turing machine using only the `ADDCOHORT` and `REMCOHORT` commands, treating the list of cohorts as the Turing machine's tape---and I don't think I was the only one to feel that way.
 
 Now, this would be wonderful news. It would prove that `ADDCOHORT` and `REMCOHORT` are Turing-complete---given that VISL CG-3 itself is a pretty decent proof that we can run constraint grammars on a universal computer. Not only that, but VISL CG-3 is an extremely optimized piece of software---so the fact that we could compile *any Turing machine* to VISL CG-3 would be great news for the HPC community[^oso].
@@ -14,14 +14,14 @@ Now, this would be wonderful news. It would prove that `ADDCOHORT` and `REMCOHOR
 With all this in mind, I decided to finally work out the details of this compiler I had had tumbling around in my brain for the past months. Turns out, it's kinda nice.
 
 For this post, we'll encode the first Turing machine program I could find, using a quick search, as a constraint grammar, using only `ADDCOHORT` and `REMCOHORT`[^add]
-I'll try to explain the general principle as we go. 
-But first, I should probably briefly go over how a Turing machine works---though I hope you'll forgive me if I'll be a little informal. 
+I'll try to explain the general principle as we go.
+But first, I should probably briefly go over how a Turing machine works---though I hope you'll forgive me if I'll be a little informal.
 *Heads-up*: If you don't want to read through a whole bunch about Turing machines, it's probably best to skip right to [the meat](#constraint-grammar-turing-machines).
 
 
 # So what's this Turing machine business?
 
-A Turing machine is a tiny machine, which sits whirring away on top of an infinite roll of tape. It has a head, which hoovers over the tape, and reads and writes whatever cell it happens to hoover over. It also has a state. This is basically saying that it can remember what it was doing, but practically speaking this'll be some number. The number of the thing it was supposed to be doing. It was never supposed to be built, but of course someone did: 
+A Turing machine is a tiny machine, which sits whirring away on top of an infinite roll of tape. It has a head, which hoovers over the tape, and reads and writes whatever cell it happens to hoover over. It also has a state. This is basically saying that it can remember what it was doing, but practically speaking this'll be some number. The number of the thing it was supposed to be doing. It was never supposed to be built, but of course someone did:
 
 ![An actual Turing machine.](https://upload.wikimedia.org/wikipedia/commons/a/ad/Model_of_a_Turing_machine.jpg)
 
@@ -39,23 +39,23 @@ Now, it just so happens that the first search result for "Turing machine example
 ![Transition function for a Turing machine which computes the binary successor.]({{ "/images/BitSuccTM.png" | prepend: site.baseurl }})
 (Taken from <https://www.cl.cam.ac.uk/projects/raspberrypi/tutorials/turing-machine/four.html>.)
 
-These programs are a little hard to read, so let's go over what the Turing machine will be doing at each of these states. 
+These programs are a little hard to read, so let's go over what the Turing machine will be doing at each of these states.
 
-The machine expects its input---that number we're going to increment---to already be written on the tape. However, it doesn't trust us to place its head directly at the beginning of said number. So, state 0 is there so that wherever in the number we put its head, it will move right to the start. 
+The machine expects its input---that number we're going to increment---to already be written on the tape. However, it doesn't trust us to place its head directly at the beginning of said number. So, state 0 is there so that wherever in the number we put its head, it will move right to the start.
 Then it moves to state 1.
 
 If you look at state 2, it does the same thing, except when the head hits the beginning of the number, it stops.
 
 So all the real work is done in state 1. In state 1, the Turing machine is in the business of progressivly moving its head to the right. It will overwrite any 1 it meets with a 0. But if it reads a 0 or a blank cell, it will write a 1 and move to state 2.
-A brief check will tell you this increments the number---though keep in mind that for the machine's convenience the numbers are written from left-to-right instead of the usual right-to-left. 
+A brief check will tell you this increments the number---though keep in mind that for the machine's convenience the numbers are written from left-to-right instead of the usual right-to-left.
 Below is the trace for the machine incrementing 11. I've put a 🤖, right before where the head of the machine is:
 
 ``` python
 🤖	1	1	0	1 # state 0: move to front, state 1
 🤖	1	1	0	1 # state 1: read 1, write 0, state 1
-	0 🤖	1	0	1 # state 1: read 1, write 0, state 1
-	0	0 🤖	0	1 # state 1: read 0, write 1, state 2
-	0	0	1 🤖	1 # state 2: move to front, stop
+    0 🤖	1	0	1 # state 1: read 1, write 0, state 1
+    0	0 🤖	0	1 # state 1: read 0, write 1, state 2
+    0	0	1 🤖	1 # state 2: move to front, stop
 🤖	0	0	1	1
 ```
 
@@ -157,22 +157,21 @@ ADDCOHORT ("<Cell>" "_")
 
 The first of these rules adds a blank cell at the beginning if the state cohort is the *first* cohort. The second adds a blank cell at the end if the state cohort is the second-to-last cohort---because, remember, we are reading the cell right after the cohort.
 
-Now if you're thinking "VISL CG-3 is known for being fast; I can't wait to compile all my code to it!" then I have to tell you---way ahead of you. I've implemented this TM to CG compile as a small Haskell library, in addition to a small Turing machine interpreter, so you can really see just *how* much time you're saving. 
+Now if you're thinking "VISL CG-3 is known for being fast; I can't wait to compile all my code to it!" then I have to tell you---way ahead of you. I've implemented this TM to CG compile as a small Haskell library, in addition to a small Turing machine interpreter, so you can really see just *how* much time you're saving.
 I've also implemented my example machine, the binary successor function, and wrote a set of QuickCheck functions which compare:
 
   - Haskell's `(+1)`;
-  - the interpreted binary successor machine; and 
-  - the compiled binary successor in VISL CG-3. 
-  
+  - the interpreted binary successor machine; and
+  - the compiled binary successor in VISL CG-3.
+
 Turns out, everthing works![^cav] If you want to have a go---maybe implement that sorting algorithm so you can *really* do a speed comparison---the library is available [on my Github](https://github.com/pepijnkokke/cgtm), and you can get VISL CG-3 [on the internet](http://beta.visl.sdu.dk/cg3/chunked/installation.html).
 
 ---
 
-[^ext]: The reason for this is that the full version of VISL CG-3 has commands such as `EXTERNAL`, which allow you to call any other program. This obviously simplifies the question of expressiveness---can we simulate a Turing machine? Yes, by calling a Turing machine. 
+[^ext]: The reason for this is that the full version of VISL CG-3 has commands such as `EXTERNAL`, which allow you to call any other program. This obviously simplifies the question of expressiveness---can we simulate a Turing machine? Yes, by calling a Turing machine.
 
 [^oso]: No, it wouldn't.
 
 [^add]: Well, those and the `ADD` command---we can theoretically encode our use of `ADD` with `ADDCOHORT`, but it really doesn't get any prettier if we do so.
 
 [^cav]: For the binary successor machine.
-
