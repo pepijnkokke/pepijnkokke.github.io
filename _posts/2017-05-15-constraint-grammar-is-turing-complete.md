@@ -48,15 +48,18 @@ Then it continues in state 1.
 
 **State 2** A brief check with your binary arithmetic will tell you we've already incremented the number in the previous state. So what is state 2 there for? It does the same thing as state 0. For reasons of cleanliness, and being a good bot, it moves its head back to the beginning of the number. And when it has done that, it stops.
 
-Below is the trace for the machine incrementing the number 11 to 12, or `1011` to `1100` in binary. I've put a 🤖, right before where the head of the machine is:
+Below is the trace for the machine incrementing the number 11 to 12, or `1011` to `1100` in binary. I've put a 🤖, to show you where the machine is looking:
 
 ``` python
-🤖	1	1	0	1 # state 0: move to front, state 1
-🤖	1	1	0	1 # state 1: read 1, write 0, state 1
-	0 🤖	1	0	1 # state 1: read 1, write 0, state 1
-	0	0 🤖	0	1 # state 1: read 0, write 1, state 2
-	0	0	1 🤖	1 # state 2: move to front, stop
-🤖	0	0	1	1
+_	_ 🤖	1	1	0	1 # state 0: read 1, write 1, left
+_ 🤖	_	1	1	0	1 # state 0: read _, write _, right
+_	_ 🤖	1	1	0	1 # state 1: read 1, write 0, right
+_	_	0 🤖	1	0	1 # state 1: read 1, write 0, right
+_	_	0	0 🤖	0	1 # state 1: read 0, write 1, left
+_	_	0 🤖	0	1	1 # state 2: read 0, write 0, left
+_	_ 🤖	0	0	1	1 # state 2: read 0, write 0, left
+_ 🤖	_	0	0	1	1 # state 2: read _, write _, right
+_	_ 🤖	0	0	1	1 # stop
 ```
 
 Great! So now we've got that out of the way, let's have a look at implementing this machine in VISL CG-3, because why not?
