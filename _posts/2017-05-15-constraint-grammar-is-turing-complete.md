@@ -41,21 +41,21 @@ Now, it just so happens that the first search result for "Turing machine example
 
 These programs are a little hard to read, so let's go over what the Turing machine will be doing at each of these states.
 
-The machine expects its input---that number we're going to increment---to already be written on the tape. However, it doesn't trust us to place its head directly at the beginning of said number. So, state 0 is there so that wherever in the number we put its head, it will move right to the start.
-Then it moves to state 1.
+**State 0** The machine expects its input---that number we're going to increment---to already be written on the tape. However, it doesn't trust us to place its head directly at the beginning of said number. So, state 0 is there so that wherever in the number we put its head, it will move right to the start.
+Then it continues in state 1.
 
-If you look at state 2, it does the same thing, except when the head hits the beginning of the number, it stops.
+**State 1** All the real work is done in state 1. In state 1, the Turing machine is in the business of progressivly moving its head to the right. It will overwrite any `1` it meets with a `0`. But if it *ever* reads a `0` or a blank, it will write a `1` and continue in state 2.
 
-So all the real work is done in state 1. In state 1, the Turing machine is in the business of progressivly moving its head to the right. It will overwrite any 1 it meets with a 0. But if it reads a 0 or a blank cell, it will write a 1 and move to state 2.
-A brief check will tell you this increments the number---though keep in mind that for the machine's convenience the numbers are written from left-to-right instead of the usual right-to-left.
+**State 2** A brief check with your binary arithmetic will tell you we've already incremented the number in the previous state. So what is state 2 there for? It does the same thing as state 0. For reasons of cleanliness, and being a good bot, it moves its head back to the beginning of the number. And when it has done that, it stops.
+
 Below is the trace for the machine incrementing 11. I've put a 🤖, right before where the head of the machine is:
 
 ``` python
 🤖	1	1	0	1 # state 0: move to front, state 1
 🤖	1	1	0	1 # state 1: read 1, write 0, state 1
-    0 🤖	1	0	1 # state 1: read 1, write 0, state 1
-    0	0 🤖	0	1 # state 1: read 0, write 1, state 2
-    0	0	1 🤖	1 # state 2: move to front, stop
+	0 🤖	1	0	1 # state 1: read 1, write 0, state 1
+	0	0 🤖	0	1 # state 1: read 0, write 1, state 2
+	0	0	1 🤖	1 # state 2: move to front, stop
 🤖	0	0	1	1
 ```
 
