@@ -144,8 +144,17 @@ ADDCOHORT ("<Cell>" "_")
 
 The first of these rules adds a blank cell at the beginning if the state cohort is the *first* cohort. The second adds a blank cell at the end if the state cohort is the second-to-last cohort---because, remember, we are reading the cell right after the cohort.
 
-Of course I implemented all of this in a small Haskell library. There's an implementation of Turing machines in Haskell, an implementation the example Turing machine---the binary successor function---and a set of QuickCheck functions which compare Haskell's `(+1)` to the evaluation of the Turing machine in my code and the evaluation of the *compiled* Turing machine in VISL CG-3. If you want to have a go, the library is available [on my Github](https://github.com/pepijnkokke/cgtm), and you can get VISL CG-3 [here](http://beta.visl.sdu.dk/cg3/chunked/installation.html).
+Now if you're thinking "VISL CG-3 is known for being fast; I can't wait to compile all my code to it!" then I have to tell you---way ahead of you. I've implemented this TM to CG compile as a small Haskell library, in addition to a small Turing machine interpreter, so you can really see just *how* much time you're saving. 
+I've also implemented my example machine, the binary successor function, and wrote a set of QuickCheck functions which compare:
+
+  - Haskell's `(+1)`;
+  - the interpreted binary successor machine; and 
+  - the compiled binary successor in VISL CG-3. 
+  
+Turns out, everthing works![^cav] If you want to have a go---maybe implement that sorting algorithm so you can *really* do a speed comparison---the library is available [on my Github](https://github.com/pepijnkokke/cgtm), and you can get VISL CG-3 [on the internet](http://beta.visl.sdu.dk/cg3/chunked/installation.html).
 
 ---
 
 [^add]: Well, those and the `ADD` command---we can theoretically encode our use of `ADD` with `ADDCOHORT`, but it really doesn't get any prettier if we do so.
+
+[^cav]: For the binary successor machine.

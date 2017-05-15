@@ -1,6 +1,6 @@
 ---
 title      : "Constraint Grammar can count!"
-date       : 2016-03-14 12:00:00
+date       : 2016-03-16 12:00:00
 categories : [compling]
 tags       : [constraint grammar]
 ---
