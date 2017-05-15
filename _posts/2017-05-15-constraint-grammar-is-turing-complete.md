@@ -48,7 +48,7 @@ Then it continues in state 1.
 
 **State 2** A brief check with your binary arithmetic will tell you we've already incremented the number in the previous state. So what is state 2 there for? It does the same thing as state 0. For reasons of cleanliness, and being a good bot, it moves its head back to the beginning of the number. And when it has done that, it stops.
 
-Below is the trace for the machine incrementing 11. I've put a 🤖, right before where the head of the machine is:
+Below is the trace for the machine incrementing the number 11, or `1011` in binary. I've put a 🤖, right before where the head of the machine is:
 
 ``` python
 🤖	1	1	0	1 # state 0: move to front, state 1
