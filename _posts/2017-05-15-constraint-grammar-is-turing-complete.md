@@ -16,7 +16,7 @@ With all this in mind, I decided to finally work out the details of this compile
 For this post, we'll encode the first Turing machine program I could find, using a quick search, as a constraint grammar, using only `ADDCOHORT` and `REMCOHORT`[^add]
 I'll try to explain the general principle as we go.
 But first, I should probably briefly go over how a Turing machine works---though I hope you'll forgive me if I'll be a little informal.
-*Heads-up*: If you don't want to read through a whole bunch about Turing machines, it's probably best to skip right to [the meat](#constraint-grammar-turing-machines).
+*Heads-up*: If you don't want to read through a whole bunch about Turing machines, it's probably best to skip right to [the meat](#visl-cg-3-turing-machines).
 
 
 # So what's this Turing machine business?
@@ -65,7 +65,7 @@ _	_ 🤖	0	0	1	1 # stop
 Great! So now we've got that out of the way, let's have a look at implementing this machine in VISL CG-3, because why not?
 
 
-# Constraint Grammar Turing Machines
+# VISL CG-3 Turing Machines
 
 We're going to represent the Turing machine's tape as a list of cohorts. This means that when we pass in the number 11, we pass VISL CG-3 the following text:
 
