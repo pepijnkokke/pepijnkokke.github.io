@@ -100,9 +100,9 @@ ADD ("<State>" "OLD") ("<State>");
 ADD ("<Cell>" "OLD") ("<Cell>") IF (-1 ("<State>" "OLD"));
 ```
 
-I realise that these are `ADD` commands, and I promised to only use `ADDCOHORT` and `REMCOHORT`, but hear me out. We can simulate this usage of `ADD` by adding a cohort `"<Old>"` *after* the cohort we're marking. However, every time we now select a cohort using e.g. `("<Cell>" "OLD")`, we'd have to change this to `(0 ("<Cell>") LINK 1 ("<Old>"))`... and we'd have to take into account the expected number of `"<Old>"` cohorts, and move every selection by that. Anyway, it wouldn't be pretty. So please allow me this one thing.
+I realise that these are `ADD` commands, and I promised to only use `ADDCOHORT` and `REMCOHORT`, but hear me out. We can simulate this usage of `ADD` by adding a cohort `"<Old>"` *after* the cohort we're marking. However, every time we now select a cohort using e.g. `("<Cell>" "OLD")`, we'd have to change this to `(0 ("<Cell>") LINK 1 ("<Old>"))`... and we'd have to take into account the expected number of `"<Old>"` cohorts, and move every selection by that. Anyway, it wouldn't be pretty. So please allow me this one thing. Ok?
 
-Ok. Back to our scheduled program. Once we've marked our old state cohort and the cell we're reading as old, we can introduce new ones. We will compile every single entry in the Turing machine's program to *two* rules. One which introduces the next state, and one which writes a new cell to replace the old one. For instance, the rule which says that "if we are in state 1, and we read a 1, then we write a 0, move the tape to the right, and continue in state 1," is compiled to the following two rules:
+Back to our scheduled program. Once we've marked our old state cohort and the cell we're reading as old, we can introduce new ones. We will compile every single entry in the Turing machine's program to *two* rules. One which introduces the next state, and one which writes a new cell to replace the old one. For instance, the rule which says that "if we are in state 1, and we read a 1, then we write a 0, move the tape to the right, and continue in state 1," is compiled to the following two rules:
 
 ``` python
 ADDCOHORT ("<State>" "State1")
