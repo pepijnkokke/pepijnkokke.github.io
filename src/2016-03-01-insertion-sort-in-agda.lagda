@@ -72,7 +72,9 @@ module 2016-03-01-insertion-sort-in-agda where
 \begin{code}
 module InsertionSort {c ℓ₁ ℓ₂} {{Ord : DecTotalOrder c ℓ₁ ℓ₂}} where
 
-  open DecTotalOrder {{...}} using (_≤_; _≤?_; total) renaming (trans to ≤-trans)
+  open DecTotalOrder {{...}}
+    using (_≤_; _≤?_; total)
+    renaming (trans to ≤-trans)
   A = DecTotalOrder.Carrier Ord
 \end{code}
 
@@ -227,8 +229,10 @@ really means to perform an insertion:
   insert x []       = x ∷ [] by ≲⊤
   insert x (y ∷ xs) = y ∷ insert x xs
   insert x (y ∷ xs by p) with x ≤? y
-  ... | yes x≤y = x ∷ (y ∷ xs by p) by (≤-lift x≤y)
-  ... | no  x≰y = y ∷ (insert x xs) by (⊓-conserves-≲ (≰-lift x≰y) p)
+  ... | yes x≤y = x ∷ (y ∷ xs by p)
+                  by (≤-lift x≤y)
+  ... | no  x≰y = y ∷ (insert x xs)
+                  by (⊓-conserves-≲ (≰-lift x≰y) p)
 \end{code}
 
 Note that insert takes a vector with *k* unsorted elements, and
@@ -278,8 +282,10 @@ its mind and drops whatever it's holding when it sees a bigger element!
   ... | no  x≰y = y ∷ bubble x xs
   ... | yes x≤y = x ∷ bubble y xs
   bubble x (y ∷ xs by p) with x ≤? y
-  ... | no  x≰y = y ∷ bubble x xs by ⊓-conserves-≲ (≰-lift x≰y) p
-  ... | yes x≤y = x ∷ bubble y xs by ⊓-conserves-≲ x≲y (≲-trans x≲y p)
+  ... | no  x≰y = y ∷ bubble x xs
+                  by ⊓-conserves-≲ (≰-lift x≰y) p
+  ... | yes x≤y = x ∷ bubble y xs
+                  by ⊓-conserves-≲ x≲y (≲-trans x≲y p)
     where
       x≲y = ≤-lift x≤y
 \end{code}
