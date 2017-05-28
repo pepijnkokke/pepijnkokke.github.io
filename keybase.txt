@@ -1,0 +1,54 @@
+==================================================================
+https://keybase.io/wen
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://wenkokke.github.io
+  * I am wen (https://keybase.io/wen) on keybase.
+  * I have a public key ASDGrBG6vQXq3xYQEocI-PSLS6yli9zR3hLMpoYidQQz2go
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "010148dde7c32da72188a0a35a3df9e103f402975ff05b4925f066c61a51b2db26720a",
+            "host": "keybase.io",
+            "kid": "0120c6ac11babd05eadf1610128708f8f48b4baca58bdcd1de12cca68622750433da0a",
+            "uid": "f741046fdac8702d179fc5f2f45fd019",
+            "username": "wen"
+        },
+        "service": {
+            "hostname": "wenkokke.github.io",
+            "protocol": "https:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "client": {
+        "name": "keybase.io go client",
+        "version": "1.0.23"
+    },
+    "ctime": 1495977604,
+    "expire_in": 504576000,
+    "merkle_root": {
+        "ctime": 1495977591,
+        "hash": "fcaa97d610d2b47f71665b9be2f3dc5d68368cd6acff578b3268b9a2c30f7d19a4935baa1d44995ccc4163bfc17e780ee799a236b71bb547cedc67fcdf6685ca",
+        "seqno": 1123208
+    },
+    "prev": "450a565a525343613cf032fbfd0004daa4fc2bb6f6c53f9736ecdbdfcfef19b9",
+    "seqno": 23,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgxqwRur0F6t8WEBKHCPj0i0uspYvc0d4SzKaGInUEM9oKp3BheWxvYWTFAvd7ImJvZHkiOnsia2V5Ijp7ImVsZGVzdF9raWQiOiIwMTAxNDhkZGU3YzMyZGE3MjE4OGEwYTM1YTNkZjllMTAzZjQwMjk3NWZmMDViNDkyNWYwNjZjNjFhNTFiMmRiMjY3MjBhIiwiaG9zdCI6ImtleWJhc2UuaW8iLCJraWQiOiIwMTIwYzZhYzExYmFiZDA1ZWFkZjE2MTAxMjg3MDhmOGY0OGI0YmFjYTU4YmRjZDFkZTEyY2NhNjg2MjI3NTA0MzNkYTBhIiwidWlkIjoiZjc0MTA0NmZkYWM4NzAyZDE3OWZjNWYyZjQ1ZmQwMTkiLCJ1c2VybmFtZSI6IndlbiJ9LCJzZXJ2aWNlIjp7Imhvc3RuYW1lIjoid2Vua29ra2UuZ2l0aHViLmlvIiwicHJvdG9jb2wiOiJodHRwczoifSwidHlwZSI6IndlYl9zZXJ2aWNlX2JpbmRpbmciLCJ2ZXJzaW9uIjoxfSwiY2xpZW50Ijp7Im5hbWUiOiJrZXliYXNlLmlvIGdvIGNsaWVudCIsInZlcnNpb24iOiIxLjAuMjMifSwiY3RpbWUiOjE0OTU5Nzc2MDQsImV4cGlyZV9pbiI6NTA0NTc2MDAwLCJtZXJrbGVfcm9vdCI6eyJjdGltZSI6MTQ5NTk3NzU5MSwiaGFzaCI6ImZjYWE5N2Q2MTBkMmI0N2Y3MTY2NWI5YmUyZjNkYzVkNjgzNjhjZDZhY2ZmNTc4YjMyNjhiOWEyYzMwZjdkMTlhNDkzNWJhYTFkNDQ5OTVjY2M0MTYzYmZjMTdlNzgwZWU3OTlhMjM2YjcxYmI1NDdjZWRjNjdmY2RmNjY4NWNhIiwic2Vxbm8iOjExMjMyMDh9LCJwcmV2IjoiNDUwYTU2NWE1MjUzNDM2MTNjZjAzMmZiZmQwMDA0ZGFhNGZjMmJiNmY2YzUzZjk3MzZlY2RiZGZjZmVmMTliOSIsInNlcW5vIjoyMywidGFnIjoic2lnbmF0dXJlIn2jc2lnxEBW7JvmCihmgyY2/3teQIob3ginmOK8FP+jDrs+n6g95lGd0CdPSL1Z9LJntG861wRnmTcxp0MjO+MiIQXq+D4FqHNpZ190eXBlIKRoYXNogqR0eXBlCKV2YWx1ZcQgJOf9n7dJBpTeBkW3Bu3j4YazC6iY5UNdwP3bsaaxqFqjdGFnzQICp3ZlcnNpb24B
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/wen
+
+==================================================================
