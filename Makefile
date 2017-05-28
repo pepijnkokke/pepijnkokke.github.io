@@ -13,6 +13,10 @@ clobber: clean
 serve: clean
 	@ruby -S bundle exec jekyll serve
 
+install:
+	@ruby -S gem install bundler
+	@ruby -S bundle install
+
 guard:
 	@ruby -S bundle exec guard
 
@@ -22,4 +26,4 @@ rake:
 clean:
 	@ruby -S bundle exec jekyll clean
 
-.phony: clean clobber rake guard serve
+.phony: clean clobber rake guard serve install
