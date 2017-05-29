@@ -3,14 +3,14 @@ description      : >-
   Welcome! I'm <span class="tooltip" title="/wɛn/">Wen</span>.
   I study natural language, programming languages and logical languages.
   Basically, all the language...
-url              : 'https://pepijnkokke.github.io'
+url              : 'https://wenkokke.github.io'
 baseurl          : ''
 google_analytics : 'UA-74596735-1'
-disqus_shortname : 'pepijnkokke'
+disqus_shortname : 'wenkokke'
 
 author:
-  name              : 'Pepijn Kokke'
-  github_username   : pepijnkokke
+  name              : 'Wen Kokke'
+  github_username   : wenkokke
 
 defaults:
   -
