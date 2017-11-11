@@ -30,11 +30,11 @@ jan lili pi len lawa loje li kama, lon ma pi kasi suli, la ona li lukin e akesi 
 jan lili pi len lawa loje li sona ala e ni: akesi ni li ike.
 tan ni, la ona li pilin ala ike.
 
-akesi li toki e ni: "tenpo suno kama pona, jan lili pi len lawa loje!"
+akesi li toki e ni: "toki, jan lili pi len lawa loje!"
 
-ona li toki e ni: "tenpo suno kama pona, akesi!"
+ona li toki e ni: "toki, akesi suli!"
 
-"tenpo suno kama lili, la sina tawa seme?"
+"tenpo suno kama, la sina tawa seme?"
 
 "tawa tomo pi mama mama mi!"
 
@@ -52,7 +52,7 @@ tomo ona li lon anpa kasi kiwen suli mute.
 mi pilin wawa e ni: sina sona e ni."
 
 akesi ni toki e ni, lon lawa: 
-"ona li jan lili suwi, pona moku a!
+"ona li jan lili suwi, li pona moku a!
 ona li pona suli tawa mi.
 mama mama ona li pona lili taso.
 taso mi wile moku e jan tu!
@@ -64,9 +64,9 @@ akesi ni li toki e ni:
 kasi kule li lukin pona!
 tan seme, la sina lukin ala?
 sina kute ala e ni: suwi, la waso lili li kalama musi!
-sina tawa wawa, sama sina tawa tomo sona.
-taso ale lon ma pi kasi suli li pona.
-sina taso li ala."
+sina tawa noka wawa, sama sina tawa tomo sona.
+ale lon ma pi kasi suli li pona.
+taso sina li lukin ala e ni."
 
 jan lili pi len lawa loje li lukin.
 ona li lukin e linja suno, la ona li toki e ni, lon lawa:
@@ -75,8 +75,8 @@ tenpo ni li tenpo suno kama lili.
 tan ni, la mi kama e tomo pi mama mama mi, la tenpo suno kama."
 
 tan ni, la ona li tawa noka wawa, lon ma pi kasi suli, tawa ni:
-ona li wile kama lukin e kasi kule.
-tenpo ali, la ona li kama lukin e kasi kule, la ona li lukin e kasi kule kin pi lukin pona mute, li tawa ni.
+ona li wile kama lukin e kasi kule, li kama jo e ni.
+tenpo ali, la ona li kama lukin en kama jo e kasi kule, la ona li lukin e kasi kule mute, li tawa ni.
 ona li tawa ma pi kasi suli insa.
 ona li tawa ma pi kasi suli insa mute...
 
@@ -86,7 +86,7 @@ akesi ni li kalama lupa.
 mama mama li toki e ni: 
 "jan seme li lon ni?"
 
-akesi mu "awu" li toke e ni: 
+akesi mu "awu" li toki e ni: 
 "jan lili pi len lawa loje!
 mi kama jo e pan suwi e telo nasa lojo!"
 
@@ -96,7 +96,7 @@ mi wawa ala, li ken ala tawa."
 akesi ni li open e lupa, li toki ala, li tawa e supa lape pi mama mama, li moku moli e ona.
 akesi ni li len e len sijelo pi mama mama e len lawa ona, li pini e len lupa, li lape, lon supa lape.
 
-tenpo ni, la jan lili pi len lawa loje li jo kasi kule.
+tenpo ni, la jan lili pi len lawa loje li jo kasi kule mute.
 ona li toki e ni, lon lawa: "a! mama mama mi! o mi tawa!"
 lupa tomo li open tan, la ona li pilin wawa.
 ona li tawa e tomo insa, li pilin nasa.
@@ -109,7 +109,7 @@ ona li open e len lupa, li tawa supa lape.
 supa lape lon ni la, mama mama ona li lape, li lukin nasa mute.
 
 jan lili pi len lawa loje li toki e ni:
-"a! mama mama mi li jo nena kute suli mute!"
+"a! mama mama mi li jo e nena kute suli mute!"
 
 toki li ni: "mi ken kute e sina pona mute la!"
 
