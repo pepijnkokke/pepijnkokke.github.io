@@ -19,7 +19,7 @@ tenpo suno kama, la sina kama e tomo pi mama mama sina.
 sina tawa, la o tawa noka pona, li kalama ala.
 sina awen, lon nasin.
 sina awen ala lon nasin, la sina ken kama anpa, li pakala e poki.
-ni kama, la mama mama sina li jo e ala.
+ni li kama, la mama mama sina li jo e ala.
 sina kama, lon tomo, la o toki e ni: 
 'toki! tenpo suno kama pona, mama mama mi!'"
 
