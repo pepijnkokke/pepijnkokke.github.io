@@ -93,13 +93,13 @@ mi kama jo e pan suwi e telo nasa lojo!"
 "o open e lupa!
 mi wawa ala, li ken ala tawa."
 
-akesi ni li open e lupa, li toki ala, li tawa e supa lape pi mama mama, li moku moli e ona.
+akesi ni li open e lupa, li toki ala, li tawa supa lape pi mama mama, li moku moli e ona.
 akesi ni li len e len sijelo pi mama mama e len lawa ona, li pini e len lupa, li lape, lon supa lape.
 
 tenpo ni, la jan lili pi len lawa loje li jo kasi kule mute.
 ona li toki e ni, lon lawa: "a! mama mama mi! o mi tawa!"
 lupa tomo li open tan, la ona li pilin wawa.
-ona li tawa e tomo insa, li pilin nasa.
+ona li tawa tomo insa, li pilin nasa.
 tan ni, la ona li toki e ni, tawa ona:
 "a! tenpo suno ni, la mi pilin nasa.
 tenpo ante, la mi lon mama mama, la mi pilin pona mute."
@@ -130,3 +130,5 @@ tenpo toki pini, la akesi mu "awu" li tawa wawa tan supa lape, li moku moli e ja
 tenpo moku pini, la akesi ni li tawa supa lape, li open e lape, li open e kalama lape mute.
 
 tenpo ale, la akesi mu "awu" li pilin pona mute.
+
+pini.
