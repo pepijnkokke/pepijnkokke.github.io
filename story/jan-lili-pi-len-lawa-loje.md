@@ -13,13 +13,15 @@ tenpo suno ni, la mama ona li toki e ni:
 pan suwi en poki pi telo nasa loje li lon.
 o tawa! o pana e ijo ni, tawa mama mama sina!
 ona li sijelo ike li wawa ala.
-ijo ni, la ona li kama pona."
-"tenpo seli kama, la o tawa pini.
+ijo ni, la ona li kama pona.
+mi wile e ni: 
+tenpo suno kama, la sina kama e tomo pi mama mama sina.
 sina tawa, la o tawa noka pona, li kalama ala.
 sina awen, lon nasin.
 sina awen ala lon nasin, la sina ken kama anpa, li pakala e poki.
 ni kama, la mama mama sina li jo e ala.
-sina kama, lon tomo, la o toki e ni: "toki! tenpo suno kama pona, mama mama!"
+sina kama, lon tomo, la o toki e ni: 
+'toki! tenpo suno kama pona, mama mama mi!'"
 
 jan lili pi len lawa loje li toki e ni: "pona, mama!"
 
