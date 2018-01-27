@@ -1,4 +1,4 @@
----
+f---
 title        : "Breadboxes, Plenty Questions and Distributional Semantics"
 date         : 2016-03-21 12:00:00
 categories   : [compling]
@@ -138,7 +138,7 @@ Breadbox:
     <div id="breadbox-input"></div>
   </div>
 </div>
-([Click here](https://breadbox-pepijnkokke.rhcloud.com) if the above version is not working.)
+(Unfortunately, the server that was hosting this game has been taken down.)
 
 So how does it work? The core hypothesis of distributional semantics is
 
