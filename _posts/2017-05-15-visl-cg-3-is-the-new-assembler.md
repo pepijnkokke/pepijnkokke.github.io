@@ -167,7 +167,7 @@ I've also implemented my example machine, the binary successor function, and wro
   - the interpreted binary successor machine; and
   - the compiled binary successor in VISL CG-3.
 
-Turns out, everthing works![^cav] If you want to have a go---maybe implement that sorting algorithm so you can *really* do a speed comparison---the library is available [on my Github](https://github.com/pepijnkokke/cgtm), and you can get VISL CG-3 [on the internet](http://beta.visl.sdu.dk/cg3/chunked/installation.html).
+Turns out, everthing works![^cav] If you want to have a go---maybe implement that sorting algorithm so you can *really* do a speed comparison---the library is available [on my Github](https://github.com/wenkokke/cgtm), and you can get VISL CG-3 [on the internet](http://beta.visl.sdu.dk/cg3/chunked/installation.html).
 
 ---
 

@@ -2,9 +2,9 @@ name:                unlit
 version:             0.1.0.0
 synopsis:            Script which unlits Markdown code.
 license:             MIT
-author:              Pepijn Kokke
-maintainer:          pepijn.kokke@gmail.com
-copyright:           2016 Pepijn Kokke
+author:              Wen Kokke
+maintainer:          wen.kokke@gmail.com
+copyright:           2016 wen Kokke
 category:            Language
 build-type:          Simple
 cabal-version:       >=1.10
