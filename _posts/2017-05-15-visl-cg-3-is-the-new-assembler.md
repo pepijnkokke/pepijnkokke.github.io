@@ -25,7 +25,7 @@ A Turing machine is a tiny machine, which sits whirring away on top of an infini
 
 ![An actual Turing machine.](https://upload.wikimedia.org/wikipedia/commons/a/ad/Model_of_a_Turing_machine.jpg)
 
-Actually, many people have built one. Out of everything from [wood and scrap metal](https://www.newscientist.com/blogs/nstv/2011/03/turing-machine-built-from-wood-and-scrap-metal.html), to [Legos](http://www.legoturingmachine.org/lego-turing-machine/), to [artificial muscle](http://dx.doi.org/10.1063/1.4793648).
+Actually, many people have built one. Out of everything from [wood and scrap metal](https://web.archive.org/web/20150924052601/https://www.newscientist.com/blogs/nstv/2011/03/turing-machine-built-from-wood-and-scrap-metal.html), to [Legos](http://www.legoturingmachine.org/lego-turing-machine/), to [artificial muscle](http://dx.doi.org/10.1063/1.4793648).
 
 Anyway. What makes every Turing machine special is that each has it's own unique table, which contains its own unique program.
 At every step, the Turing machine will use its head to read the cell it's hoovering over, and then sorta feel its state, and it will consult the great big (or sometimes small) table of its program.
