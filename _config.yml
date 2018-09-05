@@ -39,7 +39,6 @@ include :
 exclude :
   - 'Gemfile'
   - 'Gemfile.lock'
-  - 'Rakefile'
   - '*.lagda'
   - '*.agdai'
   - '*.lhs'
