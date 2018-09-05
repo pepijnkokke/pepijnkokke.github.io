@@ -79,10 +79,12 @@ beast. For this reason, we'll use a *list*:[^imports]
   open import Data.Nat             using (ℕ; suc; zero)
   open import Data.Fin             using (Fin; suc; zero)
   open import Data.List            using (List; _∷_; []; _++_)
-  open import Data.List.Any        using (module Membership; here; there)
   open import Function.Equivalence using (_⇔_; id; map; equivalence)
+
+  open import Data.List.Any
+  open import Data.List.Membership.Propositional
+  open import Data.List.Relation.Sublist.Extensional.Propositional
   open import Relation.Binary.PropositionalEquality
-  open Membership (setoid Type)    using (_∈_; _⊆_)
 \end{code}
 </div>
 \begin{code}
@@ -335,13 +337,15 @@ module Semantics (Atom : Set) {{InterpretAtom : Interpret Atom Set}} where
   open Syntax Atom
   open import Data.Empty           using (⊥-elim)
   open import Data.List            using (List; _∷_; []; map)
-  open import Data.List.Any        using (module Membership; here; there)
   open import Function             using (_∘_)
   open import Function.Equality    using (_⟨$⟩_)
   open import Function.Equivalence using (module Equivalence)
-  open import Relation.Binary.PropositionalEquality
-  open Membership (setoid Type)    using (_∈_; _⊆_)
   open Equivalence                 using (to; from)
+
+  open import Data.List.Any
+  open import Data.List.Membership.Propositional
+  open import Data.List.Relation.Sublist.Extensional.Propositional
+  open import Relation.Binary.PropositionalEquality
 \end{code}
 </div>
 

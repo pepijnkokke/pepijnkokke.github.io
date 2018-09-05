@@ -33,7 +33,6 @@ kramdown:
   input: GFM
   hard_wrap: false
 
-gems    : ['jekyll-paginate']
 include : 
   - 'keybase.txt'
   - 'story/*.pdf'
