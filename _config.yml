@@ -13,7 +13,6 @@ author:
   github_username   : wenkokke
 
 defaults:
-  -
     scope:
       path: ''
       type: 'posts'
@@ -25,13 +24,6 @@ destination : _site
 paginate    : 10
 permalink   : /:year/:title/
 markdown    : kramdown
-kramdown:
-  math_engine: mathjax
-highlighter : rouge
-
-kramdown:
-  input: GFM
-  hard_wrap: false
 
 include : 
   - 'keybase.txt'
