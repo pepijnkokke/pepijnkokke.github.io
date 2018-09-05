@@ -31,6 +31,12 @@ include :
 exclude :
   - 'Gemfile'
   - 'Gemfile.lock'
+  - 'Makefile'
+  - 'LICENSE'
+  - '.travis.yml'
+  - 'stack.yaml'
+  - 'misc/'
+  - 'src/'
   - '*.lagda'
   - '*.agdai'
   - '*.lhs'
@@ -39,4 +45,3 @@ exclude :
   - '*.o'
   - '*.cabal'
   - '*.sh'
-  - 'stack.yaml'
