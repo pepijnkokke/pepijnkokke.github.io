@@ -4,7 +4,6 @@ date         : 2016-03-01 12:00:00
 categories   : [compsci]
 tags         : [agda]
 extra-script : [agda-extra-script.html]
-extra-style  : [agda-extra-style.html]
 ---
 
 I wrote this code a long time ago, and verifiying the correctness of

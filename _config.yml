@@ -19,6 +19,9 @@ defaults:
     values:
         layout: 'post'
 
+sass:
+    sass_dir : _sass
+    style: compressed
 
 destination : _site
 paginate    : 10

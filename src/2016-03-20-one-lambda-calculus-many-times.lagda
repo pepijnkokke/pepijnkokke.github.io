@@ -5,7 +5,6 @@ categories    : [compsci]
 tags          : [agda]
 hide-implicit : true
 extra-script : [agda-extra-script.html]
-extra-style  : [agda-extra-style.html]
 ---
 
 Previously, I mentioned that one of the most common posts on Agda blogs

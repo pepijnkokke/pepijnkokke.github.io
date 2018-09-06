@@ -36,7 +36,7 @@ Some Turing machines have faulty tables, which never let it reach a stopping sta
 
 Now, it just so happens that the first search result for "Turing machine example program" on the day I wrote this post was a machine which increments binary numbers, and its table looked like this:
 
-![Transition function for a Turing machine which computes the binary successor.]({{ "/images/BitSuccTM.png" | prepend: site.baseurl }})
+![Transition function for a Turing machine which computes the binary successor.]({{ "/assets/images/BitSuccTM.png" | prepend: site.baseurl }})
 (Taken from <https://www.cl.cam.ac.uk/projects/raspberrypi/tutorials/turing-machine/four.html>.)
 
 These programs are a little hard to read, so let's go over what the Turing machine will be doing at each of these states.
