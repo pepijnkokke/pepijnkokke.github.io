@@ -35,7 +35,7 @@ script:
 
 before_deploy:
 - make clean
-- rm -rf bundle/ vendor/ Gemfile Gemfile.lock LICENSE Makefile misc/ pubs/ src/
+- rm -rf bundle/ vendor/ Gemfile Gemfile.lock LICENSE Makefile misc/ src/
 
 deploy:
   provider: pages
