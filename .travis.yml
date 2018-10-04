@@ -22,6 +22,10 @@ addons:
       - libgmp-dev
       - libicu-dev
 
+branches:
+  only:
+  - dev
+
 before_install:
 # Download and unpack the stack executable
 - mkdir -p ~/.local/bin
