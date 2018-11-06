@@ -37,6 +37,12 @@ extra-script : [pubs-extra-script.html]
                 <div class="templates"></div>
             </div>
         </div>
+        <div class="section @pub">
+            <h1>Public Houses</h1>
+            <div class="sort location" extra="DESC number">
+                <div class="templates"></div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -76,6 +82,9 @@ extra-script : [pubs-extra-script.html]
                 </span>
                 <span class="if BIBTEXTYPEKEY==@MASTERSTHESIS">
                     Master's thesis.
+                </span>
+                <span class="if BIBTEXTYPEKEY==@PUB">
+                    <span class="if location"><span class="location"></span>,</span>
                 </span>
                 <span class="if month"><span class="month"></span>,</span>
                 <span class="if year"><span class="year"></span>.</span>
