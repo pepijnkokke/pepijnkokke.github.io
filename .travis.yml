@@ -11,7 +11,7 @@ cache:
   - $HOME/.stack
   - $HOME/.agda
   - $HOME/.local
-  - $HOME/agda-master
+  - $HOME/agda-$AGDA_VERSION
   - $HOME/agda-stdlib-master
   - $HOME/agda2html-master
 
@@ -22,10 +22,6 @@ addons:
       - libgmp-dev
       - libicu-dev
 
-branches:
-  only:
-  - dev
-
 before_install:
 # Download and unpack the stack executable
 - mkdir -p ~/.local/bin
@@ -35,11 +31,17 @@ before_install:
 - make travis-setup
 
 script:
+- agda --version
+- agda2html --version
 - make
 
 before_deploy:
 - make clean
 - rm -rf bundle/ vendor/ Gemfile Gemfile.lock LICENSE Makefile misc/ src/
+
+branches:
+  only:
+  - dev
 
 deploy:
   provider: pages
