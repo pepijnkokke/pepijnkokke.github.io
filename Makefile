@@ -87,11 +87,9 @@ travis-install-agda:\
 
 $(HOME)/.agda/defaults:
 	echo "standard-library" >> $(HOME)/.agda/defaults
-	echo "plfa" >> $(HOME)/.agda/defaults
 
 $(HOME)/.agda/libraries:
 	echo "$(HOME)/agda-stdlib-master/standard-library.agda-lib" >> $(HOME)/.agda/libraries
-	echo "$(PLFA_DIR)/plfa.agda-lib" >> $(HOME)/.agda/libraries
 
 $(HOME)/.local/bin/agda:
 	curl -L https://github.com/agda/agda/archive/v$(AGDA_VERSION).zip -o $(HOME)/agda-$(AGDA_VERSION).zip
