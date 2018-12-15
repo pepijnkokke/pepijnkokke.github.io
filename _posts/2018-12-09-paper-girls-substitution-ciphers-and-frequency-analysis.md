@@ -442,7 +442,7 @@ Hope I'll find one of those in one of the later books.
 <br />
 
 Wrapping up, what have we learned?
-I guess the important things are that you can pretty easily crack any substitution cypher by boldly making some assumptions about what the language is, and then exploiting letter frequencies from that language... and that you can exploit way more than just *plain* letter freqencies---short words, n-grams, repeated characters, they're all good candidates for frequency analysis.
+I guess the important things are that you can pretty easily crack any substitution cipher by boldly making some assumptions about what the language is, and then exploiting letter frequencies from that language... and that you can exploit way more than just *plain* letter freqencies---short words, n-grams, repeated characters, they're all good candidates for frequency analysis.
 
 Also... *Paper Girls* is fucking rad, go read that shit.
 
