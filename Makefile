@@ -12,7 +12,27 @@ _posts/:
 _posts/%.md: src/%.lagda | _posts/
 	agda2html --verbose --link-to-agda-stdlib --use-jekyll=_posts/ -i $< -o $@ 2>&1 \
 		| sed '/^Generating.*/d; /^Warning\: HTML.*/d; /^reached from the.*/d; /^\s*$$/d'
-# Travis Setup (install Agda, the Agda standard library, agda2html, acknowledgements, etc.)
+
+
+build: AGDA2HTML_FLAGS += --link-to-agda-stdlib
+build: $(markdown)
+	ruby -S bundle exec jekyll build --incremental
+
+.phony: build
+
+
+serve:
+	ruby -S bundle exec jekyll serve --incremental
+
+.phony: serve
+
+
+clean:
+ifneq ($(strip $(agdai)),)
+	rm $(agdai)
+endif
+
+.phony: clean
 
 
 travis-setup:\
