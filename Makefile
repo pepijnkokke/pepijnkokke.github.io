@@ -13,6 +13,10 @@ _posts/%.md: src/%.lagda | _posts/
 	agda2html --verbose --link-to-agda-stdlib --use-jekyll=_posts/ -i $< -o $@ 2>&1 \
 		| sed '/^Generating.*/d; /^Warning\: HTML.*/d; /^reached from the.*/d; /^\s*$$/d'
 
+build-offline: $(markdown)
+	ruby -S bundle exec jekyll build --incremental
+
+.phony: build-offline
 
 build: AGDA2HTML_FLAGS += --link-to-agda-stdlib
 build: $(markdown)
@@ -20,12 +24,10 @@ build: $(markdown)
 
 .phony: build
 
-
 serve:
 	ruby -S bundle exec jekyll serve --incremental
 
 .phony: serve
-
 
 clean:
 ifneq ($(strip $(agdai)),)
@@ -33,6 +35,14 @@ ifneq ($(strip $(agdai)),)
 endif
 
 .phony: clean
+
+
+clobber:
+ifneq ($(strip $(markdown)),)
+	rm $(markdown)
+endif
+
+.phony: clobber
 
 
 travis-setup:\
