@@ -11,10 +11,10 @@ IF YOU'RE READING THIS, YOU'RE DOING IT WRONG.
 CLICK THE LINK, READ IT ON MY BLOG.
 IT'LL BE WAY LESs CONFUSING.
 ANYWAY.
-THIS WEEKEND, I PICKED UP A COPY OF PAPER GIRLS, A MYSTERY/SCIENCE FICTION COMIC ABOUT FOUR GIRLS ON A PAPER ROUTE.
+THIS WEeKEND, I PICKED UP A COPY OF PAPER GIRLS, A MYSTERY/SCIENCE FICTION COMIC ABOUT FOUR GIRLS ON A PAPER ROUTE.
 WAIT, YOU CAN'T UNDERSTAND ME?
-OH, FUCK, IT DOESN'T LOOK LIKE IT.
-SORRY, LET ME ADJUST.
+OH, FUCK, DOESN'T LOoK LIKE IT.
+SORrY, LET ME ADJUST.
 </span>
 
 Ah, I'm so sorry, is this any better? Once again, so sorry, I think I've been reading this stuff for too long, think I got carried away... Anyway, I'll take it from the start. So this weekend, I picked up a copy of *[Paper Girls][papergirls]*, a mystery/science fiction comic about four girls on a paper route...
