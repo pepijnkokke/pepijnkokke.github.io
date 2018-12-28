@@ -1,55 +1,3 @@
-@pub{chezphilippe,
-  title     = {Chez Philippe},
-  location  = {Kyōto, Japan},
-  url       = {https://www.facebook.com/chezphilippefsn/},
-}
-@pub{muraya,
-  title     = {村屋},
-  location  = {Kyōto, Japan},
-  url       = {https://kishikorofreee.com/entry/2016/02/07/201832?fbclid=IwAR0S5MQXYzvSm9U-m8gBNumZMpFgqET7Jxyx0-a-R4fG1NvxJjsdyWqvE6U},
-}
-@pub{kafebelgie,
-  title     = {Kafé België},
-  location  = {Utrecht, The Netherlands},
-  url       = {http://www.kafebelgie.nl/},
-}
-@pub{acu,
-  title     = {ACU},
-  location  = {Utrecht, The Netherlands},
-  url       = {https://acu.nl/},
-}
-@pub{deonderbroek,
-  title     = {De Onderbroek},
-  location  = {Nijmegen, The Netherlands},
-  url       = {http://grotebroek.nl/groepen/de-onderbroek/},
-}
-@pub{debijstand,
-  title     = {De Bijstand},
-  location  = {Nijmegen, The Netherlands},
-  url       = {http://www.debijstand.nl/},
-}
-@pub{dagdabar,
-  title     = {Dagda Bar},
-  location  = {Edinburgh, UK},
-  url       = {https://www.facebook.com/thedagdabar/},
-}
-@pub{thebansheelabyrinth,
-  title     = {The Banshee Labyrinth},
-  location  = {Edinburgh, UK},
-  url       = {https://www.thebansheelabyrinth.com/},
-}
-@pub{theauldhoose,
-  title     = {The Auld Hoose},
-  location  = {Edinburgh, UK},
-  url       = {http://theauldhoose.co.uk/},
-}
-@book{kokke2018plfa,
-  author    = {Philip Wadler, Wen Kokke},
-  title     = {Programming Language Foundations in Agda},
-  year      = {2018},
-  month     = oct,
-  url       = {https://plfa.github.io/},
-}
 @article{kokke2019pacmpl,
   author    = {Wen Kokke, Fabrizio Montesi, Marco Peressotti},
   title     = {Better Late Than Never: A fully-abstract semantics for Classical Processes},
@@ -60,6 +8,43 @@
   month     = jan,
   url       = {https://wenkokke.github.io/pubs/popl2019.pdf},
 }
+@article{toledo2014lilt,
+  abstract  = {We introduce a new formal semantic model for
+                  annotating textual entailments that describes
+                  restrictive, intersective, and appositive
+                  modification. The model contains a formally defined
+                  interpreted lexicon, which specifies the inventory
+                  of symbols and the supported semantic operators, and
+                  an informally defined annotation scheme that
+                  instructs annotators in which way to bind words and
+                  constructions from a given pair of premise and
+                  hypothesis to the interpreted lexicon. We explore
+                  the applicability of the proposed model to the
+                  Recognizing Textual Entailment (RTE) 1–4 corpora and
+                  describe a first-stage annotation scheme on which we
+                  based the manual annotation work. The constructions
+                  we annotated were found to occur in 80.65\% of the
+                  entailments in RTE 1–4 and were annotated with
+                  cross-annotator agreement of 68\% on average. The
+                  annotated parts of the RTE corpora are publicly
+                  available for further research. },
+  author    = {Assaf Toledo and Stavroula Alexandropoupou and Sophie Chesney and Sophia Katrenko and Heidi Klockmann and Wen Kokke and Benno Kruit and Yoad Winter},
+  title     = {Towards a Semantic Model for Textual Entailment},
+  booktitle = {Perspectives on Semantic Representations for Textual Inference},
+  volume    = {9},
+  year      = {2014},
+  journal   = {Linguistic Issues in Language Technology},
+  pages     = {117--150},
+  issn      = {1945-3604},
+  url       = {http://csli-lilt.stanford.edu/ojs/index.php/LiLT/issue/view/1},
+}
+@book{kokke2018plfa,
+  author    = {Philip Wadler, Wen Kokke},
+  title     = {Programming Language Foundations in Agda},
+  year      = {2018},
+  month     = oct,
+  url       = {https://plfa.github.io/},
+}
 @inproceedings{kokke2018tlla,
   author    = {Wen Kokke, Fabrizio Montesi, Marco Peressotti},
   title     = {Taking Linear Logic Apart},
@@ -69,26 +54,6 @@
   booktitle = {Workshop on Linearity \& TLLA at FloC'18},
   location  = {Oxford, UK},
 }
-@mastersthesis{kokke2017msc,
-  abstract  = {Process calculi based in logic, such as {\textpi DILL} and CP,
-                  provide a foundation for deadlock-free concurrent programming,
-                  but at the cost of excluding non-determinism and races. We
-                  introduce $CD_{NP}$, which extends CP with a novel account of
-                  non-determinism. Our approach draws on bounded linear logic to
-                  provide a strongly-typed account of standard process calculus
-                  expressions of non-determinism. We show that our extension is
-                  expressive enough to capture many uses of non-determinism in
-                  untyped calculi, such as non-deterministic choice, while
-                  preserving CP's meta-theoretic properties, including deadlock
-                  freedom.},                 
-  author    = {Wen Kokke},
-  title     = {Races in Classical Linear Logic},
-  school    = {University of Edinburgh},
-  year      = {2017},
-  month     = aug,
-  type      = {Master's thesis},
-  url       = {https://wenkokke.github.io/pubs/msc2017.pdf},
-}
 @inproceedings{kokke2017cg,
   author    = {Wen Kokke and Inari Listenmaa},
   title     = {Exploring the Expressivity of Constraint Grammar},
@@ -97,21 +62,6 @@
   url       = {https://wenkokke.github.io/pubs/nodalida2017.pdf},
   booktitle = {Workshop on Constraint Grammar at NoDaLiDa'17},
   location  = {Gothenburg, Sweden},
-}
-@mastersthesis{kokke2016msc,
-  abstract  = {In this thesis, I will discuss the grammar logic {NLQ}, an
-                  extension of the non-associative Lambek calculus based on
-                  Barker and Shan’s (2014) NLCL. For this logic, derivability is
-                  decidable. In addition, it is free of spurious ambiguity, can
-                  analyse scope islands, distinguish between strong and weak
-                  quantifiers, and more.},
-  author    = {Wen Kokke},
-  title     = {{NLQ}: a modular type-logical grammar for quantifier movement, scope islands, and more},
-  school    = {Utrecht University},
-  year      = {2015},
-  month     = dec,
-  type      = {Master's thesis},
-  url       = {https://wenkokke.github.io/pubs/msc2016.pdf},
 }
 @inproceedings{kokke2016lacl,
   year      = {2016},
@@ -250,33 +200,226 @@
   pages     = {21--24},
   url       = {http://dspace.library.uu.nl/handle/1874/306425},
 }
-@article{toledo2014lilt,
-  abstract  = {We introduce a new formal semantic model for
-                  annotating textual entailments that describes
-                  restrictive, intersective, and appositive
-                  modification. The model contains a formally defined
-                  interpreted lexicon, which specifies the inventory
-                  of symbols and the supported semantic operators, and
-                  an informally defined annotation scheme that
-                  instructs annotators in which way to bind words and
-                  constructions from a given pair of premise and
-                  hypothesis to the interpreted lexicon. We explore
-                  the applicability of the proposed model to the
-                  Recognizing Textual Entailment (RTE) 1–4 corpora and
-                  describe a first-stage annotation scheme on which we
-                  based the manual annotation work. The constructions
-                  we annotated were found to occur in 80.65\% of the
-                  entailments in RTE 1–4 and were annotated with
-                  cross-annotator agreement of 68\% on average. The
-                  annotated parts of the RTE corpora are publicly
-                  available for further research. },
-  author    = {Assaf Toledo and Stavroula Alexandropoupou and Sophie Chesney and Sophia Katrenko and Heidi Klockmann and Wen Kokke and Benno Kruit and Yoad Winter},
-  title     = {Towards a Semantic Model for Textual Entailment},
-  booktitle = {Perspectives on Semantic Representations for Textual Inference},
-  volume    = {9},
-  year      = {2014},
-  journal   = {Linguistic Issues in Language Technology},
-  pages     = {117--150},
-  issn      = {1945-3604},
-  url       = {http://csli-lilt.stanford.edu/ojs/index.php/LiLT/issue/view/1},
+@mastersthesis{kokke2017msc,
+  abstract  = {Process calculi based in logic, such as {\textpi DILL} and CP,
+                  provide a foundation for deadlock-free concurrent programming,
+                  but at the cost of excluding non-determinism and races. We
+                  introduce $CD_{NP}$, which extends CP with a novel account of
+                  non-determinism. Our approach draws on bounded linear logic to
+                  provide a strongly-typed account of standard process calculus
+                  expressions of non-determinism. We show that our extension is
+                  expressive enough to capture many uses of non-determinism in
+                  untyped calculi, such as non-deterministic choice, while
+                  preserving CP's meta-theoretic properties, including deadlock
+                  freedom.},                 
+  author    = {Wen Kokke},
+  title     = {Races in Classical Linear Logic},
+  school    = {University of Edinburgh},
+  year      = {2017},
+  month     = aug,
+  type      = {Master's thesis},
+  url       = {https://wenkokke.github.io/pubs/msc2017.pdf},
+}
+@mastersthesis{kokke2016msc,
+  abstract  = {In this thesis, I will discuss the grammar logic {NLQ}, an
+                  extension of the non-associative Lambek calculus based on
+                  Barker and Shan’s (2014) NLCL. For this logic, derivability is
+                  decidable. In addition, it is free of spurious ambiguity, can
+                  analyse scope islands, distinguish between strong and weak
+                  quantifiers, and more.},
+  author    = {Wen Kokke},
+  title     = {{NLQ}: a modular type-logical grammar for quantifier movement, scope islands, and more},
+  school    = {Utrecht University},
+  year      = {2015},
+  month     = dec,
+  type      = {Master's thesis},
+  url       = {https://wenkokke.github.io/pubs/msc2016.pdf},
+}
+@talk{kokke2018abcdtalkdec,
+  title     = {Rusty Variation: Deadlock-free sessions with failure in Rust},
+  location  = {London, UK},
+  month     = dec,
+  year      = {2018},
+  note      = {Talk given at ABCD meeting},
+  url       = {https://wenkokke.github.io/talks/2018-12-17-rusty-variation-or,-deadlock-free-sessions-with-failure-in-rust.pdf},
+}
+@talk{kokke2018ppartalk,
+  title     = {Where the linear lambdas go},
+  location  = {Edinburgh, UK},
+  month     = nov,
+  year      = {2018},
+  note      = {Talk given at PPar Lunch},
+  url       = {https://wenkokke.github.io/talks/2018-11-28-where-the-linear-lambdas-go.pdf},
+}
+@talk{kokke2018tspltalk,
+  title     = {Quantitative: Resources and Types},
+  location  = {Edinburgh, UK},
+  month     = nov,
+  year      = {2018},
+  note      = {Lecture given as part of TSPL},
+  url       = {http://plfa.github.io/Quantitative/},
+}
+@talk{kokke2018cdtpizzatalk,
+  title     = {This talk won't help you steal},
+  location  = {Edinburgh, UK},
+  month     = nov,
+  year      = {2018},
+  note      = {Talk given at CDT Pizza},
+  url       = {https://wenkokke.github.io/talks/2018-10-19-this-talk-wont-help-you-steal.pdf},
+}
+@talk{kokke2018splstalk,
+  title     = {Where the linear lambdas go},
+  location  = {Glasgow, UK},
+  month     = oct,
+  year      = {2018},
+  note      = {Talk given at SPLS},
+  url       = {https://wenkokke.github.io/talks/2018-11-28-where-the-linear-lambdas-go.pdf},
+}
+@talk{kokke2018kutalk,
+  title     = {Where the linear lambdas go},
+  location  = {Lawrence, Kansas},
+  month     = oct,
+  year      = {2018},
+  note      = {Invited talk},
+  url       = {https://wenkokke.github.io/talks/2018-11-28-where-the-linear-lambdas-go.pdf},
+}
+@talk{kokke2018tllatalk,
+  title     = {Taking linear logic apart},
+  location  = {Oxford, UK},
+  month     = jul,
+  year      = {2018},
+  note      = {Talk given at Linearity and TLLA as part of FLoC},
+  url       = {https://wenkokke.github.io/talks/2018-07-07-taking-linear-logic-apart.pdf},
+}
+@talk{kokke2017abcdtalkdec,
+  title     = {Taking apart classical processes},
+  location  = {Edinburgh, UK},
+  month     = dec,
+  year      = {2017},
+  note      = {Talk given at ABCD meeting},
+  url       = {https://wenkokke.github.io/talks/2017-12-18-talking-apart-classical-processes.pdf},
+}
+@talk{kokke2017splstalk,
+  title     = {Give or take: non-determinism, linear logic, and session types},
+  location  = {St. Andrews},
+  month     = mar,
+  year      = {2017},
+  note      = {Talk given at SPLS},
+  url       = {https://wenkokke.github.io/talks/2017-03-22-give-or-take-non-determinism-linear-logic-and-session-types.pdf},
+}
+@talk{kokke2017abcdtalkmar,
+  title     = {Global non-determinism with termination},
+  location  = {Edinburgh, UK},
+  month     = mar,
+  year      = {2017},
+  note      = {Talk given at ABCD meeting},
+  url       = {https://wenkokke.github.io/talks/2017-03-15-global-non-determinism-with-termination.pdf},
+}
+@talk{kokke2017icfpsrc,
+  title     = {Session types and cake},
+  location  = {Oxford, UK},
+  month     = sep,
+  year      = {2017},
+  note      = {Talk given as ICFP SRC Finalist Presentation},
+  url       = {https://wenkokke.github.io/talks/2017-09-06-session-types-and-cake.pdf},
+}
+@talk{kokke2017tspltalk2,
+  title     = {Programming in Agda, part II},
+  location  = {Edinburgh, UK},
+  month     = nov,
+  year      = {2017},
+  note      = {Lecture given as part of TSPL},
+  url       = {https://gist.github.com/wenkokke/fdcd56e73a2ba12088b4876a7bd90c7d#file-lecture2-agda},
+}
+@talk{kokke2017tspltalk1,
+  title     = {Programming in Agda, part I},
+  location  = {Edinburgh, UK},
+  month     = nov,
+  year      = {2017},
+  note      = {Lecture given as part of TSPL},
+  url       = {https://gist.github.com/wenkokke/fdcd56e73a2ba12088b4876a7bd90c7d#file-lecture1-agda},
+}
+@talk{kokke2016lacltalk,
+  title     = {A bunch of things to do with NLλ},
+  location  = {Nancy, France},
+  month     = dec,
+  year      = {2016},
+  note      = {Talk given at LACL},
+  url       = {https://wenkokke.github.io/talks/2016-12-07-a-bunch-of-things-to-do-with-nl%F0%9D%9C%86.pdf},
+}
+@talk{kokke2016tspltalk,
+  title     = {Linear logic and the lambda calculus},
+  location  = {Edinburgh, UK},
+  month     = nov,
+  year      = {2016},
+  note      = {Lecture given as part of TSPL},
+}
+@talk{kokke2015ccstalk2,
+  title     = {Type Theory and NLP},
+  location  = {Utrecht, The Netherlands},
+  month     = dec,
+  year      = {2015},
+  note      = {Talk given at Colloquium CoSc},
+  url       = {https://wenkokke.github.io/talks/2015-12-07-type-theory-and-nlp.pdf},
+}
+@talk{kokke2015tytlestalk,
+  title     = {Type-logical grammars in Agda},
+  location  = {Barcelona, Spain},
+  month     = aug,
+  year      = {2015},
+  note      = {Talk given at TyTLeS as part of ESSLLI},
+  url       = {https://wenkokke.github.io/talks/2015-08-06-type-logical-grammar-in-agda.pdf},
+}
+@talk{kokke2015ccstalk1,
+  title     = {Auto in Agda},
+  location  = {Utrecht, The Netherlands},
+  month     = jun,
+  year      = {2015},
+  note      = {Talk given at Colloquium CoSc},
+  url       = {https://wenkokke.github.io/talks/2015-06-12-auto-in-agda.pdf},
+}
+@pub{chezphilippe,
+  title     = {Chez Philippe},
+  location  = {Kyōto, Japan},
+  url       = {https://www.facebook.com/chezphilippefsn/},
+}
+@pub{muraya,
+  title     = {村屋},
+  location  = {Kyōto, Japan},
+  url       = {https://kishikorofreee.com/entry/2016/02/07/201832?fbclid=IwAR0S5MQXYzvSm9U-m8gBNumZMpFgqET7Jxyx0-a-R4fG1NvxJjsdyWqvE6U},
+}
+@pub{kafebelgie,
+  title     = {Kafé België},
+  location  = {Utrecht, The Netherlands},
+  url       = {http://www.kafebelgie.nl/},
+}
+@pub{acu,
+  title     = {ACU},
+  location  = {Utrecht, The Netherlands},
+  url       = {https://acu.nl/},
+}
+@pub{deonderbroek,
+  title     = {De Onderbroek},
+  location  = {Nijmegen, The Netherlands},
+  url       = {http://grotebroek.nl/groepen/de-onderbroek/},
+}
+@pub{debijstand,
+  title     = {De Bijstand},
+  location  = {Nijmegen, The Netherlands},
+  url       = {http://www.debijstand.nl/},
+}
+@pub{dagdabar,
+  title     = {Dagda Bar},
+  location  = {Edinburgh, UK},
+  url       = {https://www.facebook.com/thedagdabar/},
+}
+@pub{thebansheelabyrinth,
+  title     = {The Banshee Labyrinth},
+  location  = {Edinburgh, UK},
+  url       = {https://www.thebansheelabyrinth.com/},
+}
+@pub{theauldhoose,
+  title     = {The Auld Hoose},
+  location  = {Edinburgh, UK},
+  url       = {http://theauldhoose.co.uk/},
 }
