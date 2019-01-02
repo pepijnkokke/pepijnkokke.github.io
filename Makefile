@@ -35,11 +35,11 @@ ifneq ($(strip $(agdai)),)
 endif
 
 .phony: clean
-
+	bundle exec jekyll clean
 
 clobber:
 ifneq ($(strip $(markdown)),)
-	rm $(markdown)
+	rm -f $(markdown)
 endif
 
 .phony: clobber
