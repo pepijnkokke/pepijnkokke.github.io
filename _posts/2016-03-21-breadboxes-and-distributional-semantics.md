@@ -3,8 +3,6 @@ title        : "Breadboxes, Plenty Questions and Distributional Semantics"
 date         : 2016-03-21 12:00:00
 categories   : [compling]
 tags         : [python, distributional semantics]
-extra-script : breadbox-extra-script.html
-extra-style  : breadbox-extra-style.html
 ---
 
 Quite a while ago, [UnicornPower][UnicornPower] introduced me to a
@@ -126,6 +124,7 @@ Marco Baroni and Georgiana Dinu) and the first thing I thought to do
 was to use their [dataset][semantic-vectors] to implement an AI for
 Breadbox:
 
+<!--
 <div id="breadbox" class="breadbox-container">
   <div class="breadbox-console">
     <div class="breadbox-line breadbox-white">
@@ -138,7 +137,9 @@ Breadbox:
     <div id="breadbox-input"></div>
   </div>
 </div>
-(Unfortunately, the server that was hosting this game has been taken down.)
+-->
+
+*Edit: The web app associated with this post broke when OpenShift 2 was deprecated and, unfortunately, I've not had the time to put it up again...* 😞
 
 So how does it work? The core hypothesis of distributional semantics is
 
