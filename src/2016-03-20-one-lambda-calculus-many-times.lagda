@@ -82,7 +82,8 @@ beast. For this reason, we'll use a *list*:[^imports]
 
   open import Data.List.Any
   open import Data.List.Membership.Propositional
-  open import Data.List.Relation.Sublist.Extensional.Propositional
+  open import Data.List.Relation.Sublist.Propositional using (_⊆_; base; skip; keep; lookup)
+  open import Data.List.Relation.Sublist.Propositional.Properties using (++⁺; ⊆-refl)
   open import Relation.Binary.PropositionalEquality
 \end{code}
 </div>
@@ -180,14 +181,8 @@ the *function* $$A\in\Gamma\to A\in\Gamma\prime$$:
 
 \begin{code}
   struct : ∀ {A Γ Γ′} → Γ ⊆ Γ′ → ND Γ ⊢ A → ND Γ′ ⊢ A
-  struct Γ⊆Γ′ (ax x)   = ax (Γ⊆Γ′ x)
-  struct Γ⊆Γ′ (⇒i f)   = ⇒i (struct (∷-resp-⊆ Γ⊆Γ′) f)
-    where
-
-      ∷-resp-⊆ : ∀ {A Γ Γ′} → Γ ⊆ Γ′ → A ∷ Γ ⊆ A ∷ Γ′
-      ∷-resp-⊆ Γ⊆Γ′ (here  x) = here x
-      ∷-resp-⊆ Γ⊆Γ′ (there x) = there (Γ⊆Γ′ x)
-
+  struct Γ⊆Γ′ (ax x)   = ax (lookup Γ⊆Γ′ x)
+  struct Γ⊆Γ′ (⇒i f)   = ⇒i (struct (++⁺ (keep base) Γ⊆Γ′) f)
   struct Γ⊆Γ′ (⇒e f g) = ⇒e (struct Γ⊆Γ′ f) (struct Γ⊆Γ′ g)
 \end{code}
 
@@ -211,7 +206,7 @@ we write it as:
 
 \begin{code}
   w′ : ∀ {A B Γ} → ND Γ ⊢ B → ND A ∷ Γ ⊢ B
-  w′ = struct there
+  w′ = struct (skip ⊆-refl)
 \end{code}
 
 Passing <a class="Agda InductiveConstructor" target="_blank"
@@ -343,7 +338,7 @@ module Semantics (Atom : Set) {{InterpretAtom : Interpret Atom Set}} where
 
   open import Data.List.Any
   open import Data.List.Membership.Propositional
-  open import Data.List.Relation.Sublist.Extensional.Propositional
+  open import Data.List.Relation.Sublist.Propositional using (_⊆_)
   open import Relation.Binary.PropositionalEquality
 \end{code}
 </div>
