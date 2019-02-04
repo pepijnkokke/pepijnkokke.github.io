@@ -49,7 +49,6 @@ endif
 travis-setup:\
 	$(HOME)/.local/bin/agda\
 	$(HOME)/.local/bin/agda2html\
-	$(HOME)/.local/bin/acknowledgements\
 	$(HOME)/agda-stdlib-$(AGDA_STDLIB_VERSION)/src\
 	$(HOME)/.agda/defaults\
 	$(HOME)/.agda/libraries
