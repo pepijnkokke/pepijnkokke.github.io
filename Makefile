@@ -6,6 +6,12 @@ AGDA2HTML_FLAGS := --verbose --link-to-local-agda-names --use-jekyll=_posts/
 default: AGDA2HTML_FLAGS += --link-to-agda-stdlib
 default: $(markdown)
 
+test: build
+	ruby -S bundle exec htmlproofer _site
+
+test-offline: build
+	ruby -S bundle exec htmlproofer _site --disable-external
+
 _posts/:
 	mkdir -p _posts/
 

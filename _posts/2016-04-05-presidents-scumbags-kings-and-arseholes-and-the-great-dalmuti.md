@@ -107,7 +107,7 @@ in a game of The Great Dalmuti. Try it!
   <span class="runmain">&#9654;</span>
 </div>
 <div id="tabs-noscript">
-  <img alt="Screenshot of UI of embedded The Great Dalmuti after an example run." src="{{ "/images/dalmuti-example.png" | prepend: site.baseurl }}" />
+  <img alt="Screenshot of UI of embedded The Great Dalmuti after an example run." src="{{ "/assets/images/dalmuti-example.png" | prepend: site.baseurl }}" />
 </div>
 
 In implementing the game, I've made one small concession---while it

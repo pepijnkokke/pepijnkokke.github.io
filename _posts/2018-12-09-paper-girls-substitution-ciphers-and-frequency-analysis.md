@@ -19,11 +19,11 @@ SORrY, LET ME ADJUST.
 
 Ah, I'm so sorry, is this any better? Once again, so sorry, I think I've been reading this stuff for too long, think I got carried away... Anyway, I'll take it from the start. So this weekend, I picked up a copy of *[Paper Girls][papergirls]*, a mystery/science fiction comic about four girls on a paper route...
 
-![]({{ site.baseurl }}/assets/images/PaperGirls_1.jpg)
+![Image from Paper Girls. MacKenzie, smoking, sits on her bicycle, while Erin, KJ, and Tiffany stand behind her.]({{ site.baseurl }}/assets/images/PaperGirls_1.jpg)
 
 It starts simple. Our four heroes band together to deliver papers on Halloween morning. But it quickly escalates. Testament to this fact, thirty-five pages in we meet three time traveling teenagers, wrapped in black bandages, speaking in *these things*...
 
-![]({{ site.baseurl }}/assets/images/PaperGirls_2.png)
+![Image from Paper Girls. Two figures wrapped in dark bandages bend over their fallen friend. Their speech is written using strange glyphs.]({{ site.baseurl }}/assets/images/PaperGirls_2.png)
 
 These glyphs are used for the rest of the book, and---best I can tell---the rest of the series without any real explanation... which leaves me with the following question: 
 
@@ -33,7 +33,7 @@ Wanna guess what today's topic is? Yep. Welcome to my class, "Help! These letter
 
 Now, I've done this before. Several years ago, I was given a copy of *[Johnny 23][johnny23]* by Charles Burns which is, euh, a book put together using panels from *[X'ed Out][xedout]*, with an entirely new "story" written in strange glyphs... Sound, well, semi-familiar at least?
 
-![]({{ site.baseurl }}/assets/images/XedOut.jpg)
+![Image from X'ed Out. A person is shown a crying worm by a hooded figure with a wound for a nose. The hooded figure then eats the worm. Their speech is written using strange glyphs.]({{ site.baseurl }}/assets/images/XedOut.jpg)
 
 It turns out that what Charles had done was basically a substitution cipher---you make up one crazy glyph for each letter of the alphabet, and then instead of writing letters from the alphabet, you use the alien glyphs you came up with...
 
@@ -118,13 +118,13 @@ letters_counts_emma =
 
 Let's plot those side by side, see if anything looks off about this.
 
-![]({{ site.baseurl }}/assets/images/PaperGirls_FA.png)
+![Frequency analysis graphs for single characters in the speech in Paper Girls compared to the speech in Jane Austen's Emma. The graphs look similar.]({{ site.baseurl }}/assets/images/PaperGirls_FA.png)
 
 Great news! 
 The distribution of the letters looks like *language*.
 For comparison, if we encrypt *Emma* and then do frequency analysis, it looks something like this:
 
-![]({{ site.baseurl }}/assets/images/PaperGirls_Encrypted_FA.png)
+![Frequency analysis graphs for single characters in the speech in Jane Austen's Emma encrypted compared to the speech in Jane Austen's Emma unencrypted. The frequency counts for the encrypted speech are virtually uniform.]({{ site.baseurl }}/assets/images/PaperGirls_Encrypted_FA.png)
 
 Ok, so hypothesis: 
 
@@ -202,7 +202,7 @@ We can repeat this trick for two letter words, three letter words, four letter w
 However, we'll probably need quite a lot of data for word counts to start looking like your average word counts for English---like those found in *Emma* and only *Emma*.
 Let's count up the two-letter words, and plot their frequencies:
 
-![]({{ site.baseurl }}/assets/images/PaperGirls_TwoLetter_FA.png)
+![Frequency analysis graphs for two-letter words in the speech in Paper Girls compared to the speech in Jane Austen's Emma. The graphs look similar.]({{ site.baseurl }}/assets/images/PaperGirls_TwoLetter_FA.png)
 
 It's tempting to assume that those plots align exactly, but we're dealing with *really* sparse data at this point.
 Instead, let's the knowledge that we've uncovered so far to see if we can find any of those common words.
@@ -224,7 +224,7 @@ doubles_counts = sorted(doubles_counts.items(), key=lambda x: x[1], reverse=True
 
 You've got the hang of this by now---we count doubles in *Emma* as well, and plot both distributions.
 
-![]({{ site.baseurl }}/assets/images/PaperGirls_Doubles_FA_1.png)
+![Frequency analysis graphs for bigrams in the speech in Paper Girls compared to the speech in Jane Austen's Emma. The graph for paper girls has only two entries.]({{ site.baseurl }}/assets/images/PaperGirls_Doubles_FA_1.png)
 
 Whoa, so something kinda weird is going on here. First off, really? There's only *two* characters that are ever repeated? Like, our sample size is small, but not *that* small. Also, neither of these characters are anything we have a guess for yet... so if our guesses are correct, we don't have *any* occurances of 'ee' or 'tt'. Look at the chart for *Emma*, they're pretty common.
 
@@ -256,7 +256,7 @@ doubles_or_mirrored_counts = sorted(
     doubles_or_mirrored_counts.items(), key=lambda x: x[1], reverse=True)
 ```
 
-![]({{ site.baseurl }}/assets/images/PaperGirls_Doubles_FA_2.png)
+![Frequency analysis graphs for bigrams in the speech in Paper Girls compared to the speech in Jane Austen's Emma. The graphs look similar.]({{ site.baseurl }}/assets/images/PaperGirls_Doubles_FA_2.png)
 
 Ah, that makes *way* more sense. 
 We can still probably assume that '<span class="papergirls">LL</span>' is 'll', and it probably makes sense to stick to our guns and say that '<span class="papergirls">Oo</span>' is 'oo' and '<span class="papergirls">Ee</span>' is 'ee'.

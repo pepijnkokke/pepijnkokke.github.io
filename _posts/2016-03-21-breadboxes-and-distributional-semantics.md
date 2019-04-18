@@ -124,7 +124,6 @@ Marco Baroni and Georgiana Dinu) and the first thing I thought to do
 was to use their [dataset][semantic-vectors] to implement an AI for
 Breadbox:
 
-<!--
 <div id="breadbox" class="breadbox-container">
   <div class="breadbox-console">
     <div class="breadbox-line breadbox-white">
@@ -137,7 +136,6 @@ Breadbox:
     <div id="breadbox-input"></div>
   </div>
 </div>
--->
 
 *Edit: The web app associated with this post broke when OpenShift 2 was deprecated and, unfortunately, I've not had the time to put it up again...* 😞
 
@@ -240,7 +238,7 @@ networks to learn the word meanings: for instance, have a look at
 [DontCountPredict]: http://clic.cimec.unitn.it/marco/publications/acl2014/baroni-etal-countpredict-acl2014.pdf
 [UnicornPower]: https://github.com/UnicornPower
 [word2vec]: http://deeplearning4j.org/word2vec
-[slides]: https://www.cs.utex.edu/~mooney/cs388/slides/dist-sem-intro-NLP-class-UT.pdf
+[slides]: https://www.cs.utexas.edu/~mooney/cs388/slides/dist-sem-intro-NLP-class-UT.pdf
 [semantic-vectors]: http://clic.cimec.unitn.it/composes/semantic-vectors.html
 [^wampimuk]: Taken from <https://www.cs.utexas.edu/~mooney/cs388/slides/dist-sem-intro-NLP-class-UT.pdf>.
 [^webcorp]: Taken from <http://www.webcorp.org.uk>.
