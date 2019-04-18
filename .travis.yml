@@ -33,7 +33,7 @@ before_install:
 script:
 - agda --version
 - agda2html --version
-- make
+- make test-offline
 
 before_deploy:
 - make clean
