@@ -64,6 +64,9 @@ function execCommand(input,cont,stop) {
         } else if (definitions.length == 1) {
             addLine(resp+"It's "+definitions[0]+".",'line','blue');
         }
+        } else if (definitions.length == 0) {
+            addLine(resp+,'line','blue');
+        }
         stop();
 
     } else {

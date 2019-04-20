@@ -127,7 +127,7 @@ Breadbox:
 <div id="breadbox" class="breadbox-container">
   <div class="breadbox-console">
     <div class="breadbox-line breadbox-white">
-    Welcome to Breadbox 1.0! Type 'help' for instructions, or simply start guessing!
+    Welcome to Breadbox 2.0! Type 'help' for instructions, or simply start guessing!
     </div>
     <div class="breadbox-line">&nbsp;</div>
   </div>
@@ -136,8 +136,6 @@ Breadbox:
     <div id="breadbox-input"></div>
   </div>
 </div>
-
-*Edit: The web app associated with this post broke when OpenShift 2 was deprecated and, unfortunately, I've not had the time to put it up again...* 😞
 
 So how does it work? The core hypothesis of distributional semantics is
 
