@@ -28,12 +28,12 @@ before_install:
 - export PATH=$HOME/.local/bin:$PATH
 - travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
 # Download and install agda, agda-stdlib, and agda2html
-- make build
+- make travis-setup
 
 script:
 - agda --version
 - agda2html --version
-- make test-offline
+- make build
 
 before_deploy:
 - make clean
