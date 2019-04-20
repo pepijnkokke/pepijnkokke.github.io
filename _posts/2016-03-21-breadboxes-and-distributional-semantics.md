@@ -3,6 +3,7 @@ title        : "Breadboxes, Plenty Questions and Distributional Semantics"
 date         : 2016-03-21 12:00:00
 categories   : [compling]
 tags         : [python, distributional semantics]
+extra-script : [breadbox-extra-script.html]
 ---
 
 Quite a while ago, [UnicornPower][UnicornPower] introduced me to a
