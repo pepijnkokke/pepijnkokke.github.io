@@ -3,6 +3,8 @@ var current_sim          = 0.0;
 var current_with_article = 'a breadbox';
 
 $(document).ready(function() {
+    $('#breadbox-input').find('input').focus();
+
     addLine("I'm thinking of something...",'line','blue');
     addLine("Is it a breadbox?",'line','white');
     addLine("No, it's not.",'line','blue');
@@ -34,13 +36,10 @@ function addLine(input, style, color) {
     }
     style = typeof style !== 'undefined' ? style : 'line';
     color = typeof color !== 'undefined' ? color : 'white';
-    $('.breadbox-console').append('<div class="breadbox-'+style+' breadbox-'+
-                                  color+'">'+input+'</div>');
+    $('.breadbox-console').append('<div class="breadbox-'+style+' breadbox-'+color+'">'+input+'</div>');
 }
 
-
 function execCommand(input,cont,stop) {
-
     var input = input.trim();
 
     if (input == "help") {
@@ -51,9 +50,9 @@ function execCommand(input,cont,stop) {
     } else if (input.indexOf("give up") != -1) {
 
         addLine("I give up! What is it?",'line','white');
-        resp = "I was thinking of "+secret_with_article+". "
+        reply = "I was thinking of "+secret_with_article+"... ";
         if (definitions.length > 1) {
-            addLine(resp+"It's:",'line','blue');
+            addLine(reply+"It's",'line','blue');
             $(definitions).each(function(index,item) {
                 if (index == definitions.length - 1) {
                     addLine("- "+item+".",'margin','blue');
@@ -62,10 +61,9 @@ function execCommand(input,cont,stop) {
                 }
             });
         } else if (definitions.length == 1) {
-            addLine(resp+"It's "+definitions[0]+".",'line','blue');
-        }
+            addLine(reply+"It's "+definitions[0]+".",'line','blue');
         } else if (definitions.length == 0) {
-            addLine(resp+,'line','blue');
+            addLine(reply,'line','blue');
         }
         stop();
 
@@ -80,7 +78,6 @@ function execCommand(input,cont,stop) {
         $.ajax({
             url         : breadbox_url+'guess/'+secret+'/'+next,
             type        : "GET",
-            crossDomain : true,
             dataType    : "json",
             success     : function(data) {
                 var next_sim          = data['similarity'];
@@ -104,10 +101,6 @@ function execCommand(input,cont,stop) {
                     addLine("It's more like "+current_with_article+"...",'line','blue');
                     cont();
                 }
-            },
-            error      : function (jqXHR,textStatus,errorThrown) {
-                addLine("Oh dear! It seems part of me has gone offline...",'line','red');
-                addLine("Well, this is embarrassing... Check back later?")
             }
         });
     }
@@ -136,8 +129,9 @@ function help() {
     addLine("...where <i>breadbox</i> is replaced with whatever your current guess is.",
             'margin','blue');
     addLine("&nbsp;");
-    addLine("And remember, you can always type 'give up', and I'll tell you what "+
-            "I was thinking of! Once you win (or give up), just reload the page "+
-            "to play another game.",'margin','blue');
+    addLine("And remember, you can always type 'give up', and I'll tell you what I "+
+            "was thinking of! ^^",'margin','blue');
+    addLine("Once you win (or give up), just reload the page to play another game.",
+            'margin','blue');
     addLine("&nbsp;");
 }
