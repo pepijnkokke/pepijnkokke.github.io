@@ -20,18 +20,18 @@ _posts/%.md: src/%.lagda | _posts/
 		| sed '/^Generating.*/d; /^Warning\: HTML.*/d; /^reached from the.*/d; /^\s*$$/d'
 
 build-offline: $(markdown)
-	ruby -S bundle exec jekyll build --incremental
+	ruby -S bundle exec jekyll build --incremental --drafts
 
 .phony: build-offline
 
 build: AGDA2HTML_FLAGS += --link-to-agda-stdlib
 build: $(markdown)
-	ruby -S bundle exec jekyll build --incremental
+	ruby -S bundle exec jekyll build --incremental --drafts
 
 .phony: build
 
 serve:
-	ruby -S bundle exec jekyll serve --incremental
+	ruby -S bundle exec jekyll serve --incremental --drafts
 
 .phony: serve
 
