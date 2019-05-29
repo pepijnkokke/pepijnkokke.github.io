@@ -33,32 +33,22 @@
           <nav class="cover-navigation navigation--social">
             <ul class="navigation">
 
+            {% if site.author.email %}
+            <!-- Email -->
+            <li class="navigation__item">
+                <a href="mailto:{{ site.author.email }}" title="Email {{ site.author.email }}" target="_blank">
+                    <i class="icon icon-mail"></i>
+                    <span class="label">Email</span>
+                </a>
+            </li>
+            {% endif %}
+
             {% if site.author.twitter_username %}
               <!-- Twitter -->
               <li class="navigation__item">
                 <a href="http://twitter.com/{{ site.author.twitter_username }}" title="@{{ site.author.twitter_username }} on Twitter" target="_blank">
                   <i class="icon icon-social-twitter"></i>
                   <span class="label">Twitter</span>
-                </a>
-              </li>
-            {% endif %}
-
-            {% if site.author.facebook_username %}
-              <!-- Facebook -->
-              <li class="navigation__item">
-                <a href="http://fb.me/{{ site.author.facebook_username }}" title="{{ site.author.facebook_username }} on Facebook" target="_blank">
-                  <i class="icon icon-social-facebook"></i>
-                  <span class="label">Facebook</span>
-                </a>
-              </li>
-            {% endif %}
-
-            {% if site.author.linkedin_username %}
-              <!-- LinkedIn -->
-              <li class="navigation__item">
-                <a href="https://www.linkedin.com/in/{{ site.author.linkedin_username }}" title="{{ site.author.linkedin_username }} on LinkedIn" target="_blank">
-                  <i class="icon icon-social-linkedin"></i>
-                  <span class="label">LinkedIn</span>
                 </a>
               </li>
             {% endif %}
@@ -73,14 +63,14 @@
               </li>
             {% endif %}
 
-            {% if site.author.email %}
-              <!-- Email -->
-              <li class="navigation__item">
-                <a href="mailto:{{ site.author.email }}" title="Email {{ site.author.email }}" target="_blank">
-                  <i class="icon icon-mail"></i>
-                  <span class="label">Email</span>
+            {% if site.author.paypal_username %}
+            <!-- PayPal -->
+            <li class="navigation__item">
+                <a href="https://www.paypal.me/{{ site.author.paypal_username }}" title="{{ site.author.paypal_username }} on PayPal" target="_blank">
+                    <i class="icon icon-paypal"></i>
+                    <span class="label">Paypal</span>
                 </a>
-              </li>
+            </li>
             {% endif %}
 
             </ul>
