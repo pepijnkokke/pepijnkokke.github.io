@@ -3,7 +3,6 @@ title        : "Breadboxes, Plenty Questions and Distributional Semantics"
 date         : 2016-03-21 12:00:00
 categories   : [compling]
 tags         : [python, distributional semantics]
-extra-script : [breadbox-extra-script.html]
 ---
 
 Quite a while ago, [UnicornPower][UnicornPower] introduced me to a
@@ -123,20 +122,7 @@ person! ^^
 In the summer of 2014, I took a course on distributional semantics (by
 Marco Baroni and Georgiana Dinu) and the first thing I thought to do
 was to use their [dataset][semantic-vectors] to implement an AI for
-Breadbox:
-
-<div id="breadbox" class="breadbox-container">
-  <div class="breadbox-console">
-    <div class="breadbox-line breadbox-white">
-    Welcome to Breadbox 2.0! Type 'help' for instructions, or simply start guessing!
-    </div>
-    <div class="breadbox-line">&nbsp;</div>
-  </div>
-  <div class="breadbox-bottom">
-    <div class="breadbox-label">></div>
-    <div id="breadbox-input"></div>
-  </div>
-</div>
+Breadbox. Try it [here][breadbox]!
 
 So how does it work? The core hypothesis of distributional semantics is
 
@@ -239,6 +225,7 @@ networks to learn the word meanings: for instance, have a look at
 [word2vec]: http://deeplearning4j.org/word2vec
 [slides]: https://www.cs.utexas.edu/~mooney/cs388/slides/dist-sem-intro-NLP-class-UT.pdf
 [semantic-vectors]: http://clic.cimec.unitn.it/composes/semantic-vectors.html
+[breadbox]: http://breadbox-breadbox.7e14.starter-us-west-2.openshiftapps.com/
 [^wampimuk]: Taken from <https://www.cs.utexas.edu/~mooney/cs388/slides/dist-sem-intro-NLP-class-UT.pdf>.
 [^webcorp]: Taken from <http://www.webcorp.org.uk>.
 [^abitofashame]: A bit of a shame, really, since the course I took was
