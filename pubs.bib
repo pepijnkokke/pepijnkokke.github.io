@@ -1,40 +1,3 @@
-@article{kokke2019eptcsb,
-  abstract  = {Rusty Variation (RV) is a library for session-typed communication in Rust which offers strong compile-time correctness guarantees. Programs written using RV are guaranteed to respect a specified protocol, and are guaranteed to be free from deadlocks and races.},
-  author    = {Wen Kokke},
-  title     = {Rusty Variation: Deadlock-free Sessions with Failure in Rust},
-  year      = {2019},
-  url       = {https://wenkokke.github.io/pubs/eptcs2019b.pdf},
-  note      = {Forthcoming},
-}
-@article{kokke2019eptcsa,
-  abstract  = {Process calculi based on logic, such as πDILL and CP, provide a
-                  foundation for deadlock-free concurrent programming. However,
-                  in previous work, there is a mismatch between the rules for
-                  constructing proofs and the term constructors of the
-                  π-calculus: the fundamental operator for parallel composition
-                  does not correspond to any rule of linear logic. Kokke et al.
-                  (2019) introduced Hypersequent Classical Processes (HCP),
-                  which addresses this mismatch using hypersequents (collections
-                  of sequents) to register parallelism in the typing judgements.
-                  However, the step from CP to HCP is a big one. As of yet, HCP
-                  does not have reduction semantics, and the addition of delayed
-                  actions means that CP processes interpreted as HCP processes
-                  do not behave as they would in CP. We introduce HCP-, a
-                  variant of HCP with reduction semantics and without delayed
-                  actions. We prove progress, preservation, and termination, and
-                  show that HCP- supports the same communication protocols as
-                  CP.},
-  author    = {Wen Kokke and Fabrizio Montesi and Marco Peressotti},
-  title     = {Taking Linear Logic Apart},
-  year      = {2019},
-  month     = apr,
-  publisher = {Open Publishing Association},
-  volume    = {292},
-  pages     = {90--103},
-  journal   = {Electronic Proceedings in Theoretical Computer Science},
-  doi       = {10.4204/eptcs.292.5},
-  url       = {https://wenkokke.github.io/pubs/eptcs2019a.pdf},
-}
 @article{kokke2019pacmpl,
   abstract  = {We present Hypersequent Classical Processes (HCP), a revised
                   interpretation of the "Proofs as Processes" correspondence
@@ -107,6 +70,43 @@
   month     = oct,
   url       = {https://plfa.github.io/},
 }
+@inproceedings{kokke2019ice,
+  abstract  = {Rusty Variation (RV) is a library for session-typed communication in Rust which offers strong compile-time correctness guarantees. Programs written using RV are guaranteed to respect a specified protocol, and are guaranteed to be free from deadlocks and races.},
+  author    = {Wen Kokke},
+  title     = {Rusty Variation: Deadlock-free Sessions with Failure in Rust},
+  year      = {2019},
+  url       = {https://wenkokke.github.io/pubs/eptcs2019b.pdf},
+  note      = {Forthcoming},
+}
+@inproceedings{kokke2019tlla,
+  abstract  = {Process calculi based on logic, such as πDILL and CP, provide a
+                  foundation for deadlock-free concurrent programming. However,
+                  in previous work, there is a mismatch between the rules for
+                  constructing proofs and the term constructors of the
+                  π-calculus: the fundamental operator for parallel composition
+                  does not correspond to any rule of linear logic. Kokke et al.
+                  (2019) introduced Hypersequent Classical Processes (HCP),
+                  which addresses this mismatch using hypersequents (collections
+                  of sequents) to register parallelism in the typing judgements.
+                  However, the step from CP to HCP is a big one. As of yet, HCP
+                  does not have reduction semantics, and the addition of delayed
+                  actions means that CP processes interpreted as HCP processes
+                  do not behave as they would in CP. We introduce HCP-, a
+                  variant of HCP with reduction semantics and without delayed
+                  actions. We prove progress, preservation, and termination, and
+                  show that HCP- supports the same communication protocols as
+                  CP.},
+  author    = {Wen Kokke and Fabrizio Montesi and Marco Peressotti},
+  title     = {Taking Linear Logic Apart},
+  year      = {2019},
+  month     = apr,
+  publisher = {Open Publishing Association},
+  volume    = {292},
+  pages     = {90--103},
+  journal   = {Electronic Proceedings in Theoretical Computer Science},
+  doi       = {10.4204/eptcs.292.5},
+  url       = {https://wenkokke.github.io/pubs/eptcs2019a.pdf},
+}
 @inproceedings{kokke2019coordination,
   abstract  = {Process calculi based in logic, such as πDILL and CP, provide a
                   foundation for deadlock-free concurrent programming, but
@@ -130,15 +130,6 @@
   booktitle = {International Conference on Coordination Models and Languages},
   location  = {Lyngby, Denmark},
   note      = {Forthcoming},
-}
-@inproceedings{kokke2018tlla,
-  author    = {Wen Kokke and Fabrizio Montesi and Marco Peressotti},
-  title     = {Taking Linear Logic Apart},
-  year      = {2018},
-  month     = jul,
-  url       = {https://wenkokke.github.io/pubs/tlla2018.pdf},
-  booktitle = {Workshop on Linearity \& TLLA at FloC'18},
-  location  = {Oxford, UK},
 }
 @inproceedings{kokke2017cg,
   author    = {Wen Kokke and Inari Listenmaa},
