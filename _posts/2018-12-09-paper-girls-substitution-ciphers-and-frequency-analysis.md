@@ -205,7 +205,7 @@ Let's count up the two-letter words, and plot their frequencies:
 ![Frequency analysis graphs for two-letter words in the speech in Paper Girls compared to the speech in Jane Austen's Emma. The graphs look similar.]({{ site.baseurl }}/assets/images/PaperGirls_TwoLetter_FA.png)
 
 It's tempting to assume that those plots align exactly, but we're dealing with *really* sparse data at this point.
-Instead, let's the knowledge that we've uncovered so far to see if we can find any of those common words.
+Instead, let's use the knowledge that we've uncovered so far to see if we can find any of those common words.
 The words '<span class="papergirls">TO</span>', '<span class="papergirls">IT</span>', and '<span class="papergirls">AT</span>' all feature a '<span class="papergirls">T</span>'. 
 They seem like pretty likely candidates for 'to', 'it', and 'at', so it seems quite likely that '<span class="papergirls">O</span>' is 'o', and that '<span class="papergirls">I</span>' is 'i' and '<span class="papergirls">A</span>' is 'a', or vice versa. Note that '<span class="papergirls">A</span>' is the fourth most character, like we'd expect from an 'i' or an 'a'. Based on the frequencies---'a' is a more common character than 'i', but 'I' is a more common word than 'a'---we can guess that '<span class="papergirls">I</span>' is 'i' and '<span class="papergirls">a</span>' is 'a'.
 
