@@ -31,7 +31,7 @@ before_install:
 
 script:
 - agda --version
-- make build
+- make test-offline
 
 before_deploy:
 - make clean
