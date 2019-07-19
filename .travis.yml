@@ -13,7 +13,6 @@ cache:
   - $HOME/.local
   - $HOME/agda-$AGDA_VERSION
   - $HOME/agda-stdlib-master
-  - $HOME/agda2html-master
 
 # Ensure necessary system libraries are present
 addons:
@@ -32,7 +31,6 @@ before_install:
 
 script:
 - agda --version
-- agda2html --version
 - make build
 
 before_deploy:

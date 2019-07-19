@@ -1,8 +1,7 @@
 ---
 title        : "Presidents, Scumbags, Kings and Arseholes, and The Great Dalmuti"
 date         : 2016-04-05 12:00:00
-categories   : []
-tags         : [haskell, javascript]
+tags         : [games, haskell]
 extra-script : [dalmuti-extra-script.html]
 extra-style  : [dalmuti-extra-style.html]
 ---

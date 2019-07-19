@@ -1,8 +1,7 @@
 ---
 title        : "Breadboxes, Plenty Questions and Distributional Semantics"
 date         : 2016-03-21 12:00:00
-categories   : [compling]
-tags         : [python, distributional semantics]
+tags         : [games, linguistics, python]
 ---
 
 Quite a while ago, [UnicornPower][UnicornPower] introduced me to a
@@ -110,8 +109,7 @@ exclude all animals."
 
 It is exactly this---the fact that the game forces you to consider a
 distance metric for your internal ontology, insofar as one exists---which
-makes it so fascinating to play. I heartily recommend you <a
-href="#breadbox">try it!</a>
+makes it so fascinating to play. I heartily recommend you [try it!][breadbox]
 
 If you're upset because Breadbox is hard, or because you think that
 the choices it makes are weird or wrong... try playing it with a

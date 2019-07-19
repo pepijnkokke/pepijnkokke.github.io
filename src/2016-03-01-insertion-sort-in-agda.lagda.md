@@ -1,7 +1,6 @@
 ---
 title        : "Insertion sort in Agda"
 date         : 2016-03-01 12:00:00
-categories   : [compsci]
 tags         : [agda]
 extra-script : [agda-extra-script.html]
 ---
@@ -34,7 +33,7 @@ post, or in the Agda standard library!
 
 Obligatory "this is literate code, here are my imports."
 
-\begin{code}
+```
 open import Level            using (_⊔_)
 open import Data.Vec         using (Vec; []; _∷_)
 open import Data.Nat         using (ℕ; zero; suc)
@@ -44,7 +43,7 @@ open import Data.Empty       using (⊥-elim)
 open import Relation.Nullary using (¬_; Dec; yes; no)
 open import Relation.Binary
 open import Relation.Binary.PropositionalEquality
-\end{code}
+```
 
 So the first question is "What do we want to sort?" The boring answer
 would be "lists of integers", but let's be a little bit more
@@ -63,19 +62,19 @@ y` will tell you whether or not `x ≤ y`, whereas `total` will tell you
 whether it is `x ≤ y` or `y ≤ x`.
 
 <div style="display:none;">
-\begin{code}
+```
 module 2016-03-01-insertion-sort-in-agda where
-\end{code}
+```
 </div>
 
-\begin{code}
+```
 module InsertionSort {c ℓ₁ ℓ₂} {{Ord : DecTotalOrder c ℓ₁ ℓ₂}} where
 
   open DecTotalOrder {{...}}
     using (_≤_; _≤?_; total)
     renaming (trans to ≤-trans)
   A = DecTotalOrder.Carrier Ord
-\end{code}
+```
 
 The type A is already ordered, but it would be incredibly convenient
 if it were also *bounded*---meaning that it has a value which is
@@ -83,44 +82,44 @@ smaller than everything else, and a value which is bigger than
 everything else. Below, we define a wrapper for A which is bounded at
 the top by ⊤ and at the bottom by ⊥:
 
-\begin{code}
+```
   data Â : Set c where
     ⊤ : Â
     ⊥ : Â
     ⟦_⟧ : A → Â
-\end{code}
+```
 
 We still need to encode the fact that ⊥ and ⊤ are in fact smaller and
 bigger than all other values. Below, we defined the order ≲ on bounded
 Â... where we simply state these facts as ⊥≲ and ≲⊤:
 
-\begin{code}
+```
   infix 4 _≲_
 
   data _≲_ : Rel Â (c ⊔ ℓ₂) where
     ⊥≲ : ∀ {x} → ⊥ ≲ x
     ≲⊤ : ∀ {x} → x ≲ ⊤
     ≤-lift : ∀ {x y} → x ≤ y → ⟦ x ⟧ ≲ ⟦ y ⟧
-\end{code}
+```
 
 Note that with the last constructor, we can lift the order of any two
 values in A into ≲. However, if we only have a proof of ≰, then the
 lifting is slightly more involved. Therefore, we define a function
 which does this for us:
 
-\begin{code}
+```
   ≰-lift : ∀ {x y} → ¬ (y ≤ x) → ⟦ x ⟧ ≲ ⟦ y ⟧
   ≰-lift {x} {y} y≰x with total x y
   ≰-lift y≰x | inj₁ x≤y = ≤-lift x≤y
   ≰-lift y≰x | inj₂ y≤x = ⊥-elim (y≰x y≤x)
-\end{code}
+```
 
 Another thing we can do with two values of type Â is compute their
 *minimum*. This is one example where we deviate from *correctness by
 construction*: we define minimum function ⊓, and only then prove its
 correctness:
 
-\begin{code}
+```
   infix 5 _⊓_
 
   _⊓_ : Â → Â → Â
@@ -140,7 +139,7 @@ correctness:
   ⊓-conserves-≲ {x} {⟦ y ⟧} {⟦ z ⟧} p q with y ≤? z
   ⊓-conserves-≲ {x} {⟦ y ⟧} {⟦ z ⟧} p _ | yes y≤z = p
   ⊓-conserves-≲ {x} {⟦ y ⟧} {⟦ z ⟧} _ q | no  y≰z = q
-\end{code}
+```
 
 Insertion sort has rather complicated invariants. If we were implementing
 mergesort, that we could define ordered lists as lists in which every
@@ -180,7 +179,7 @@ There are three ways to construct an `OVec`:
   - and finally, we can forgo all sorting, and just add some unsorted
     elements to the front of the list.
 
-\begin{code}
+```
   data OVec : (l : Â) (n k : ℕ) → Set (c ⊔ ℓ₂) where
 
     []     : OVec ⊤ 0 0
@@ -190,7 +189,7 @@ There are three ways to construct an `OVec`:
 
     _∷_    : ∀ {l n k} (x : A) (xs : OVec l n k)
            → OVec ⊥ (suc n) (suc k)
-\end{code}
+```
 
 If we have a regular vector---a list which tracks its length---we can
 turn it into a k-ordered vector together with some lower bound. (This
@@ -199,7 +198,7 @@ another existential with the lists length in it.) Our naive process of
 just inserting all elements in the vector as *unsorted* means that the
 lower bound will be either ⊤ or ⊥. And we can show that!
 
-\begin{code}
+```
   fromVec : ∀ {n} → Vec A n → ∃ (λ l → OVec l n n)
   fromVec [] = ⊤ , []
   fromVec (x ∷ xs) = ⊥ , x ∷ proj₂ (fromVec xs)
@@ -208,22 +207,22 @@ lower bound will be either ⊤ or ⊥. And we can show that!
     → let l = proj₁ (fromVec xs) in l ≡ ⊤ ⊎ l ≡ ⊥
   fromVec-⊤or⊥ {.0}       {[]}     = inj₁ refl
   fromVec-⊤or⊥ {.(suc _)} {x ∷ xs} = inj₂ refl
-\end{code}
+```
 
 And obviously, we can also turn any k-ordered vector into a regular
 vector simply by forgetting about all the order evidence:
 
-\begin{code}
+```
   toVec : ∀ {l n k} → OVec l n k → Vec A n
   toVec [] = []
   toVec (x ∷ xs) = x ∷ toVec xs
   toVec (x ∷ xs by _) = x ∷ toVec xs
-\end{code}
+```
 
 Finally! We've developed enough vocabulary to write down what it
 really means to perform an insertion:
 
-\begin{code}
+```
   insert : ∀ {l n k} (x : A) → OVec l n k → OVec (⟦ x ⟧ ⊓ l) (suc n) k
   insert x []       = x ∷ [] by ≲⊤
   insert x (y ∷ xs) = y ∷ insert x xs
@@ -232,7 +231,7 @@ really means to perform an insertion:
                   by (≤-lift x≤y)
   ... | no  x≰y = y ∷ (insert x xs)
                   by (⊓-conserves-≲ (≰-lift x≰y) p)
-\end{code}
+```
 
 Note that insert takes a vector with *k* unsorted elements, and
 returns a vector which has one more element, but still only *k*
@@ -244,12 +243,12 @@ element in the sorted portion of the vector, that if we take elements
 from the unsorted portion, insert it, and repeat this *k* times, we'll
 have sorted *k* elements... and therefore the list.
 
-\begin{code}
+```
   insertsort : ∀ {l n k} → OVec l n k → ∃ (λ l → OVec l n 0)
   insertsort []            = ⊤ , []
   insertsort (x ∷ xs)      = insertsort (insert x xs)
   insertsort (x ∷ xs by p) = ⟦ x ⟧ , x ∷ xs by p
-\end{code}
+```
 
 There is one thing we haven't verified so far---and I've hinted at this
 possibility above. It is fairly simple to implement an insertion sort
@@ -274,7 +273,7 @@ incredibly similar to insert. However, as opposed to inserting the
 first element in the correct position, "bubble" has trouble making up
 its mind and drops whatever it's holding when it sees a bigger element!
 
-\begin{code}
+```
   bubble : ∀ {l n k} (x : A) → OVec l n k → OVec (⟦ x ⟧ ⊓ l) (suc n) k
   bubble x []            = x ∷ [] by ≲⊤
   bubble x (y ∷ xs)      with x ≤? y
@@ -287,7 +286,7 @@ its mind and drops whatever it's holding when it sees a bigger element!
                   by ⊓-conserves-≲ x≲y (≲-trans x≲y p)
     where
       x≲y = ≤-lift x≤y
-\end{code}
+```
 
 All that we need is to show that our home-brewed ≲-relation is
 transitive. This follows immediately from the underlying
@@ -295,23 +294,23 @@ order. This kind of stuff---the adding of bounds to total
 order---should really be provided by the standard library. And perhaps
 it is, and I've simply failed to find it...
 
-\begin{code}
+```
       ≲-trans : ∀ {x y z} → x ≲ y → y ≲ z → x ≲ z
       ≲-trans  ⊥≲         _         = ⊥≲
       ≲-trans  _          ≲⊤        = ≲⊤
       ≲-trans (≤-lift p) (≤-lift q) = ≤-lift (≤-trans p q)
-\end{code}
+```
 
 At any rate, once we have our "bubble" function, the implementation of
 the sorting algorithm is trivial---and exactly identical to the
 definition of insertion sort!
 
-\begin{code}
+```
   bubblesort : ∀ {l n k} → OVec l n k → ∃ (λ l → OVec l n 0)
   bubblesort []            = ⊤ , []
   bubblesort (x ∷ xs)      = bubblesort (bubble x xs)
   bubblesort (x ∷ xs by p) = ⟦ x ⟧ , x ∷ xs by p
-\end{code}
+```
 
 This does lead to an interesting point: how do you know that what
 you've implemented is actually what you *wanted* to implement?
@@ -365,6 +364,3 @@ lemma, your next proof will *fail*. And obviously, the notion that the
 *usage* of properties and and *repeated checking* of proofs strengtens
 a theory applies even more strongly to theories which are also
 *machine-checked*.
-
-\begin{code}
-\end{code}

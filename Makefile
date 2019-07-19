@@ -1,31 +1,41 @@
-agda := $(shell find src -type f -name '*.lagda')
-agdai := $(shell find src -type f -name '*.agdai')
-markdown := $(subst src/,_posts/,$(subst .lagda,.md,$(agda)))
-AGDA2HTML_FLAGS := --verbose --link-to-local-agda-names --use-jekyll=_posts/
+SHELL := /bin/bash
+AGDA := $(shell find . -type f -and \( -path '*/src/*' \) -and -name '*.lagda.md')
+AGDAI := $(shell find . -type f -and \( -path '*/src/*' \) -and -name '*.agdai')
+MARKDOWN := $(subst src/,_posts/,$(subst .lagda.md,.md,$(AGDA)))
 
-default: AGDA2HTML_FLAGS += --link-to-agda-stdlib
-default: $(markdown)
+ifeq ($(AGDA_STDLIB_VERSION),)
+AGDA_STDLIB_URL := https://agda.github.io/agda-stdlib/
+else
+AGDA_STDLIB_URL := https://agda.github.io/agda-stdlib/v$(AGDA_STDLIB_VERSION)/
+endif
 
+default: $(MARKDOWN)
+
+# Build blog and test hyperlinks
 test: build
 	ruby -S bundle exec htmlproofer _site
 
+# Build blog and test hyperlinks offline
 test-offline: build
 	ruby -S bundle exec htmlproofer _site --disable-external
 
+# Convert literal Agda to Markdown
 _posts/:
 	mkdir -p _posts/
 
-_posts/%.md: src/%.lagda | _posts/
-	agda2html --verbose --link-to-agda-stdlib --use-jekyll=_posts/ -i $< -o $@ 2>&1 \
-		| sed '/^Generating.*/d; /^Warning\: HTML.*/d; /^reached from the.*/d; /^\s*$$/d'
+define AGDA_template
+in := $(1)
+out := $(subst src/,_posts/,$(subst .lagda.md,.md,$(1)))
+$$(out) : in  = $(1)
+$$(out) : out = $(subst src/,_posts/,$(subst .lagda.md,.md,$(1)))
+$$(out) : $$(in) | _posts/
+	@echo "Processing $$(subst ./,,$$(in))"
+	./highlight.sh $$(subst ./,,$$(in)) --include-path=src/
+endef
 
-build-offline: $(markdown)
-	ruby -S bundle exec jekyll build --incremental --drafts
+$(foreach agda,$(AGDA),$(eval $(call AGDA_template,$(agda))))
 
-.phony: build-offline
-
-build: AGDA2HTML_FLAGS += --link-to-agda-stdlib
-build: $(markdown)
+build: $(MARKDOWN)
 	ruby -S bundle exec jekyll build --incremental --drafts
 
 .phony: build
@@ -36,25 +46,25 @@ serve:
 .phony: serve
 
 clean:
-ifneq ($(strip $(agdai)),)
-	rm $(agdai)
+	rm -f .agda-stdlib.sed .links-*.sed
+ifneq ($(strip $(AGDAI)),)
+	rm $(AGDAI)
 endif
 
 .phony: clean
 	bundle exec jekyll clean
 
 clobber:
-ifneq ($(strip $(markdown)),)
-	rm -f $(markdown)
+ifneq ($(strip $(MARKDOWN)),)
+	rm -f $(MARKDOWN)
 endif
 
 .phony: clobber
 
 
-# Travis Setup (install Agda, the Agda standard library, agda2html, acknowledgements, etc.)
+# Travis Setup (install Agda, the Agda standard library, etc.)
 travis-setup:\
 	$(HOME)/.local/bin/agda\
-	$(HOME)/.local/bin/agda2html\
 	$(HOME)/agda-stdlib-$(AGDA_STDLIB_VERSION)/src\
 	$(HOME)/.agda/defaults\
 	$(HOME)/.agda/libraries
@@ -77,7 +87,6 @@ travis-uninstall-agda2html:
 travis-reinstall-agda2html: travis-uninstall-agda2html travis-install-agda2html
 
 .phony: travis-install-agda2html travis-uninstall-agda2html travis-reinstall-agda2html
-
 
 
 travis-install-agda:\
