@@ -54,7 +54,7 @@ endif
 .phony: clean
 	bundle exec jekyll clean
 
-clobber:
+clobber: clean
 ifneq ($(strip $(MARKDOWN)),)
 	rm -f $(MARKDOWN)
 endif
