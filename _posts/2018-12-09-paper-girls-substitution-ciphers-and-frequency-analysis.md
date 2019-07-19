@@ -1,7 +1,7 @@
 ---
 title      : "Paper Girls, Substitution Ciphers, and Frequency Analysis"
 date       : 2018-12-09 12:00:00
-tags       : [linguistics, cryptography]
+tags       : [linguistics, cryptography, python]
 ---
 
 <span style="font-family:PaperGirls;font-size:large;">
