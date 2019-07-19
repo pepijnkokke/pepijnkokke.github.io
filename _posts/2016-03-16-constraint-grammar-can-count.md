@@ -1,7 +1,7 @@
 ---
 title      : "Constraint Grammar can count!"
 date       : 2016-03-16 12:00:00
-tags       : [linguistics, formal language]
+tags       : [linguistics, formal language theory]
 ---
 
 Constraint grammar---it is a natural language processing formalism with

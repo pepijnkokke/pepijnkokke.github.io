@@ -1,7 +1,7 @@
 ---
 title      : "VISL CG-3 is the new assembler"
 date       : 2017-05-15 12:00:00
-tags       : [formal language]
+tags       : [formal language theory]
 ---
 
 This post is a continuation of *[Constraint Grammar can count!]({% post_url 2016-03-16-constraint-grammar-can-count %})*, in which I talked a bunch about how expressive constraint grammar is.
