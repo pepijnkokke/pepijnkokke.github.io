@@ -123,18 +123,25 @@ $$
     \frac{\Gamma \vdash M : A \Rightarrow B \quad \Gamma \vdash N : A}{\Gamma \vdash (M\;N) : B}
 $$
 
-However, I like the clean look of the logical notation, so in the
-interest of keeping things simple I will use that.
-We encode the natural deduction system as a datatype, with each rule
-corresponding to a *constructor*, and each proof a *value*:
+However, I like the clean look of the logical notation, so in the interest of keeping things simple I will use that.
+
+In what follows, we'll use the following metavariables for types, contexts, and sequents. That means that if you see one of these names, and you can't find a binding site, it's implicitly bound at the top-level:
+
+```
+  variable A B C : Type
+  variable Γ Γ′  : List Type
+  variable S     : Sequent
+```
+
+We encode the natural deduction system as a datatype, with each rule corresponding to a *constructor*, and each proof a *value*:
 
 ```
   infix 3 ND_
 
   data ND_ : Sequent → Set where
-    ax : ∀ {A   Γ} → A ∈ Γ → ND Γ ⊢ A
-    ⇒i : ∀ {A B Γ} → ND A ∷ Γ ⊢ B → ND Γ ⊢ A ⇒ B
-    ⇒e : ∀ {A B Γ} → ND Γ ⊢ A ⇒ B → ND Γ ⊢ A → ND Γ ⊢ B
+    ax : A ∈ Γ → ND Γ ⊢ A
+    ⇒i : ND A ∷ Γ ⊢ B → ND Γ ⊢ A ⇒ B
+    ⇒e : ND Γ ⊢ A ⇒ B → ND Γ ⊢ A → ND Γ ⊢ B
 ```
 
 Note: for the sake of brevity, I'm using an Agda notation in which
@@ -178,10 +185,10 @@ as a *function*, that is to say $$\Gamma \subseteq \Gamma\prime$$ is
 the *function* $$A\in\Gamma\to A\in\Gamma\prime$$:
 
 ```
-  struct : ∀ {A Γ Γ′} → Γ ⊆ Γ′ → ND Γ ⊢ A → ND Γ′ ⊢ A
-  struct Γ⊆Γ′ (var x) = var (lookup Γ⊆Γ′ x)
-  struct Γ⊆Γ′ (lam f) = lam (struct (++⁺ ⊆-refl Γ⊆Γ′) f)
-  struct Γ⊆Γ′ (f ∙ g) = struct Γ⊆Γ′ f ∙ struct Γ⊆Γ′ g
+  struct : Γ ⊆ Γ′ → ND Γ ⊢ A → ND Γ′ ⊢ A
+  struct Γ⊆Γ′ (ax x)   = ax (lookup Γ⊆Γ′ x)
+  struct Γ⊆Γ′ (⇒i f)   = ⇒i (struct (++⁺ ⊆-refl Γ⊆Γ′) f)
+  struct Γ⊆Γ′ (⇒e f g) = ⇒e (struct Γ⊆Γ′ f) (struct Γ⊆Γ′ g)
 ```
 
 Note that values of type $$A\in\Gamma$$ are constructed using <a
@@ -203,8 +210,8 @@ in that enviroment with some irrelevant stuff added to it. Formally,
 we write it as:
 
 ```
-  w′ : ∀ {A B Γ} → ND Γ ⊢ B → ND A ∷ Γ ⊢ B
-  w′ = struct (++⁺ˡ _ ⊆-refl)
+  w′ : ND Γ ⊢ B → ND A ∷ Γ ⊢ B
+  w′ f = struct (++⁺ˡ _ ⊆-refl) f
 ```
 
 Passing <a class="Agda InductiveConstructor" target="_blank" href="https://agda.github.io/agda-stdlib/Data.List.Any.html#1227">there</a> to <a class="Agda Function">struct</a> simply moves every value by one: the first value becomes the second, the second becomes the third, etc... In the new antecedent, the first value will be our "irrelevant stuff".
@@ -233,10 +240,10 @@ We can encode these rules in Agda as follows:
   infix 3 SC_
 
   data SC_ : Sequent → Set where
-    ax  : ∀ {A     Γ} → A ∈ Γ → SC Γ ⊢ A
-    cut : ∀ {A B   Γ} → SC Γ ⊢ A → SC A ∷ Γ ⊢ B → SC Γ ⊢ B
-    ⇒l  : ∀ {A B C Γ} → SC Γ ⊢ A → SC B ∷ Γ ⊢ C → SC A ⇒ B ∷ Γ ⊢ C
-    ⇒r  : ∀ {A B   Γ} → SC A ∷ Γ ⊢ B → SC Γ ⊢ A ⇒ B
+    ax  : A ∈ Γ → SC Γ ⊢ A
+    cut : SC Γ ⊢ A → SC A ∷ Γ ⊢ B → SC Γ ⊢ B
+    ⇒l  : SC Γ ⊢ A → SC B ∷ Γ ⊢ C → SC A ⇒ B ∷ Γ ⊢ C
+    ⇒r  : SC A ∷ Γ ⊢ B → SC Γ ⊢ A ⇒ B
 ```
 
 We will define a few patterns that we'd otherwise have to write out,
@@ -255,16 +262,16 @@ It's a little bit of a puzzle, but given <a class="Agda Function">w′</a> it be
 ```
   module ND⇔SC where
 
-    ⟹ : ∀ {S} → ND S → SC S
-    ⟹ (var x) = ax x
-    ⟹ (lam f) = ⇒r  (⟹ f)
-    ⟹ (f ∙ g) = cut (⟹ f) (⇒l (⟹ g) ax₀)
+    ⟹ : ND S → SC S
+    ⟹ (ax x)   = ax x
+    ⟹ (⇒i f)   = ⇒r  (⟹ f)
+    ⟹ (⇒e f g) = cut (⟹ f) (⇒l (⟹ g) ax₀)
 
-    ⟸ : ∀ {S} → SC S → ND S
-    ⟸ (ax  p)   = var p
-    ⟸ (cut f g) = (lam (⟸ g)) ∙ (⟸ f)
-    ⟸ (⇒l  f g) = w′ (lam (⟸ g)) ∙ (ax₀ ∙ w′ (⟸ f))
-    ⟸ (⇒r  f)   = lam (⟸ f)
+    ⟸ : SC S → ND S
+    ⟸ (ax  p)   = ax p
+    ⟸ (cut f g) = ⇒e (⇒i (⟸ g)) (⟸ f)
+    ⟸ (⇒l  f g) = w′ (⇒i (⟸ g)) ∙ (ax₀ ∙ w′ (⟸ f))
+    ⟸ (⇒r  f)   = ⇒i (⟸ f)
 ```
 
 The rules for sequent calculus obviously no longer correspond *directly*
@@ -353,7 +360,7 @@ which stores values of the *interpretations* of those types:
 
   data Env : List Type → Set where
     []  : Env []
-    _∷_ : {A : Type} {Γ : List Type} → ⟦ A ⟧ → Env Γ → Env (A ∷ Γ)
+    _∷_ : ⟦ A ⟧ → Env Γ → Env (A ∷ Γ)
 ```
 
 Using this, we can interpret sequents as functions from environments
@@ -372,7 +379,7 @@ Let's get to interpreting terms! First off, variables. We can
 interpret variables simply by looking them up in the environment:
 
 ```
-  lookup : ∀ {A Γ} → A ∈ Γ → Env Γ → ⟦ A ⟧
+  lookup : A ∈ Γ → Env Γ → ⟦ A ⟧
   lookup (here refl) (x ∷ _) = x
   lookup (there A∈Γ) (_ ∷ e) = lookup A∈Γ e
 ```
@@ -390,10 +397,10 @@ abstractions and eliminations by applications:
 
 ```
   instance
-    InterpretND : ∀ {S} → Interpret (ND S) ⟦ S ⟧
+    InterpretND : Interpret (ND S) ⟦ S ⟧
     InterpretND = record { ⟦_⟧ = ⟦_⟧′ }
       where
-        ⟦_⟧′ : ∀ {S} → ND S → ⟦ S ⟧
+        ⟦_⟧′ : ND S → ⟦ S ⟧
         ⟦ ax p   ⟧′ e = lookup p e
         ⟦ ⇒i f   ⟧′ e = λ x → ⟦ f ⟧′ (x ∷ e)
         ⟦ ⇒e f g ⟧′ e = (⟦ f ⟧′ e) (⟦ g ⟧′ e)
@@ -404,7 +411,7 @@ translation from sequent calculus into Agda:
 
 ```
   instance
-    InterpretSC : ∀ {S} → Interpret (SC S) ⟦ S ⟧
+    InterpretSC : Interpret (SC S) ⟦ S ⟧
     InterpretSC = record { ⟦_⟧ = ⟦_⟧ ∘ ND⇔SC.⟸ }
 ```
 
