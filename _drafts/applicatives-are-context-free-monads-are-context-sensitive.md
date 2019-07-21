@@ -10,30 +10,79 @@ Over the past few days, there's a question that came up repeatedly, first [on Tw
 
 Folklore tells us that applicative parsers parse context-free grammars, and monadic parsers parse, well, at very least context-sensitive grammars. However, I've not been able to find a formal proof of the matter, or much writing on the topic at all!
 
+When we say "applicative parser combinators", we're using a bit of a colloquialism. For a parser combinator library to actually be useful, we need more than just an instance of Applicative; we need an instance of Alternative! Similarly, for monadic parsers to be useful, we need instances of Monad and MonadPlus! The Alternative and MonadPlus type classes are essentially the same. The only differences are in the method names and the class constraint.
+
 Brent Yorgey has written about [a trick][yorgey] which allows you to parse any recursively enumerable language[^erratum] using applicative parsers, by using recursion to create a production rule for each word in the language, creating a (potentially) infinite grammar.
 Brent argues that this means that this means parsers written using applicative parser combinators are way more expressive than context-free grammars.
-Instead, I'd argue that Brent has misinterpreted the question. Brent isn't talking about applicative parser combinators. They are talking about applicative parser combinators *plus* the ability to use recursion to construct infinite grammars.
+Instead, I'd argue that Brent has misinterpreted the question. Brent isn't talking about applicative parser combinators. They are talking about applicative parser combinators *plus* the ability to use recursion in the metalanguage (i.e., Haskell) to construct infinite grammars.
 
 There's another problem with the question. Context-free grammars are an abstract grammar formalism. They describe languages, but they don't come equipped with any specific way to *parse*. Parser combinator libraries are *parser libraries*. They *are* a specific way to parse. However, there is no abstract notion of what parser combinators are; there are only concrete libraries. So while it makes sense to say that [Parsec] can parse "predictive LL[1] grammars," it doesn't make sense to say that parser combinators *in general* are context-free. It's not so much apples and oranges as it is thoughts of fruit and actual fruit.
 
+
+### Thoughts of Apples
+
+To have any chance of meaningfully answering the question of expressivity, we'll have to come up with grammar formalism which captures what parser combinators *ideally* mean.
+
 $$
-\texttt{<*>}
+\begin{array}{lrll}
+p & ::=  & \texttt{char} \; c             &\textit{accepts}\;c
+\\& \mid & \texttt{succeed}               &\textit{accepts empty string}
+\\& \mid & \texttt{fail}                  &\textit{accepts nothing}
+\\& \mid & p_1 \mathbin{\texttt{<*>}} p_2 &\textit{accepts}\;p_1\;\textit{followed by}\;p_2
+\\& \mid & p_1 \mathbin{\texttt{<|>}} p_2 &\textit{accepts}\;p_1\;\textit{or}\;p_2
+\end{array}
 $$
 
-TODO: 
-- Define the problem: 
-  * What languages can we parse using ONLY the subset of Haskell that is `pSymbol` and the functions in `Alternative` using a clairvoiyent, idealised execution model.
-  * What languages can we parse using ONLY the subset of Haskell that is `pSymbol` and the functions in `MonadPlus` using a clairvoiyent, idealised execution model.
+The parser $$\texttt{char}\;c$$ accepts *only* the symbol $$c$$. The parser $$\texttt{succeed}$$ always succeeds, and accepts the empty string. It corresponds to `pure` from the Applicative type class (or `return` from the Monad type class). I've removed the argument, as we're only concerned with whether or not a parse succeeds, not what it returns. The parser $$\texttt{fail}$$ always fails. It corresponds to `empty` from the Alternative type class (or `mzero` from the MonadPlus type class). The parser $$p_1 \mathbin{\texttt{<*>}} p_2$$ accepts a word from the language $$p_1$$ followed by a word from the language $$p_2$$. It corresponds to `<*>` from the Applicative type class. Lastly, the parser $$p_1 \mathbin{\texttt{<}\vert\texttt{>}} p_2$$ accepts a word either from the language $$p_1$$ or from the language $$p_2$$. It corresponds to `<|>` from the Alternative type class (or `mplus` from the MonadPlus type class).
 
+<!-- TODO: using \mathbin{\texttt{<|>}} inline triggers a bug in KaTeX -->
 
+We can write this down as a binary relation between the parser $$p$$ and the word $$s$$, $$p \mathbin{\text{accepts}} s$$:
+
+$$
+\begin{array}{c}
+% no premises
+\\ \hline
+\texttt{char}\;c \mathbin{\text{accepts}} c
+\end{array}
+\quad
+\begin{array}{c}
+% no premises
+\\ \hline
+\texttt{succeed} \mathbin{\text{accepts}} \epsilon
+\end{array}
+\quad
+$$
+
+$$
+\text{(no rule for \texttt{fail})}
+$$
+
+$$
+\begin{array}{c}
+p_1 \mathbin{\text{accepts}} s_1
+\qquad
+p_2 \mathbin{\text{accepts}} s_2
+\\ \hline
+(p_1\mathbin{\texttt{<*>}}p_2) \mathbin{\text{accepts}} (s_1 \cdot s_2)
+\end{array}
+$$
+
+$$
+\begin{array}{c}
+p_1 \mathbin{\text{accepts}} s
+\\ \hline
+(p_1\mathbin{\texttt{<|>}}p_2) \mathbin{\text{accepts}} s
+\end{array}
+\quad
+\begin{array}{c}
+p_2 \mathbin{\text{accepts}} s
+\\ \hline
+(p_1\mathbin{\texttt{<|>}}p_2) \mathbin{\text{accepts}} s
+\end{array}
+$$
 
 <!--
-Over the past few days, there's a question that came up repeatedly, first [on Twitter][parsec], then after [a talk by Simon Marlow on Selective Functors][coplas]. That question?
-
-> What is the expressiveness of parser combinators?
-
-I spent some time at Utrecht University, and there the fact that parser combinators using *applicative style* parse context-free languages, while parser combinators using *monadic style* parse context-sensitive languages, was considered an obvious truth, part of the computer science folklore, but I've not been able to find a formal proof of the matter. So, let's try to give one ourselves, shall we?
-
 # What are Parser Combinators?
 
 Before we delve into the question of expressiveness, I---uh, I kinda have to explain what parser combinators are, right? Yes. Well, here goes! Parser combinators are an approach to writing parsers using higher-order functions. It's really neat, 'cuz the way you end up writing parsers is *really* close to how you'd write formal grammars, such as context-free grammars. 
@@ -128,11 +177,9 @@ data Parser s a where
   (:>>=)  :: Parser s a -> (a -> Parser s b) -> Parser s b
 ```
 
-# Applicatives are Context Free
-
-# Monads are Context Sensitive
-
 -->
+
+---
 
 [^erratum]: Brent argues that the technique can be used to parse *context-sensitive* languages, but the technique can convert arbitrary functions of type `String -> Bool` to parsers, and hence can be used to parse any *recursively enumerable* language. This is pointed out in the comments.
 [techrep]: http://www.cs.uu.nl/research/techreps/repo/CS-2008/2008-044.pdf
@@ -146,3 +193,7 @@ data Parser s a where
 [cfgparsing]: https://en.wikipedia.org/wiki/Context-free_grammar#Parsing
 [parsec]: https://wiki.haskell.org/Parsec
 [llparser]: https://en.wikipedia.org/wiki/LL_parser
+[firstclass]: http://www.cs.uu.nl/research/techreps/repo/CS-2011/2011-032.pdf
+
+<!--  LocalWords:  expressivity
+ -->
