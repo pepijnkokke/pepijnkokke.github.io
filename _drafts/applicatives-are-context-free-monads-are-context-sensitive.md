@@ -1,10 +1,33 @@
 ---
 title        : "Applicatives are Context Free, Monads are Context Sensitive"
-date         : 2019-04-27 12:00:00
-categories   : [compsci]
-tags         : [agda]
+date         : 2019-07-21 12:00:00
+tags         : [formal language theory, haskell, agda]
 ---
 
+Over the past few days, there's a question that came up repeatedly, first [on Twitter][beka], then after [a talk by Simon Marlow on Selective Functors][coplas]. That question?
+
+> What is the expressiveness of applicative and monadic parser combinators?
+
+Folklore tells us that applicative parsers parse context-free grammars, and monadic parsers parse, well, at very least context-sensitive grammars. However, I've not been able to find a formal proof of the matter, or much writing on the topic at all!
+
+Brent Yorgey has written about [a trick][yorgey] which allows you to parse any recursively enumerable language[^erratum] using applicative parsers, by using recursion to create a production rule for each word in the language, creating a (potentially) infinite grammar.
+Brent argues that this means that this means parsers written using applicative parser combinators are way more expressive than context-free grammars.
+Instead, I'd argue that Brent has misinterpreted the question. Brent isn't talking about applicative parser combinators. They are talking about applicative parser combinators *plus* the ability to use recursion to construct infinite grammars.
+
+There's another problem with the question. Context-free grammars are an abstract grammar formalism. They describe languages, but they don't come equipped with any specific way to *parse*. Parser combinator libraries are *parser libraries*. They *are* a specific way to parse. However, there is no abstract notion of what parser combinators are; there are only concrete libraries. So while it makes sense to say that [Parsec] can parse "predictive LL[1] grammars," it doesn't make sense to say that parser combinators *in general* are context-free. It's not so much apples and oranges as it is thoughts of fruit and actual fruit.
+
+$$
+\texttt{<*>}
+$$
+
+TODO: 
+- Define the problem: 
+  * What languages can we parse using ONLY the subset of Haskell that is `pSymbol` and the functions in `Alternative` using a clairvoiyent, idealised execution model.
+  * What languages can we parse using ONLY the subset of Haskell that is `pSymbol` and the functions in `MonadPlus` using a clairvoiyent, idealised execution model.
+
+
+
+<!--
 Over the past few days, there's a question that came up repeatedly, first [on Twitter][parsec], then after [a talk by Simon Marlow on Selective Functors][coplas]. That question?
 
 > What is the expressiveness of parser combinators?
@@ -109,8 +132,17 @@ data Parser s a where
 
 # Monads are Context Sensitive
 
-[parsec]: https://twitter.com/beka_valentine/status/1118924404040159232
-[coplas]: https://di.ku.dk/english/event-calendar-2019/coplas-talk-simon-marlow-facebook/
+-->
+
+[^erratum]: Brent argues that the technique can be used to parse *context-sensitive* languages, but the technique can convert arbitrary functions of type `String -> Bool` to parsers, and hence can be used to parse any *recursively enumerable* language. This is pointed out in the comments.
 [techrep]: http://www.cs.uu.nl/research/techreps/repo/CS-2008/2008-044.pdf
 [structamb]: https://en.wikipedia.org/wiki/Syntactic_ambiguity
 [wadler]: https://dl.acm.org/citation.cfm?id=5288
+[beka]: https://twitter.com/beka_valentine/status/1118924404040159232
+[coplas]: https://di.ku.dk/english/event-calendar-2019/coplas-talk-simon-marlow-facebook/
+[techrep]: http://www.cs.uu.nl/research/techreps/repo/CS-2008/2008-044.pdf
+[wadler]: https://dl.acm.org/citation.cfm?id=5288
+[yorgey]: https://byorgey.wordpress.com/2012/01/05/parsing-context-sensitive-languages-with-applicative/
+[cfgparsing]: https://en.wikipedia.org/wiki/Context-free_grammar#Parsing
+[parsec]: https://wiki.haskell.org/Parsec
+[llparser]: https://en.wikipedia.org/wiki/LL_parser
