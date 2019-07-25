@@ -10,34 +10,49 @@ Over the past few days, there's a question that came up repeatedly, first [on Tw
 
 Folklore tells us that applicative parsers parse context-free grammars, and monadic parsers parse, well, at very least context-sensitive grammars. However, I've not been able to find a formal proof of the matter, or much writing on the topic at all!
 
-When we say "applicative parser combinators", we're using a bit of a colloquialism. For a parser combinator library to actually be useful, we need more than just an instance of Applicative; we need an instance of Alternative! Similarly, for monadic parsers to be useful, we need instances of Monad and MonadPlus! The Alternative and MonadPlus type classes are essentially the same. The only differences are in the method names and the class constraint.
+
+### Narrowing Down the Question
+
+The terms "applicative" and "monadic parser combinators" aren't quite accurate. If we only had instances of the applicative or monadic type classes, we wouldn't be able to write parsers that parse anything beyond a single, set phrase. These terms are commonly understood to mean parser combinators with instances of the Applicative *and* Alternative type classes (or Monad *and* MonadPlus). These additional type classes let us choose between two alternatives, e.g., parse "apple" *or* "orange". (They're essentially the same type class; the only differences are the function names and the subclass constraint.)
+
+<!-- TODO: add links to the definitions of Applicative, Alternative, etc. -->
 
 Brent Yorgey has written about [a trick][yorgey] which allows you to parse any recursively enumerable language[^erratum] using applicative parsers, by using recursion to create a production rule for each word in the language, creating a (potentially) infinite grammar.
 Brent argues that this means that this means parsers written using applicative parser combinators are way more expressive than context-free grammars.
-Instead, I'd argue that Brent has misinterpreted the question. Brent isn't talking about applicative parser combinators. They are talking about applicative parser combinators *plus* the ability to use recursion in the metalanguage (i.e., Haskell) to construct infinite grammars.
+Instead, I'd argue that Brent has misinterpreted the question. Brent isn't talking about applicative parser combinators. They're talking about applicative parser combinators *plus* the ability to use recursion in the metalanguage (i.e., Haskell) to construct infinite grammars. There are *tons* of ways to embed an arbitrary Haskell into a parser combinator. Many parser combinator libraries actually include the ability to turn `String -> Bool` functions into parsers *directly*, e.g. [`satisfy`][satisfy]. If we don't rule out such combinators, we can parse any recursively enumerable language, simply because Haskell can.
 
 There's another problem with the question. Context-free grammars are an abstract grammar formalism. They describe languages, but they don't come equipped with any specific way to *parse*. Parser combinator libraries are *parser libraries*. They *are* a specific way to parse. However, there is no abstract notion of what parser combinators are; there are only concrete libraries. So while it makes sense to say that [Parsec] can parse "predictive LL[1] grammars," it doesn't make sense to say that parser combinators *in general* are context-free. It's not so much apples and oranges as it is thoughts of fruit and actual fruit.
 
 
-### Thoughts of Apples
+### Thoughts of Apples, Thoughts of Parsers
 
 To have any chance of meaningfully answering the question of expressivity, we'll have to come up with grammar formalism which captures what parser combinators *ideally* mean.
 
-$$
-\begin{array}{lrll}
-p & ::=  & \texttt{char} \; c             &\textit{accepts}\;c
-\\& \mid & \texttt{succeed}               &\textit{accepts empty string}
-\\& \mid & \texttt{fail}                  &\textit{accepts nothing}
-\\& \mid & p_1 \mathbin{\texttt{<*>}} p_2 &\textit{accepts}\;p_1\;\textit{followed by}\;p_2
-\\& \mid & p_1 \mathbin{\texttt{<|>}} p_2 &\textit{accepts}\;p_1\;\textit{or}\;p_2
-\end{array}
-$$
+Following [the Wikipedia definition for context-free grammars][cfgformal], we define a parser combinator grammar as a 4-tuple $$G = (V, \Sigma, S, \bar{D})$$ where:
 
-The parser $$\texttt{char}\;c$$ accepts *only* the symbol $$c$$. The parser $$\texttt{succeed}$$ always succeeds, and accepts the empty string. It corresponds to `pure` from the Applicative type class (or `return` from the Monad type class). I've removed the argument, as we're only concerned with whether or not a parse succeeds, not what it returns. The parser $$\texttt{fail}$$ always fails. It corresponds to `empty` from the Alternative type class (or `mzero` from the MonadPlus type class). The parser $$p_1 \mathbin{\texttt{<*>}} p_2$$ accepts a word from the language $$p_1$$ followed by a word from the language $$p_2$$. It corresponds to `<*>` from the Applicative type class. Lastly, the parser $$p_1 \mathbin{\texttt{<}\vert\texttt{>}} p_2$$ accepts a word either from the language $$p_1$$ or from the language $$p_2$$. It corresponds to `<|>` from the Alternative type class (or `mplus` from the MonadPlus type class).
+  - $$V$$ is a finite set; each element $$v \in V$$ is called a *nonterminal character* or syntactic category. Each variable defines a sub-language of the language defined by $$G$$. <br /> (In Haskell, $$V$$ is the set of Haskell names for the parsers.)
+  - $$\Sigma$$ is a finite set, disjoint from $$V$$; each element $$c \in \Sigma$$ is called a *terminal* character. Terminals make up the actual content of the sentence or program. <br /> (In Haskell, $$\Sigma$$ is usually the set of values of the `Char` type.)
+  - $$S$$ is the *start symbol*, used to represent the syntactic category for the whole sentence or program. It must be an element of $$V$$. <br /> (In Haskell, $$S$$ is one of the names in $$V$$.)
+  - $$\bar{D}$$ is a function from nonterminals to parsers, written as a collection of mutually recursive definitions $$v = p$$. The syntax of parsers $$p$$ is as follows:
 
-<!-- TODO: using \mathbin{\texttt{<|>}} inline triggers a bug in KaTeX -->
+    $$
+    \begin{array}{lrlrl}
+    p(x_1,\dots,x_n) & ::=
+             & \texttt{char}\;c
+    \\& \mid & \texttt{call}\;v(p_1,\dots,p_n)
+      & \mid & x_i
+    \\& \mid & p_1 \mathbin{\texttt{<*>}} p_2
+      & \mid & \texttt{succeed}
+    \\& \mid & p_1 \mathbin{\texttt{<|>}} p_2
+      & \mid & \texttt{fail}
+    \end{array}
+    $$
+    
+    Each nonterminal is defined with a number of arguments, and each call to a nonterminal should provide that number of arguments. The start symbol $$S$$ should be defined with no arguments.
 
-We can write this down as a binary relation between the parser $$p$$ and the word $$s$$, $$p \mathbin{\text{accepts}} s$$:
+    (In Haskell, $$\text{char}$$ corresponds to, e.g., Parsec's [`char`][char], $$\texttt{succeed}$$ and $$\texttt{<*>}$$ correspond to the [`pure`][pure] and [`(<*>)`][ap] functions from Applicative[^sucarg], and $$\texttt{fail}$$ and $$\texttt{<}\vert\texttt{>}$$ correspond to the [`empty`][empty] and [`(<|>)`][alt] functions from Alternative.)
+
+For a grammar $$G = (V, \Sigma, S, \bar{D})$$ we inductively define a binary relation from $$V$$ to $$\Sigma^*$$, which we write as $$v \mathbin{\textit{accepts}} w$$:
 
 $$
 \begin{array}{c}
@@ -45,143 +60,91 @@ $$
 \\ \hline
 \texttt{char}\;c \mathbin{\text{accepts}} c
 \end{array}
-\quad
+$$
+
+$$
+\begin{array}{c}
+\bar{D}(v)\{p_1,\dots,p_n/x_1,\dots,x_n\} \mathbin{accepts} w
+\\ \hline
+\texttt{call}\;v(p_1,\dots,p_n) \mathbin{\text{accepts}} w
+\end{array}
+$$
+
+$$
 \begin{array}{c}
 % no premises
 \\ \hline
 \texttt{succeed} \mathbin{\text{accepts}} \epsilon
 \end{array}
 \quad
-$$
-
-$$
 \text{(no rule for \texttt{fail})}
 $$
 
 $$
 \begin{array}{c}
-p_1 \mathbin{\text{accepts}} s_1
+p_1 \mathbin{\text{accepts}} w_1
 \qquad
-p_2 \mathbin{\text{accepts}} s_2
+p_2 \mathbin{\text{accepts}} w_2
 \\ \hline
-(p_1\mathbin{\texttt{<*>}}p_2) \mathbin{\text{accepts}} (s_1 \cdot s_2)
+(p_1\mathbin{\texttt{<*>}}p_2) \mathbin{\text{accepts}} w_1w_2
 \end{array}
 $$
 
 $$
 \begin{array}{c}
-p_1 \mathbin{\text{accepts}} s
+p_1 \mathbin{\text{accepts}} w
 \\ \hline
-(p_1\mathbin{\texttt{<|>}}p_2) \mathbin{\text{accepts}} s
+(p_1\mathbin{\texttt{<|>}}p_2) \mathbin{\text{accepts}} w
 \end{array}
 \quad
 \begin{array}{c}
-p_2 \mathbin{\text{accepts}} s
+p_2 \mathbin{\text{accepts}} w
 \\ \hline
-(p_1\mathbin{\texttt{<|>}}p_2) \mathbin{\text{accepts}} s
+(p_1\mathbin{\texttt{<|>}}p_2) \mathbin{\text{accepts}} w
 \end{array}
 $$
 
-<!--
-# What are Parser Combinators?
+<br />
+You can read these from bottom to top: the statement below the line is true if all statements above the line are true. Keeping this in mind, we can read these rules as follows:
 
-Before we delve into the question of expressiveness, I---uh, I kinda have to explain what parser combinators are, right? Yes. Well, here goes! Parser combinators are an approach to writing parsers using higher-order functions. It's really neat, 'cuz the way you end up writing parsers is *really* close to how you'd write formal grammars, such as context-free grammars. 
+  - The parser $$\texttt{char}\;c$$ accepts *only* the symbol $$c$$.
+  - To find out what the parser $$\texttt{call}\;v(p_1,\dots,p_n)$$ accepts, we look up the definition of the nonterminal $$v$$, and substitute the parsers $$p_1,\dots,p_n$$ for the argument variables $$x_1,\dots,x_n$$.
+  - The parser $$\texttt{succeed}$$ always succeeds, and accepts the empty string.
+  - The parser $$\texttt{fail}$$ always fails, so there's no rule.
+  - The parser $$p_1 \mathbin{\texttt{<*>}} p_2$$ accepts a word from the language $$p_1$$ followed by a word from the language $$p_2$$.
+  - The parser $$p_1 \mathbin{\texttt{<}\vert\texttt{>}} p_2$$ accepts a word either from the language $$p_1$$ or from the language $$p_2$$.
 
-That's all a bit vague, though, so in this section, let's build ourselves a basic parser combinator library, based on [Combinator Parsing: A Short Tutorial][techrep] by Doaitse Swierstra.
+The language of a grammar $$G = (V,\Sigma,S,\bar{D})$$ is the set
 
-First, what is a parser, really? We could start out by saying "A parser is a function from a list of symbols to some value." A bit naive, but it gives us a type:
+$$
+\mathcal{L}(G) =
+\{ w \in \Sigma^\star \mid S \mathbin{\textit{accepts}} w \}
+$$
 
-```haskell
-type Parser s a = [s] -> a
-```
+### Applicatives are Context Free
 
-That's a fine type for finished parsers---if we're willing to call, say, `error` in case of a parse error, at least. However, it puts you in hot water when you're trying to actually *write* parsers.
+Great! So we know what a parser combinator grammar is now! Let's prove that they're context free! I, uh, kinda need to explain what a context-free grammar is first, don't I? Like, I'm basically gonna copy the definition from [Wikipedia][cfgformal] here.
 
-The problem is that your type promises that you'll consume the whole list of input symbols in one go, but if you're writing a parser for, say, C++ code, you don't wanna write that whole parser in one go. Somewhere in there, you might want to write a parser which can say "I had a look at the next few symbols, and they're the number 12. Here's the rest of the symbols back." 
+We define a context-free grammar as a 4-tuple $$G = (V, \Sigma, S, R)$$ where:
 
-For that, we'd need to change our type:
+  - $$V$$ is a finite set; each element $$v \in V$$ is called a *nonterminal character* or syntactic category. Each variable defines a sub-language of the language defined by $$G$$.
+  - $$\Sigma$$ is a finite set, disjoint from $$V$$; each element $$c \in \Sigma$$ is called a *terminal* character. Terminals make up the actual content of the sentence or program.
+  - $$S$$ is the *start symbol*, used to represent the syntactic category for the whole sentence or program. It must be an element of $$V$$.
+  
+(So, exactly like above.)
 
-```haskell
-type Parser s a = [s] -> (a, [s])
-```
+  - $$R$$ is a finite relation from $$V$$ to $$(V \cup \Sigma)^*$$, where the asterisk represents the [Kleene star][kleene] operation, i.e., a relation from nonterminals to sequences of nonterminals and terminals. Elements of $$R$$ are called rewrite rules or *productions*.
+  
+Productions are usually written with an arrow, e.g., for a nonterminal $$v \in V$$ and a sequence of nonterminals and nonterminals $$\alpha \in (V \cup \Sigma)^*$$, we write $$v \leftarrow \alpha$$[^notation].
+  
 
-Lastly, parsers can be ambiguous, as there may be several different ways to parse a string. For programming languages, we usually want our grammar to be unambiguous, otherwise who knows how our compiler will interpret our program? However, in natural language, this sort of thing happens all the time, and is referred to as [structural ambiguity][structamb]. For instance, consider this sentence:
-
-> I saw the person with the binoculars.
-
-Did you use the binoculars? Were they holding the binoculars? From the sentence alone, there's no way to know!
-
-If we want to allow our parsers to be ambiguous, we'll have to change our type a little bit more. Instead of a single result, we'll have them return a list of possible results, which is called the [list of successes][wadler] method. Using a list of successes has the lovely benefit that the possibility of failure is now also apparent from ours type---after all, a list of successes can be empty!
-
-```haskell
-type Parser s a = [s] -> [(a, [s])]
-```
-
-Okay, whew, that's it. That's our final type. We're not gonna mess with our parser type any more. Instead, now that we know what parsers *are*, we're gonna spend some time talking about how to build them, and how to run them.
-
-Let's talk about that last one first! How do we actually run these things? For that first type, things were pretty clear, but now? Okay, to run a parser, we apply it to our list of input symbols. That gives us a list of successes. However, we only want finished parses which consumed the whole document. So, we filter the successes, keeping only those where the list of remaining symbols is empty:
-
-```haskell
-parse :: Parser s a -> [s] -> [a]
-parse p inp = [ x | (x, rest) <- p inp, null rest ]
-```
-
-```haskell
-symbol :: s -> Parser s s
-symbol s' (s:rest) | s' == s = [(s, rest)]
-symbol _  _                  = []
-```
-
-```haskell
-succeed :: a -> Parser s a
-succeed x inp = [(x, inp)]
-```
-
-```haskell
-fail :: Parser s a
-fail inp = []
-```
-
-```haskell
-(<*>) :: Parser s (a -> b) -> Parser s a -> Parser s b
-(p <*> q) inp = [ (f x, inp2) 
-                | (f, inp1) <- p inp
-                , (x, inp2) <- q inp1 ]
-```
-
-```haskell
-(<|>) :: Parser s a -> Parser s a -> Parser s a
-(p <|> q) inp = p inp ++ q inp
-```
-
-```haskell
-(<$>) :: (a -> b) -> Parser s a -> Parser s b
-f <$> p = succeed f <*> p
-```
-
-```haskell
-(>>=) :: Parser s a -> (a -> Parser s b) -> Parser s b
-(p >>= q) inp = [ (y, inp2) 
-                | (x, inp1) <- p inp
-                , (y, inp2) <- q x inp1 ]
-```
-
-```haskell
-data Parser s a where
-  Symbol  :: s -> Parser s s
-  Succeed :: a -> Parser s a
-  Fail    :: Parser s a
-  (:<*>)  :: Parser s (a -> b) -> Parser s a -> Parser s b
-  (:<|>)  :: Parser s a -> Parser s a -> Parser s a
-  (:<$>)  :: (a -> b) -> Parser s a -> Parser s b
-  (:>>=)  :: Parser s a -> (a -> Parser s b) -> Parser s b
-```
-
--->
 
 ---
 
 [^erratum]: Brent argues that the technique can be used to parse *context-sensitive* languages, but the technique can convert arbitrary functions of type `String -> Bool` to parsers, and hence can be used to parse any *recursively enumerable* language. This is pointed out in the comments.
+[^sucarg]: I've removed the argument to `pure`, as we're only concerned with whether or not a parse succeeds, not what it returns
+[^notation]: Wikipedia uses $$\alpha \rightarrow v$$, which I've never seen before, and I think is absurd.
+
 [techrep]: http://www.cs.uu.nl/research/techreps/repo/CS-2008/2008-044.pdf
 [structamb]: https://en.wikipedia.org/wiki/Syntactic_ambiguity
 [wadler]: https://dl.acm.org/citation.cfm?id=5288
@@ -194,6 +157,11 @@ data Parser s a where
 [parsec]: https://wiki.haskell.org/Parsec
 [llparser]: https://en.wikipedia.org/wiki/LL_parser
 [firstclass]: http://www.cs.uu.nl/research/techreps/repo/CS-2011/2011-032.pdf
-
-<!--  LocalWords:  expressivity
- -->
+[cfgformal]: https://en.wikipedia.org/wiki/Context-free_grammar#Formal_definitions
+[satisfy]: http://hackage.haskell.org/package/parsec-3.1.13.0/docs/Text-Parsec-Char.html#v:satisfy
+[char]: http://hackage.haskell.org/package/parsec-3.1.13.0/docs/Text-Parsec-Char.html#v:char
+[ap]: http://hackage.haskell.org/package/base-4.12.0.0/docs/Control-Applicative.html#v:-60--42--62-
+[pure]: http://hackage.haskell.org/package/base-4.12.0.0/docs/Control-Applicative.html#v:pure
+[alt]: http://hackage.haskell.org/package/base-4.12.0.0/docs/Control-Applicative.html#v:-60--124--62-
+[empty]: http://hackage.haskell.org/package/base-4.12.0.0/docs/Control-Applicative.html#v:empty
+[kleene]: https://en.wikipedia.org/wiki/Kleene_star
