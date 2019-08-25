@@ -1,0 +1,102 @@
+---
+layout       : page
+title        : Publications
+permalink    : /pubs/
+extra-script : [pubs-extra-script.html]
+---
+
+<!-- Pointer to my BibTeX source file -->
+<bibtex src="{{ "/pubs.bib" | prepend: site.baseurl }}"></bibtex>
+
+<div id="bibtex_errors"></div>
+
+<!-- Bibliography will be structured as follows -->
+<div class="bibtex_structure">
+    <div class="sections bibtextypekey">
+        <div class="section @article">
+            <h1>Journal Articles</h1>
+            <div class="sort year" extra="DESC number">
+                <div class="templates"></div>
+            </div>
+        </div>
+        <div class="section @book">
+            <h1>Books</h1>
+            <div class="sort year" extra="DESC number">
+                <div class="templates"></div>
+            </div>
+        </div>
+        <div class="section @inproceedings">
+            <h1>Conference and Workshop Papers</h1>
+            <div class="sort year" extra="DESC number">
+                <div class="templates"></div>
+            </div>
+        </div>
+        <div class="section @misc|@phdthesis|@mastersthesis|@bachelorsthesis|@techreport">
+            <h1>Theses</h1>
+            <div class="sort year" extra="DESC number">
+                <div class="templates"></div>
+            </div>
+        </div>
+        <div class="section @talk">
+            <h1>Talks</h1>
+            <div class="templates"></div>
+        </div>
+        <div class="section @pub">
+            <h1>Public Houses</h1>
+            <div class="sort location" extra="DESC number">
+                <div class="templates"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bibliography entries will be structured as follows -->
+<div id="bibtex_display">
+    <div class="bibtex_template">
+        <ul><li>
+            <span class="if title">
+                <span class="if url">
+                    <a class="url">
+                        <span class="title"></span>,
+                    </a>
+                </span>
+                <span class="if !url">
+                    <span class="title"></span>,
+                </span>
+            </span>
+            <div class="if author">
+                <span class="author"></span>
+            </div>
+            <div>
+                <span class="if BIBTEXTYPEKEY==@ARTICLE">
+                    <span class="if journal"><em><span class="journal"></span>,</em></span>
+                    <span class="if number">
+                        <span class="if volume"><em><span class="volume"></span></em></span>
+                        <span class="if number"><em>(<span class="number"></span>),</em></span>
+                    </span>
+                    <span class="if !number">
+                        <span class="if volume"><em><span class="volume"></span>,</em></span>
+                    </span>
+                </span>
+                <span class="if BIBTEXTYPEKEY==@BOOK">
+                </span>
+                <span class="if BIBTEXTYPEKEY==@INPROCEEDINGS">
+                    <span class="if booktitle"><span class="booktitle"></span>,</span>
+                    <span class="if location"><span class="location"></span>,</span>
+                </span>
+                <span class="if BIBTEXTYPEKEY==@MASTERSTHESIS">
+                    Master's thesis.
+                </span>
+                <span class="if BIBTEXTYPEKEY==@TALK">
+                    <span class="if location"><span class="location"></span>,</span>
+                </span>
+                <span class="if BIBTEXTYPEKEY==@PUB">
+                    <span class="if location"><span class="location"></span>,</span>
+                </span>
+                <span class="if month"><span class="month"></span>,</span>
+                <span class="if year"><span class="year"></span>.</span>
+                <span class="if note"><span class="note"></span>.</span>
+            </div>
+        </li></ul>
+    </div>
+</div>

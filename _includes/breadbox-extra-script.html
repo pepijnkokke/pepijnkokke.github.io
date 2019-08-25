@@ -1,0 +1,21 @@
+<script>
+  var lineLimit    = 25;
+  var breadbox_url = 'http://breadbox-breadbox.7e14.starter-us-west-2.openshiftapps.com/';
+
+  $.ajax({
+    url         : breadbox_url+"generate/secret",
+    type        : "GET",
+    crossDomain : true,
+    dataType    : "json",
+    success     : function(data) {
+      window.secret              = data['secret'];
+      window.secret_with_article = data['secret_with_article'];
+      window.definitions         = data['definitions'];
+      if (window.location.href.indexOf("#breadbox") != -1) {
+        $('#breadbox-input').find('input').focus();
+      }
+    }
+  });
+</script>
+<script type="text/javascript" src="{{ "/assets/js/cssConsole.min.js" | prepend: site.baseurl }}"></script>
+<script type="text/javascript" src="{{ "/assets/js/breadbox.js" | prepend: site.baseurl }}"></script>

@@ -1,0 +1,192 @@
+<script type="text/javascript" src="{{ "/assets/js/codemirror.js" | prepend: site.baseurl }}"></script>
+<script type="text/javascript" src="{{ "/assets/js/codemirror/javascript.js" | prepend: site.baseurl }}"></script>
+<script type="text/javascript" src="{{ "/assets/js/jquery-ui.min.js" | prepend: site.baseurl }}"></script>
+<script type="text/javascript" src="{{ "/assets/js/TheGreatDalmuti.jsexe/rts.js" | prepend: site.baseurl }}"></script>
+<script type="text/javascript" src="{{ "/assets/js/TheGreatDalmuti.jsexe/lib.js" | prepend: site.baseurl }}"></script>
+<script type="text/javascript" src="{{ "/assets/js/TheGreatDalmuti.jsexe/out.js" | prepend: site.baseurl }}"></script>
+<script type="text/javascript" src="{{ "/assets/js/TheGreatDalmuti.jsexe/runmain.js" | prepend: site.baseurl }}" defer></script>
+<script type="text/javascript">
+    // Create new tabs:
+function newTab(name,opts) {
+    $("#tabs ul").append('<li id="li-'+name+'"><a href="#tabs-'+name+'">'
+                         +name+'</a></li>');
+    $("#tabs").append('<div id="tabs-'+name+'"><textarea id="edit-'+name+'">'
+                      +(opts.value || '')+'</textarea></div>');
+    CodeMirror.fromTextArea(document.getElementById('edit-'+name),opts);
+    $("#tabs").tabs('refresh');
+}
+// Create new players:
+function newPlayer(name,value,opts) {
+    if (typeof window.players === 'undefined') {
+        window.players = [];
+    }
+    window.players.push(name);
+    opts.value = value;
+    newTab(name,opts);
+    $("#li-"+name).addClass('li-player');
+}
+// Create announce function:
+function addLine(data){
+    var editor = $('#tabs-Console .CodeMirror')[0].CodeMirror;
+    editor.replaceRange(data+'\n', CodeMirror.Pos(editor.lastLine()));
+    editor.execCommand('goPageDown');
+    editor.refresh();
+}
+function announce(msg) {
+    switch (true) {
+    case msg.tag === 'Play':
+        addLine(msg.contents[0] + ' plays [' + msg.contents[1].toString() + ']');
+        break;
+    case msg.tag === 'Pass':
+        addLine(msg.contents + ' passes');
+        break;
+    case msg.tag === 'Win':
+        addLine(msg.contents + ' wins the round!');
+        break;
+    case msg.tag === 'Finish':
+        addLine(msg.contents + ' is out of cards!');
+        break;
+    case msg.tag === 'Hand':
+        addLine(msg.contents[0] + ' is dealt [' + msg.contents[1].toString() + ']');
+        break;
+    case msg.tag === 'Illegal':
+        addLine(msg.contents[0] + ' attempted the illegal move ['
+                + msg.contents[1].toString() + ']');
+        break;
+    case msg.tag === 'Give':
+        addLine(msg.contents[0] + ' gives [' + msg.contents[2]
+                + '] to ' + msg.contents[1]);
+        break;
+    case msg.tag === 'Revolution':
+        addLine(msg.contents + ' cries revolution!');
+        break;
+    case msg.tag === 'StartTaxation':
+        addLine("");
+        break;
+    case msg.tag === 'StartGame':
+        addLine("");
+        break;
+    case msg.tag === 'AllPass':
+        addLine("The game ended early, because all players passed.");
+        break;
+    }
+}
+// Create play function:
+function play(player,game) {
+    var editor   = $('#tabs-'+player+' .CodeMirror')[0].CodeMirror;
+    try {
+        return eval('('+editor.getValue().replace(/;$/,'')+')').play(player,game);
+    }
+    catch (e) {
+        addLine("// " + player + " throws " + e.toString());
+        return [];
+    }
+}
+function give(player,n,hand) {
+    var editor   = $('#tabs-'+player+' .CodeMirror')[0].CodeMirror;
+    try {
+        return eval('('+editor.getValue().replace(/;$/,'')+')').give(player,n,hand);
+    }
+    catch (e) {
+        addLine("// " + player + " throws " + e.toString());
+        return [];
+    }
+}
+function revolt(player,rank,hand) {
+    return rank > 2;
+}
+// Create main function:
+function main() {
+    var editor = $('#tabs-Console .CodeMirror')[0].CodeMirror;
+    editor.setValue('');
+    editor.clearHistory();
+    var result = __main__();
+    addLine('\nResult: ' + result.toString());
+    var ul = $("#tabs ul");
+    var li = ul.children("li.li-player");
+    li.detach().sort(function(x1,x2) {
+        var i1 = result.findIndex(p => p == $(x1).text());
+        var i2 = result.findIndex(p => p == $(x2).text());
+        return i1 > i2;
+    });
+    ul.append(li);
+    $('.runmain').button('enable');
+}
+var playWorstCardsAI = `
+{
+    play : function(player,game) {
+        return playWorstCards(game);
+    },
+    give : function(player,n,hand) {
+        return giveWorstCards(n,hand);
+    }
+}`;
+var playBestCardsAI = `
+{
+    play : function(player,game) {
+        return playBestCards(game);
+    },
+    give : function(player,n,hand) {
+        return giveBestCards(n,hand);
+    }
+}`;
+var passAI = `
+{
+    play : function(player,game) {
+        return [];
+    },
+    give : function(player,n,hand) {
+        return giveBestCards(n,hand);
+    }
+}`;
+function shuffle(a) {
+    var j, x, i;
+    for (i = a.length; i; i -= 1) {
+        j        = Math.floor(Math.random() * i);
+        x        = a[i - 1];
+        a[i - 1] = a[j];
+        a[j]     = x;
+    }
+}
+$(function() {
+    $('#tabs-noscript').hide();
+    $('#tabs').show();
+    $('#tabs').tabs();
+    $('.runmain').button().click(function(event) {
+        $('.runmain').button('disable');
+        main();
+    });
+    newTab('Console',{
+        readOnly    : true,
+        value       : '',
+    });
+    $("#tabs").tabs("option", "active", 0);
+    var opts = {
+        lineNumbers : true,
+        mode        : "javascript",
+        autofocus   : false
+    };
+    var players =
+    [ {name: 'Ezra', code: playWorstCardsAI, opts: opts}
+    , {name: 'Neil', code: playBestCardsAI,  opts: opts}
+    , {name: 'Ruth', code: passAI,           opts: opts}
+    , {name: 'Abby', code: playWorstCardsAI, opts: opts}
+    ];
+    shuffle(players)
+    players.forEach(function(player,index,array) {
+      newPlayer(player.name,player.code,player.opts);
+    });
+    $("#tabs").tabs({
+        activate: function(event,ui) {
+    if (ui.newPanel.attr('id') == 'tabs-Console') {
+                $('.runmain').button('enable');
+                $('#tabs .runmain').show();
+            }
+            else {
+                $('.runmain').button('disable');
+                $('#tabs .runmain').hide();
+            }
+        }
+    });
+});
+</script>
