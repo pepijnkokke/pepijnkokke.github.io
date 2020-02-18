@@ -23,8 +23,18 @@ function html_path {
     HTML_DIR="$2"
 
     # Extract the module name from the Agda file
-    # NOTE: this fails if there is more than a single space after 'module'
-    MOD_NAME=`grep -oP -m 1 "(?<=^module )(\\S+)(?=\\s+(\\S+\\s+)*where)" "$SRC"`
+    #
+    # NOTE: This fails when there is no module statement,
+    #       or when there is more than one space after 'module'.
+    #
+    MOD_NAME=`grep -o -m 1 "module\\s*\\(\\S\\S*\\)\\s.*where$" "$SRC" | cut -d ' ' -f 2`
+
+    if [ -z "$MOD_NAME" ]
+    then
+        echo "Error: No module header detected in '$SRC'" 1>&2
+        exit 1
+    fi
+
 
     # Extract the extension from the Agda file
     SRC_EXT="$(basename $SRC)"
@@ -44,7 +54,7 @@ set -o pipefail \
 
 # Check if the highlighted file was successfully generated
 if [[ ! -f "$HTML" ]]; then
-    echo "File not generated: $FILE"
+    echo "Error: File not generated: $FILE" 1>&2
     exit 1
 fi
 
