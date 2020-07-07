@@ -1,15 +1,34 @@
-@article{kokke202scp,
-  title     = "Programming language foundations in Agda",
-  journal   = "Science of Computer Programming",
-  volume    = "194",
-  pages     = "102440",
+@article{kokke2019ice,
+  abstract  = {Rusty Variation (RV) is a library for session-typed communication
+                  in Rust which offers strong compile-time correctness
+                  guarantees. Programs written using RV are guaranteed to
+                  respect a specified protocol, and are guaranteed to be free
+                  from deadlocks and races.},
+  title     = {Rusty Variation: Deadlock-free Sessions with Failure in Rust},
+  author    = {Wen Kokke},
+  journal   = {Electronic Proceedings in Theoretical Computer Science},
+  volume    = {304},
+  issn      = {2075-2180},
+  doi       = {10.4204/eptcs.304.4},
+  publisher = {Open Publishing Association},
+  year      = {2019},
+  month     = {Sep},
+  pages     = {48–60},
+  url       = {https://wenkokke.github.io/pubs/eptcs2019b.pdf},
+  note      = {Renamed to Sesh},
+}
+@article{kokke2020scp,
+  doi       = {10.1016/j.scico.2020.102440},
+  url       = {https://doi.org/10.1016/j.scico.2020.102440},
   year      = {2020},
-  issn      = "0167-6423",
-  doi       = "https://doi.org/10.1016/j.scico.2020.102440",
-  url       = "http://www.sciencedirect.com/science/article/pii/S0167642320300502",
-  author    = "Wen Kokke and Jeremy G. Siek and Philip Wadler",
-  keywords  = "Agda, Coq, Lambda calculus, Dependent types",
-  abstract  = "One of the leading textbooks for formal methods is Software Foundations (SF), written by Benjamin Pierce in collaboration with others, and based on Coq. After five years using SF in the classroom, we came to the conclusion that Coq is not the best vehicle for this purpose, as too much of the course needs to focus on learning tactics for proof derivation, to the cost of learning programming language theory. Accordingly, we have written a new textbook, Programming Language Foundations in Agda (PLFA). PLFA covers much of the same ground as SF, although it is not a slavish imitation. What did we learn from writing PLFA? First, that it is possible. One might expect that without proof tactics that the proofs become too long, but in fact proofs in PLFA are about the same length as those in SF. Proofs in Coq require an interactive environment to be understood, while proofs in Agda can be read on the page. Second, that constructive proofs of preservation and progress give immediate rise to a prototype evaluator. This fact is obvious in retrospect but it is not exploited in SF (which instead provides a separate normalise tactic) nor can we find it in the literature. Third, that using extrinsically-typed terms is far less perspicuous than using intrinsically-typed terms. SF uses the former presentation, while PLFA presents both; the former uses about 1.6 as many lines of Agda code as the latter, roughly the golden ratio. The textbook is written as a literate Agda script, and can be found here: http://plfa.inf.ed.ac.uk"
+  month     = aug,
+  publisher = {Elsevier {BV}},
+  volume    = {194},
+  pages     = {102440},
+  author    = {Wen Kokke and Jeremy G. Siek and Philip Wadler},
+  title     = {Programming language foundations in Agda},
+  journal   = {Science of Computer Programming},
+  abstract  = {One of the leading textbooks for formal methods is Software Foundations (SF), written by Benjamin Pierce in collaboration with others, and based on Coq. After five years using SF in the classroom, we came to the conclusion that Coq is not the best vehicle for this purpose, as too much of the course needs to focus on learning tactics for proof derivation, to the cost of learning programming language theory. Accordingly, we have written a new textbook, Programming Language Foundations in Agda (PLFA). PLFA covers much of the same ground as SF, although it is not a slavish imitation. What did we learn from writing PLFA? First, that it is possible. One might expect that without proof tactics that the proofs become too long, but in fact proofs in PLFA are about the same length as those in SF. Proofs in Coq require an interactive environment to be understood, while proofs in Agda can be read on the page. Second, that constructive proofs of preservation and progress give immediate rise to a prototype evaluator. This fact is obvious in retrospect but it is not exploited in SF (which instead provides a separate normalise tactic) nor can we find it in the literature. Third, that using extrinsically-typed terms is far less perspicuous than using intrinsically-typed terms. SF uses the former presentation, while PLFA presents both; the former uses about 1.6 as many lines of Agda code as the latter, roughly the golden ratio. The textbook is written as a literate Agda script, and can be found here: http://plfa.inf.ed.ac.uk}
 }
 @article{kokke2019pacmpl,
   abstract  = {We present Hypersequent Classical Processes (HCP), a revised
@@ -83,19 +102,17 @@
   month     = oct,
   url       = {https://plfa.github.io/},
 }
-@inproceedings{kokke2019ice,
-  abstract  = {Rusty Variation (RV) is a library for session-typed communication
-                  in Rust which offers strong compile-time correctness
-                  guarantees. Programs written using RV are guaranteed to
-                  respect a specified protocol, and are guaranteed to be free
-                  from deadlocks and races.},
-  author    = {Wen Kokke},
-  title     = {Rusty Variation: Deadlock-free Sessions with Failure in Rust},
-  year      = {2019},
-  booktitle = {12th Interaction and Concurrency Experience},
-  series    = {Electronic Proceedings in Theoretical Computer Science},
-  url       = {https://wenkokke.github.io/pubs/eptcs2019b.pdf},
-  note      = {Forthcoming},
+@inproceedings{kokke2020live,
+  abstract  = {We introduce StarChild and Lazuli, two proof-of-concept libraries which leverage the type system and theorem proving capabilities of F* and Liquid Haskell, respectively, to verify properties of pre-trained neural networks. We largely focus on StarChild, as the F* syntax is slightly more concise, but Lazuli implements the same functionality. Currently, both libraries are capable of verifying small models. Performance issues arise for larger models. Optimising the libraries is future work.
+  We make two novel contributions. We demonstrate that (1) it is possible to leverage a sufficiently advanced type system to model properties of neural networks such as robustness as types, and check them without any proof burden; and in service of that, we demonstrate that (2) it is possible to approximately translate neural network models to SMT logic.},
+  author    = {Wen Kokke and Ekaterina Komendantskaya and Daniel Kienitz and David Aspinall},
+  title     = {Robustness as a Refinement Type: Verifying Neural Networks in Liquid Haskell and F*},
+  year      = {2020},
+  month     = apr,
+  editor    = {Joost-Pieter Katoen and Jan Kretinsky},
+  booktitle = {{4th Workshop on Learning in Verification}},
+  location  = {Dublin, Ireland},
+  url       = {https://wenkokke.github.io/pubs/live2020.pdf}
 }
 @inproceedings{kokke2019tlla,
   abstract  = {Process calculi based on logic, such as πDILL and CP, provide a
@@ -129,6 +146,7 @@
   pages     = {90-103},
   doi       = {10.4204/EPTCS.292.5},
   url       = {https://wenkokke.github.io/pubs/eptcs2019a.pdf},
+  note      = {The EPTCS version has errors, which are fixed here},
 }
 @inproceedings{kokke2019coordination,
   abstract  = {Process calculi based in logic, such as πDILL and CP, provide a
@@ -152,7 +170,7 @@
   url       = {https://wenkokke.github.io/pubs/coordination2019.pdf},
   booktitle = {International Conference on Coordination Models and Languages},
   location  = {Lyngby, Denmark},
-  note      = {Forthcoming},
+  note      = {The COORDINATION version has errors, which are fixed here},
 }
 @inproceedings{kokke2017cg,
   author    = {Wen Kokke and Inari Listenmaa},
