@@ -13,13 +13,19 @@ When you write a paper, you probably create a bunch of things that don’t direc
 
 That’s where AECs come in! There’s [a two-fold goal][artifact-eval] to artefact evaluation.
 First and foremost, the goal is “to reward authors who take the trouble to create useful artifacts beyond the paper.”
-The second goal is to cause “radical shift in our conference evaluation processes”, where “the AEC will inform and advise the Program Committee.” We’re currently in the middle of this shift: it’s common for reviewers to cite the lack of an artefact as grounds for rejection, but the artefact—if one is present—is not inspected for this. The AEC does not have the power to reject a paper.
+The second goal is to cause “radical shift in our conference evaluation processes”, where “the AEC will inform and advise the Program Committee.” We’re currently in the middle of this shift: it happens that reviewers to cite the lack of an artefact as grounds for rejection, but artefacts—if one is present—usually aren’t inspected by reviewers, and the AEC does not have the power to reject a paper.
 
-“Ultimately, we expect artifacts to be:
-- consistent with the paper,
-- as complete as possible,
-- documented well, and
-- easy to reuse, facilitating further research.”
+## How It’s Made: Artefacts
+
+Every conference has its own guidelines for artefacts, and every guideline has a degree to which it’s actually enforced—probably varying from reviewer to reviewer[^VARIANCE]. For some consistency, let’s look at what [artifact-eval.org][artifact-eval] has to say:
+
+{:.blockquote-alignleft}
+> “Ultimately, we expect artifacts to be:
+> - consistent with the paper,
+> - as complete as possible,
+> - documented well, and
+> - easy to reuse, facilitating further research.”
+> {:.compact-list}
 
 
 ---
@@ -29,4 +35,5 @@ The second goal is to cause “radical shift in our conference evaluation proces
 [^ARTEFACT]: The answer is that my spell checker is stuck on UK English, and I don’t know how to change it.
 [^REPRODUCIBILITY]: *Mutters something about verification and reproducibility.*
 [^HONESTY]: "Conversely, authors sometimes take liberties in describing the status of their artifacts—claims they would temper if they knew the artifacts are going to be scruitinized. This leads to more accurate reporting.“ —[artifact-eval.org][artifact-eval]
+[^VARIANCE]: Caveat: <script type="math/tex">N = 1</script>
 [artifact-eval]: https://www.artifact-eval.org/about.html
