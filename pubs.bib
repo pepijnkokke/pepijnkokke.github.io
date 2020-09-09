@@ -114,10 +114,16 @@
   url       = {https://plfa.github.io/},
 }
 @inproceedings{kokke2020aplas,
+  abstract  = {We present StarChild and Lazuli, two libraries which leverage refinement types to verify neural networks, implemented in F* and Liquid Haskell. Refinement types are types augmented, or refined, with assertions about values of that type, e.g., ``integers greater than five'', which are checked by an SMT solver. Crucially, these assertions are written in the language itself. A user of our library can refine the type of neural networks, e.g., ``neural networks which are robust against adversarial attacks'', and expect F* to handle the verification of this claim for any specific network, without having to change the representation of the network, or even having to learn about SMT solvers.
+  Our initial experiments indicate that our approach could greatly reduce the burden of verifying neural networks. Unfortunately, they also show that SMT solvers do not scale to the sizes required for neural network verification.},
   author    = {Wen Kokke and Ekaterina Komendantskaya and Daniel Kienitz and David Aspinall and Robert Atkey},
   title     = {Neural Networks, Secure by Construction: An Exploration of Refinement Types},
   year      = {2020},
-  note      = {Forthcoming},
+  month     = nov,
+  editor    = {Bruno C. d. S. Oliveira},
+  booktitle = {Proceedings 18th Asian Symposium on Programming Languages and Systems, APLAS 2020},
+  location  = {Fukuoka, Japan},
+  url       = {https://wenkokke.github.io/pubs/aplas2020.pdf}
 }
 @inproceedings{kokke2020live,
   abstract  = {We introduce StarChild and Lazuli, two proof-of-concept libraries which leverage the type system and theorem proving capabilities of F* and Liquid Haskell, respectively, to verify properties of pre-trained neural networks. We largely focus on StarChild, as the F* syntax is slightly more concise, but Lazuli implements the same functionality. Currently, both libraries are capable of verifying small models. Performance issues arise for larger models. Optimising the libraries is future work.
@@ -201,7 +207,7 @@
 @inproceedings{kokke2016lacl,
   year      = {2016},
   month     = dec,
-  publisher = {Springer Nature},
+  publisher = {Springer},
   pages     = {134--148},
   author    = {Wen Kokke},
   title     = {Strong and Weak Quantifiers in Focused {NLCL}},
@@ -266,7 +272,7 @@
   doi       = {10.1007/978-3-319-19797-5_14},
   title     = {Auto in Agda: Programming Proof Search Using Reflection},
   url       = {https://wenkokke.github.io/pubs/mpc2015.pdf},
-  publisher = {Springer International Publishing},
+  publisher = {Springer},
   author    = {Wen Kokke and Wouter Swierstra},
   pages     = {276-301},
 }
