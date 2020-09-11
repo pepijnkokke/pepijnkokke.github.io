@@ -1,5 +1,11 @@
 @article{kokke2020oopsla,
-  abstract  = {We describe a design for generics in Go inspired by previous work on Featherweight Java by Igarashi, Pierce, and Wadler. Whereas subtyping in Java is nominal, in Go it is structural, and whereas generics in Java are defined via erasure, in Go we use monomorphisation. Although monomorphisation is widely used, we are one of the first to formalise it. Our design also supports a solution to The Expression Problem.},
+  abstract  = {We describe a design for generics in Go inspired by previous work
+                  on Featherweight Java by Igarashi, Pierce, and Wadler. Whereas
+                  subtyping in Java is nominal, in Go it is structural, and
+                  whereas generics in Java are defined via erasure, in Go we use
+                  monomorphisation. Although monomorphisation is widely used, we
+                  are one of the first to formalise it. Our design also supports
+                  a solution to The Expression Problem.}, 
   title     = {Featherweight Go},
   author    = {Robert Griesemer and Raymond Hu and Wen Kokke and Julien Lange and Ian Lance Taylor and Bernardo Toninho and Philip Wadler and Nobuko Yoshida},
   journal   = {Proceedings of the {ACM} on Programming Languages},
@@ -39,7 +45,32 @@
   author    = {Wen Kokke and Jeremy G. Siek and Philip Wadler},
   title     = {Programming language foundations in Agda},
   journal   = {Science of Computer Programming},
-  abstract  = {One of the leading textbooks for formal methods is Software Foundations (SF), written by Benjamin Pierce in collaboration with others, and based on Coq. After five years using SF in the classroom, we came to the conclusion that Coq is not the best vehicle for this purpose, as too much of the course needs to focus on learning tactics for proof derivation, to the cost of learning programming language theory. Accordingly, we have written a new textbook, Programming Language Foundations in Agda (PLFA). PLFA covers much of the same ground as SF, although it is not a slavish imitation. What did we learn from writing PLFA? First, that it is possible. One might expect that without proof tactics that the proofs become too long, but in fact proofs in PLFA are about the same length as those in SF. Proofs in Coq require an interactive environment to be understood, while proofs in Agda can be read on the page. Second, that constructive proofs of preservation and progress give immediate rise to a prototype evaluator. This fact is obvious in retrospect but it is not exploited in SF (which instead provides a separate normalise tactic) nor can we find it in the literature. Third, that using extrinsically-typed terms is far less perspicuous than using intrinsically-typed terms. SF uses the former presentation, while PLFA presents both; the former uses about 1.6 as many lines of Agda code as the latter, roughly the golden ratio. The textbook is written as a literate Agda script, and can be found here: http://plfa.inf.ed.ac.uk.}
+  abstract  = {One of the leading textbooks for formal methods is Software
+                  Foundations (SF), written by Benjamin Pierce in collaboration
+                  with others, and based on Coq. After five years using SF in
+                  the classroom, we came to the conclusion that Coq is not the
+                  best vehicle for this purpose, as too much of the course needs
+                  to focus on learning tactics for proof derivation, to the cost
+                  of learning programming language theory. Accordingly, we have
+                  written a new textbook, Programming Language Foundations in
+                  Agda (PLFA). PLFA covers much of the same ground as SF,
+                  although it is not a slavish imitation. What did we learn from
+                  writing PLFA? First, that it is possible. One might expect
+                  that without proof tactics that the proofs become too long,
+                  but in fact proofs in PLFA are about the same length as those
+                  in SF. Proofs in Coq require an interactive environment to be
+                  understood, while proofs in Agda can be read on the page.
+                  Second, that constructive proofs of preservation and progress
+                  give immediate rise to a prototype evaluator. This fact is
+                  obvious in retrospect but it is not exploited in SF (which
+                  instead provides a separate normalise tactic) nor can we find
+                  it in the literature. Third, that using extrinsically-typed
+                  terms is far less perspicuous than using intrinsically-typed
+                  terms. SF uses the former presentation, while PLFA presents
+                  both; the former uses about 1.6 as many lines of Agda code as
+                  the latter, roughly the golden ratio. The textbook is written
+                  as a literate Agda script, and can be found here:
+                  http://plfa.inf.ed.ac.uk.} 
 }
 @article{kokke2019pacmpl,
   abstract  = {We present Hypersequent Classical Processes (HCP), a revised
@@ -96,7 +127,9 @@
                   cross-annotator agreement of 68\% on average. The
                   annotated parts of the RTE corpora are publicly
                   available for further research. },
-  author    = {Assaf Toledo and Stavroula Alexandropoupou and Sophie Chesney and Sophia Katrenko and Heidi Klockmann and Wen Kokke and Benno Kruit and Yoad Winter},
+  author    = {Assaf Toledo and Stavroula Alexandropoupou and Sophie Chesney and
+                  Sophia Katrenko and Heidi Klockmann and Wen Kokke and Benno
+                  Kruit and Yoad Winter},
   title     = {Towards a Semantic Model for Textual Entailment},
   booktitle = {Perspectives on Semantic Representations for Textual Inference},
   volume    = {9},
@@ -114,8 +147,22 @@
   url       = {https://plfa.github.io/},
 }
 @inproceedings{kokke2020aplas,
-  abstract  = {We present StarChild and Lazuli, two libraries which leverage refinement types to verify neural networks, implemented in F* and Liquid Haskell. Refinement types are types augmented, or refined, with assertions about values of that type, e.g., ``integers greater than five'', which are checked by an SMT solver. Crucially, these assertions are written in the language itself. A user of our library can refine the type of neural networks, e.g., ``neural networks which are robust against adversarial attacks'', and expect F* to handle the verification of this claim for any specific network, without having to change the representation of the network, or even having to learn about SMT solvers.
-  Our initial experiments indicate that our approach could greatly reduce the burden of verifying neural networks. Unfortunately, they also show that SMT solvers do not scale to the sizes required for neural network verification.},
+  abstract  = {We present StarChild and Lazuli, two libraries which leverage
+                  refinement types to verify neural networks, implemented in F*
+                  and Liquid Haskell. Refinement types are types augmented, or
+                  refined, with assertions about values of that type, e.g.,
+                  ``integers greater than five'', which are checked by an SMT
+                  solver. Crucially, these assertions are written in the
+                  language itself. A user of our library can refine the type of
+                  neural networks, e.g., ``neural networks which are robust
+                  against adversarial attacks'', and expect F* to handle the
+                  verification of this claim for any specific network, without
+                  having to change the representation of the network, or even
+                  having to learn about SMT solvers.
+                  Our initial experiments indicate that our approach could greatly reduce the
+                  burden of verifying neural networks. Unfortunately, they also
+                  show that SMT solvers do not scale to the sizes required for
+                  neural network verification.}, 
   author    = {Wen Kokke and Ekaterina Komendantskaya and Daniel Kienitz and David Aspinall and Robert Atkey},
   title     = {Neural Networks, Secure by Construction: An Exploration of Refinement Types},
   year      = {2020},
@@ -126,8 +173,21 @@
   url       = {https://wenkokke.github.io/pubs/aplas2020.pdf}
 }
 @inproceedings{kokke2020live,
-  abstract  = {We introduce StarChild and Lazuli, two proof-of-concept libraries which leverage the type system and theorem proving capabilities of F* and Liquid Haskell, respectively, to verify properties of pre-trained neural networks. We largely focus on StarChild, as the F* syntax is slightly more concise, but Lazuli implements the same functionality. Currently, both libraries are capable of verifying small models. Performance issues arise for larger models. Optimising the libraries is future work.
-  We make two novel contributions. We demonstrate that (1) it is possible to leverage a sufficiently advanced type system to model properties of neural networks such as robustness as types, and check them without any proof burden; and in service of that, we demonstrate that (2) it is possible to approximately translate neural network models to SMT logic.},
+  abstract  = {We introduce StarChild and Lazuli, two proof-of-concept libraries
+                  which leverage the type system and theorem proving
+                  capabilities of F* and Liquid Haskell, respectively, to verify
+                  properties of pre-trained neural networks. We largely focus on
+                  StarChild, as the F* syntax is slightly more concise, but
+                  Lazuli implements the same functionality. Currently, both
+                  libraries are capable of verifying small models. Performance
+                  issues arise for larger models. Optimising the libraries is
+                  future work.
+                  We make two novel contributions. We demonstrate that (1) it is
+                  possible to leverage a sufficiently advanced type system to
+                  model properties of neural networks such as robustness as
+                  types, and check them without any proof burden; and in service
+                  of that, we demonstrate that (2) it is possible to
+                  approximately translate neural network models to SMT logic.},
   author    = {Wen Kokke and Ekaterina Komendantskaya and Daniel Kienitz and David Aspinall},
   title     = {Robustness as a Refinement Type: Verifying Neural Networks in Liquid Haskell and F*},
   year      = {2020},
@@ -296,7 +356,8 @@
                   annotated with cross-annotator agreement of 68\% on
                   average. The annotated RTE corpora are publicly
                   available for the research community. },
-  author    = {Assaf Toledo and Stavroula Alexandropoulou and Sophia Katrenko and Heidi Klockmann and Wen Kokke and Yoad Winter},
+  author    = {Assaf Toledo and Stavroula Alexandropoulou and Sophia Katrenko
+                  and Heidi Klockmann and Wen Kokke and Yoad Winter},
   title     = {Semantic Annotation of Textual Entailment},
   booktitle = {International Conference on Computational Semantics},
   month     = mar,
@@ -331,7 +392,9 @@
                   entailments is currently being compiled based on the
                   platform and will be available for the research
                   community in the foreseeable future. },
-  author    = {Assaf Toledo and Stavroula Alexandropoulou and Sophie Chesney and Robert Grimm and Wen Kokke and Benno Kruit and Kyriaki Neophytou and Antony Nguyen and Yoad Winter},
+  author    = {Assaf Toledo and Stavroula Alexandropoulou and Sophie Chesney and
+                  Robert Grimm and Wen Kokke and Benno Kruit and Kyriaki
+                  Neophytou and Antony Nguyen and Yoad Winter}, 
   title     = {A Proof-Based Annotation Platform of Textual Entailment},
   booktitle = {Workshop on Interoperable Semantic Annotation},
   month     = may,
